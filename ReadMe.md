@@ -1,38 +1,89 @@
-# Template Git Repository
+# tiPS PowerShell Module
 
-This is just a simple template repository that I use to start my git repos from to avoid having to add some boilerplate things.
+PowerShell tips delivered straight to your terminal 💻.
 
 ## 💬 Description
 
-A short description of what this project does.
+`tiPS` is a PowerShell module that provides tips and tricks for using PowerShell.
+It is meant to be a low effort way to learn new things about PowerShell, and to help you become a better PowerShell user.
 
 ## ❓ Why this exists
 
-A short description of why this project exists.
-What use-case is it meant to solve?
+There are tons of great tips and tricks for PowerShell scattered around on the internet, but they require you to actively go look for them.
+This module brings tips to you with minimal effort required on your part.
+
+You can configure tiPS to show a tip every time you open your PowerShell terminal, or you can show a tip on demand by running the `tip` command.
 
 ## 🚀 Quick start
 
-A quick guide on how to get started with this project.
-Install a NuGet Package?
-Code snippets?
-Links to wiki or other documentation.
+### Installation
+
+The tiPS PowerShell module can be downloaded and installed by running the following command in PowerShell:
+
+```powershell
+Install-Module -Name tiPS -Scope CurrentUser
+```
+
+### Automatic tip on PowerShell startup
+
+To have a tip automatically displayed every time you open your PowerShell terminal, run the following command:
+
+```powershell
+Set-ShowPowerShellTipOnStartup
+```
+
+The above command will add a line to your PowerShell profile that will run the `tip` command every time you open your PowerShell terminal.
+
+You can disable this behavior by running the following command:
+
+```powershell
+Set-ShowPowerShellTipOnStartup -Disable
+```
+
+## Usage
+
+### Show a tip
+
+To show a tip, run the following command:
+
+```powershell
+Write-PowerShellTip
+```
+
+This cmdlet can also be run using one of its aliases: `Write-PSTip`, `Write-Tip`, or `tip`.
+
+If you know the ID of the tip you want to show, you can use the `-Id` parameter to show that specific tip.
+
+```powershell
+Write-PowerShellTip -Id 1
+```
+
+### Get a tip
+
+To get a tip as an object, run the following command:
+
+```powershell
+Get-PowerShellTip
+```
 
 ## ➕ How to contribute
+
+Have a PowerShell tip you want to share?
+Add it to the [tips.json](src/Tips/tips.json) file and submit a pull request.
+
+tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
+
+tiPS is meant to be a community driven project, so please help make it better by contributing your tips and tricks.
 
 Issues and Pull Requests are welcome.
 See [the Contributing page](docs/Contributing.md) for more details.
 
 ## 📃 Changelog
 
-See what's changed in the application over time by viewing [the changelog](docs/Changelog.md).
+See what's changed in the module over time by viewing [the changelog](docs/Changelog.md).
 
 ## 💳 Donate
 
-Buy me a [CANADIAN ITEM] for providing this [EXTENSION|APP|SCRIPT] open source and for free 🙂
+Buy me a bagel for providing this module open source and for free 🙂
 
-FOR A GENERIC DONATE LINK USE THIS BUTTON
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/deadlydogDan/5USD)
-
-FOR AN APP SPECIFIC DONATE LINK [GO HERE](https://www.paypal.com/cgi-bin/webscr?cmd=_button-management) AND CREATE A NEW BUTTON, THEN REPLACE THE `BUTTON_ID_GOES_HERE` WITH THE NEW BUTTON'S ID
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BUTTON_ID_GOES_HERE)
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JV6M4PKNLFQNQ)
