@@ -1,7 +1,7 @@
 #Requires -Version 5.0
 Set-StrictMode -Version Latest
 
-# dot source the Tip.ps1 file to include our classes and enums.
+# Dot-source the Tip.ps1 file to include our classes and enums.
 . (Join-Path -Path $PSScriptRoot -ChildPath 'Tip.ps1')
 
 [hashtable] $Tips = @{}
@@ -69,6 +69,7 @@ function InitializeModule
 		# Dot-source the tip file, which should have a $tip variable defined with all of the tip info.
 		. $tipFilePath
 
+		$tip.Validate()
 		$Tips.Add($tip.Id, $tip)
 	}
 }
