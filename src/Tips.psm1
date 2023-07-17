@@ -66,7 +66,10 @@ function InitializeModule
 
 	foreach ($tipFilePath in $tipFilePaths)
 	{
+		# Dot-source the tip file, which should have a $tip variable defined with all of the tip info.
 		. $tipFilePath
+
+		$Tips.Add($tip.Id, $tip)
 	}
 }
 InitializeModule

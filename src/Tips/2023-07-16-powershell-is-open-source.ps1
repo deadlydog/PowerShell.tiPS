@@ -6,5 +6,3 @@ $tip.Example = 'Example code to demonstrate the tip.'
 $tip.Urls = @('https://github.com/PowerShell/PowerShell')
 $tip.MinPowerShellVersion = [Version]::new(0, 0)
 $tip.Tags = @()
-
-$Tips.Add($tip.Id, $tip)
