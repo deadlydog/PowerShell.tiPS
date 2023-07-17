@@ -28,4 +28,4 @@ In order to keep the barrier-to-entry for contributions as low as possible, this
 
 ## Consequences
 
-- Additional tests will be required to ensure that the module is working as expected.
+Additional tests will be required to ensure that the module is working as expected.
