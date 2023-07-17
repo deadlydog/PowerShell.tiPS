@@ -5,17 +5,6 @@ BeforeAll {
 }
 
 Describe 'Get-PowerShellTip' {
-	Context 'Using one of its aliases' {
-		It 'Should return a tip using Get-PSTip' {
-			$tip = Get-PSTip
-			$tip | Should -Not -BeNullOrEmpty
-		}
-		It 'Should return a tip using Get-Tip' {
-			$tip = Get-Tip
-			$tip | Should -Not -BeNullOrEmpty
-		}
-	}
-
 	Context 'Given no parameters' {
 		It 'Should return a tip' {
 			$tip = Get-PowerShellTip

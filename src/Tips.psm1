@@ -9,7 +9,6 @@ Set-StrictMode -Version Latest
 function Get-PowerShellTip
 {
 	[CmdletBinding()]
-	[Alias('Get-PSTip', 'Get-Tip')]
 	Param
 	(
 		[Parameter(Mandatory = $false)]
@@ -73,8 +72,6 @@ function InitializeModule
 InitializeModule
 
 Export-ModuleMember -Function Get-PowerShellTip
-Export-ModuleMember -Alias 'Get-PSTip'
-Export-ModuleMember -Alias 'Get-Tip'
 
 Export-ModuleMember -Function Write-PowerShellTip
 Export-ModuleMember -Alias 'Write-PSTip'
