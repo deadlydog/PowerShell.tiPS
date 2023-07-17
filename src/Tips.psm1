@@ -50,7 +50,7 @@ function GetRandomTipFilePath
 		[string] $tipsDirectoryPath
 	)
 
-	[string] $tipFilePath = Get-ChildItem -Path $tipsDirectoryPath -Filter '*.json' |
+	[string] $tipFilePath = Get-ChildItem -Path $tipsDirectoryPath -Filter '*.ps1' |
 		Get-Random -Count 1 |
 		Select-Object -ExpandProperty FullName
 	return $tipFilePath
