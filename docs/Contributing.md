@@ -2,7 +2,7 @@
 
 Feel free to open an issue or pull request.
 
-## Issues
+## 🐛 Issues
 
 If you open an issue, please:
 
@@ -13,6 +13,7 @@ If you open an issue, please:
   - screenshots, gifs, or videos
   - example code
 
-## Why is it like this?
+## ⁉ Why was a specific decision made
 
-If you are curious why something is the way it is, it may be documented in the [Architecture Decision Records](/docs/ArchitectureDecisionRecords/ArchitectureDecisionRecords.md).
+Curious about some of the choices made in this project?
+The reasons may be documented in the [Architecture Decision Records](docs/ArchitectureDecisionRecords).
