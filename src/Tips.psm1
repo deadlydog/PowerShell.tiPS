@@ -1,8 +1,7 @@
+using module .\Tip.ps1
+
 #Requires -Version 5.0
 Set-StrictMode -Version Latest
-
-# Dot-source the Tip.ps1 file to include our classes and enums.
-. (Join-Path -Path $PSScriptRoot -ChildPath 'Tip.ps1')
 
 [hashtable] $Tips = @{}
 
