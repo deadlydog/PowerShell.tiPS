@@ -1,4 +1,4 @@
-using module .\Tips.psm1
+using module .\tiPS.psm1
 
 BeforeAll {
 	[string] $ModuleName = 'Tips' # Required for mocking functions called by the module.

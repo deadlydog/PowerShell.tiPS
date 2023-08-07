@@ -1,4 +1,4 @@
-using module .\Tip.ps1
+using module .\Classes\Tip.ps1
 
 #Requires -Version 5.0
 Set-StrictMode -Version Latest
@@ -37,7 +37,7 @@ function Write-PowerShellTip
 function GetTipsDirectoryPath
 {
 	[string] $thisScriptsDirectoryPath = $PSScriptRoot
-	[string] $tipsDirectoryPath = Join-Path -Path $thisScriptsDirectoryPath -ChildPath 'Tips'
+	[string] $tipsDirectoryPath = Join-Path -Path $thisScriptsDirectoryPath -ChildPath 'PowerShellTips'
 	return $tipsDirectoryPath
 }
 
