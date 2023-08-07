@@ -8,6 +8,17 @@ class Tip
 	[Version] $MinPowerShellVersion
 	[Tags[]] $Tags
 
+	Tip()
+	{
+		$this.Id = [string]::Empty
+		$this.Title = [string]::Empty
+		$this.TipText = [string]::Empty
+		$this.Example = [string]::Empty
+		$this.Urls = @()
+		$this.MinPowerShellVersion = [Version]::new(0, 0)
+		$this.Tags = @()
+	}
+
 	[void] Validate()
 	{
 		if ([string]::IsNullOrWhiteSpace($this.Id))
