@@ -40,3 +40,21 @@ Describe 'Write-PowerShellTip' {
 		}
 	}
 }
+
+Describe 'Initializing the module to load up all defined tips' {
+	It 'Should load all of the tips successfully' {
+		[int] $numberOfTipsFiles = Get-ChildItem -Path $PSScriptRoot\Tips -Filter '*.ps1' |
+			Measure-Object |
+			Select-Object -ExpandProperty Count
+
+		[int] $numberOfTipsLoaded = $Tips.Length
+
+		$numberOfTipsLoaded | Should -Be $numberOfTipsFiles
+	}
+
+	It 'Should load all of the Tips into the module' {
+		Mock -ModuleName $ModuleName $Tips { } -Verifiable
+		Tips
+		Should -InvokeVerifiable # Verify that the mock was called.
+	}
+}
