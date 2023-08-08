@@ -76,6 +76,6 @@ InitializeModule
 
 Export-ModuleMember -Function Get-PowerShellTip
 Export-ModuleMember -Function Write-PowerShellTip
-Export-ModuleMember -Alias 'Write-PSTip'
-Export-ModuleMember -Alias 'Write-Tip'
-Export-ModuleMember -Alias 'Tips'
+Export-ModuleMember -Alias Write-PSTip
+Export-ModuleMember -Alias Write-Tip
+Export-ModuleMember -Alias Tips
