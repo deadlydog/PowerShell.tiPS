@@ -114,7 +114,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/deadlydog/PowerShell.tiPS/blob/main/docs/Changelog.md'
+        ReleaseNotes = 'https://github.com/deadlydog/PowerShell.tiPS/blob/main/Changelog.md'
 
         # Prerelease string of this module
         # Prerelease = ''
