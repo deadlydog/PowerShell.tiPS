@@ -5,12 +5,18 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Run All Pester Tests",
+			"name": "PowerShell: Launch Current File",
+			"type": "PowerShell",
+			"request": "launch",
+			"script": "${file}",
+			"cwd": "${cwd}"
+		},
+		{
+			"name": "PowerShell: Run All Pester Tests",
 			"type": "PowerShell",
 			"request": "launch",
 			"script": "Invoke-Pester",
-			"createTemporaryIntegratedConsole": true,
-			"attachDotnetDebugger": true
+			"createTemporaryIntegratedConsole": true
 		}
 	]
 }
