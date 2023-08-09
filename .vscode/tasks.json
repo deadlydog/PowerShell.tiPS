@@ -4,27 +4,14 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			// Since we set the default F5 command in launch.json to run all Pester tests, F5 no
-			// longer runs the current file. This task allows us to run the current file with F5.
-			// This task assumes the default shell is configured to be PowerShell.
-			"label": "Run current PowerShell file",
-			"type": "shell",
-			"command": "${file}",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "new",
-			},
-			"problemMatcher": ["$func-powershell-watch"]
-		},
-		{
 			"label": "Run all Pester tests",
 			"type": "shell",
 			"command": "Invoke-Pester",
 			"group": "test",
 			"presentation": {
 				"reveal": "always",
-				"panel": "new",
+				"panel": "dedicated",
+				"clear": true
 			},
 			"problemMatcher": ["$func-powershell-watch"]
 		}
