@@ -5,7 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "PowerShell: Run Pester Tests",
+			"name": "Run All Pester Tests",
 			"type": "PowerShell",
 			"request": "launch",
 			"script": "Invoke-Pester",
