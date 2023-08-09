@@ -102,7 +102,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('PowerShell', 'tip', 'tips', 'hint', 'pointer', 'suggestion')
+        Tags = @('PowerShell', 'tip', 'tips', 'trick', 'tricks', 'hint', 'pointer', 'suggestion', 'information', 'new', 'news')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/deadlydog/PowerShell.tiPS/blob/main/License.md'
