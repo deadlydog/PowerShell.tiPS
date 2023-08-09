@@ -43,7 +43,7 @@ Describe 'Write-PowerShellTip' {
 
 Describe 'Initializing the module to load up all defined tips' {
 	It 'Should load all of the tips successfully' {
-		[int] $numberOfTipsFiles = Get-ChildItem -Path $PSScriptRoot\Tips -Filter '*.ps1' |
+		[int] $numberOfTipsFiles = Get-ChildItem -Path $PSScriptRoot\PowerShellTips -Filter '*.ps1' |
 			Measure-Object |
 			Select-Object -ExpandProperty Count
 
