@@ -10,13 +10,16 @@ function Get-PowerShellTip
 	[CmdletBinding()]
 	Param
 	(
-		[Parameter(Mandatory = $false)]
+		[Parameter(Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
 		[string] $TipId
 	)
 
-	[string] $tipsDirectoryPath = GetTipsDirectoryPath
-	[string] $tipFilePath = GetRandomTipFilePath -tipsDirectoryPath $tipsDirectoryPath
-	[string] $tip = Get-Content -Path $tipFilePath
+	if ([string]::IsNullOrWhiteSpace($TipId))
+	{
+		$TipId = $Tips.Keys | Get-Random -Count 1
+	}
+
+	[Tip] $tip = $Tips[$TipId]
 	return $tip
 }
 
@@ -26,7 +29,7 @@ function Write-PowerShellTip
 	[Alias('Write-PSTip', 'Write-Tip', 'Tips')]
 	Param
 	(
-		[Parameter(Mandatory = $false)]
+		[Parameter(Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
 		[string] $TipId
 	)
 
