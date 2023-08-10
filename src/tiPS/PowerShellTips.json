@@ -9,14 +9,7 @@
       "https://OneOrMoreUrls",
       "https://ToLearnMoreAboutTheTip"
     ],
-    "MinPowerShellVersion": {
-      "Major": 0,
-      "Minor": 0,
-      "Build": -1,
-      "Revision": -1,
-      "MajorRevision": -1,
-      "MinorRevision": -1
-    },
+    "MinPowerShellVersion": "0.0",
     "Tags": []
   },
   {
@@ -28,14 +21,7 @@
     "Urls": [
       "https://github.com/PowerShell/PowerShell"
     ],
-    "MinPowerShellVersion": {
-      "Major": 0,
-      "Minor": 0,
-      "Build": -1,
-      "Revision": -1,
-      "MajorRevision": -1,
-      "MinorRevision": -1
-    },
+    "MinPowerShellVersion": "0.0",
     "Tags": []
   },
   {
@@ -47,14 +33,7 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode"
     ],
-    "MinPowerShellVersion": {
-      "Major": 0,
-      "Minor": 0,
-      "Build": -1,
-      "Revision": -1,
-      "MajorRevision": -1,
-      "MinorRevision": -1
-    },
+    "MinPowerShellVersion": "0.0",
     "Tags": [
       5
     ]
