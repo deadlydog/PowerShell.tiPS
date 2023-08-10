@@ -1,4 +1,4 @@
-name: CI
+name: build-powershell-module
 
 # Controls when the workflow will run
 on:
