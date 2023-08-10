@@ -10,5 +10,5 @@ foreach ($tip in $tipObjects)
 	$tipHashtable[$tip.Id] = $tip
 }
 
-# Scope our $Tips variable to the entire module.
+# Scope our $Tips variable to the entire module so the Get-PowerShellTips cmdlet can access it.
 New-Variable -Name 'Tips' -Value $tipHashtable -Option Constant -Scope Script
