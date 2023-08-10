@@ -1,6 +1,7 @@
 class Tip
 {
 	[string] $Id
+	[DateTime] $CreatedDate
 	[string] $Title
 	[string] $TipText
 	[string] $Example
@@ -11,6 +12,7 @@ class Tip
 	Tip()
 	{
 		$this.Id = [string]::Empty
+		$this.CreatedDate = [DateTime]::MinValue
 		$this.Title = [string]::Empty
 		$this.TipText = [string]::Empty
 		$this.Example = [string]::Empty
@@ -24,6 +26,11 @@ class Tip
 		if ([string]::IsNullOrWhiteSpace($this.Id))
 		{
 			throw [System.ArgumentException]::new('The Id property must be set.')
+		}
+
+		if ($this.CreatedDate -eq [DateTime]::MinValue)
+		{
+			throw [System.ArgumentException]::new('The CreatedDate property must be set.')
 		}
 
 		if ($this.Id.Contains(' '))

@@ -19,6 +19,12 @@ Describe 'Validating a Tip' {
 			{ $tip.Validate() } | Should -Throw
 		}
 
+		It 'Should throw an error when the CreatedDate has not been set' {
+			[Tip] $tip = $validTip
+			$tip.CreatedDate = [DateTime]::MinValue
+			{ $tip.Validate() } | Should -Throw
+		}
+
 		It 'Should throw an error when the ID contains spaces' {
 			[Tip] $tip = $validTip
 			$tip.Id = 'The ID should not contain spaces'
@@ -54,6 +60,7 @@ Describe 'Validating a Tip' {
 		BeforeEach {
 			[Tip] $validTip = [Tip]::new()
 			$validTip.Id = "TipId"
+			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
 			$validTip.Example = 'Example'
