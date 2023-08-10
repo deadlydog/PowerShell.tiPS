@@ -5,11 +5,12 @@ Describe 'Validating a Tip' {
 		BeforeEach {
 			[Tip] $validTip = [Tip]::new()
 			$validTip.Id = "TipId"
+			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
 			$validTip.Example = 'Example'
 			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$validTip.MinPowerShellVersion = [Version]::new(5, 1)
+			$validTip.MinPowerShellVersion = '5.1'
 			$validTip.Tags = @('Excel', 'Module')
 		}
 
@@ -54,6 +55,12 @@ Describe 'Validating a Tip' {
 			$tip.Urls = @('https://Url1.com', 'http://Url2.com', 'Url3.com')
 			{ $tip.Validate() } | Should -Throw
 		}
+
+		It 'Should throw an error when an invalid MinPowerShellVersion is supplied' {
+			[Tip] $tip = $validTip
+			$tip.MinPowerShellVersion = 'Not a valid version'
+			{ $tip.Validate() } | Should -Throw
+		}
 	}
 
 	Context 'Given a Tip has all valid properties' {
@@ -65,7 +72,7 @@ Describe 'Validating a Tip' {
 			$validTip.TipText = 'Tip Text'
 			$validTip.Example = 'Example'
 			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$validTip.MinPowerShellVersion = [Version]::new(5, 1)
+			$validTip.MinPowerShellVersion = '5.1'
 			$validTip.Tags = @('Excel', 'Module')
 		}
 

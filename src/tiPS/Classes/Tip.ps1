@@ -6,7 +6,7 @@ class Tip
 	[string] $TipText
 	[string] $Example
 	[string[]] $Urls
-	[Version] $MinPowerShellVersion
+	[string] $MinPowerShellVersion # Use a string because System.Version is not deserialized correctly from JSON.
 	[Tags[]] $Tags
 
 	Tip()
@@ -17,7 +17,7 @@ class Tip
 		$this.TipText = [string]::Empty
 		$this.Example = [string]::Empty
 		$this.Urls = @()
-		$this.MinPowerShellVersion = [Version]::new(0, 0)
+		$this.MinPowerShellVersion = [string]::Empty
 		$this.Tags = @()
 	}
 
@@ -63,6 +63,15 @@ class Tip
 			if (-not ($url.StartsWith('http://') -or $url.StartsWith('https://')))
 			{
 				throw [System.ArgumentException]::new("The Urls property value '$url' must start with 'http://' or 'https://'.")
+			}
+		}
+
+		if (-not [string]::IsNullOrWhiteSpace($this.MinPowerShellVersion))
+		{
+			[bool] $isValidVersionNumber = [Version]::TryParse($this.MinPowerShellVersion, [ref] $null)
+			if (-not $isValidVersionNumber)
+			{
+				throw [System.ArgumentException]::new("The MinPowerShellVersion property value '$($this.MinPowerShellVersion)' is not a valid version number.")
 			}
 		}
 	}
