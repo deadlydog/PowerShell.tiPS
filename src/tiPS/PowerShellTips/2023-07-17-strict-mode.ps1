@@ -1,6 +1,6 @@
 [Tip] $tip = [Tip]::new()
 $tip.Id = 'StrictMode'
-$tip.CreatedDate = [DateTime]::Parse('2023-07-16')
+$tip.CreatedDate = [DateTime]::Parse('2023-07-17')
 $tip.Title = 'Set Strict Mode on your scripts'
 $tip.TipText = 'Enforce coding rules and raise errors for common coding mistakes by declaring strict mode at the top of your scripts.'
 $tip.Example = 'Set-StrictMode -Version Latest'
