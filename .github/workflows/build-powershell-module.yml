@@ -16,7 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   build-and-test:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -24,4 +24,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run Pester Tests
-        uses: zyborg/pester-tests-report@v1.5.0
+        shell: pwsh
+        run: |
+          Invoke-Pester
