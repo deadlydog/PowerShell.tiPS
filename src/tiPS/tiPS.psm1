@@ -3,7 +3,7 @@ using module .\Classes\Tip.ps1
 #Requires -Version 5.0
 Set-StrictMode -Version Latest
 
-[hashtable] $Tips = @{}
+[hashtable] $Tips = [ordered]@{}
 
 function Get-PowerShellTip
 {
@@ -68,6 +68,8 @@ function InitializeModule
 
 	foreach ($tipFilePath in $tipFilePaths)
 	{
+		$tip = $null
+
 		# Dot-source the tip file, which should have a $tip variable defined with all of the tip info.
 		. $tipFilePath
 
