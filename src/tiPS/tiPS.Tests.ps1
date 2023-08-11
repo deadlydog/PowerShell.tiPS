@@ -1,7 +1,7 @@
 using module .\tiPS.psm1
 
 BeforeAll {
-	[string] $ModuleName = 'Tips' # Required for mocking functions called by the module.
+	New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
 }
 
 Describe 'Get-PowerShellTip' {
