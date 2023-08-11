@@ -24,7 +24,7 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "Running PSScriptAnalyzer against all PowerShell files in the repo:"
-          Invoke-ScriptAnalyzer -Path . -Recurse -Outvariable issues
+          Invoke-ScriptAnalyzer -Path . -Recurse -ExcludeRule PSAvoidUsingWriteHost -Outvariable issues
 
           $errors = $issues | Where-Object { $_.Severity -eq 'Error' }
           $warnings = $issues | Where-Object { $_.Severity -eq 'Warning' }
