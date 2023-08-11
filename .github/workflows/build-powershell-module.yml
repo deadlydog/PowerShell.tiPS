@@ -1,4 +1,4 @@
-name: build-powershell-module
+name: build-and-test-powershell-module
 
 # Controls when the workflow will run
 on:
@@ -23,12 +23,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Display PowerShell version being used
+        shell: pwsh
+        run: $PSVersionTable
+
+      - name: Run PowerShell linter with PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Write-Output "Running PSScriptAnalyzer against all PowerShell files in the repo:"
+          Invoke-ScriptAnalyzer -Path . -Recurse
+
       - name: Run Pester Tests
         shell: pwsh
         run: |
-          Write-Output "PowerShell version being used:"
-          $PSVersionTable
-
           Write-Output "Pester version being used:"
           Import-Module -Name Pester
           Get-Module -Name Pester
