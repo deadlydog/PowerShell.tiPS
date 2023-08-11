@@ -24,18 +24,14 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "Running PSScriptAnalyzer against all PowerShell files in the repo:"
-          Invoke-ScriptAnalyzer -Path . -Recurse -ExcludeRule PSAvoidUsingWriteHost -Outvariable issues
+          Invoke-ScriptAnalyzer -Path . -Recurse -ExcludeRule PSAvoidUsingWriteHost -EnableExit -Outvariable issues
 
           $errors = $issues | Where-Object { $_.Severity -eq 'Error' }
           $warnings = $issues | Where-Object { $_.Severity -eq 'Warning' }
 
-          if ($errors)
+          if ($errors -or $warnings)
           {
-              Write-Error "There were $($errors.Count) errors and $($warnings.Count) warnings total." -ErrorAction Stop
-          }
-          else
-          {
-              Write-Output "There were $($errors.Count) errors and $($warnings.Count) warnings total."
+              throw "PSScriptAnalyzer found $($errors.Count) errors and $($warnings.Count) warnings that need to be fixed."
           }
 
       - name: Run Pester Tests
