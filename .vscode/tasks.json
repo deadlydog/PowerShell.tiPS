@@ -14,6 +14,17 @@
 				"clear": true
 			},
 			"problemMatcher": ["$func-powershell-watch"]
+		},
+		{
+			"label": "Run PSScriptAnalyzer linter",
+			"type": "shell",
+			"command": "Invoke-ScriptAnalyzer -Path . -Recurse -ExcludeRule PSAvoidUsingWriteHost",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
 		}
 	]
 }
