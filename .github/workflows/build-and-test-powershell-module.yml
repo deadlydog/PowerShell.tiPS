@@ -22,17 +22,7 @@ jobs:
 
       - name: Run PowerShell linter with PSScriptAnalyzer
         shell: pwsh
-        run: |
-          Write-Output "Running PSScriptAnalyzer against all PowerShell files in the repo:"
-          Invoke-ScriptAnalyzer -Path . -Recurse -ExcludeRule PSAvoidUsingWriteHost -EnableExit -Outvariable issues
-
-          # $errors = $issues | Where-Object { $_.Severity -eq 'Error' }
-          # $warnings = $issues | Where-Object { $_.Severity -eq 'Warning' }
-
-          # if ($errors -or $warnings)
-          # {
-          #     throw "PSScriptAnalyzer found $($errors.Count) errors and $($warnings.Count) warnings that need to be fixed."
-          # }
+        run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -ExcludeRule PSAvoidUsingWriteHost
 
       - name: Run Pester Tests
         shell: pwsh
