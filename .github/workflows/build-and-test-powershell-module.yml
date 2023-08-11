@@ -1,4 +1,4 @@
-name: build-and-test-powershell-module
+name: build
 
 on:
   push:
