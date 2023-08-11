@@ -1,4 +1,4 @@
-# tiPS PowerShell Module
+# tiPS PowerShell Module [![Build status](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-powershell-module.yml)
 
 PowerShell tips delivered straight to your terminal 💻.
 
