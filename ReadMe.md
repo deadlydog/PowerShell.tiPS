@@ -1,4 +1,4 @@
-# tiPS PowerShell Module [![Build status](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-powershell-module.yml)
+# tiPS PowerShell Module [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deadlydog/PowerShell.tiPS/blob/main/License.md) [![Build status](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-powershell-module.yml) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/deadlydog/PowerShell.tiPS/blob/main/docs/Contributing.md)
 
 PowerShell tips delivered straight to your terminal 💻.
 
