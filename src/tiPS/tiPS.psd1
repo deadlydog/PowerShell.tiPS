@@ -24,7 +24,7 @@ GUID = 'f4c65354-565d-4e4b-b922-c7dbceb953d6'
 Author = 'Daniel Schroeder'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = ''
 
 # Copyright statement for this module
 Copyright = '(c) Daniel Schroeder. All rights reserved.'
