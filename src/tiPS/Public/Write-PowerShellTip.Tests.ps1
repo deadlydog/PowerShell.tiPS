@@ -1,16 +1,7 @@
-using module .\tiPS.psm1
+using module .\..\tiPS.psm1
 
 BeforeAll {
 	New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
-}
-
-Describe 'Get-PowerShellTip' {
-	Context 'Given no parameters' {
-		It 'Should return a tip' {
-			$tip = Get-PowerShellTip
-			$tip | Should -Not -BeNullOrEmpty
-		}
-	}
 }
 
 Describe 'Write-PowerShellTip' {
@@ -38,17 +29,5 @@ Describe 'Write-PowerShellTip' {
 			Write-PowerShellTip
 			Should -InvokeVerifiable # Verify that the mock was called.
 		}
-	}
-}
-
-Describe 'Initializing the module to load up all defined tips' {
-	It 'Should load all of the tips successfully' {
-		[int] $numberOfTipsFiles = Get-ChildItem -Path $PSScriptRoot\PowerShellTips -Filter '*.ps1' |
-			Measure-Object |
-			Select-Object -ExpandProperty Count
-
-		[int] $numberOfTipsLoaded = (Get-PowerShellTip -All).Count
-
-		$numberOfTipsLoaded | Should -Be $numberOfTipsFiles
 	}
 }

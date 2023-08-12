@@ -1,3 +1,5 @@
+using module .\..\Classes\Tip.ps1
+
 function LoadAllPowerShellTipsFromJsonFile
 {
 	[string] $moduleRootDirectoryPath = Split-Path -Path $PSScriptRoot -Parent
