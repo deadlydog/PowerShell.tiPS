@@ -1,4 +1,4 @@
-[Tip] $tip = [Tip]::new()
+[PowerShellTip] $tip = [PowerShellTip]::new()
 $tip.Id = 'PowerShellIsOpenSource'
 $tip.CreatedDate = [DateTime]::Parse('2023-07-16')
 $tip.Title = 'PowerShell is open source'

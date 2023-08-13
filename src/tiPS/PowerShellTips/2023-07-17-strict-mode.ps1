@@ -1,4 +1,4 @@
-[Tip] $tip = [Tip]::new()
+[PowerShellTip] $tip = [PowerShellTip]::new()
 $tip.Id = 'StrictMode'
 $tip.CreatedDate = [DateTime]::Parse('2023-07-17')
 $tip.Title = 'Set Strict Mode on your scripts'

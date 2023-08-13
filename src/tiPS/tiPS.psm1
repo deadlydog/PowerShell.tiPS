@@ -1,9 +1,7 @@
-# Classes must be imported with the 'using module' statement, which has to be the first line of the script.
-# using module .\Classes\Tip.ps1
+# In order for classes and enums to be accessible outside of the module, they must be defined directly in the psm1 file.
+# For more info see: https://github.com/deadlydog/PowerShell.Experiment.ClassInModule
 
-# TODO: Figure out how to have Pester tests find class when it is defined in another file.
-# Pester works fine locally with class in another file, but breaks in GitHub Actions with "Unable to find type [Tip]".
-class Tip
+class PowerShellTip
 {
 	[string] $Id
 	[DateTime] $CreatedDate
@@ -14,7 +12,7 @@ class Tip
 	[string] $MinPowerShellVersion # Use a string because System.Version is not deserialized correctly from JSON.
 	[Tags[]] $Tags
 
-	Tip()
+	PowerShellTip()
 	{
 		$this.Id = [string]::Empty
 		$this.CreatedDate = [DateTime]::MinValue
@@ -94,16 +92,17 @@ enum Tags
 	Terminal
 }
 
+
 #Requires -Version 5.0
 Set-StrictMode -Version Latest
 
-# Import all of the functions from the Private and Public folders.
+# Import all Private and Public functions from their respective directories.
 [string[]] $privateFunctionFilePaths =
-	Get-ChildItem -Path $PSScriptRoot\Private -Recurse -Filter '*.ps1' |
+	Get-ChildItem -Path $PSScriptRoot\Private -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
 [string[]] $publicFunctionFilePaths =
-	Get-ChildItem -Path $PSScriptRoot\Public -Recurse -Filter '*.ps1' |
+	Get-ChildItem -Path $PSScriptRoot\Public -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
 [string[]] $functionFilesToImport = $privateFunctionFilePaths + $publicFunctionFilePaths
@@ -113,13 +112,16 @@ $functionFilesToImport | ForEach-Object {
 
 	try
 	{
-		Write-Debug "Dot-source importing function from file '$filePath'."
+		Write-Debug "Dot-source importing functions/types from file '$filePath'."
 		. $_
 	}
 	catch
 	{
-		Write-Error "Failed to import function from file '$filePath': $_"
+		Write-Error "Failed to dot-source import functions/types from file '$filePath': $_"
 	}
 }
+
+Write-Debug 'Now that all types and functions are imported, initializing the module by reading in all the PowerShell tips.'
+LoadAllPowerShellTipsFromJsonFile
 
 # Function and Alias exports are defined in the modules manifest (.psd1) file.
