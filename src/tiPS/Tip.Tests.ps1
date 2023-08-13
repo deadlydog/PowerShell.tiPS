@@ -1,4 +1,4 @@
-using module .\..\tiPS.psm1
+using module .\tiPS.psm1
 
 Describe 'Validating a Tip' {
 	Context 'Given a Tip has invalid properties' {
