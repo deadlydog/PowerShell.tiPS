@@ -1,7 +1,7 @@
 using module .\tiPS.psm1
 
-Describe 'Validating a Tip' {
-	Context 'Given a Tip has invalid properties' {
+Describe 'Validating a PowerShellTip' {
+	Context 'Given a PowerShellTip has invalid properties' {
 		BeforeEach {
 			[PowerShellTip] $validTip = [PowerShellTip]::new()
 			$validTip.Id = "TipId"
@@ -63,7 +63,7 @@ Describe 'Validating a Tip' {
 		}
 	}
 
-	Context 'Given a Tip has all valid properties' {
+	Context 'Given a PowerShellTip has all valid properties' {
 		BeforeEach {
 			[PowerShellTip] $validTip = [PowerShellTip]::new()
 			$validTip.Id = "TipId"
