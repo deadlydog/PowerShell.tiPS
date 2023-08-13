@@ -121,7 +121,7 @@ $functionFilesToImport | ForEach-Object {
 	}
 }
 
-Write-Debug 'Now that all types and functions are imported, initializing the module.'
+Write-Debug 'Now that all types and functions are imported, initializing the module by reading in all the PowerShell tips.'
 LoadAllPowerShellTipsFromJsonFile
 
 # Function and Alias exports are defined in the modules manifest (.psd1) file.
