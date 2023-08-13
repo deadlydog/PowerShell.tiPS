@@ -1,7 +1,7 @@
 # In order for classes and enums to be accessible outside of the module, they must be defined directly in the psm1 file.
 # For more info see: https://github.com/deadlydog/PowerShell.Experiment.ClassInModule
 
-class Tip
+class PowerShellTip
 {
 	[string] $Id
 	[DateTime] $CreatedDate
@@ -12,7 +12,7 @@ class Tip
 	[string] $MinPowerShellVersion # Use a string because System.Version is not deserialized correctly from JSON.
 	[Tags[]] $Tags
 
-	Tip()
+	PowerShellTip()
 	{
 		$this.Id = [string]::Empty
 		$this.CreatedDate = [DateTime]::MinValue
