@@ -1,3 +1,6 @@
+#Requires -Version 5.0
+Set-StrictMode -Version Latest
+
 # In order for classes and enums to be accessible outside of the module, they must be defined directly in the psm1 file.
 # For more info see: https://github.com/deadlydog/PowerShell.Experiment.ClassInModule
 
@@ -91,10 +94,6 @@ enum Tags
 	Syntax
 	Terminal
 }
-
-
-#Requires -Version 5.0
-Set-StrictMode -Version Latest
 
 # Import all Private and Public functions from their respective directories.
 [string[]] $privateFunctionFilePaths =
