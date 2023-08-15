@@ -13,7 +13,7 @@ class PowerShellTip
 	[string] $Example
 	[string[]] $Urls
 	[string] $MinPowerShellVersion # Use a string because System.Version is not deserialized correctly from JSON.
-	[Tags[]] $Tags
+	[PowerShellTipTag[]] $Tags
 
 	PowerShellTip()
 	{
@@ -83,8 +83,7 @@ class PowerShellTip
 	}
 }
 
-# TODO: Move enum to it's own file: https://stackoverflow.com/questions/69097932/include-enums-from-another-file
-enum Tags
+enum PowerShellTipTag
 {
 	Excel
 	FileSystem
