@@ -1,4 +1,4 @@
-using module .\..\src\tiPS\Classes\Tip.ps1
+using module .\..\src\tiPS\tiPS.psm1
 
 [CmdletBinding()]
 Param()
