@@ -6,7 +6,7 @@
 		{
 			"label": "Run all Pester tests",
 			"type": "shell",
-			"command": "Invoke-Pester",
+			"command": "Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
 			"group": "test",
 			"presentation": {
 				"reveal": "always",
