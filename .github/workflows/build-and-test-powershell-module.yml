@@ -32,4 +32,10 @@ jobs:
           Get-Module -Name Pester
 
           Write-Output "Running all Pester tests in the repo:"
-          Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})
+          $pesterConfig = New-PesterConfiguration @{
+              Output = @{ Verbosity = 'Detailed' }
+              TestResult = @{ Enabled = $true }
+              CodeCoverage = @{ Enabled = $true }
+              Run = @{ Exit = $true }
+            }
+          Invoke-Pester -Configuration $pesterConfig
