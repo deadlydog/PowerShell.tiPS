@@ -35,7 +35,7 @@ jobs:
           $pesterConfig = New-PesterConfiguration @{
               Output = @{ Verbosity = 'Detailed' }
               TestResult = @{ Enabled = $true }
-              CodeCoverage = @{ Enabled = $true }
+              CodeCoverage = @{ Enabled = $false }
               Run = @{ Exit = $true }
             }
           Invoke-Pester -Configuration $pesterConfig
