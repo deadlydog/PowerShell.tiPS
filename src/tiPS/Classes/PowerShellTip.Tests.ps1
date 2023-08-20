@@ -1,4 +1,6 @@
-using module .\tiPS.psm1
+BeforeAll {
+	. "$PSScriptRoot\PowerShellTip.ps1"
+}
 
 Describe 'Validating a PowerShellTip' {
 	Context 'Given a PowerShellTip has invalid properties' {
