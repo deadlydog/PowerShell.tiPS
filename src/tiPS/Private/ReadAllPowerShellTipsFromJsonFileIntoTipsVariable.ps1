@@ -1,4 +1,4 @@
-function LoadAllPowerShellTipsFromJsonFile
+function ReadAllPowerShellTipsFromJsonFileIntoTipsVariable
 {
 	[string] $moduleRootDirectoryPath = Split-Path -Path $PSScriptRoot -Parent
 	[string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
