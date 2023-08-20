@@ -1,5 +1,8 @@
 using System;
 
+// Ideally the enum would be in a separate file, but then we have to deal with writing assemblies to disk
+// in order to load PowerShell types from 2 different files, so just define everything in a single file
+// here for now: https://stackoverflow.com/a/20749076/602585
 public enum PowerShellTipTag
 {
 	Excel,
