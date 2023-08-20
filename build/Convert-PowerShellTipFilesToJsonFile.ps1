@@ -5,8 +5,9 @@ Param()
 
 [string] $thisScriptsDirectoryPath = $PSScriptRoot
 [string] $repoRootDirectoryPath = Split-Path -Path $thisScriptsDirectoryPath -Parent
-[string] $moduleRootDirectoryPath = Join-Path -Path $repoRootDirectoryPath -ChildPath 'src\tiPS'
-[string] $powerShellTipsDirectoryPath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips'
+[string] $srcDirectoryPath = Join-Path -Path $repoRootDirectoryPath -ChildPath 'src'
+[string] $moduleRootDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'tiPS'
+[string] $powerShellTipsDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'PowerShellTips'
 [string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
 
 Write-Verbose "Finding all PowerShell tip files in '$powerShellTipsDirectoryPath'."
@@ -33,4 +34,4 @@ $tips |
 	ConvertTo-Json -Depth 100 |
 	Out-File -FilePath $powerShellTipsJsonFilePath -Encoding UTF8 -Force
 
-Write-Output "PowerShell tip files in the directory '$powerShellTipsDirectoryPath' were successfully converted to JSON and written to the file '$powerShellTipsJsonFilePath'."
+Write-Output "$($tips.Count) PowerShell tip files were found in the directory '$powerShellTipsDirectoryPath', successfully converted to JSON, and written to the file '$powerShellTipsJsonFilePath'."

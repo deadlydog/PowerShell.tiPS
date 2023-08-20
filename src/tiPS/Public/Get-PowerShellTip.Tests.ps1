@@ -11,7 +11,7 @@ Describe 'Get-PowerShellTip' {
 
 Describe 'Initializing the module to load up all defined tips' {
 	It 'Should load all of the tips successfully' {
-		[string] $powerShellTipsDirectoryPath = Resolve-Path "$PSScriptRoot\..\PowerShellTips"
+		[string] $powerShellTipsDirectoryPath = Resolve-Path "$PSScriptRoot\..\..\PowerShellTips"
 		[int] $numberOfTipsFiles = Get-ChildItem -Path $powerShellTipsDirectoryPath -Filter '*.ps1' |
 			Measure-Object |
 			Select-Object -ExpandProperty Count
