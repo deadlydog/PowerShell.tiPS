@@ -3,7 +3,7 @@ Set-StrictMode -Version Latest
 
 # Import all Classes and Private and Public functions from their respective directories.
 [string[]] $classFilePaths =
-	Get-ChildItem -Path $PSScriptRoot\Private -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
+	Get-ChildItem -Path $PSScriptRoot\Classes -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
 [string[]] $privateFunctionFilePaths =
