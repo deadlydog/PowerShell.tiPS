@@ -19,6 +19,14 @@ function Get-PowerShellTip
 	{
 		$TipId = $Tips.Keys | Get-Random -Count 1
 	}
+	else
+	{
+		if (-not $Tips.ContainsKey($TipId))
+		{
+			Write-Error "A tip with ID '$TipId' does not exist."
+			return
+		}
+	}
 
 	[tiPS.PowerShellTip] $tip = $Tips[$TipId]
 	return $tip
