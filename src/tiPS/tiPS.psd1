@@ -33,7 +33,7 @@ Copyright = '(c) Daniel Schroeder. All rights reserved.'
 Description = 'PowerShell tips delivered straight to your terminal 💻.'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '5.0'
+PowerShellVersion = '3.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
