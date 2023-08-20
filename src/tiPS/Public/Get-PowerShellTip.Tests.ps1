@@ -1,9 +1,5 @@
 using module .\..\tiPS.psm1
 
-BeforeAll {
-	[string] $PowerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
-}
-
 Describe 'Get-PowerShellTip' {
 	Context 'Given no parameters' {
 		It 'Should return a tip' {
@@ -28,8 +24,10 @@ Describe 'Get-PowerShellTip' {
 
 	Context 'Given the All switch' {
 		It 'Should return all tips' {
+			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+
 			[int] $numberOfTipsInJsonFile =
-			Get-Content -Path $PowerShellTipsJsonFilePath |
+			Get-Content -Path $powerShellTipsJsonFilePath |
 				ConvertFrom-Json |
 				Measure-Object |
 				Select-Object -ExpandProperty Count
