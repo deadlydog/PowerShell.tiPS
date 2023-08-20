@@ -6,16 +6,6 @@ BeforeAll {
 
 Describe 'Write-PowerShellTip' {
 	Context 'Using one of its aliases' {
-		It 'Should write a tip using Write-PSTip' {
-			Mock -ModuleName $ModuleName Write-Host { } -Verifiable
-			Write-PSTip
-			Should -InvokeVerifiable # Verify that the mock was called.
-		}
-		It 'Should write a tip using Write-Tip' {
-			Mock -ModuleName $ModuleName Write-Host { } -Verifiable
-			Write-Tip
-			Should -InvokeVerifiable # Verify that the mock was called.
-		}
 		It 'Should write a tip using Tips' {
 			Mock -ModuleName $ModuleName Write-Host { } -Verifiable
 			Tips

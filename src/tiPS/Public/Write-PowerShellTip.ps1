@@ -1,7 +1,7 @@
 function Write-PowerShellTip
 {
 	[CmdletBinding()]
-	[Alias('Write-PSTip', 'Write-Tip', 'Tips')]
+	[Alias('Tips')]
 	Param
 	(
 		[Parameter(Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
