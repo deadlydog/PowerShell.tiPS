@@ -20,6 +20,6 @@ function Get-PowerShellTip
 		$TipId = $Tips.Keys | Get-Random -Count 1
 	}
 
-	[PowerShellTip] $tip = $Tips[$TipId]
+	[tiPS.PowerShellTip] $tip = $Tips[$TipId]
 	return $tip
 }

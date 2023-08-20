@@ -1,4 +1,4 @@
-[PowerShellTip] $tip = [PowerShellTip]::new()
+[tiPS.PowerShellTip] $tip = [tiPS.PowerShellTip]::new()
 $tip.Id = 'AShortEasyToRememberIdWithNoSpaces'
 $tip.CreatedDate = [DateTime]::Parse('2023-07-15') # Use today's date.
 $tip.Title = 'A brief title for the tip'
