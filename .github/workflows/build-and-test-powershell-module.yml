@@ -113,13 +113,13 @@ jobs:
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$stableVersionNumber'"
 
       - name: Create Prerelease artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.prereleaseArtifactName }}
           path: ${{ env.prereleaseModuleDirectoryPath }}
 
       - name: Create Stable artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.stableArtifactName }}
           path: ${{ env.stableModuleDirectoryPath }}
