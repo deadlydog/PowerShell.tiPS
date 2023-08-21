@@ -66,7 +66,7 @@ jobs:
           [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
           [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
           [string] $prereleaseModuleDirectoryPath = $Env:prereleaseModuleDirectoryPath
-          [string] $stableModuleDirectoryPath = $Env:stableModuleOutputDirectoryPath
+          [string] $stableModuleDirectoryPath = $Env:stableModuleDirectoryPath
 
           Write-Output "Determining what the module manifest file paths should be."
           [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
