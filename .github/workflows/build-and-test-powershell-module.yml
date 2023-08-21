@@ -9,6 +9,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  powerShellModuleDirectoryPath: './src/tiPS'
+  powerShellModuleManifestFileName: 'tiPS.psd1'
+  prereleaseModuleDirectoryPath: './artifacts/Prerelease'
+  stableModuleDirectoryPath: './artifacts/Stable'
+  prereleaseArtifactName: 'PrereleaseModuleArtifacts'
+  stableArtifactName: 'StableModuleArtifacts'
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -39,3 +47,79 @@ jobs:
               Run = @{ Exit = $true }
             }
           Invoke-Pester -Configuration $pesterConfig
+
+      - name: Create Stable and Prerelease artifacts
+        shell: pwsh
+        run: |
+          function Replace-TextInFile(
+            [ValidateScript({Test-Path $_ -PathType Leaf})]
+            [string]$filePath,
+            [string]$textToReplace,
+            [string]$replacementText)
+          {
+            $fileContents = Get-Content -Path $filePath -Raw
+            $newFileContents = $fileContents.Replace($textToReplace, $replacementText)
+            Set-Content -Path $filePath -Value $newFileContents
+          }
+
+          Write-Output "Reading in environment variables."
+          [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
+          [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
+          [string] $prereleaseModuleDirectoryPath = $Env:prereleaseModuleDirectoryPath
+          [string] $stableModuleDirectoryPath = $Env:stableModuleOutputDirectoryPath
+
+          Write-Output "Determining what the module manifest file paths should be."
+          [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseModuleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $stableManifestFilePath = Join-Path -Path $stableModuleDirectoryPath -ChildPath $moduleManifestFileName
+
+          Write-Output "Retrieving the module manifest's current version number from '$manifestFilePath'."
+          $manifestVersionNumberRegexPattern = "(?i)ModuleVersion = '(?<Version>.*?)'"
+          $manifestVersionNumberMatches =
+            Select-String -Path $manifestFilePath -Pattern $manifestVersionNumberRegexPattern |
+            Select-Object -First 1
+          if ($manifestVersionNumberMatches.Matches.Count -le 0 -or
+            !$manifestVersionNumberMatches.Matches[0].Success)
+          {
+            throw "Could not find the manifest's current version number."
+          }
+
+          $manifestVersionNumberMatch = $manifestVersionNumberMatches.Matches[0]
+          $currentManifestVersionNumber = $manifestVersionNumberMatch.Groups['Version'].Value
+          $currentManifestVersionNumberLine = $manifestVersionNumberMatch.Value
+
+          if (-not $currentManifestVersionNumber -match '\d+\.\d+\.\d+')
+          {
+            throw "The manifest's current version number '$currentManifestVersionNumber' is not in the correct format. We expect it to be in the format 'Major.Minor.Patch'."
+          }
+
+          Write-Output "Previous version number was '$currentManifestVersionNumber'. Determining what the new version number should be."
+          $currentVersion = [System.Version]::new($currentManifestVersionNumber)
+          $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
+          [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
+          [string] $stableVersionNumber = $newVersion.ToString()
+          [string] $prereleaseVersionNumber = $stableVersionNumber + "-ci$dateTime+${{ github.sha }}"
+
+          Write-Output "Copying the module files to the Prerelease directory."
+          Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+
+          Write-Output "Copying the mdule files to the Stable directory."
+          Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+
+          Write-Output "Replacing the manifest's current version number with '$prereleaseVersionNumber' in the Prerelease directory."
+          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$prereleaseVersionNumber'"
+
+          Write-Output "Replacing the manifest's current version number with '$stableVersionNumber' in the Stable directory."
+          Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$stableVersionNumber'"
+
+      - name: Create Prerelease artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.prereleaseArtifactName }}
+          path: ${{ env.prereleaseModuleDirectoryPath }}
+
+      - name: Create Stable artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.stableArtifactName }}
+          path: ${{ env.stableModuleDirectoryPath }}
