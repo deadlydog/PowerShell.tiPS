@@ -109,10 +109,10 @@ jobs:
           Write-Output "Copying the mdule files to the Stable directory '$stableModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Replacing the prerelease manifest's current version number '$currentManifestVersionNumber' with '$prereleaseVersionNumber'."
+          Write-Output "Updating the prerelease manifest's version number from '$currentManifestVersionNumber' to '$prereleaseVersionNumber'."
           Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$prereleaseVersionNumber'"
 
-          Write-Output "Replacing the stable manifest's current version number '$currentManifestVersionNumber' with '$stableVersionNumber'."
+          Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$stableVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$stableVersionNumber'"
 
       - name: Upload prerelease module artifact
