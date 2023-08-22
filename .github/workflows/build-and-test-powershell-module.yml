@@ -29,6 +29,10 @@ jobs:
         shell: pwsh
         run: $PSVersionTable
 
+      - name: Generate PowerShellTips.json file
+        shell: pwsh
+        run: .\build\Convert-PowerShellTipFilesToJsonFile.ps1
+
       - name: Run PowerShell linter with PSScriptAnalyzer
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -ExcludeRule PSAvoidUsingWriteHost
