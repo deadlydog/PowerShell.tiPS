@@ -110,7 +110,7 @@ jobs:
 
           Write-Output "Updating the prerelease manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber$prereleaseVersionNumberPostfix'."
           Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
-          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace "Prerelease = ''" -replacementText "Prerelease = '$prereleaseVersionNumberPostfix'"
+          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace "# Prerelease = ''" -replacementText "Prerelease = '$prereleaseVersionNumberPostfix'"
 
           Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
