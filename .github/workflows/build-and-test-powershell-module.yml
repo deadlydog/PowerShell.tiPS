@@ -141,7 +141,7 @@ jobs:
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
 
       - name: Update CI version tag and set new version tag
-        if: env.isDefaultBranch && env.isNotPullRequest
+        if: ${{ env.isDefaultBranch && env.isNotPullRequest }}
         shell: pwsh
         run: |
           [string] $previousCiVersionTag = $Env:PreviousCiVersionTag
