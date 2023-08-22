@@ -19,6 +19,7 @@ env:
   stableModuleArtifactName: 'StableModuleArtifacts'
   ciVersionTagPrefix: 'ci-version-'
   isDefaultBranch: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+  isNotPullRequest: ${{ github.event_name != 'pull_request' }}
 
 jobs:
   build-and-test:
@@ -140,7 +141,7 @@ jobs:
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
 
       - name: Update CI version tag and set new version tag
-        if: success() && env.isDefaultBranch
+        if: env.isDefaultBranch && env.isNotPullRequest
         shell: pwsh
         run: |
           [string] $previousCiVersionTag = $Env:PreviousCiVersionTag
