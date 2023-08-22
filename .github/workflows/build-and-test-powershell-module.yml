@@ -99,8 +99,9 @@ jobs:
           $currentVersion = [System.Version]::new($currentManifestVersionNumber)
           $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
+          [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
           [string] $stableVersionNumber = $newVersion.ToString()
-          [string] $prereleaseVersionNumber = $stableVersionNumber + "-ci$dateTime+${{ github.sha }}"
+          [string] $prereleaseVersionNumber = $stableVersionNumber + "-ci$dateTime+$truncatedCommitSha"
 
           Write-Output "Copying the module files to the Prerelease directory."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
