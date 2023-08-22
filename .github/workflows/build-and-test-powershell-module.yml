@@ -161,6 +161,9 @@ jobs:
           Write-Output "Displaying value of the isNotPullRequest expression:"
           "${{ github.event_name != 'pull_request' }}"
 
+          Write-Output "Branch name:"
+          $Env:GITHUB_REF
+
       - name: Update CI version tag and set new version tag
         if: env.isDefaultBranch && env.isNotPullRequest
         shell: pwsh
