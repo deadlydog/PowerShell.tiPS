@@ -15,8 +15,8 @@ env:
   powerShellModuleManifestFileName: 'tiPS.psd1'
   prereleaseModuleDirectoryPath: './artifacts/Prerelease'
   stableModuleDirectoryPath: './artifacts/Stable'
-  prereleaseArtifactName: 'PrereleaseModuleArtifacts'
-  stableArtifactName: 'StableModuleArtifacts'
+  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts'
+  stableModuleArtifactName: 'StableModuleArtifacts'
 
 jobs:
   build-and-test:
@@ -49,7 +49,7 @@ jobs:
             }
           Invoke-Pester -Configuration $pesterConfig
 
-      - name: Create Stable and Prerelease artifacts
+      - name: Create Stable and Prerelease module artifacts
         shell: pwsh
         run: |
           function Replace-TextInFile(
@@ -115,14 +115,14 @@ jobs:
           Write-Output "Replacing the stable manifest's current version number '$currentManifestVersionNumber' with '$stableVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$stableVersionNumber'"
 
-      - name: Create Prerelease artifact
+      - name: Upload prerelease module artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.prereleaseArtifactName }}
+          name: ${{ env.prereleaseModuleArtifactName }}
           path: ${{ env.prereleaseModuleDirectoryPath }}
 
-      - name: Create Stable artifact
+      - name: Upload stable module artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.stableArtifactName }}
+          name: ${{ env.stableModuleArtifactName }}
           path: ${{ env.stableModuleDirectoryPath }}
