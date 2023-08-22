@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
+        with:
+          fetch-tags: true  # Required to retrieve the CI version tag.
 
       - name: Display PowerShell version being used
         shell: pwsh
