@@ -62,6 +62,10 @@ jobs:
           [string] $ciVersionTagPrefix = $Env:ciVersionTagPrefix
           [string] $ciTagSearchPattern = $ciVersionTagPrefix + '*'
 
+          Write-Output "Listing all git tags."
+          & git tag --list
+
+          Write-Output "Searching for CI version git tag by using search pattern '$ciTagSearchPattern'."
           $ciVersionTag = (& git tag --list $ciTagSearchPattern)
           Write-Output "CI version git tag is '$ciVersionTag'."
 
