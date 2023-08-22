@@ -98,22 +98,22 @@ jobs:
           Write-Output "Previous version number was '$currentManifestVersionNumber'. Determining what the new version number should be."
           $currentVersion = [System.Version]::new($currentManifestVersionNumber)
           $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
+          [string] $newVersionNumber = $newVersion.ToString()
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
-          [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
-          [string] $stableVersionNumber = $newVersion.ToString()
-          [string] $prereleaseVersionNumber = $stableVersionNumber + "-ci$dateTime+$truncatedCommitSha"
+          [string] $prereleaseVersionNumberPostfix = "-ci-$dateTime"
 
           Write-Output "Copying the module files to the Prerelease directory '$prereleaseModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Copying the mdule files to the Stable directory '$stableModuleDirectoryPath'."
+          Write-Output "Copying the module files to the Stable directory '$stableModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Updating the prerelease manifest's version number from '$currentManifestVersionNumber' to '$prereleaseVersionNumber'."
-          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$prereleaseVersionNumber'"
+          Write-Output "Updating the prerelease manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber$prereleaseVersionNumberPostfix'."
+          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
+          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace "Prerelease = ''" -replacementText "Prerelease = '$prereleaseVersionNumberPostfix'"
 
-          Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$stableVersionNumber'."
-          Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$stableVersionNumber'"
+          Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber'."
+          Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
 
       - name: Upload prerelease module artifact
         uses: actions/upload-artifact@v3
