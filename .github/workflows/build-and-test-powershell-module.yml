@@ -59,7 +59,7 @@ jobs:
         shell: pwsh
         run: |
           [string] $ciVersionTagPrefix = $Env:ciVersionTagPrefix
-          $ciVersionTag = (& git --list $ciVersionTagPrefix*)
+          $ciVersionTag = (& git tag --list $ciVersionTagPrefix*)
           Write-Output "CI version git tag is '$ciVersionTag'."
 
           if ([string]::IsNullOrWhiteSpace($ciVersionTag))
