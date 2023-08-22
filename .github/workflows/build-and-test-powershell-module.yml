@@ -103,16 +103,16 @@ jobs:
           [string] $stableVersionNumber = $newVersion.ToString()
           [string] $prereleaseVersionNumber = $stableVersionNumber + "-ci$dateTime+$truncatedCommitSha"
 
-          Write-Output "Copying the module files to the Prerelease directory."
+          Write-Output "Copying the module files to the Prerelease directory '$prereleaseModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Copying the mdule files to the Stable directory."
+          Write-Output "Copying the mdule files to the Stable directory '$stableModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Replacing the manifest's current version number with '$prereleaseVersionNumber' in the Prerelease directory."
+          Write-Output "Replacing the prerelease manifest's current version number '$currentManifestVersionNumber' with '$prereleaseVersionNumber'."
           Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$prereleaseVersionNumber'"
 
-          Write-Output "Replacing the manifest's current version number with '$stableVersionNumber' in the Stable directory."
+          Write-Output "Replacing the stable manifest's current version number '$currentManifestVersionNumber' with '$stableVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$stableVersionNumber'"
 
       - name: Create Prerelease artifact
