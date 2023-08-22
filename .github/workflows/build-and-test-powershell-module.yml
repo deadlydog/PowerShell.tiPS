@@ -136,7 +136,8 @@ jobs:
           Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
-          [string] $prereleaseVersionNumberPostfix = "-ci-$dateTime"
+          [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
+          [string] $prereleaseVersionNumberPostfix = "-ci-$dateTime-$truncatedCommitSha"
 
           Write-Output "Updating the prerelease manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber$prereleaseVersionNumberPostfix'."
           Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
