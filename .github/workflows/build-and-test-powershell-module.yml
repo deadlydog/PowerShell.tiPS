@@ -27,8 +27,6 @@ jobs:
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
-        with:
-          fetch-tags: true  # Required to retrieve the CI version tag.
 
       - name: Display PowerShell version being used
         shell: pwsh
@@ -64,8 +62,8 @@ jobs:
           [string] $ciVersionTagPrefix = $Env:ciVersionTagPrefix
           [string] $ciTagSearchPattern = $ciVersionTagPrefix + '*'
 
-          Write-Output "Listing all git tags."
-          & git tag --list
+          Write-Output "Fetching all git tags, in case they were not included with the git checkout."
+          & git fetch --tags origin
 
           Write-Output "Searching for CI version git tag by using search pattern '$ciTagSearchPattern'."
           $ciVersionTag = (& git tag --list $ciTagSearchPattern)
