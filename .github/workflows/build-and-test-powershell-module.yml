@@ -152,7 +152,7 @@ jobs:
           Write-Output "Displaying the contents of the isDefaultBranch variable:"
           $Env:isDefaultBranch
 
-          Write-Output "Displaying the contents of the isDefaultBranch variable:"
+          Write-Output "Displaying the contents of the isNotPullRequest variable:"
           $Env:isNotPullRequest
 
           Write-Output "Displaying value of the isDefaultBranch expression:"
@@ -162,7 +162,7 @@ jobs:
           "${{ github.event_name != 'pull_request' }}"
 
       - name: Update CI version tag and set new version tag
-        if: ${{ env.isDefaultBranch && env.isNotPullRequest }}
+        if: env.isDefaultBranch && env.isNotPullRequest
         shell: pwsh
         run: |
           [string] $previousCiVersionTag = $Env:PreviousCiVersionTag
