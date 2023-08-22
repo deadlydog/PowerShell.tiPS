@@ -10,10 +10,11 @@ on:
   workflow_dispatch:
 
 env:
+  powerShellModuleName: 'tiPS'
   powerShellModuleDirectoryPath: './src/tiPS'
   powerShellModuleManifestFileName: 'tiPS.psd1'
-  prereleaseModuleDirectoryPath: './artifacts/Prerelease/tiPS'
-  stableModuleDirectoryPath: './artifacts/Stable/tiPS'
+  prereleaseModuleDirectoryPath: './artifacts/Prerelease'
+  stableModuleDirectoryPath: './artifacts/Stable'
   prereleaseArtifactName: 'PrereleaseModuleArtifacts'
   stableArtifactName: 'StableModuleArtifacts'
 
@@ -63,10 +64,11 @@ jobs:
           }
 
           Write-Output "Reading in environment variables."
+          [string] $moduleName = $Env:powerShellModuleName
           [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
           [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
-          [string] $prereleaseModuleDirectoryPath = $Env:prereleaseModuleDirectoryPath
-          [string] $stableModuleDirectoryPath = $Env:stableModuleDirectoryPath
+          [string] $prereleaseModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleDirectoryPath -ChildPath $moduleName
+          [string] $stableModuleDirectoryPath = Join-Path -Path $Env:stableModuleDirectoryPath -ChildPath $moduleName
 
           Write-Output "Determining what the module manifest file paths should be."
           [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
