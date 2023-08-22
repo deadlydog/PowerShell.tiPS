@@ -145,12 +145,15 @@ jobs:
         run: |
           [string] $previousCiVersionTag = $Env:PreviousCiVersionTag
           [string] $newVersionNumber = $Env:NewVersionNumber
-          [string] $newCiVersionTag = $Env:PreviousCiVersionTag + $newVersionNumber
+          [string] $newCiVersionTag = $Env:ciVersionTagPrefix + $newVersionNumber
           [string] $newVersionTag = "v$newVersionNumber"
 
-          Write-Output "Removing the previous CI version tag."
+          # To avoid a 403 error on 'git push', ensure you have granted your GitHub Actions workflow read/write permission.
+          # In your GitHub repo: Settings > Actions > General > Workflow permissions > Read and write permissions
+
+          Write-Output "Removing the previous CI version tag '$previousCiVersionTag'."
           & git tag -d $previousCiVersionTag
-          & git push orgin --delete $previousCiVersionTag
+          & git push origin --delete $previousCiVersionTag
 
           Write-Output "Creating new CI version tag '$newCiVersionTag'."
           & git tag $newCiVersionTag
