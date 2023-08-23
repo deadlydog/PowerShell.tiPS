@@ -9,7 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      workflow_run_id:
+      workflowRunId:
         description: 'The build workflow run ID containing the artifacts to use. The run ID can be found in the URL of the build workflow run.'
         type: number
         required: true
@@ -19,7 +19,7 @@ env:
   prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts' # Must match the name in the build workflow.
   stableModuleArtifactName: 'StableModuleArtifacts' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
-  workflowRunId: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_run_id || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
+  workflowRunId: ${{ github.event_name == 'workflow_dispatch' && inputs.workflowRunId || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
 
 jobs:
   publish-prerelease-module:
