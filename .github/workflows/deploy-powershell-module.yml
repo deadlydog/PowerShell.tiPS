@@ -22,7 +22,7 @@ env:
   workflowRunId: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_run_id || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
 
 jobs:
-  deploy-prerelease-module:
+  publish-prerelease-module:
     runs-on: ubuntu-latest
     # Only run the deployment if manually triggered, or the build workflow succeeded.
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
@@ -41,11 +41,10 @@ jobs:
           [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
-  deploy-stable-module:
+  publish-stable-module:
     runs-on: ubuntu-latest
-    # Only run the deployment if manually triggered, or the build workflow succeeded.
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
-    environment: production
+    needs: publish-prerelease-module
+    environment: production # Used for deployment approvals.
     steps:
       - name: Download artifacts from triggered workflow
         uses: dawidd6/action-download-artifact@v2
