@@ -3,6 +3,7 @@ name: build
 on:
   push:
     branches: [ "main" ]
+    paths: [ "src/**", "build/**", ".github/workflows/**" ]
   pull_request:
     branches: [ "main" ]
 
