@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  powerShellModuleName: 'tiPS'
+  powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
   powerShellModuleDirectoryPath: './src/tiPS'
   powerShellModuleManifestFileName: 'tiPS.psd1'
   prereleaseModuleDirectoryPath: './artifacts/Prerelease'

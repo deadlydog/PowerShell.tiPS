@@ -1,0 +1,62 @@
+name: deploy
+
+on:
+  workflow_run:
+    workflows: [build]
+    types: [completed]
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      workflow_run_id:
+        description: 'The build workflow run ID containing the artifacts to use. The run ID can be found in the URL of the build workflow run.'
+        type: number
+        required: true
+
+env:
+  powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
+  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts' # Must match the name in the build workflow.
+  stableModuleArtifactName: 'StableModuleArtifacts' # Must match the name in the build workflow.
+  artifactsDirectoryPath: './artifacts'
+  workflowRunId: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_run_id || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
+
+jobs:
+  deploy-prerelease-module:
+    runs-on: ubuntu-latest
+    # Only run the deployment if manually triggered, or the build workflow succeeded.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Download artifacts from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ env.workflowRunId }}
+          name: ${{ env.prereleaseModuleArtifactName}}
+          path: ${{ env.artifactsDirectoryPath }}
+          search_artifacts: true
+
+      - name: Publish prerelease PowerShell module
+        shell: pwsh
+        run: |
+          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
+          Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
+
+  deploy-stable-module:
+    runs-on: ubuntu-latest
+    # Only run the deployment if manually triggered, or the build workflow succeeded.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    environment: production
+    steps:
+      - name: Download artifacts from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ env.workflowRunId }}
+          name: ${{ env.stableModuleArtifactName}}
+          path: ${{ env.artifactsDirectoryPath }}
+          search_artifacts: true
+
+      - name: Publish stable PowerShell module
+        shell: pwsh
+        run: |
+          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
+          Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
