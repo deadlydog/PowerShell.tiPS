@@ -115,6 +115,13 @@ jobs:
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
 
+      - name: Run Super Linter across the entire repo
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run Pester tests on Windows PowerShell to ensure backward compatibility
         shell: powershell
         run: |
