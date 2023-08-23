@@ -1,3 +1,5 @@
+🚧 This repository is new and still under construction. The PowerShell module is not ready for consumption yet. 🚧
+
 # tiPS PowerShell Module [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deadlydog/PowerShell.tiPS/blob/main/License.md) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/deadlydog/PowerShell.tiPS/blob/main/docs/Contributing.md) [![Build status](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml)
 
 PowerShell tips delivered straight to your terminal 💻.
