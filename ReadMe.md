@@ -9,14 +9,14 @@
 
 <p align="center">
   <a href="https://www.powershellgallery.com/packages/tiPS"><img alt="Stable PowerShell module version" src="https://img.shields.io/powershellgallery/v/tiPS.svg"></a>
-  <a href="https://www.powershellgallery.com/packages/tiPS"><img alt="Prerelease PowerShell module version" src="https://img.shields.io/powershellgallery/vpre/tiPS.svg?label=powershell%20gallery%20preview&colorB=yellow"></a>
+  <a href="https://www.powershellgallery.com/packages/tiPS"><img alt="Prerelease PowerShell module version" src="https://img.shields.io/powershellgallery/vpre/tiPS.svg?include_prereleases&label=powershell%20gallery%20prerelease&colorB=yellow"></a>
+  <a href="https://www.powershellgallery.com/packages/tiPS"><img src="https://img.shields.io/powershellgallery/dt/tiPS.svg"></a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/powershellgallery/p/tiPS.svg">
   <img src="https://img.shields.io/github/languages/top/deadlydog/PowerShell.tiPS.svg">
-  <img src="https://img.shields.io/github/languages/code-size/evotecit/Mailozaurr.svg">
-  <a href="https://www.powershellgallery.com/packages/tiPS"><img src="https://img.shields.io/powershellgallery/dt/tiPS.svg"></a>
+  <img src="https://img.shields.io/github/languages/code-size/deadlydog/PowerShell.tiPS.svg">
 </p>
 
 # tiPS PowerShell Module
