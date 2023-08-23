@@ -10,7 +10,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      version_number:
+      versionNumber:
         description: 'The version number to use for the module. This should be in the format of "Major.Minor.Patch". e.g. "1.0.0". Future builds will increment from this version number.'
         required: false
         type: string
@@ -83,7 +83,7 @@ jobs:
           [string] $previousVersionNumber = $ciVersionTag -replace $ciVersionTagPrefix, ''
 
           Write-Output "Previous version number was '$previousVersionNumber'. Determining what the new version number should be."
-          [string] $newVersionNumber = '${{ inputs.version_number }}'
+          [string] $newVersionNumber = '${{ inputs.versionNumber }}'
           if ([string]::IsNullOrWhiteSpace($newVersionNumber))
           {
             Write-Output "No version number was provided. Incrementing the previous version number."
