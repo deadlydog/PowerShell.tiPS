@@ -9,6 +9,16 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  powerShellModuleName: 'tiPS'
+  powerShellModuleDirectoryPath: './src/tiPS'
+  powerShellModuleManifestFileName: 'tiPS.psd1'
+  prereleaseModuleDirectoryPath: './artifacts/Prerelease'
+  stableModuleDirectoryPath: './artifacts/Stable'
+  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts'
+  stableModuleArtifactName: 'StableModuleArtifacts'
+  ciVersionTagPrefix: 'ci-version-'
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -19,6 +29,10 @@ jobs:
       - name: Display PowerShell version being used
         shell: pwsh
         run: $PSVersionTable
+
+      - name: Generate PowerShellTips.json file
+        shell: pwsh
+        run: ./build/Convert-PowerShellTipFilesToJsonFile.ps1
 
       - name: Run PowerShell linter with PSScriptAnalyzer
         shell: pwsh
@@ -39,3 +53,131 @@ jobs:
               Run = @{ Exit = $true }
             }
           Invoke-Pester -Configuration $pesterConfig
+
+      - name: Determine new version from Git tag and set environment variables
+        shell: pwsh
+        run: |
+          [string] $ciVersionTagPrefix = $Env:ciVersionTagPrefix
+          [string] $ciTagSearchPattern = $ciVersionTagPrefix + '*'
+
+          Write-Output "Fetching all git tags, in case they were not included with the git checkout."
+          & git fetch --tags origin
+
+          Write-Output "Searching for CI version git tag by using search pattern '$ciTagSearchPattern'."
+          $ciVersionTag = (& git tag --list $ciTagSearchPattern)
+          Write-Output "CI version git tag is '$ciVersionTag'."
+
+          if ([string]::IsNullOrWhiteSpace($ciVersionTag))
+          {
+            Write-Output "No CI version git tag was found. Assuming this is the first CI build and setting the version number to 0.0.0."
+            $ciVersionTag = $ciVersionTagPrefix + '0.0.0'
+          }
+
+          [string] $previousVersionNumber = $ciVersionTag -replace $ciVersionTagPrefix, ''
+
+          Write-Output "Previous version number was '$previousVersionNumber'. Determining what the new version number should be."
+          $currentVersion = [System.Version]::new($previousVersionNumber)
+          $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
+          [string] $newVersionNumber = $newVersion.ToString()
+
+          Write-Output "Setting new environment variables 'NewVersionNumber=$newVersionNumber' and 'PreviousCiVersionTag=$ciVersionTag'."
+          "NewVersionNumber=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          "PreviousCiVersionTag=$ciVersionTag" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Create Stable and Prerelease module artifacts
+        shell: pwsh
+        run: |
+          function Replace-TextInFile(
+            [ValidateScript({Test-Path $_ -PathType Leaf})]
+            [string]$filePath,
+            [string]$textToReplace,
+            [string]$replacementText)
+          {
+            $fileContents = Get-Content -Path $filePath -Raw
+            $newFileContents = $fileContents.Replace($textToReplace, $replacementText)
+            Set-Content -Path $filePath -Value $newFileContents
+          }
+
+          Write-Output "Reading in environment variables."
+          [string] $moduleName = $Env:powerShellModuleName
+          [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
+          [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
+          [string] $prereleaseModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleDirectoryPath -ChildPath $moduleName
+          [string] $stableModuleDirectoryPath = Join-Path -Path $Env:stableModuleDirectoryPath -ChildPath $moduleName
+
+          Write-Output "Reading in dynamic environment variables."
+          [string] $newVersionNumber = $Env:NewVersionNumber
+
+          Write-Output "Determining what the module manifest file paths should be."
+          [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseModuleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $stableManifestFilePath = Join-Path -Path $stableModuleDirectoryPath -ChildPath $moduleManifestFileName
+
+          Write-Output "Retrieving the module manifest's current version number line from '$manifestFilePath' so it can be updated."
+          $manifestVersionNumberRegexPattern = "(?i)ModuleVersion = '(?<Version>.*?)'"
+          $manifestVersionNumberMatches =
+            Select-String -Path $manifestFilePath -Pattern $manifestVersionNumberRegexPattern |
+            Select-Object -First 1
+          if ($manifestVersionNumberMatches.Matches.Count -le 0 -or
+            !$manifestVersionNumberMatches.Matches[0].Success)
+          {
+            throw "Could not find the manifest's current version number."
+          }
+
+          $manifestVersionNumberMatch = $manifestVersionNumberMatches.Matches[0]
+          $currentManifestVersionNumber = $manifestVersionNumberMatch.Groups['Version'].Value
+          $currentManifestVersionNumberLine = $manifestVersionNumberMatch.Value
+
+          Write-Output "Copying the module files to the Prerelease directory '$prereleaseModuleDirectoryPath'."
+          Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+
+          Write-Output "Copying the module files to the Stable directory '$stableModuleDirectoryPath'."
+          Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+
+          [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
+          [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
+          [string] $prereleaseVersionNumberPostfix = "-ci-$dateTime-$truncatedCommitSha"
+
+          Write-Output "Updating the prerelease manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber$prereleaseVersionNumberPostfix'."
+          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
+          Replace-TextInFile -filePath $prereleaseManifestFilePath -textToReplace "# Prerelease = ''" -replacementText "Prerelease = '$prereleaseVersionNumberPostfix'"
+
+          Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber'."
+          Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
+
+      - name: Update CI version tag and set new version tag
+        # Only run this step if we are doing a push (not a PR) to the default branch (e.g. main).
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        shell: pwsh
+        run: |
+          [string] $previousCiVersionTag = $Env:PreviousCiVersionTag
+          [string] $newVersionNumber = $Env:NewVersionNumber
+          [string] $newCiVersionTag = $Env:ciVersionTagPrefix + $newVersionNumber
+          [string] $newVersionTag = "v$newVersionNumber"
+
+          # To avoid a 403 error on 'git push', ensure you have granted your GitHub Actions workflow read/write permission.
+          # In your GitHub repo: Settings > Actions > General > Workflow permissions > Read and write permissions
+
+          Write-Output "Removing the previous CI version tag '$previousCiVersionTag'."
+          & git tag -d $previousCiVersionTag
+          & git push origin --delete $previousCiVersionTag
+
+          Write-Output "Creating new CI version tag '$newCiVersionTag'."
+          & git tag $newCiVersionTag
+          & git push origin $newCiVersionTag
+
+          Write-Output "Tagging commit with new version tag '$newVersionTag'."
+          & git tag $newVersionTag
+          & git push origin $newVersionTag
+
+      - name: Upload prerelease module artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.prereleaseModuleArtifactName }}
+          path: ${{ env.prereleaseModuleDirectoryPath }}
+
+      - name: Upload stable module artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.stableModuleArtifactName }}
+          path: ${{ env.stableModuleDirectoryPath }}
