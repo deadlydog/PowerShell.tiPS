@@ -1,6 +1,25 @@
 🚧 This repository is new and still under construction. The PowerShell module is not ready for consumption yet. 🚧
 
-# tiPS PowerShell Module [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deadlydog/PowerShell.tiPS/blob/main/License.md) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/deadlydog/PowerShell.tiPS/blob/main/docs/Contributing.md) [![Build status](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml/badge.svg)](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml)
+<p align="center">
+  <a href="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml"><img alt="Build status" src="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml/badge.svg"></a>
+  <a href="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/deploy-powershell-module.yml"><img alt="Deploy status" src="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/deploy-powershell-module.yml/badge.svg"></a>
+  <a href="https://github.com/deadlydog/PowerShell.tiPS/blob/main/License.md"><img alt="License" src="https://img.shields.io/github/license/deadlydog/PowerShell.tiPS.svg"></a>
+  <a href="https://github.com/deadlydog/PowerShell.tiPS/blob/main/docs/Contributing.md"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
+</p>
+
+<p align="center">
+  <a href="https://www.powershellgallery.com/packages/tiPS"><img alt="Stable PowerShell module version" src="https://img.shields.io/powershellgallery/v/tiPS.svg"></a>
+  <a href="https://www.powershellgallery.com/packages/tiPS"><img alt="Prerelease PowerShell module version" src="https://img.shields.io/powershellgallery/vpre/tiPS.svg?label=powershell%20gallery%20preview&colorB=yellow"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/powershellgallery/p/tiPS.svg">
+  <img src="https://img.shields.io/github/languages/top/deadlydog/PowerShell.tiPS.svg">
+  <img src="https://img.shields.io/github/languages/code-size/evotecit/Mailozaurr.svg">
+  <a href="https://www.powershellgallery.com/packages/tiPS"><img src="https://img.shields.io/powershellgallery/dt/tiPS.svg"></a>
+</p>
+
+# tiPS PowerShell Module
 
 PowerShell tips delivered straight to your terminal 💻.
 
