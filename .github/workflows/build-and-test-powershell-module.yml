@@ -16,8 +16,8 @@ env:
   powerShellModuleManifestFileName: 'tiPS.psd1'
   prereleaseModuleDirectoryPath: './artifacts/Prerelease'
   stableModuleDirectoryPath: './artifacts/Stable'
-  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts'
-  stableModuleArtifactName: 'StableModuleArtifacts'
+  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts' # Must match the name in the deployment workflow.
+  stableModuleArtifactName: 'StableModuleArtifacts' # Must match the name in the deployment workflow.
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
