@@ -9,6 +9,12 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      version_number:
+        description: 'The version number to use for the module. This should be in the format of "Major.Minor.Patch". e.g. "1.0.0". Future builds will increment from this version number.'
+        required: false
+        type: string
+        default: ''
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
@@ -65,7 +71,7 @@ jobs:
           & git fetch --tags origin
 
           Write-Output "Searching for CI version git tag by using search pattern '$ciTagSearchPattern'."
-          $ciVersionTag = (& git tag --list $ciTagSearchPattern)
+          [string] $ciVersionTag = (& git tag --list $ciTagSearchPattern)
           Write-Output "CI version git tag is '$ciVersionTag'."
 
           if ([string]::IsNullOrWhiteSpace($ciVersionTag))
@@ -77,9 +83,18 @@ jobs:
           [string] $previousVersionNumber = $ciVersionTag -replace $ciVersionTagPrefix, ''
 
           Write-Output "Previous version number was '$previousVersionNumber'. Determining what the new version number should be."
-          $currentVersion = [System.Version]::new($previousVersionNumber)
-          $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
-          [string] $newVersionNumber = $newVersion.ToString()
+          [string] $newVersionNumber = '${{ inputs.version_number }}'
+          if ([string]::IsNullOrWhiteSpace($newVersionNumber))
+          {
+            Write-Output "No version number was provided. Incrementing the previous version number."
+            $currentVersion = [System.Version]::new($previousVersionNumber)
+            $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
+            $newVersionNumber = $newVersion.ToString()
+          }
+          else
+          {
+            Write-Output "Version number '$newVersionNumber' was provided. Using it as the new version number."
+          }
 
           Write-Output "Setting new environment variables 'NewVersionNumber=$newVersionNumber' and 'PreviousCiVersionTag=$ciVersionTag'."
           "NewVersionNumber=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
