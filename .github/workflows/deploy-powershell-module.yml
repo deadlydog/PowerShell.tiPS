@@ -94,6 +94,9 @@ jobs:
           }
           Invoke-Pester -Configuration $pesterConfig
 
+          Write-Output "Displaying the installed module version that was used for the smoke tests."
+          Get-Module -Name $Env:powerShellModuleName
+
   publish-stable-module:
     needs: test-prerelease-module
     runs-on: ubuntu-latest
@@ -162,3 +165,6 @@ jobs:
             }
           }
           Invoke-Pester -Configuration $pesterConfig
+
+          Write-Output "Displaying the installed module version that was used for the smoke tests."
+          Get-Module -Name $Env:powerShellModuleName
