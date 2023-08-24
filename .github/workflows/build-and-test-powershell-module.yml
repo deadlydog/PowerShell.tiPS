@@ -123,8 +123,6 @@ jobs:
           [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableArtifactDirectoryPath -ChildPath $moduleName
-          [string] $deployFilesDirectoryPath = $Env:deployDirectoryPath
-          [string] $deployFilesArtifactDirectoryPath = $Env:deployFilesArtifactDirectoryPath
 
           Write-Output "Reading in dynamic environment variables."
           [string] $newVersionNumber = $Env:NewVersionNumber
@@ -155,9 +153,6 @@ jobs:
           Write-Output "Copying the module files to the Stable artifact directory '$stableArtifactModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $stableArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Copying the deployment files '$deployFilesDirectoryPath' to the deployment artifact directory '$deployFilesArtifactDirectoryPath'."
-          Copy-Item -Path $deployFilesDirectoryPath -Destination $deployFilesArtifactDirectoryPath -Recurse -Force
-
           # Prerelase version numbers can only contain 'a-zA-Z0-9' characters.
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
           [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
@@ -169,6 +164,16 @@ jobs:
 
           Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
+
+      - name: Create deploy files artifact
+        shell: pwsh
+        run: |
+          [string] $deployFilesDirectoryPath = $Env:deployDirectoryPath
+          [string] $deployFilesArtifactDirectoryPath = $Env:deployFilesArtifactDirectoryPath
+
+          Write-Output "Copying the deployment files '$deployFilesDirectoryPath' to the deployment artifact directory '$deployFilesArtifactDirectoryPath'."
+          Copy-Item -Path $deployFilesDirectoryPath -Destination $deployFilesArtifactDirectoryPath -Recurse -Force
+
 
       - name: Update CI version tag and set new version tag
         # Only run this step if we are doing a push (not a PR) to the default branch (e.g. main).
