@@ -78,9 +78,12 @@ jobs:
           Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
           $pesterConfig = New-PesterConfiguration @{
             Output = @{ Verbosity = 'Detailed' }
-            Run = @{ Throw = $true }
+            Run = @{
+              Path = $smokeTestsScriptPath
+              Throw = $true
+            }
           }
-          Invoke-Pester -Path $smokeTestsScriptPath -Configuration $pesterConfig
+          Invoke-Pester -Configuration $pesterConfig
 
   publish-stable-module:
     needs: test-prerelease-module
@@ -135,6 +138,9 @@ jobs:
           Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
           $pesterConfig = New-PesterConfiguration @{
             Output = @{ Verbosity = 'Detailed' }
-            Run = @{ Throw = $true }
+            Run = @{
+              Path = $smokeTestsScriptPath
+              Throw = $true
+            }
           }
-          Invoke-Pester -Path $smokeTestsScriptPath -Configuration $pesterConfig
+          Invoke-Pester -Configuration $pesterConfig
