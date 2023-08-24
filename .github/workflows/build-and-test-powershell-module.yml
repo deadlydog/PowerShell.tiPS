@@ -123,7 +123,7 @@ jobs:
           [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableArtifactDirectoryPath -ChildPath $moduleName
-          [string] $deployFilesDirectoryPath = $Env:deployFilesDirectoryPath
+          [string] $deployFilesDirectoryPath = $Env:deployDirectoryPath
           [string] $deployFilesArtifactDirectoryPath = $Env:deployFilesArtifactDirectoryPath
 
           Write-Output "Reading in dynamic environment variables."
