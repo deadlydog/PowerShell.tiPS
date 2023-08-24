@@ -24,9 +24,11 @@ env:
 
 jobs:
   publish-prerelease-module:
-    runs-on: ubuntu-latest
     # Only run the deployment if manually triggered, or the build workflow succeeded.
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    outputs:
+      prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
     steps:
       - name: Download artifacts from triggered workflow
         uses: dawidd6/action-download-artifact@v2
@@ -43,6 +45,7 @@ jobs:
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
       - name: Make prerelease version number available to downstream jobs
+        id: output-version-number
         shell: pwsh
         run: |
           [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName/$Env:powerShellModuleName.psd1"
@@ -53,7 +56,7 @@ jobs:
           [string] $prereleaseVersionNumber = "$versionNumber-$prereleasePostfix"
 
           Write-Output "Saving the prerelease version number '$prereleaseVersionNumber' to an environment variable."
-          "PrereleaseVersionNumber=$prereleaseVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          "prereleaseVersionNumber=$prereleaseVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
   test-prerelease-module:
     needs: publish-prerelease-module
@@ -63,7 +66,7 @@ jobs:
         shell: pwsh
         run: |
           [string] $moduleName = $Env:powerShellModuleName
-          [string] $prereleaseVersionNumber = $Env:PrereleaseVersionNumber
+          [string] $prereleaseVersionNumber = '${{ needs.publish-prerelease-module.outputs.prereleaseVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
           Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery
@@ -83,6 +86,8 @@ jobs:
     needs: test-prerelease-module
     runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
+    outputs:
+      stableVersionNumber: ${{ steps.output-version-number.outputs.StableVersionNumber }}
     steps:
       - name: Download artifacts from triggered workflow
         uses: dawidd6/action-download-artifact@v2
@@ -99,6 +104,7 @@ jobs:
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
       - name: Make stable version number available to downstream jobs
+        id: output-version-number
         shell: pwsh
         run: |
           [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName/$Env:powerShellModuleName.psd1"
@@ -107,7 +113,7 @@ jobs:
           [string] $versionNumber = $manifest.ModuleVersion
 
           Write-Output "Saving the stable version number '$versionNumber' to an environment variable."
-          "StableVersionNumber=$versionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          "stableVersionNumber=$versionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
   test-stable-module:
     needs: publish-stable-module
@@ -117,7 +123,7 @@ jobs:
         shell: pwsh
         run: |
           [string] $moduleName = $Env:powerShellModuleName
-          [string] $stableVersionNumber = $Env:StableVersionNumber
+          [string] $stableVersionNumber = '${{ needs.publish-stable-module.outputs.stableVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
           Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery
