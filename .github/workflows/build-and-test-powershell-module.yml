@@ -24,6 +24,7 @@ env:
   stableModuleDirectoryPath: './artifacts/Stable'
   prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts' # Must match the name in the deployment workflow.
   stableModuleArtifactName: 'StableModuleArtifacts' # Must match the name in the deployment workflow.
+  deployDirectoryPathToIncludeInArtifacts: './deploy'
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
@@ -120,6 +121,7 @@ jobs:
           [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
           [string] $prereleaseModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleDirectoryPath -ChildPath $moduleName
           [string] $stableModuleDirectoryPath = Join-Path -Path $Env:stableModuleDirectoryPath -ChildPath $moduleName
+          [string] $deployFilesDirectoryPath = $Env:deployDirectoryPathToIncludeInArtifacts
 
           Write-Output "Reading in dynamic environment variables."
           [string] $newVersionNumber = $Env:NewVersionNumber
@@ -146,9 +148,11 @@ jobs:
 
           Write-Output "Copying the module files to the Prerelease directory '$prereleaseModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+          Copy-Item -Path $deployFilesDirectoryPath -Destination $prereleaseModuleDirectoryPath -Recurse -Force
 
           Write-Output "Copying the module files to the Stable directory '$stableModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+          Copy-Item -Path $deployFilesDirectoryPath -Destination $stableModuleDirectoryPath -Recurse -Force
 
           # Prerelase version numbers can only contain 'a-zA-Z0-9' characters.
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
