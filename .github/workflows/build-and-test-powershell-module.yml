@@ -56,9 +56,9 @@ jobs:
           Write-Output "Running all Pester tests in the repo:"
           $pesterConfig = New-PesterConfiguration @{
             Output = @{ Verbosity = 'Detailed' }
+            Run = @{ Throw = $true }
             TestResult = @{ Enabled = $true }
             CodeCoverage = @{ Enabled = $false }
-            Run = @{ Throw = $true }
           }
           Invoke-Pester -Configuration $pesterConfig
 
