@@ -16,8 +16,8 @@ on:
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
-  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts' # Must match the name in the build workflow.
-  stableModuleArtifactName: 'StableModuleArtifacts' # Must match the name in the build workflow.
+  prereleaseModuleArtifactName: 'PrereleaseArtifacts' # Must match the name in the build workflow.
+  stableModuleArtifactName: 'StableArtifacts' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
   artifactsDeployDirectoryPath: './artifacts/deploy'
   workflowRunId: ${{ github.event_name == 'workflow_dispatch' && inputs.workflowRunId || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
