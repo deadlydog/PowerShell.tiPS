@@ -55,7 +55,7 @@ jobs:
           [string] $prereleasePostfix = $manifest.PrivateData.PSData.Prerelease
           [string] $prereleaseVersionNumber = "$versionNumber-$prereleasePostfix"
 
-          Write-Output "Saving the prerelease version number '$prereleaseVersionNumber' to an environment variable."
+          Write-Output "Saving the prerelease version number '$prereleaseVersionNumber' to an output variable."
           "prereleaseVersionNumber=$prereleaseVersionNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
   test-prerelease-module:
@@ -124,7 +124,7 @@ jobs:
           [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
           [string] $versionNumber = $manifest.ModuleVersion
 
-          Write-Output "Saving the stable version number '$versionNumber' to an environment variable."
+          Write-Output "Saving the stable version number '$versionNumber' to an output variable."
           "stableVersionNumber=$versionNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
   test-stable-module:
