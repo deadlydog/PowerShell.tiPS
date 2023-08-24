@@ -55,11 +55,11 @@ jobs:
 
           Write-Output "Running all Pester tests in the repo:"
           $pesterConfig = New-PesterConfiguration @{
-              Output = @{ Verbosity = 'Detailed' }
-              TestResult = @{ Enabled = $true }
-              CodeCoverage = @{ Enabled = $false }
-              Run = @{ Exit = $true }
-            }
+            Output = @{ Verbosity = 'Detailed' }
+            TestResult = @{ Enabled = $true }
+            CodeCoverage = @{ Enabled = $false }
+            Run = @{ Throw = $true }
+          }
           Invoke-Pester -Configuration $pesterConfig
 
       - name: Determine new version from Git tag and set environment variables
