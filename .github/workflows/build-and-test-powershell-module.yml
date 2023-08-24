@@ -20,11 +20,13 @@ env:
   powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
   powerShellModuleDirectoryPath: './src/tiPS'
   powerShellModuleManifestFileName: 'tiPS.psd1'
-  prereleaseDirectoryPath: './artifacts/Prerelease'
-  stableDirectoryPath: './artifacts/Stable'
-  prereleaseArtifactName: 'PrereleaseArtifacts' # Must match the name in the deployment workflow.
-  stableArtifactName: 'StableArtifacts' # Must match the name in the deployment workflow.
-  deployDirectoryPathToIncludeInArtifacts: './deploy'
+  deployFilesDirectoryPath: './deploy'
+  prereleaseArtifactDirectoryPath: './artifacts/Prerelease'
+  stableArtifactDirectoryPath: './artifacts/Stable'
+  deployFilesArtifactDirectoryPath: './artifacts/deploy'
+  prereleaseArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the deployment workflow.
+  stableArtifactName: 'StableModuleArtifact' # Must match the name in the deployment workflow.
+  deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the deployment workflow.
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
@@ -119,19 +121,16 @@ jobs:
           [string] $moduleName = $Env:powerShellModuleName
           [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
           [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
-          [string] $prereleaseDirectoryPath = $Env:prereleaseDirectoryPath
-          [string] $stableDirectoryPath = $Env:stableDirectoryPath
-          [string] $prereleaseModuleDirectoryPath = Join-Path -Path $prereleaseDirectoryPath -ChildPath $moduleName
-          [string] $stableModuleDirectoryPath = Join-Path -Path $stableDirectoryPath -ChildPath $moduleName
-          [string] $deployFilesDirectoryPath = $Env:deployDirectoryPathToIncludeInArtifacts
+          [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseArtifactDirectoryPath -ChildPath $moduleName
+          [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableArtifactDirectoryPath -ChildPath $moduleName
 
           Write-Output "Reading in dynamic environment variables."
           [string] $newVersionNumber = $Env:NewVersionNumber
 
           Write-Output "Determining what the module manifest file paths should be."
           [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
-          [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseModuleDirectoryPath -ChildPath $moduleManifestFileName
-          [string] $stableManifestFilePath = Join-Path -Path $stableModuleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
 
           Write-Output "Retrieving the module manifest's current version number line from '$manifestFilePath' so it can be updated."
           $manifestVersionNumberRegexPattern = "(?i)ModuleVersion = '(?<Version>.*?)'"
@@ -148,13 +147,11 @@ jobs:
           $currentManifestVersionNumber = $manifestVersionNumberMatch.Groups['Version'].Value
           $currentManifestVersionNumberLine = $manifestVersionNumberMatch.Value
 
-          Write-Output "Copying the module and related artifact files to the Prerelease directory '$prereleaseDirectoryPath'."
-          Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
-          Copy-Item -Path $deployFilesDirectoryPath -Destination $prereleaseDirectoryPath -Recurse -Force
+          Write-Output "Copying the module files to the Prerelease artifact directory '$prereleaseArtifactModuleDirectoryPath'."
+          Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          Write-Output "Copying the module and related artifact files to the Stable directory '$stableDirectoryPath'."
-          Copy-Item -Path $moduleDirectoryPath -Destination $stableModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
-          Copy-Item -Path $deployFilesDirectoryPath -Destination $stableDirectoryPath -Recurse -Force
+          Write-Output "Copying the module files to the Stable artifact directory '$stableArtifactModuleDirectoryPath'."
+          Copy-Item -Path $moduleDirectoryPath -Destination $stableArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
           # Prerelase version numbers can only contain 'a-zA-Z0-9' characters.
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
@@ -167,6 +164,16 @@ jobs:
 
           Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
+
+      - name: Create deploy files artifact
+        shell: pwsh
+        run: |
+          [string] $deployFilesDirectoryPath = $Env:deployFilesDirectoryPath
+          [string] $deployFilesArtifactDirectoryPath = $Env:deployFilesArtifactDirectoryPath
+
+          Write-Output "Copying the deployment files '$deployFilesDirectoryPath' to the deployment artifact directory '$deployFilesArtifactDirectoryPath'."
+          Copy-Item -Path $deployFilesDirectoryPath -Destination $deployFilesArtifactDirectoryPath -Recurse -Force
+
 
       - name: Update CI version tag and set new version tag
         # Only run this step if we are doing a push (not a PR) to the default branch (e.g. main).
@@ -197,10 +204,16 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.prereleaseArtifactName }}
-          path: ${{ env.prereleaseDirectoryPath }}
+          path: ${{ env.prereleaseArtifactDirectoryPath }}
 
       - name: Upload stable module artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.stableArtifactName }}
-          path: ${{ env.stableDirectoryPath }}
+          path: ${{ env.stableArtifactDirectoryPath }}
+
+      - name: Upload deploy files artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.deployFilesArtifactName }}
+          path: ${{ env.deployFilesArtifactDirectoryPath }}
