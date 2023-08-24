@@ -20,7 +20,7 @@ env:
   powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
   powerShellModuleDirectoryPath: './src/tiPS'
   powerShellModuleManifestFileName: 'tiPS.psd1'
-  deployDirectoryPath: './deploy'
+  deployFilesDirectoryPath: './deploy'
   prereleaseArtifactDirectoryPath: './artifacts/Prerelease'
   stableArtifactDirectoryPath: './artifacts/Stable'
   deployFilesArtifactDirectoryPath: './artifacts/deploy'
@@ -168,7 +168,7 @@ jobs:
       - name: Create deploy files artifact
         shell: pwsh
         run: |
-          [string] $deployFilesDirectoryPath = $Env:deployDirectoryPath
+          [string] $deployFilesDirectoryPath = $Env:deployFilesDirectoryPath
           [string] $deployFilesArtifactDirectoryPath = $Env:deployFilesArtifactDirectoryPath
 
           Write-Output "Copying the deployment files '$deployFilesDirectoryPath' to the deployment artifact directory '$deployFilesArtifactDirectoryPath'."
