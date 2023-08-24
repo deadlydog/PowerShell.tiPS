@@ -18,8 +18,9 @@ env:
   powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
   prereleaseModuleArtifactName: 'PrereleaseArtifacts' # Must match the name in the build workflow.
   stableModuleArtifactName: 'StableArtifacts' # Must match the name in the build workflow.
+  deployFilesArtifactName: 'DeployFilesArtifacts' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
-  artifactsDeployDirectoryPath: './artifacts/deploy'
+  deployFilesArtifactDirectoryPath: './artifacts/deploy'
   workflowRunId: ${{ github.event_name == 'workflow_dispatch' && inputs.workflowRunId || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
 
 jobs:
@@ -30,7 +31,7 @@ jobs:
     outputs:
       prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
     steps:
-      - name: Download artifacts from triggered workflow
+      - name: Download prerelease module artifact from triggered workflow
         uses: dawidd6/action-download-artifact@v2
         with:
           run_id: ${{ env.workflowRunId }}
@@ -62,7 +63,7 @@ jobs:
     needs: publish-prerelease-module
     runs-on: ubuntu-latest
     steps:
-      - name: Download prerelease module from PowerShell Gallery
+      - name: Install prerelease module from PowerShell Gallery
         shell: pwsh
         run: |
           [string] $moduleName = $Env:powerShellModuleName
@@ -70,10 +71,19 @@ jobs:
 
           Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
           Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery
+
+      - name: Download deploy files artifact from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ env.workflowRunId }}
+          name: ${{ env.deployFilesArtifactName}}
+          path: ${{ env.artifactsDirectoryPath }}
+          search_artifacts: true
+
       - name: Run smoke tests
         shell: pwsh
         run: |
-          [string] $smokeTestsScriptPath = "$Env:artifactsDeployDirectoryPath/Invoke-SmokeTests.ps1"
+          [string] $smokeTestsScriptPath = "$Env:deployFilesArtifactDirectoryPath/Invoke-SmokeTests.ps1"
 
           Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
           $pesterConfig = New-PesterConfiguration @{
@@ -92,7 +102,7 @@ jobs:
     outputs:
       stableVersionNumber: ${{ steps.output-version-number.outputs.StableVersionNumber }}
     steps:
-      - name: Download artifacts from triggered workflow
+      - name: Download stable module artifact from triggered workflow
         uses: dawidd6/action-download-artifact@v2
         with:
           run_id: ${{ env.workflowRunId }}
@@ -122,7 +132,7 @@ jobs:
     needs: publish-stable-module
     runs-on: ubuntu-latest
     steps:
-      - name: Download stable module from PowerShell Gallery
+      - name: Install stable module from PowerShell Gallery
         shell: pwsh
         run: |
           [string] $moduleName = $Env:powerShellModuleName
@@ -130,10 +140,19 @@ jobs:
 
           Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
           Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery
+
+      - name: Download deploy files artifact from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ env.workflowRunId }}
+          name: ${{ env.deployFilesArtifactName}}
+          path: ${{ env.artifactsDirectoryPath }}
+          search_artifacts: true
+
       - name: Run smoke tests
         shell: pwsh
         run: |
-          [string] $smokeTestsScriptPath = "$Env:artifactsDeployDirectoryPath/Invoke-SmokeTests.ps1"
+          [string] $smokeTestsScriptPath = "$Env:deployFilesArtifactDirectoryPath/Invoke-SmokeTests.ps1"
 
           Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
           $pesterConfig = New-PesterConfiguration @{
