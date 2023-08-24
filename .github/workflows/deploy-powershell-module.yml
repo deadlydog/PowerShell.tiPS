@@ -62,15 +62,17 @@ jobs:
       - name: Download prerelease module from PowerShell Gallery
         shell: pwsh
         run: |
+          [string] $moduleName = $Env:powerShellModuleName
           [string] $prereleaseVersionNumber = $Env:PrereleaseVersionNumber
 
-          Write-Output "Installing the module prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
-          Install-Module -Name $Env:powerShellModuleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery
+          Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
+          Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery
       - name: Run smoke tests
         shell: pwsh
         run: |
           [string] $smokeTestsScriptPath = "$Env:artifactsDeployDirectoryPath/Invoke-SmokeTests.ps1"
 
+          Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
           $pesterConfig = New-PesterConfiguration @{
             Output = @{ Verbosity = 'Detailed' }
             Run = @{ Throw = $true }
@@ -114,15 +116,17 @@ jobs:
       - name: Download stable module from PowerShell Gallery
         shell: pwsh
         run: |
+          [string] $moduleName = $Env:powerShellModuleName
           [string] $stableVersionNumber = $Env:StableVersionNumber
 
-          Write-Output "Installing the module stable version '$stableVersionNumber' from the PowerShell Gallery."
-          Install-Module -Name $Env:powerShellModuleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery
+          Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
+          Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery
       - name: Run smoke tests
         shell: pwsh
         run: |
           [string] $smokeTestsScriptPath = "$Env:artifactsDeployDirectoryPath/Invoke-SmokeTests.ps1"
 
+          Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
           $pesterConfig = New-PesterConfiguration @{
             Output = @{ Verbosity = 'Detailed' }
             Run = @{ Throw = $true }
