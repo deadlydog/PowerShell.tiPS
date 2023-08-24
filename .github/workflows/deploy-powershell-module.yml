@@ -16,9 +16,10 @@ on:
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
-  prereleaseModuleArtifactName: 'PrereleaseModuleArtifacts' # Must match the name in the build workflow.
-  stableModuleArtifactName: 'StableModuleArtifacts' # Must match the name in the build workflow.
+  prereleaseModuleArtifactName: 'PrereleaseArtifacts' # Must match the name in the build workflow.
+  stableModuleArtifactName: 'StableArtifacts' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
+  artifactsDeployDirectoryPath: './artifacts/deploy'
   workflowRunId: ${{ github.event_name == 'workflow_dispatch' && inputs.workflowRunId || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
 
 jobs:
@@ -41,9 +42,44 @@ jobs:
           [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
-  publish-stable-module:
-    runs-on: ubuntu-latest
+      - name: Make prerelease version number available to downstream jobs
+        shell: pwsh
+        run: |
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName/$Env:powerShellModuleName.psd1"
+          Write-Output "Reading module manifest from '$moduleManifestPath'."
+          [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
+          [string] $versionNumber = $manifest.ModuleVersion
+          [string] $prereleasePostfix = $manifest.PrivateData.PSData.Prerelease
+          [string] $prereleaseVersionNumber = "$versionNumber-$prereleasePostfix"
+
+          Write-Output "Saving the prerelease version number '$prereleaseVersionNumber' to an environment variable."
+          "PrereleaseVersionNumber=$prereleaseVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+  test-prerelease-module:
     needs: publish-prerelease-module
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download prerelease module from PowerShell Gallery
+        shell: pwsh
+        run: |
+          [string] $prereleaseVersionNumber = $Env:PrereleaseVersionNumber
+
+          Write-Output "Installing the module prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
+          Install-Module -Name $Env:powerShellModuleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery
+      - name: Run smoke tests
+        shell: pwsh
+        run: |
+          [string] $smokeTestsScriptPath = "$Env:artifactsDeployDirectoryPath/Invoke-SmokeTests.ps1"
+
+          $pesterConfig = New-PesterConfiguration @{
+            Output = @{ Verbosity = 'Detailed' }
+            Run = @{ Throw = $true }
+          }
+          Invoke-Pester -Path $smokeTestsScriptPath -Configuration $pesterConfig
+
+  publish-stable-module:
+    needs: test-prerelease-module
+    runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
     steps:
       - name: Download artifacts from triggered workflow
@@ -59,3 +95,36 @@ jobs:
         run: |
           [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
+
+      - name: Make stable version number available to downstream jobs
+        shell: pwsh
+        run: |
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName/$Env:powerShellModuleName.psd1"
+          Write-Output "Reading module manifest from '$moduleManifestPath'."
+          [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
+          [string] $versionNumber = $manifest.ModuleVersion
+
+          Write-Output "Saving the stable version number '$versionNumber' to an environment variable."
+          "StableVersionNumber=$versionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+  test-stable-module:
+    needs: publish-stable-module
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download stable module from PowerShell Gallery
+        shell: pwsh
+        run: |
+          [string] $stableVersionNumber = $Env:StableVersionNumber
+
+          Write-Output "Installing the module stable version '$stableVersionNumber' from the PowerShell Gallery."
+          Install-Module -Name $Env:powerShellModuleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery
+      - name: Run smoke tests
+        shell: pwsh
+        run: |
+          [string] $smokeTestsScriptPath = "$Env:artifactsDeployDirectoryPath/Invoke-SmokeTests.ps1"
+
+          $pesterConfig = New-PesterConfiguration @{
+            Output = @{ Verbosity = 'Detailed' }
+            Run = @{ Throw = $true }
+          }
+          Invoke-Pester -Path $smokeTestsScriptPath -Configuration $pesterConfig
