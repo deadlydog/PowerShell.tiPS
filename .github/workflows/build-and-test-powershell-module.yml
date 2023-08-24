@@ -24,9 +24,9 @@ env:
   prereleaseArtifactDirectoryPath: './artifacts/Prerelease'
   stableArtifactDirectoryPath: './artifacts/Stable'
   deployFilesArtifactDirectoryPath: './artifacts/deploy'
-  prereleaseArtifactName: 'PrereleaseArtifacts' # Must match the name in the deployment workflow.
-  stableArtifactName: 'StableArtifacts' # Must match the name in the deployment workflow.
-  deployFilesArtifactName: 'DeployFilesArtifacts' # Must match the name in the deployment workflow.
+  prereleaseArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the deployment workflow.
+  stableArtifactName: 'StableModuleArtifact' # Must match the name in the deployment workflow.
+  deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the deployment workflow.
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
