@@ -1,3 +1,7 @@
+# This file reads in all of the tip files in the PowerShellTips directory, validates them, and writes them to a JSON file.
+# This is done as part of the module's build process so that loading the tips at runtime is as fast as possible.
+# Rather than shipping all of the tip files with the module, we ship a single JSON file that contains all of the tips.
+
 using module .\..\src\tiPS\tiPS.psm1
 
 [CmdletBinding()]
