@@ -10,4 +10,4 @@ This can be multiple lines.
 $tip.Example = 'Example code to demonstrate the tip.'
 $tip.Urls = @('https://OneOrMoreUrls', 'https://ToLearnMoreAboutTheTip')
 $tip.MinPowerShellVersion = '0.0'
-$tip.Tags = @()
+$tip.Category = [tiPS.TipCategory]::Other

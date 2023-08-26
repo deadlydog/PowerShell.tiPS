@@ -5,15 +5,14 @@ namespace tiPS
 	// Ideally the enum would be in a separate file, but then we have to deal with writing assemblies to disk
 	// in order to load PowerShell types from 2 different files, so just define everything in a single file
 	// here for now: https://stackoverflow.com/a/20749076/602585
-	public enum PowerShellTipTag
+	public enum TipCategory
 	{
-		Excel,
-		FileSystem,
-		Module,
-		Script,
-		Social,
-		Syntax,
-		Terminal
+		Community, // Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
+		Editor, // Editor tips and extensions. e.g. VSCode, ISE, etc.
+		Module, // Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
+		Syntax, // Syntax tips. e.g. splatting, pipeline, etc.
+		Terminal, // Terminal shortcuts and tips. e.g. PSReadLine, ConEmu, etc.
+		Other // Tips that don't fit into any of the above categories.
 	}
 
 	public class PowerShellTip
@@ -25,7 +24,7 @@ namespace tiPS
 		public string Example { get; set; }
 		public string[] Urls { get; set; }
 		public string MinPowerShellVersion { get; set; } // Use a string because System.Version is not deserialized correctly from JSON, and it's a bit more user friendly when specifying the version.
-		public PowerShellTipTag[] Tags { get; set; }
+		public TipCategory Category { get; set; }
 
 		public PowerShellTip()
 		{
@@ -36,7 +35,7 @@ namespace tiPS
 			Example = string.Empty;
 			Urls = Array.Empty<string>();
 			MinPowerShellVersion = string.Empty;
-			Tags = Array.Empty<PowerShellTipTag>();
+			Category = TipCategory.Other;
 		}
 
 		public void Validate()

@@ -6,4 +6,4 @@ $tip.TipText = 'Enforce coding rules and raise errors for common coding mistakes
 $tip.Example = 'Set-StrictMode -Version Latest'
 $tip.Urls = @('https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode')
 $tip.MinPowerShellVersion = '0.0'
-$tip.Tags = @([tiPS.PowerShellTipTag]::Syntax)
+$tip.Category = [tiPS.TipCategory]::Syntax

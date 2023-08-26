@@ -13,7 +13,7 @@ Describe 'Validating a PowerShellTip' {
 			$validTip.Example = 'Example'
 			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$validTip.MinPowerShellVersion = '5.1'
-			$validTip.Tags = @('Excel', 'Module')
+			$validTip.Category = 'Community'
 		}
 
 		It 'Should throw an error when no ID is supplied' {
@@ -63,6 +63,11 @@ Describe 'Validating a PowerShellTip' {
 			$tip.MinPowerShellVersion = 'Not a valid version'
 			{ $tip.Validate() } | Should -Throw
 		}
+
+		It 'Should throw an error when an invalid Category is supplied' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			{ $tip.Category = 'InvalidCategory' } | Should -Throw
+		}
 	}
 
 	Context 'Given a PowerShellTip has all valid properties' {
@@ -75,7 +80,7 @@ Describe 'Validating a PowerShellTip' {
 			$validTip.Example = 'Example'
 			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$validTip.MinPowerShellVersion = '5.1'
-			$validTip.Tags = @('Excel', 'Module')
+			$validTip.Category = 'Community'
 		}
 
 		It 'Should not throw an error when all properties are valid' {

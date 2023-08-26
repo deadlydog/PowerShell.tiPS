@@ -10,7 +10,7 @@
       "https://ToLearnMoreAboutTheTip"
     ],
     "MinPowerShellVersion": "0.0",
-    "Tags": []
+    "Category": 5
   },
   {
     "Id": "PowerShellIsOpenSource",
@@ -22,7 +22,7 @@
       "https://github.com/PowerShell/PowerShell"
     ],
     "MinPowerShellVersion": "0.0",
-    "Tags": []
+    "Category": 0
   },
   {
     "Id": "StrictMode",
@@ -34,8 +34,6 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode"
     ],
     "MinPowerShellVersion": "0.0",
-    "Tags": [
-      5
-    ]
+    "Category": 3
   }
 ]

@@ -6,4 +6,4 @@ $tip.TipText = 'Did you know that PowerShell is open source? You can contribute 
 $tip.Example = 'Example code to demonstrate the tip.'
 $tip.Urls = @('https://github.com/PowerShell/PowerShell')
 $tip.MinPowerShellVersion = '0.0'
-$tip.Tags = @()
+$tip.Category = [tiPS.TipCategory]::Community
