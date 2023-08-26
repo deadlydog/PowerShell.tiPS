@@ -20,8 +20,9 @@ Write-Verbose "Finding all PowerShell tip files in '$powerShellTipsDirectoryPath
 	Select-Object -ExpandProperty FullName
 
 [System.Collections.ArrayList] $tips = @()
+[int] $numberOfTipFiles = $tipFilePaths.Count
 
-Write-Verbose "Reading in and validating $($tipFilePaths.Count) PowerShell tip files."
+Write-Verbose "Reading in and validating $numberOfTipFiles PowerShell tip files."
 foreach ($tipFilePath in $tipFilePaths)
 {
 	# Dot-source the tip file, which should have a $tip variable defined with all of the tip info.
@@ -32,10 +33,16 @@ foreach ($tipFilePath in $tipFilePaths)
 	$tips.Add($tip) > $null
 }
 
-Write-Verbose "Writing $($tips.Count) PowerShell Tip objects to JSON file '$powerShellTipsJsonFilePath'."
+[int] $numberOfTips = $tips.Count
+if ($numberOfTips -ne $numberOfTipFiles)
+{
+	throw "Found $numberOfTipFiles tip files, but read in $numberOfTips tips. The number of tip files and tips should match."
+}
+
+Write-Verbose "Writing $numberOfTips PowerShell Tip objects to JSON file '$powerShellTipsJsonFilePath'."
 $tips |
 	Sort-Object -Property CreatedDate |
 	ConvertTo-Json -Depth 100 |
 	Out-File -FilePath $powerShellTipsJsonFilePath -Encoding UTF8 -Force
 
-Write-Output "$($tips.Count) PowerShell tip files were found in the directory '$powerShellTipsDirectoryPath', successfully converted to JSON, and written to the file '$powerShellTipsJsonFilePath'."
+Write-Output "$numberOfTipFiles PowerShell tip files were found in the directory '$powerShellTipsDirectoryPath', successfully converted to JSON, and written to the file '$powerShellTipsJsonFilePath'."
