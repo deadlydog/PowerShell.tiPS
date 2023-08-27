@@ -43,9 +43,24 @@ if ($numberOfTips -ne $numberOfTipFiles)
 	throw "Found $numberOfTipFiles tip files, but read in $numberOfTips tips. The number of tip files and tips should match."
 }
 
+if ($numberOfTips -eq 0)
+{
+	throw "No tips were read in from the directory '$powerShellTipsDirectoryPath'. At least one tip file is required."
+}
+
+# Ideally we could get the read-only property names with the [JsonIgnore] attribute, but PowerShell
+# does not have an easy way to inspect property attributes. Instead do a more brittle string match.
+[string[]] $readOnlyClassPropertyNames =
+	[tiPS.PowerShellTip]::new() |
+	Get-Member -MemberType Property |
+	Where-Object { $_.Definition -match '{get;}' } |
+	Select-Object -ExpandProperty Name
+Write-Verbose "The following read-only properties will be excluded from the JSON file: $readOnlyClassPropertyNames"
+
 Write-Verbose "Writing $numberOfTips PowerShell Tip objects to JSON file '$powerShellTipsJsonFilePath'."
 $tips |
 	Sort-Object -Property CreatedDate |
+	Select-Object -ExcludeProperty $readOnlyClassPropertyNames |
 	ConvertTo-Json -Depth 100 |
 	Out-File -FilePath $powerShellTipsJsonFilePath -Encoding UTF8 -Force
 

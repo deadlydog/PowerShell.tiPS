@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json.Serialization;
 
 namespace tiPS
 {
@@ -39,10 +38,8 @@ namespace tiPS
 			Category = TipCategory.Other;
 		}
 
-		[JsonIgnore]
 		public bool UrlsAreProvided => Urls != null && Urls.Length > 0;
 
-		[JsonIgnore]
 		public bool MinPowerShellVersionIsProvided =>
 			!string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0";
 
