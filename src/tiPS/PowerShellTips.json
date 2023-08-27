@@ -35,5 +35,18 @@
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 3
+  },
+  {
+    "Id": "CommandLineHistory",
+    "CreatedDate": "2023-08-28T00:00:00",
+    "Title": "View your command line history",
+    "TipText": "PowerShell lets you view your session history with `Get-History` and it's alias `h`.\r\n`Get-PSReadLineOption` used with `Get-Content` takes history reading further by allowing you to read your current users lifetime history.",
+    "Example": "Get-Content (Get-PSReadLineOption).HistorySavePath",
+    "Urls": [
+      "https://learn.microsoft.com/powershell/module/psreadline/about/about_psreadline",
+      "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
   }
 ]

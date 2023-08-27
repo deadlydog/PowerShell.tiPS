@@ -2,8 +2,6 @@
 # This is done as part of the module's build process so that loading the tips at runtime is as fast as possible.
 # Rather than shipping all of the tip files with the module, we ship a single JSON file that contains all of the tips.
 
-using module .\..\src\tiPS\tiPS.psm1
-
 [CmdletBinding()]
 Param()
 
@@ -13,6 +11,12 @@ Param()
 [string] $moduleRootDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'tiPS'
 [string] $powerShellTipsDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'PowerShellTips'
 [string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
+
+Write-Verbose "Wiping out the contents of the JSON file '$powerShellTipsJsonFilePath' to ensure it can be loaded by the module."
+@{} | ConvertTo-Json | Out-File -FilePath $powerShellTipsJsonFilePath -Encoding UTF8 -Force
+
+Write-Verbose "Importing the tiPS module from '$moduleRootDirectoryPath'."
+Import-Module -Name $moduleRootDirectoryPath -Force
 
 Write-Verbose "Finding all PowerShell tip files in '$powerShellTipsDirectoryPath'."
 [string[]] $tipFilePaths =
