@@ -38,6 +38,8 @@ namespace tiPS
 			Category = TipCategory.Other;
 		}
 
+		public bool UrlsAreProvided => Urls != null && Urls.Length > 0;
+
 		public bool MinPowerShellVersionIsProvided =>
 			!string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0";
 
@@ -68,7 +70,7 @@ namespace tiPS
 				throw new System.ArgumentException($"The {nameof(TipText)} property must be set.");
 			}
 
-			if (Urls != null && Urls.Length > 3)
+			if (UrlsAreProvided && Urls.Length > 3)
 			{
 				throw new System.ArgumentException($"You may only provide up to 3 {nameof(Urls)}.");
 			}
