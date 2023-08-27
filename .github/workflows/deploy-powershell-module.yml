@@ -60,8 +60,15 @@ jobs:
 
   test-prerelease-module:
     needs: publish-prerelease-module
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
     steps:
+      - name: Display PowerShell version being used
+        shell: pwsh
+        run: $PSVersionTable
+
       - name: Install prerelease module from PowerShell Gallery
         shell: pwsh
         run: |
@@ -69,7 +76,7 @@ jobs:
           [string] $prereleaseVersionNumber = '${{ needs.publish-prerelease-module.outputs.prereleaseVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
-          Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -Verbose
+          Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
         uses: dawidd6/action-download-artifact@v2
@@ -132,8 +139,15 @@ jobs:
 
   test-stable-module:
     needs: publish-stable-module
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
     steps:
+      - name: Display PowerShell version being used
+        shell: pwsh
+        run: $PSVersionTable
+
       - name: Install stable module from PowerShell Gallery
         shell: pwsh
         run: |
@@ -141,7 +155,7 @@ jobs:
           [string] $stableVersionNumber = '${{ needs.publish-stable-module.outputs.stableVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
-          Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -Verbose
+          Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
         uses: dawidd6/action-download-artifact@v2
