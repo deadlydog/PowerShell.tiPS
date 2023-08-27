@@ -8,6 +8,6 @@ function Write-PowerShellTip
 		[string] $TipId
 	)
 
-	[string] $tip = Get-PowerShellTip -TipId $TipId
-	Write-Host -Object $tip
+	[tiPS.PowerShellTip] $tip = Get-PowerShellTip -TipId $TipId
+	WritePowerShellTipToTerminal -Tip $tip
 }
