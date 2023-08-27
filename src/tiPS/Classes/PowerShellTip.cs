@@ -38,10 +38,15 @@ namespace tiPS
 			Category = TipCategory.Other;
 		}
 
-		public bool UrlsAreProvided => Urls != null && Urls.Length > 0;
+		public bool UrlsAreProvided
+		{
+			get { return Urls != null && Urls.Length > 0; }
+		}
 
-		public bool MinPowerShellVersionIsProvided =>
-			!string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0";
+		public bool MinPowerShellVersionIsProvided
+		{
+			get { return !string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0"; }
+		}
 
 		public void Validate()
 		{
