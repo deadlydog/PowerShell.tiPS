@@ -30,7 +30,7 @@ CompanyName = ''
 Copyright = '(c) Daniel Schroeder. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'PowerShell tips delivered straight to your terminal 💻.'
+Description = 'PowerShell tips delivered straight to your terminal.'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '3.0'
