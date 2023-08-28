@@ -62,7 +62,7 @@ jobs:
         shell: pwsh
         run: Start-Sleep -Seconds 30
 
-  test-prerelease-module:
+  test-prerelease-module-in-pwsh:
     needs: publish-prerelease-module
     strategy:
       matrix:
@@ -108,8 +108,51 @@ jobs:
           Write-Output "Displaying the installed module version that was used for the smoke tests."
           Get-Module -Name $Env:powerShellModuleName
 
+  test-prerelease-module-in-windows-powershell:
+    needs: publish-prerelease-module
+    runs-on: windows-latest
+    steps:
+      - name: Display PowerShell version being used
+        shell: powershell
+        run: $PSVersionTable
+
+      - name: Install prerelease module from PowerShell Gallery
+        shell: powershell
+        run: |
+          [string] $moduleName = $Env:powerShellModuleName
+          [string] $prereleaseVersionNumber = '${{ needs.publish-prerelease-module.outputs.prereleaseVersionNumber }}'
+
+          Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
+          Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
+
+      - name: Download deploy files artifact from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ env.workflowRunId }}
+          name: ${{ env.deployFilesArtifactName}}
+          path: ${{ env.artifactsDirectoryPath }}
+          search_artifacts: true
+
+      - name: Run smoke tests
+        shell: powershell
+        run: |
+          [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
+
+          Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
+          $pesterConfig = New-PesterConfiguration @{
+            Output = @{ Verbosity = 'Detailed' }
+            Run = @{
+              Path = $smokeTestsScriptPath
+              Throw = $true
+            }
+          }
+          Invoke-Pester -Configuration $pesterConfig
+
+          Write-Output "Displaying the installed module version that was used for the smoke tests."
+          Get-Module -Name $Env:powerShellModuleName
+
   publish-stable-module:
-    needs: test-prerelease-module
+    needs: [test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
     runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
     outputs:
@@ -145,7 +188,7 @@ jobs:
         shell: pwsh
         run: Start-Sleep -Seconds 30
 
-  test-stable-module:
+  test-stable-module-in-pwsh:
     needs: publish-stable-module
     strategy:
       matrix:
@@ -175,6 +218,49 @@ jobs:
 
       - name: Run smoke tests
         shell: pwsh
+        run: |
+          [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
+
+          Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
+          $pesterConfig = New-PesterConfiguration @{
+            Output = @{ Verbosity = 'Detailed' }
+            Run = @{
+              Path = $smokeTestsScriptPath
+              Throw = $true
+            }
+          }
+          Invoke-Pester -Configuration $pesterConfig
+
+          Write-Output "Displaying the installed module version that was used for the smoke tests."
+          Get-Module -Name $Env:powerShellModuleName
+
+  test-stable-module-in-windows-powershell:
+    needs: publish-stable-module
+    runs-on: windows-latest
+    steps:
+      - name: Display PowerShell version being used
+        shell: powershell
+        run: $PSVersionTable
+
+      - name: Install stable module from PowerShell Gallery
+        shell: powershell
+        run: |
+          [string] $moduleName = $Env:powerShellModuleName
+          [string] $stableVersionNumber = '${{ needs.publish-stable-module.outputs.stableVersionNumber }}'
+
+          Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
+          Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
+
+      - name: Download deploy files artifact from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ env.workflowRunId }}
+          name: ${{ env.deployFilesArtifactName}}
+          path: ${{ env.artifactsDirectoryPath }}
+          search_artifacts: true
+
+      - name: Run smoke tests
+        shell: powershell
         run: |
           [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
 
