@@ -1,3 +1,5 @@
+// Windows PowerShell only supports C# 5.0, so we can't use any newer language features: https://stackoverflow.com/a/40789694/602585
+// List of C# versions and features: https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history
 using System;
 
 namespace tiPS
@@ -38,61 +40,66 @@ namespace tiPS
 			Category = TipCategory.Other;
 		}
 
-		public bool UrlsAreProvided => Urls != null && Urls.Length > 0;
+		public bool UrlsAreProvided
+		{
+			get { return Urls != null && Urls.Length > 0; }
+		}
 
-		public bool MinPowerShellVersionIsProvided =>
-			!string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0";
+		public bool MinPowerShellVersionIsProvided
+		{
+			get { return !string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0"; }
+		}
 
 		public void Validate()
 		{
 			if (string.IsNullOrWhiteSpace(Id))
 			{
-				throw new System.ArgumentException("The " + nameof(Id) + " property must be set.");
+				throw new System.ArgumentException("The Id property must be set.");
 			}
 
 			if (CreatedDate == DateTime.MinValue)
 			{
-				throw new System.ArgumentException("The " + nameof(CreatedDate) + " property must be set.");
+				throw new System.ArgumentException("The CreatedDate property must be set.");
 			}
 
-			if (Id.Contains(' '))
+			if (Id.Contains(" "))
 			{
-				throw new System.ArgumentException("The " + nameof(Id) + " property value '" + Id + "' cannot contain spaces. Use PascalCase.");
+				throw new System.ArgumentException("The Id property value '" + Id + "' cannot contain spaces. Use PascalCase.");
 			}
 
 			if (string.IsNullOrWhiteSpace(Title))
 			{
-				throw new System.ArgumentException("The " + nameof(Title) + " property must be set.");
+				throw new System.ArgumentException("The Title property must be set.");
 			}
 
 			if (string.IsNullOrWhiteSpace(TipText))
 			{
-				throw new System.ArgumentException("The " + nameof(TipText) + " property must be set.");
+				throw new System.ArgumentException("The TipText property must be set.");
 			}
 
 			if (UrlsAreProvided && Urls.Length > 3)
 			{
-				throw new System.ArgumentException("You may only provide up to 3 " + nameof(Urls) + ".");
+				throw new System.ArgumentException("You may only provide up to 3 Urls.");
 			}
 
 			foreach (var url in Urls)
 			{
 				if (string.IsNullOrWhiteSpace(url))
 				{
-					throw new System.ArgumentException("The " + nameof(Urls) + " property must not contain null or empty values.");
+					throw new System.ArgumentException("The Urls property must not contain null or empty values.");
 				}
 
 				bool urlStartsWithHttp = url.StartsWith("http://") || url.StartsWith("https://");
 				if (!urlStartsWithHttp)
 				{
-					throw new System.ArgumentException("The " + nameof(Urls) + "property value '" + url + "' must start with 'http://' or 'https://'.");
+					throw new System.ArgumentException("The Urls property value '" + url + "' must start with 'http://' or 'https://'.");
 				}
 
 				Uri uri;
 				bool isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out uri);
 				if (!isValidUrl)
 				{
-					throw new System.ArgumentException("The " + nameof(Urls) + " property value '" + url + "' is not a valid URL.");
+					throw new System.ArgumentException("The Urls property value '" + url + "' is not a valid URL.");
 				}
 			}
 
@@ -102,17 +109,17 @@ namespace tiPS
 				bool isValidVersionNumber = Version.TryParse(MinPowerShellVersion, out version);
 				if (!isValidVersionNumber)
 				{
-					throw new System.ArgumentException("The " + nameof(MinPowerShellVersion) + " property value '" + MinPowerShellVersion + "' is not a valid version number.");
+					throw new System.ArgumentException("The MinPowerShellVersion property value '" + MinPowerShellVersion + "' is not a valid version number.");
 				}
 
 				if (version == new Version(0, 0) && MinPowerShellVersion != "0.0")
 				{
-					throw new System.ArgumentException("To specify that there is no minimum PowerShell version, use a " + nameof(MinPowerShellVersion) + " property value of '0.0' instead of '" + MinPowerShellVersion + "'.");
+					throw new System.ArgumentException("To specify that there is no minimum PowerShell version, use a MinPowerShellVersion property value of '0.0' instead of '" + MinPowerShellVersion + "'.");
 				}
 
 				if (version.Build > 0 || version.Revision > 0)
 				{
-					throw new System.ArgumentException("The " + nameof(MinPowerShellVersion) + " property value should be of the format 'Major.Minor'. The value '" + MinPowerShellVersion + "' is not valid.");
+					throw new System.ArgumentException("The MinPowerShellVersion property value should be of the format 'Major.Minor'. The value '" + MinPowerShellVersion + "' is not valid.");
 				}
 			}
 		}
