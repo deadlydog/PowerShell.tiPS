@@ -11,7 +11,11 @@ function WritePowerShellTipToTerminal
 	[int] $numberOfCharactersInHeader = 80
 	[int] $numberOfHeaderCharactersOnEachSideOfTitle =
 		[Math]::Floor(($numberOfCharactersInHeader - ($Tip.Title.Length + 2)) / 2)
-	[int] $additionalHeaderCharacterNeeded = ($Tip.Title.Length % 2) -eq 1 ? 1 : 0
+	[int] $additionalHeaderCharacterNeeded = 0
+	if ($Tip.Title.Length % 2 -eq 1)
+	{
+		$additionalHeaderCharacterNeeded = 1
+	}
 
 	[string] $header =
 		('-' * $numberOfHeaderCharactersOnEachSideOfTitle) +
