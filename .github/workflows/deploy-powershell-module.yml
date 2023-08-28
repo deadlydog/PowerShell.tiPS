@@ -58,6 +58,10 @@ jobs:
           Write-Output "Saving the prerelease version number '$prereleaseVersionNumber' to an output variable."
           "prereleaseVersionNumber=$prereleaseVersionNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
+      - name: Wait a short while for the module to be available on the PowerShell Gallery before continuing
+        shell: pwsh
+        run: Start-Sleep -Seconds 30
+
   test-prerelease-module:
     needs: publish-prerelease-module
     strategy:
@@ -136,6 +140,10 @@ jobs:
 
           Write-Output "Saving the stable version number '$versionNumber' to an output variable."
           "stableVersionNumber=$versionNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Wait a short while for the module to be available on the PowerShell Gallery before continuing
+        shell: pwsh
+        run: Start-Sleep -Seconds 30
 
   test-stable-module:
     needs: publish-stable-module
