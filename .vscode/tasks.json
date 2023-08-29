@@ -16,6 +16,14 @@
 			"problemMatcher": ["$func-powershell-watch"]
 		},
 		{
+			"label": "Run build tasks",
+			"dependsOn": ["Run PSScriptAnalyzer linter", "Convert PowerShellTips files to JSON file"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
 			"label": "Run PSScriptAnalyzer linter",
 			"type": "shell",
 			"command": "Invoke-ScriptAnalyzer -Path . -Recurse -ExcludeRule PSAvoidUsingWriteHost",
@@ -23,7 +31,20 @@
 			"presentation": {
 				"reveal": "always",
 				"panel": "dedicated",
-				"clear": true
+				"clear": true,
+				"group": "build"
+			}
+		},
+		{
+			"label": "Convert PowerShellTips files to JSON file",
+			"type": "shell",
+			"command": "./build/Convert-PowerShellTipFilesToJsonFile.ps1",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"group": "build"
 			}
 		}
 	]
