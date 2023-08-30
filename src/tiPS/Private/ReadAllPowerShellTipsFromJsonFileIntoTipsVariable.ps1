@@ -1,5 +1,8 @@
 function ReadAllPowerShellTipsFromJsonFileIntoTipsVariable
 {
+	[CmdletBinding()]
+	Param()
+	
 	[string] $moduleRootDirectoryPath = Split-Path -Path $PSScriptRoot -Parent
 	[string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
 	[tiPS.PowerShellTip[]] $tipObjects =
