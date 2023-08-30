@@ -7,7 +7,7 @@ function InitializeModule
 	[hashtable] $tipHashTable = ReadAllPowerShellTipsFromJsonFile
 	New-Variable -Name 'Tips' -Value $tipHashtable -Option Constant -Scope Script
 
-	Write-Debug 'Reading in configuration from JSON file and storing it in a $TipsConfiguration variable for access by other module functions.'
+	Write-Debug 'Reading in configuration from JSON file and storing it in a $TiPSConfiguration variable for access by other module functions.'
 	[tiPS.Configuration] $config = ReadConfigurationFromFile
-	New-Variable -Name 'TipsConfiguration' -Value $config -Scope Script
+	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
 }
