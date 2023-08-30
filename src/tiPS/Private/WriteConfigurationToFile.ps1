@@ -1,4 +1,4 @@
-function SetConfiguration
+function WriteConfigurationToFile
 {
 	[CmdletBinding()]
 	Param

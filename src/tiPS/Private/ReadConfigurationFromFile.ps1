@@ -1,4 +1,4 @@
-function GetConfiguration
+function ReadConfigurationFromFile
 {
 	[CmdletBinding()]
 	Param()
