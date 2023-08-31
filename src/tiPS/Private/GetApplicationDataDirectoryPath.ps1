@@ -1,5 +1,6 @@
 function GetApplicationDataDirectoryPath
 {
+	[OutputType([string])]
 	[CmdletBinding()]
 	Param()
 

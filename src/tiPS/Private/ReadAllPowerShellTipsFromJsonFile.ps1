@@ -1,5 +1,6 @@
 function ReadAllPowerShellTipsFromJsonFile
 {
+	[OutputType([hashtable])]
 	[CmdletBinding()]
 	Param()
 

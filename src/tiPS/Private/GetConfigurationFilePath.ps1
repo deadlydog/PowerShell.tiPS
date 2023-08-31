@@ -1,5 +1,6 @@
 function GetConfigurationFilePath
 {
+	[OutputType([string])]
 	[CmdletBinding()]
 	Param()
 
