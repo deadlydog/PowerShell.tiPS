@@ -15,11 +15,11 @@ namespace tiPS
 
 	public class Configuration
 	{
-		public ModuleAutoUpdateCadence { get; set; }
+		public ModuleAutoUpdateCadence AutoUpdateCadence { get; set; }
 
 		public Configuration()
 		{
-			ModuleAutoUpdateCadence = ModuleAutoUpdateCadence.Never;
+			AutoUpdateCadence = ModuleAutoUpdateCadence.Never;
 		}
 	}
 }
