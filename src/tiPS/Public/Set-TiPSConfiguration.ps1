@@ -6,6 +6,6 @@ function Set-TiPSConfiguration
 		[tiPS.Configuration] $Configuration
 	)
 
-	$TiPSConfiguration = $Configuration
-	WriteConfigurationToFile -Config $TiPSConfiguration
+	$script:TiPSConfiguration = $Configuration
+	WriteConfigurationToFile -Config $script:TiPSConfiguration
 }
