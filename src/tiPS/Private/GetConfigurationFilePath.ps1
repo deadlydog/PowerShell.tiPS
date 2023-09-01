@@ -4,10 +4,7 @@ function GetConfigurationFilePath
 	[CmdletBinding()]
 	Param()
 
-	[string] $applicationDataDirectoryPath = GetApplicationDataDirectoryPath
-	[string] $configFilePath = [System.IO.Path]::Combine(
-		$applicationDataDirectoryPath,
-		"tiPSConfiguration.json"
-	)
+	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
+	[string] $configFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'tiPSConfiguration.json'
 	return $configFilePath
 }
