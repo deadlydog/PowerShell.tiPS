@@ -108,3 +108,28 @@ Describe 'StartModuleUpdateIfNeeded' {
 		}
 	}
 }
+
+Describe 'Updating the module' {
+	BeforeEach {
+		Mock GetModulesLastUpdateDateFilePath { return 'TestDrive:\ModulesLastUpdateDate.txt' }
+
+		# Update-Module is called from a background job, and we cannot mock calls inside a background job's scriptblock,
+		# so the best we can do to check if Update-Module was called is to mock Start-Job and ensure it was called.
+		Mock Start-Job {} -Verifiable
+	}
+
+	It 'Should update the module in a background job' {
+		UpdateModule
+
+		Assert-MockCalled Start-Job -Times 1 -Exactly
+	}
+
+	It 'Should write the current date to the modules last updated date text file' {
+		UpdateModule
+
+		[DateTime] $now = [DateTime]::Now
+		[DateTime] $updatedDate = ReadModulesLastUpdateDate
+		[TimeSpan] $timeSinceLastUpdate = $now - $updatedDate
+		$timeSinceLastUpdate | Should -BeLessThan ([TimeSpan]::FromMinutes(1))
+	}
+}
