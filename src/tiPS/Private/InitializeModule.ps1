@@ -10,4 +10,7 @@ function InitializeModule
 	Write-Debug 'Reading in configuration from JSON file and storing it in a $TiPSConfiguration variable for access by other module functions.'
 	[tiPS.Configuration] $config = ReadConfigurationFromFile
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
+
+	Write-Debug 'Checking if the module needs to be updated, and updating it if needed.'
+	StartModuleUpdateIfNeeded
 }
