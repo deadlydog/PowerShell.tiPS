@@ -1,7 +1,13 @@
-function ReadAllPowerShellTipsFromJsonFileIntoTipsVariable
+function ReadAllPowerShellTipsFromJsonFile
 {
+	[CmdletBinding()]
+	[OutputType([System.Collections.Specialized.OrderedDictionary])]
+	Param()
+
 	[string] $moduleRootDirectoryPath = Split-Path -Path $PSScriptRoot -Parent
 	[string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
+
+	Write-Verbose "Reading PowerShell tips from '$powerShellTipsJsonFilePath'."
 	[tiPS.PowerShellTip[]] $tipObjects =
 		Get-Content -Path $powerShellTipsJsonFilePath -Raw |
 		ConvertFrom-Json
@@ -12,6 +18,5 @@ function ReadAllPowerShellTipsFromJsonFileIntoTipsVariable
 		$tipHashtable[$tip.Id] = $tip
 	}
 
-	# Scope our $Tips variable to the entire module so the Get-PowerShellTips cmdlet can access it.
-	New-Variable -Name 'Tips' -Value $tipHashtable -Option Constant -Scope Script
+	return $tipHashtable
 }

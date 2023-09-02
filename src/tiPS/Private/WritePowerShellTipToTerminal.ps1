@@ -1,6 +1,7 @@
 function WritePowerShellTipToTerminal
 {
 	[CmdletBinding()]
+	[OutputType([void])]
 	Param
 	(
 		[Parameter(Mandatory = $true, HelpMessage = 'The PowerShell Tip to write to the terminal.')]

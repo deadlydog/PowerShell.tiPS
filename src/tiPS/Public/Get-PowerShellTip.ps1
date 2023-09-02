@@ -12,22 +12,22 @@ function Get-PowerShellTip
 
 	if ($AllTips)
 	{
-		return $Tips.Values
+		return $script:Tips.Values
 	}
 
 	if ([string]::IsNullOrWhiteSpace($TipId))
 	{
-		$TipId = $Tips.Keys | Get-Random -Count 1
+		$TipId = $script:Tips.Keys | Get-Random -Count 1
 	}
 	else
 	{
-		if (-not $Tips.ContainsKey($TipId))
+		if (-not $script:Tips.ContainsKey($TipId))
 		{
 			Write-Error "A tip with ID '$TipId' does not exist."
 			return
 		}
 	}
 
-	[tiPS.PowerShellTip] $tip = $Tips[$TipId]
+	[tiPS.PowerShellTip] $tip = $script:Tips[$TipId]
 	return $tip
 }
