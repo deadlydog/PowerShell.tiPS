@@ -54,11 +54,11 @@ function StartModuleUpdateIfNeeded
 	[int] $daysNeededToTriggerUpdate = 0
 	switch ($Config.AutoUpdateCadence)
 	{
-		[tiPS.ModuleAutoUpdateCadence]::Never { $daysNeededToTriggerUpdate = -1 }
-		[tiPS.ModuleAutoUpdateCadence]::Daily { $daysNeededToTriggerUpdate = 1 }
-		[tiPS.ModuleAutoUpdateCadence]::Weekly { $daysNeededToTriggerUpdate = 7 }
-		[tiPS.ModuleAutoUpdateCadence]::BiWeekly { $daysNeededToTriggerUpdate = 14 }
-		[tiPS.ModuleAutoUpdateCadence]::Monthly { $daysNeededToTriggerUpdate = 30 }
+		([tiPS.ModuleAutoUpdateCadence]::Never) { $daysNeededToTriggerUpdate = -1; break }
+		([tiPS.ModuleAutoUpdateCadence]::Daily) { $daysNeededToTriggerUpdate = 1; break }
+		([tiPS.ModuleAutoUpdateCadence]::Weekly) { $daysNeededToTriggerUpdate = 7 ; break }
+		([tiPS.ModuleAutoUpdateCadence]::BiWeekly) { $daysNeededToTriggerUpdate = 14; break }
+		([tiPS.ModuleAutoUpdateCadence]::Monthly) { $daysNeededToTriggerUpdate = 30; break }
 	}
 
 	[bool] $moduleUpdateNeeded =
