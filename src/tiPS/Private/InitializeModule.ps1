@@ -1,6 +1,7 @@
 function InitializeModule
 {
 	[CmdletBinding()]
+	[OutputType([void])]
 	Param()
 
 	Write-Debug 'Reading all tips from JSON file and storing them in a $Tips variable for access by other module functions.'

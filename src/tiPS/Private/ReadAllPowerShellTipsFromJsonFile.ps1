@@ -1,7 +1,7 @@
 function ReadAllPowerShellTipsFromJsonFile
 {
-	[OutputType([System.Collections.Specialized.OrderedDictionary])]
 	[CmdletBinding()]
+	[OutputType([System.Collections.Specialized.OrderedDictionary])]
 	Param()
 
 	[string] $moduleRootDirectoryPath = Split-Path -Path $PSScriptRoot -Parent

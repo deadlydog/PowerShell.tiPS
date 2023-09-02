@@ -1,6 +1,7 @@
 function GetModulesLastUpdateDateFilePath
 {
 	[CmdletBinding()]
+	[OutputType([string])]
 	Param()
 
 	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
@@ -11,6 +12,7 @@ function GetModulesLastUpdateDateFilePath
 function ReadModulesLastUpdateDate
 {
 	[CmdletBinding()]
+	[OutputType([DateTime])]
 	Param()
 
 	[DateTime] $modulesLastUpdateDate = [DateTime]::MinValue
@@ -26,6 +28,7 @@ function ReadModulesLastUpdateDate
 function WriteModulesLastUpdateDate
 {
 	[CmdletBinding()]
+	[OutputType([void])]
 	Param
 	(
 		[DateTime] $ModulesLastUpdateDate
@@ -39,6 +42,7 @@ function WriteModulesLastUpdateDate
 function StartModuleUpdateIfNeeded
 {
 	[CmdletBinding()]
+	[OutputType([void])]
 	Param
 	(
 		[tiPS.Configuration] $Config

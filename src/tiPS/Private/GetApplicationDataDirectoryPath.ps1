@@ -1,7 +1,7 @@
 function GetApplicationDataDirectoryPath
 {
-	[OutputType([string])]
 	[CmdletBinding()]
+	[OutputType([string])]
 	Param()
 
 	[string] $usersLocalAppDataPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::LocalApplicationData)

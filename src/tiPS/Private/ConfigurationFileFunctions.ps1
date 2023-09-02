@@ -1,7 +1,7 @@
 function GetConfigurationFilePath
 {
-	[OutputType([string])]
 	[CmdletBinding()]
+	[OutputType([string])]
 	Param()
 
 	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
@@ -12,6 +12,7 @@ function GetConfigurationFilePath
 function ReadConfigurationFromFile
 {
 	[CmdletBinding()]
+	[OutputType([tiPS.Configuration])]
 	Param()
 
 	$config = [tiPS.Configuration]::new()
@@ -27,6 +28,7 @@ function ReadConfigurationFromFile
 function WriteConfigurationToFile
 {
 	[CmdletBinding()]
+	[OutputType([void])]
 	Param
 	(
 		[tiPS.Configuration] $Config
