@@ -5,7 +5,7 @@ function GetModulesLastUpdateDateFilePath
 	Param()
 
 	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
-	[string] $moduleUpdateDateFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath "ModulesLastUpdateDate.txt"
+	[string] $moduleUpdateDateFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'ModulesLastUpdateDate.txt'
 	return $moduleUpdateDateFilePath
 }
 
@@ -65,16 +65,25 @@ function StartModuleUpdateIfNeeded
 		$daysNeededToTriggerUpdate -gt 0 -and $timeSinceLastUpdate.Days -ge $daysNeededToTriggerUpdate
 	if ($moduleUpdateNeeded)
 	{
-		Write-Verbose "Updating the tiPS module in a background job."
-		Start-Job -ScriptBlock {
-			[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-			Update-Module -Name 'tiPS' -Force
-		}
-
-		WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now)
+		UpdateModule
 	}
 	else
 	{
 		Write-Verbose "An auto-update of the tiPS module is not needed at this time."
 	}
+}
+
+function UpdateModule
+{
+	[CmdletBinding()]
+	[OutputType([void])]
+	Param()
+
+	Write-Verbose "Updating the tiPS module in a background job."
+	Start-Job -ScriptBlock {
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+		Update-Module -Name 'tiPS' -Force
+	}
+
+	WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now)
 }
