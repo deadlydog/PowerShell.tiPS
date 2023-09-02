@@ -5,6 +5,8 @@ function GetApplicationDataDirectoryPath
 	Param()
 
 	[string] $usersLocalAppDataPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::LocalApplicationData)
-	[string] $appDataDirectoryPath = Join-Path -Path $usersLocalAppDataPath -ChildPath 'PowerShell' -AdditionalChildPath 'tiPS'
+	[string] $appDataDirectoryPath =
+		Join-Path -Path $usersLocalAppDataPath -ChildPath (
+		Join-Path -Path 'PowerShell' -ChildPath 'tiPS')
 	return $appDataDirectoryPath
 }
