@@ -13,5 +13,5 @@ function InitializeModule
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
 
 	Write-Debug 'Checking if the module needs to be updated, and updating it if needed.'
-	StartModuleUpdateIfNeeded
+	StartModuleUpdateIfNeeded -Config $script:TiPSConfiguration
 }
