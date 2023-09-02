@@ -40,8 +40,16 @@ function UpdateModule
 
 	Write-Verbose "Updating the tiPS module in a background job."
 	Start-Job -ScriptBlock {
+		Write-Verbose "Updating the tiPS module."
 		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 		Update-Module -Name 'tiPS' -Force
+
+		Write-Verbose "Removing all but the latest version of the tiPS module to keep the modules directory clean."
+		$latestModuleVersion = Get-InstalledModule -Name 'tiPS'
+		$allModuleVersions = Get-InstalledModule -Name 'tiPS' -AllVersions
+		$allModuleVersions |
+			Where-Object { $_.Version -ne $latestModuleVersion.Version } |
+			Uninstall-Module -Force
 	}
 
 	WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now)
