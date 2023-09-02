@@ -1,11 +1,14 @@
 function Set-TiPSConfiguration
 {
-	[CmdletBinding()]
+	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param
 	(
 		[tiPS.Configuration] $Configuration
 	)
 
-	$script:TiPSConfiguration = $Configuration
-	WriteConfigurationToFile -Config $script:TiPSConfiguration
+	if ($PSCmdlet.ShouldProcess('tiPS configuration', 'Set'))
+	{
+		$script:TiPSConfiguration = $Configuration
+		WriteConfigurationToFile -Config $script:TiPSConfiguration
+	}
 }
