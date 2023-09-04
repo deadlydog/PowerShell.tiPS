@@ -100,6 +100,28 @@ Describe 'Validating a PowerShellTip' {
 	}
 }
 
+Describe 'Getting the Id property' {
+	Context 'Given the PowerShellTip properties are valid and have been specified' {
+		BeforeEach {
+			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
+			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+			$validTip.Title = 'Title of the tip'
+			$validTip.TipText = 'Tip Text'
+			$validTip.Example = 'Example'
+			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
+			$validTip.MinPowerShellVersion = '5.1'
+			$validTip.Category = 'Community'
+		}
+
+		It 'Should create the Id properly from the other property values' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			$tip.CreatedDate = [DateTime]::Parse('2023-07-16')
+			$tip.Title = 'Title of the tip'
+			$tip.Id | Should -Be '2023-07-16-title-of-the-tip'
+		}
+	}
+}
+
 Describe 'Checking if URLs are provided' {
 	Context 'Given the PowerShellTip has URLs' {
 		BeforeEach {
