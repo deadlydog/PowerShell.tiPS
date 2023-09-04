@@ -27,6 +27,12 @@ Describe 'Validating a PowerShellTip' {
 			{ $tip.Validate() } | Should -Throw
 		}
 
+		It 'Should throw an error when the Title is longer than 75 characters' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			$tip.Title = 'The maximum number of characters allowed in the title is 75, but this one is 91 characters.'
+			{ $tip.Validate() } | Should -Throw
+		}
+
 		It 'Should throw an error when no TipText is supplied' {
 			[tiPS.PowerShellTip] $tip = $validTip
 			$tip.TipText = ''

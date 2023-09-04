@@ -70,6 +70,11 @@ namespace tiPS
 				throw new System.ArgumentException("The Title property must be set.");
 			}
 
+			if (Title.Length > 75)
+			{
+				throw new System.ArgumentException("The Title property value must be 75 characters or less. The current title's length is " + Title.Length + " characters.");
+			}
+
 			if (string.IsNullOrWhiteSpace(TipText))
 			{
 				throw new System.ArgumentException("The TipText property must be set.");
