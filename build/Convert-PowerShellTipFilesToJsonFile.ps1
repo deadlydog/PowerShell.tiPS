@@ -21,6 +21,7 @@ Import-Module -Name $moduleRootDirectoryPath -Force
 Write-Verbose "Finding all PowerShell tip files in '$powerShellTipsDirectoryPath'."
 [string[]] $tipFilePaths =
 	Get-ChildItem -Path $powerShellTipsDirectoryPath -Filter '*.ps1' -Recurse |
+	Where-Object { $_.Name -ne '0001-01-01-tip-template.ps1' } | # Exclude the template file.
 	Select-Object -ExpandProperty FullName
 
 [System.Collections.ArrayList] $tips = @()

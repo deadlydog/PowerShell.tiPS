@@ -90,7 +90,7 @@ Get-PowerShellTip
 ## ➕ How to contribute
 
 Have a PowerShell tip you want to share?
-Create a copy of the [0000-00-00-tip-template.ps1](src/PowerShellTips/0000-00-00-tip-template.ps1) file in the [PowerShellTips directory](src/PowerShellTips), modify it with your tip info, and submit a pull request.
+Create a copy of the [0000-00-00-tip-template.ps1](src/PowerShellTips/0001-01-01-tip-template.ps1) file in the [PowerShellTips directory](src/PowerShellTips), modify it with your tip info, and submit a pull request.
 
 tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
 
