@@ -1,5 +1,5 @@
 $tip = [tiPS.PowerShellTip]::new()
-$tip.CreatedDate = [DateTime]::Parse('0001-01-01') # Change to today's date and remove this comment.
+$tip.CreatedDate = [DateTime]::Parse('0001-01-01') # Change to today's date (yyyy-mm-dd) and remove this comment.
 $tip.Title = 'Tip template'
 $tip.TipText = @'
 A short description of the tip.
