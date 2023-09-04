@@ -10,8 +10,9 @@ $tip.CreatedDate = [DateTime]::Today
 $tip.Title = $tipTitle
 
 [string] $today = $tip.CreatedDate.ToString('yyyy-MM-dd')
+[string] $powerShellTipsFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot\..\src\PowerShellTips"
 [string] $newTipFileName = $tip.Id + '.ps1'
-[string] $newTipFilePath = Join-Path -Path "$PSScriptRoot\..\src\PowerShellTips" -ChildPath $newTipFileName
+[string] $newTipFilePath = Join-Path -Path $powerShellTipsFilesDirectoryPath -ChildPath $newTipFileName
 [string] $tipTemplateFileContents = @"
 `$tip = [tiPS.PowerShellTip]::new()
 `$tip.CreatedDate = [DateTime]::Parse('$today')
@@ -27,6 +28,12 @@ This can be multiple lines.
 `$tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, Syntax, Terminal, or Other.
 "@
 
-# Create the new PowerShell Tip file and open it.
+Write-Output "Creating new PowerShell Tip file and opening it: $newTipFilePath"
 Set-Content -Path $newTipFilePath -Value $tipTemplateFileContents -Force
-Invoke-Item -Path $newTipFilePath
+Invoke-Item -Path $newTipFilePath -ErrorVariable openTipFileError
+
+# GitHub Codespace will throw an error when trying to open the file, but will open it fine using VS Code (code.exe).
+if ($openTipFileError)
+{
+	& code "$newTipFilePath"
+}
