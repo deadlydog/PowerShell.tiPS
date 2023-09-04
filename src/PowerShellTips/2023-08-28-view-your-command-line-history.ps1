@@ -1,5 +1,4 @@
 $tip = [tiPS.PowerShellTip]::new()
-$tip.Id = 'CommandLineHistory'
 $tip.CreatedDate = [DateTime]::Parse('2023-08-28')
 $tip.Title = 'View your command line history'
 $tip.TipText = @'

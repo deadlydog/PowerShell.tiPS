@@ -10,8 +10,8 @@ Describe 'Get-PowerShellTip' {
 
 	Context 'Given a valid tip ID' {
 		It 'Should return the tip with the specified ID' {
-			$tip = Get-PowerShellTip -TipId 'PowerShellIsOpenSource'
-			$tip.Id | Should -Be 'PowerShellIsOpenSource'
+			$tip = Get-PowerShellTip -TipId '2023-07-16-powershell-is-open-source'
+			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
 		}
 	}
 

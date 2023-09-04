@@ -6,7 +6,6 @@ Describe 'Validating a PowerShellTip' {
 	Context 'Given the PowerShellTip has invalid properties' {
 		BeforeEach {
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
-			$validTip.Id = "TipId"
 			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
@@ -16,27 +15,21 @@ Describe 'Validating a PowerShellTip' {
 			$validTip.Category = 'Community'
 		}
 
-		It 'Should throw an error when no ID is supplied' {
-			[tiPS.PowerShellTip] $tip = $validTip
-			$tip.Id = ''
-			{ $tip.Validate() } | Should -Throw
-		}
-
 		It 'Should throw an error when the CreatedDate has not been set' {
 			[tiPS.PowerShellTip] $tip = $validTip
 			$tip.CreatedDate = [DateTime]::MinValue
 			{ $tip.Validate() } | Should -Throw
 		}
 
-		It 'Should throw an error when the ID contains spaces' {
-			[tiPS.PowerShellTip] $tip = $validTip
-			$tip.Id = 'The ID should not contain spaces'
-			{ $tip.Validate() } | Should -Throw
-		}
-
 		It 'Should throw an error when no Title is supplied' {
 			[tiPS.PowerShellTip] $tip = $validTip
 			$tip.Title = ''
+			{ $tip.Validate() } | Should -Throw
+		}
+
+		It 'Should throw an error when the Title is longer than 75 characters' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			$tip.Title = 'The maximum number of characters allowed in the title is 75, but this one is 91 characters.'
 			{ $tip.Validate() } | Should -Throw
 		}
 
@@ -85,7 +78,6 @@ Describe 'Validating a PowerShellTip' {
 	Context 'Given the PowerShellTip has all valid properties' {
 		BeforeEach {
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
-			$validTip.Id = "TipId"
 			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
@@ -114,11 +106,39 @@ Describe 'Validating a PowerShellTip' {
 	}
 }
 
+Describe 'Getting the Id property' {
+	Context 'Given the PowerShellTip properties are valid and have been specified' {
+		BeforeEach {
+			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
+			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+			$validTip.Title = 'Title of the tip'
+			$validTip.TipText = 'Tip Text'
+			$validTip.Example = 'Example'
+			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
+			$validTip.MinPowerShellVersion = '5.1'
+			$validTip.Category = 'Community'
+		}
+
+		It 'Should create the Id properly from the other property values' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			$tip.CreatedDate = [DateTime]::Parse('2023-07-16')
+			$tip.Title = 'Title of the tip'
+			$tip.Id | Should -Be '2023-07-16-title-of-the-tip'
+		}
+
+		It 'Should remove any special characters as expected' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			$tip.CreatedDate = [DateTime]::Parse('2023-01-22')
+			$tip.Title = 'Title with a colon: [brackets] (parentheses) and other special characters!@#$%^&*()_+{}|:"<>?~`'
+			$tip.Id | Should -Be '2023-01-22-title-with-a-colon-brackets-parentheses-and-other-special-characters'
+		}
+	}
+}
+
 Describe 'Checking if URLs are provided' {
 	Context 'Given the PowerShellTip has URLs' {
 		BeforeEach {
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
-			$validTip.Id = "TipId"
 			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
@@ -138,7 +158,6 @@ Describe 'Checking if URLs are provided' {
 	Context 'Given the PowerShellTip does not have URLs' {
 		BeforeEach {
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
-			$validTip.Id = "TipId"
 			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
@@ -166,7 +185,6 @@ Describe 'Checking if a MinPowerShellVersion was provided' {
 	Context 'Given the PowerShellTip has a MinPowerShellVersion' {
 		BeforeEach {
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
-			$validTip.Id = "TipId"
 			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
@@ -186,7 +204,6 @@ Describe 'Checking if a MinPowerShellVersion was provided' {
 	Context 'Given the PowerShellTip does not have a MinPowerShellVersion' {
 		BeforeEach {
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
-			$validTip.Id = "TipId"
 			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
 			$validTip.Title = 'Title of the tip'
 			$validTip.TipText = 'Tip Text'
