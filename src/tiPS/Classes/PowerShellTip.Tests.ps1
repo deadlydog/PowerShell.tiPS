@@ -119,6 +119,13 @@ Describe 'Getting the Id property' {
 			$tip.Title = 'Title of the tip'
 			$tip.Id | Should -Be '2023-07-16-title-of-the-tip'
 		}
+
+		It 'Should remove any special characters as expected' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			$tip.CreatedDate = [DateTime]::Parse('2023-01-22')
+			$tip.Title = 'Title with a colon: [brackets] (parentheses) and other special characters!@#$%^&*()_+{}|:"<>?~`'
+			$tip.Id | Should -Be '2023-01-22-title-with-a-colon-brackets-parentheses-and-other-special-characters'
+		}
 	}
 }
 
