@@ -1,5 +1,4 @@
 $tip = [tiPS.PowerShellTip]::new()
-$tip.Id = 'AShortEasyToRememberIdWithNoSpaces'
 $tip.CreatedDate = [DateTime]::Parse('2023-07-15') # Change to today's date and remove this comment.
 $tip.Title = 'A brief title for the tip'
 $tip.TipText = @'

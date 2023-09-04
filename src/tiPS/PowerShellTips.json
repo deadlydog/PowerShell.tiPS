@@ -1,6 +1,5 @@
 [
   {
-    "Id": "AShortEasyToRememberIdWithNoSpaces",
     "CreatedDate": "2023-07-15T00:00:00",
     "Title": "A brief title for the tip",
     "TipText": "A short description of the tip.\r\n\r\nThis can be multiple lines.",
@@ -13,7 +12,6 @@
     "Category": 5
   },
   {
-    "Id": "PowerShellIsOpenSource",
     "CreatedDate": "2023-07-16T00:00:00",
     "Title": "PowerShell is open source",
     "TipText": "Did you know that PowerShell is open source? You can contribute to the project on GitHub.",
@@ -25,7 +23,6 @@
     "Category": 0
   },
   {
-    "Id": "StrictMode",
     "CreatedDate": "2023-07-17T00:00:00",
     "Title": "Set Strict Mode on your scripts",
     "TipText": "Enforce coding rules and raise errors for common coding mistakes by declaring strict mode at the top of your scripts.",
@@ -37,7 +34,6 @@
     "Category": 3
   },
   {
-    "Id": "CommandLineHistory",
     "CreatedDate": "2023-08-28T00:00:00",
     "Title": "View your command line history",
     "TipText": "PowerShell lets you view your session history with `Get-History` and it's alias `h`.\r\n`Get-PSReadLineOption` used with `Get-Content` takes history reading further by allowing you to read your current users lifetime history.",

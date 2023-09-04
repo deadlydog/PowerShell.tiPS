@@ -19,7 +19,6 @@ namespace tiPS
 
 	public class PowerShellTip
 	{
-		public string Id { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public string Title { get; set; }
 		public string TipText { get; set; }
@@ -30,7 +29,6 @@ namespace tiPS
 
 		public PowerShellTip()
 		{
-			Id = string.Empty;
 			CreatedDate = DateTime.MinValue;
 			Title = string.Empty;
 			TipText = string.Empty;
@@ -38,6 +36,16 @@ namespace tiPS
 			Urls = Array.Empty<string>();
 			MinPowerShellVersion = string.Empty;
 			Category = TipCategory.Other;
+		}
+
+		public string Id
+		{
+			get
+			{
+				string id = CreatedDate.ToString("yyyy-MM-dd-") + Title.ToLower().Replace(" ", "-");
+				string idWithoutSpecialCharacters = System.Text.RegularExpressions.Regex.Replace(id, "[^a-zA-Z0-9-]", "");
+				return idWithoutSpecialCharacters;
+			}
 		}
 
 		public bool UrlsAreProvided
@@ -52,19 +60,9 @@ namespace tiPS
 
 		public void Validate()
 		{
-			if (string.IsNullOrWhiteSpace(Id))
-			{
-				throw new System.ArgumentException("The Id property must be set.");
-			}
-
 			if (CreatedDate == DateTime.MinValue)
 			{
 				throw new System.ArgumentException("The CreatedDate property must be set.");
-			}
-
-			if (Id.Contains(" "))
-			{
-				throw new System.ArgumentException("The Id property value '" + Id + "' cannot contain spaces. Use PascalCase.");
 			}
 
 			if (string.IsNullOrWhiteSpace(Title))
