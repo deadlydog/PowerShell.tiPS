@@ -26,7 +26,7 @@ function Set-TiPSConfiguration
 	{
 		if ($PSCmdlet.ShouldProcess('tiPS configuration AutomaticallyUpdateModule property', 'Set'))
 		{
-			$script:TiPSConfiguration.AutomaticallyUpdateModule = $AutomaticallyUpdateModule
+			$script:TiPSConfiguration.AutoUpdateCadence = $AutomaticallyUpdateModule
 			WriteConfigurationToFile -Config $script:TiPSConfiguration
 		}
 	}
