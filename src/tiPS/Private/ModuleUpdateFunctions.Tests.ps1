@@ -128,7 +128,7 @@ Describe 'Updating the module' {
 		UpdateModule
 
 		[DateTime] $now = [DateTime]::Now
-		[DateTime] $updatedDate = ReadModulesLastUpdateDate
+		[DateTime] $updatedDate = ReadModulesLastUpdateDateOrDefault
 		[TimeSpan] $timeSinceLastUpdate = $now - $updatedDate
 		$timeSinceLastUpdate | Should -BeLessThan ([TimeSpan]::FromMinutes(1))
 	}

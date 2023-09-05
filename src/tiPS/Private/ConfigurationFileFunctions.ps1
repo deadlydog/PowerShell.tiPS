@@ -9,7 +9,7 @@ function GetConfigurationFilePath
 	return $configFilePath
 }
 
-function ReadConfigurationFromFile
+function ReadConfigurationFromFileOrDefault
 {
 	[CmdletBinding()]
 	[OutputType([tiPS.Configuration])]

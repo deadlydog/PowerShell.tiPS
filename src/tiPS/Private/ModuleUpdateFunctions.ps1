@@ -7,7 +7,7 @@ function StartModuleUpdateIfNeeded
 		[tiPS.Configuration] $Config
 	)
 
-	[DateTime] $modulesLastUpdateDate = ReadModulesLastUpdateDate
+	[DateTime] $modulesLastUpdateDate = ReadModulesLastUpdateDateOrDefault
 	[TimeSpan] $timeSinceLastUpdate = [DateTime]::Now - $modulesLastUpdateDate
 
 	[int] $daysNeededToTriggerUpdate = 0
@@ -55,7 +55,7 @@ function UpdateModule
 	WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now)
 }
 
-function ReadModulesLastUpdateDate
+function ReadModulesLastUpdateDateOrDefault
 {
 	[CmdletBinding()]
 	[OutputType([DateTime])]
