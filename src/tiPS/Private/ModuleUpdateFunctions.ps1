@@ -91,7 +91,7 @@ function GetModulesLastUpdateDateFilePath
 	[OutputType([string])]
 	Param()
 
-	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
+	[string] $appDataDirectoryPath = Get-TiPSDataDirectoryPath
 	[string] $moduleUpdateDateFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'ModulesLastUpdateDate.txt'
 	return $moduleUpdateDateFilePath
 }

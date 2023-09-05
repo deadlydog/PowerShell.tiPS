@@ -4,7 +4,7 @@ function GetConfigurationFilePath
 	[OutputType([string])]
 	Param()
 
-	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
+	[string] $appDataDirectoryPath = Get-TiPSDataDirectoryPath
 	[string] $configFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'tiPSConfiguration.json'
 	return $configFilePath
 }
