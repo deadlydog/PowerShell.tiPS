@@ -6,6 +6,9 @@ PowerShell lets you view your session history with `Get-History` and it's alias 
 `Get-PSReadLineOption` used with `Get-Content` takes history reading further by allowing you to read your current users lifetime history.
 '@
 $tip.Example = 'Get-Content (Get-PSReadLineOption).HistorySavePath'
-$tip.Urls = @('https://learn.microsoft.com/powershell/module/psreadline/about/about_psreadline', 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history')
+$tip.Urls = @(
+	'https://learn.microsoft.com/powershell/module/psreadline/about/about_psreadline'
+	'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Terminal
