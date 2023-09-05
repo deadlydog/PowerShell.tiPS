@@ -4,6 +4,10 @@ function Get-TiPSDataDirectoryPath
 	[OutputType([string])]
 	Param()
 
-	[string] $appDataDirectoryPath = GetApplicationDataDirectoryPath
+	[string] $usersLocalAppDataPath =
+		[System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::LocalApplicationData)
+	[string] $appDataDirectoryPath =
+		Join-Path -Path $usersLocalAppDataPath -ChildPath (
+		Join-Path -Path 'PowerShell' -ChildPath 'tiPS')
 	return $appDataDirectoryPath
 }
