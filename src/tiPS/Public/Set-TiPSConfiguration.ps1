@@ -10,7 +10,7 @@ function Set-TiPSConfiguration
 		[tiPS.ModuleAutoUpdateCadence] $AutomaticallyUpdateModule = [tiPS.ModuleAutoUpdateCadence]::Never
 	)
 
-	# If the entire Configuration object is passed in, set it and return.
+	# If the entire Configuration object parameter is passed in, set it and return.
 	if ($PSBoundParameters.ContainsKey('Configuration'))
 	{
 		if ($PSCmdlet.ShouldProcess('tiPS configuration', 'Set'))
@@ -21,7 +21,7 @@ function Set-TiPSConfiguration
 		return
 	}
 
-	# If the ModuleAutoUpdateCadence is passed in, set it.
+	# If the AutomaticallyUpdateModule parameter is passed in, set it.
 	if ($PSBoundParameters.ContainsKey('AutomaticallyUpdateModule'))
 	{
 		if ($PSCmdlet.ShouldProcess('tiPS configuration AutomaticallyUpdateModule property', 'Set'))
