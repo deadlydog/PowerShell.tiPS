@@ -50,7 +50,7 @@ Install-Module -Name tiPS -Scope CurrentUser
 To have a tip automatically displayed every time you open your PowerShell terminal, run the following command:
 
 ```powershell
-Set-ShowPowerShellTipOnStartup
+Set-TiPSConfiguration -AutomaticallyShowPowerShellTip EverySession
 ```
 
 The above command will add a line to your PowerShell profile that will run the `tips` command every time you open your PowerShell terminal.
@@ -58,7 +58,22 @@ The above command will add a line to your PowerShell profile that will run the `
 You can disable this behavior by running the following command:
 
 ```powershell
-Set-ShowPowerShellTipOnStartup -Disable
+Set-TiPSConfiguration -AutomaticallyShowPowerShellTip Never
+```
+
+### Automatic updates
+
+New tips are obtained by updating the tiPS module.
+Rather than having to remember to manually update the module to see up-to-date tips, you can have the module automatically update itself by running the following command:
+
+```powershell
+Set-TiPSConfiguration -AutomaticallyUpdateModule Weekly
+```
+
+You can disable this behavior by running the following command:
+
+```powershell
+Set-TiPSConfiguration -AutomaticallyUpdateModule Never
 ```
 
 ## Usage
