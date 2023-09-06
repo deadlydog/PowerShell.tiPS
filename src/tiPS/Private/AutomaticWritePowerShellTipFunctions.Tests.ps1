@@ -1,6 +1,6 @@
 BeforeAll {
 	. "$PSScriptRoot\..\Classes\Configuration.ps1"
-	. "$PSScriptRoot\ShowAutomaticPowerShellTipFunctions.ps1"
+	. "$PSScriptRoot\AutomaticWritePowerShellTipFunctions.ps1"
 }
 
 Describe 'Calling ShowAutomaticPowerShellTipIfNeeded' {
