@@ -1,11 +1,11 @@
-function Edit-ProfileToImportTiPS
+function Edit-PowerShellProfileToImportTiPS
 {
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param()
 
 	Process
 	{
-		[bool] $moduleIsAlreadyInProfile = Test-ProfileImportsTiPS
+		[bool] $moduleIsAlreadyInProfile = Test-PowerShellProfileImportsTiPS
 		if ($moduleIsAlreadyInProfile)
 		{
 			Write-Verbose "PowerShell profile already imports the tiPS module."

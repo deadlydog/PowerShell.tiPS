@@ -1,15 +1,15 @@
 BeforeAll {
-	. "$PSScriptRoot\Test-ProfileImportsTiPS.ps1"
+	. "$PSScriptRoot\Test-PowerShellProfileImportsTiPS.ps1"
 }
 
-Describe 'Calling Test-ProfileImportsTiPS' {
+Describe 'Calling Test-PowerShellProfileImportsTiPS' {
 	Context 'When the PowerShell profiles do not exist' {
 		BeforeEach {
 			Mock -CommandName GetPowerShellProfileFilePaths -MockWith { return @('TestDrive:\DoesNotExist.ps1') }
 		}
 
 		It 'Should return false' {
-			$result = Test-ProfileImportsTiPS
+			$result = Test-PowerShellProfileImportsTiPS
 			$result | Should -Be $false
 		}
 	}
@@ -24,7 +24,7 @@ Describe 'Calling Test-ProfileImportsTiPS' {
 		}
 
 		It 'Should return false' {
-			$result = Test-ProfileImportsTiPS
+			$result = Test-PowerShellProfileImportsTiPS
 			$result | Should -Be $false
 		}
 	}
@@ -40,7 +40,7 @@ Import-Module -Name tiPS
 		}
 
 		It 'Should return true' {
-			$result = Test-ProfileImportsTiPS
+			$result = Test-PowerShellProfileImportsTiPS
 			$result | Should -Be $true
 		}
 	}

@@ -1,4 +1,4 @@
-function Test-ProfileImportsTiPS
+function Test-PowerShellProfileImportsTiPS
 {
 	[CmdletBinding()]
 	Param()
