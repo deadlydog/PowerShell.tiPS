@@ -7,7 +7,10 @@ function Set-TiPSConfiguration
 		[tiPS.Configuration] $Configuration,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
-		[tiPS.ModuleAutoUpdateCadence] $AutomaticallyUpdateModule = [tiPS.ModuleAutoUpdateCadence]::Never
+		[tiPS.ModuleAutoUpdateCadence] $AutomaticallyUpdateModule = [tiPS.ModuleAutoUpdateCadence]::Never,
+
+		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
+		[tiPS.WritePowerShellTipCadence] $AutomaticallyWritePowerShellTip = [tiPS.WritePowerShellTipCadence]::Never
 	)
 
 	Process
@@ -29,6 +32,16 @@ function Set-TiPSConfiguration
 			if ($PSCmdlet.ShouldProcess('tiPS configuration AutoUpdateCadence property', 'Set'))
 			{
 				$script:TiPSConfiguration.AutoUpdateCadence = $AutomaticallyUpdateModule
+				WriteConfigurationToFile -Config $script:TiPSConfiguration
+			}
+		}
+
+		# If the AutomaticallyWritePowerShellTip parameter is passed in, set it.
+		if ($PSBoundParameters.ContainsKey('AutomaticallyWritePowerShellTip'))
+		{
+			if ($PSCmdlet.ShouldProcess('tiPS configuration AutoWritePowerShellTipCadence property', 'Set'))
+			{
+				$script:TiPSConfiguration.AutoWritePowerShellTipCadence = $AutomaticallyWritePowerShellTip
 				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
 		}
