@@ -44,5 +44,27 @@
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 3
+  },
+  {
+    "CreatedDate": "2023-09-06T00:00:00",
+    "Title": "Use Ctrl+R to search your terminal history",
+    "TipText": "When in your command prompt, press Ctrl+R to reverse search your terminal history. As you type, it will show the most recent matching command. This is a great way to find a command you ran previously, but can't remember the exact command or parameters.\r\n\r\nIf you press Ctrl+R again, it will show the next most recent matching command. You can keep pressing Ctrl+R to cycle through all matching commands. If you go past the command you wanted, press Ctrl+S and it will cycle through the matching commands in the opposite direction.\r\n\r\nNote: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and newer.",
+    "Example": "",
+    "Urls": [
+      "https://woshub.com/powershell-commands-history/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
+  },
+  {
+    "CreatedDate": "2023-09-06T00:00:00",
+    "Title": "Use Ctrl+Space to list all parameters, properties, and possibilities",
+    "TipText": "In the terminal, when you are typing a command, parameter, or property, press Ctrl+Space to see a list of all the possible options. If there is only a single option, it will auto-complete the command, parameter, or property for you. If there are many options, it will list them all for you to choose from, and you use the arrow keys to navigate the list and select one.\r\n\r\nFor example, if you type `Get-Process -` and then press Ctrl+Space, you will see all the possible parameters you can use with the `Get-Process` command.\r\n\r\nIf you have a variable, you can type `$variableName.` and then press Ctrl+Space to see all the properties and methods for the variable.\r\n\r\nIt will even autocomplete partial commands, variables, properties, and methods. If you type `Get-Pro` and press Ctrl+Space, it will list all the commands that start with `Get-Pro`, including their parameter sets.\r\n\r\nSimilarly, if you have the variables `$variable1` and `$variable2`, you can type `$var` and press Ctrl+Space to see all the variables that start with `$var`, including their type if available (e.g. [string], [int]).\r\n\r\nCtrl+Space is similar to using tab completion except it will show you all of the options, instead of just one option at a time and having to tab cycle through them.\r\n\r\nNote: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and newer.",
+    "Example": "Get-Process -<Ctrl+Space>",
+    "Urls": [
+      "https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
   }
 ]
