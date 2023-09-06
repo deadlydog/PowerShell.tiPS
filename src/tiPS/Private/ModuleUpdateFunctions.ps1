@@ -9,26 +9,25 @@ function StartModuleUpdateIfNeeded
 
 	[DateTime] $modulesLastUpdateDate = ReadModulesLastUpdateDateOrDefault
 	[TimeSpan] $timeSinceLastUpdate = [DateTime]::Now - $modulesLastUpdateDate
+	[int] $daysSinceLastUpdate = $timeSinceLastUpdate.Days
 
-	[int] $daysNeededToTriggerUpdate = 0
+	[bool] $moduleUpdateNeeded = $false
 	switch ($Config.AutoUpdateCadence)
 	{
-		([tiPS.ModuleAutoUpdateCadence]::Never) { $daysNeededToTriggerUpdate = -1; break }
-		([tiPS.ModuleAutoUpdateCadence]::Daily) { $daysNeededToTriggerUpdate = 1; break }
-		([tiPS.ModuleAutoUpdateCadence]::Weekly) { $daysNeededToTriggerUpdate = 7 ; break }
-		([tiPS.ModuleAutoUpdateCadence]::BiWeekly) { $daysNeededToTriggerUpdate = 14; break }
-		([tiPS.ModuleAutoUpdateCadence]::Monthly) { $daysNeededToTriggerUpdate = 30; break }
+		([tiPS.ModuleAutoUpdateCadence]::Never) { $moduleUpdateNeeded = $false; break }
+		([tiPS.ModuleAutoUpdateCadence]::Daily) { $moduleUpdateNeeded = $daysSinceLastUpdate -ge 1; break }
+		([tiPS.ModuleAutoUpdateCadence]::Weekly) { $moduleUpdateNeeded = $daysSinceLastUpdate -ge 7 ; break }
+		([tiPS.ModuleAutoUpdateCadence]::BiWeekly) { $moduleUpdateNeeded = $daysSinceLastUpdate -ge 14; break }
+		([tiPS.ModuleAutoUpdateCadence]::Monthly) { $moduleUpdateNeeded = $daysSinceLastUpdate -ge 30; break }
 	}
-
-	[bool] $moduleUpdateNeeded =
-	$daysNeededToTriggerUpdate -gt 0 -and $timeSinceLastUpdate.Days -ge $daysNeededToTriggerUpdate
+	
 	if ($moduleUpdateNeeded)
 	{
 		UpdateModule
 	}
 	else
 	{
-		Write-Verbose "An auto-update of the tiPS module is not needed at this time."
+		Write-Debug "An auto-update of the tiPS module is not needed at this time."
 	}
 }
 
