@@ -20,7 +20,7 @@ function StartModuleUpdateIfNeeded
 		([tiPS.ModuleAutoUpdateCadence]::BiWeekly) { $moduleUpdateNeeded = $daysSinceLastUpdate -ge 14; break }
 		([tiPS.ModuleAutoUpdateCadence]::Monthly) { $moduleUpdateNeeded = $daysSinceLastUpdate -ge 30; break }
 	}
-	
+
 	if ($moduleUpdateNeeded)
 	{
 		UpdateModule
@@ -51,7 +51,8 @@ function UpdateModule
 			Uninstall-Module -Force
 	}
 
-	WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now)
+	[DateTime] $todayWithoutTime = [DateTime]::Now.Date # Exclude the time for a better user experience.
+	WriteModulesLastUpdateDate -ModulesLastUpdateDate $todayWithoutTime
 }
 
 function ReadModulesLastUpdateDateOrDefault
