@@ -37,4 +37,20 @@ Describe 'Setting the Configuration' {
 			$result.AutoUpdateCadence | Should -Be Monthly
 		}
 	}
+
+	Context 'When setting the AutomaticallyWritePowerShellTip property' {
+		It 'Should set the property to the proper value when using strongly-typed input' {
+			Set-TiPSConfiguration -AutomaticallyWritePowerShellTip ([tiPS.WritePowerShellTipCadence]::Weekly)
+
+			$result = Get-TiPSConfiguration
+			$result.AutoWritePowerShellTipCadence | Should -Be ([tiPS.WritePowerShellTipCadence]::Weekly)
+		}
+
+		It 'Should set the property to the proper value when using string input' {
+			Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily
+
+			$result = Get-TiPSConfiguration
+			$result.AutoWritePowerShellTipCadence | Should -Be Daily
+		}
+	}
 }

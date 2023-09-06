@@ -12,6 +12,9 @@ function InitializeModule
 	[tiPS.Configuration] $config = ReadConfigurationFromFileOrDefault
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
 
+	Write-Debug "Checking if we should write a PowerShell tip, and writing one if needed."
+	WriteAutomaticPowerShellTipIfNeeded -Config $script:TiPSConfiguration
+
 	Write-Debug 'Checking if the module needs to be updated, and updating it if needed.'
 	StartModuleUpdateIfNeeded -Config $script:TiPSConfiguration
 }

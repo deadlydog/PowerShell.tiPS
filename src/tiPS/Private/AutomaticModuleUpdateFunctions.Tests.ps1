@@ -1,9 +1,9 @@
 BeforeAll {
 	. "$PSScriptRoot\..\Classes\Configuration.ps1"
-	. "$PSScriptRoot\ModuleUpdateFunctions.ps1"
+	. "$PSScriptRoot\AutomaticModuleUpdateFunctions.ps1"
 }
 
-Describe 'StartModuleUpdateIfNeeded' {
+Describe 'Calling StartModuleUpdateIfNeeded' {
 	BeforeEach {
 		Mock GetModulesLastUpdateDateFilePath { return 'TestDrive:\ModulesLastUpdateDate.txt' }
 		Mock UpdateModule {} -Verifiable
@@ -24,7 +24,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should update the module if the last update was more than 1 day ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Daily
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-2))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-2))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -34,7 +34,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should not update the module if the last update was less than 1 day ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Daily
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddHours(-12))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date)
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -46,7 +46,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should update the module if the last update was more than 7 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Weekly
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-8))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-8))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -56,7 +56,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should not update the module if the last update was less than 7 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Weekly
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-6))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-6))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -68,7 +68,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should update the module if the last update was more than 14 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::BiWeekly
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-15))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-15))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -78,7 +78,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should not update the module if the last update was less than 14 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::BiWeekly
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-13))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-13))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -90,7 +90,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should update the module if the last update was more than 30 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Monthly
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-31))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-31))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -100,7 +100,7 @@ Describe 'StartModuleUpdateIfNeeded' {
 		It 'Should not update the module if the last update was less than 30 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Monthly
-			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.AddDays(-29))
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate ([DateTime]::Now.Date.AddDays(-29))
 
 			StartModuleUpdateIfNeeded -Config $config
 
@@ -127,9 +127,8 @@ Describe 'Updating the module' {
 	It 'Should write the current date to the modules last updated date text file' {
 		UpdateModule
 
-		[DateTime] $now = [DateTime]::Now
+		[DateTime] $today = [DateTime]::Now.Date
 		[DateTime] $updatedDate = ReadModulesLastUpdateDateOrDefault
-		[TimeSpan] $timeSinceLastUpdate = $now - $updatedDate
-		$timeSinceLastUpdate | Should -BeLessThan ([TimeSpan]::FromMinutes(1))
+		$updatedDate | Should -Be $today
 	}
 }
