@@ -23,7 +23,6 @@ function Set-TiPSConfiguration
 				$script:TiPSConfiguration = $Configuration
 				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
-			return
 		}
 
 		# If the AutomaticallyUpdateModule parameter is passed in, set it.
@@ -44,6 +43,12 @@ function Set-TiPSConfiguration
 				$script:TiPSConfiguration.AutoWritePowerShellTipCadence = $AutomaticallyWritePowerShellTip
 				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
+		}
+
+		[bool] $tiPSModuleIsImportedByProfile = Test-ProfileImportsTiPS
+		if (-not $tiPSModuleIsImportedByProfile)
+		{
+			Write-Warning "tiPS can only perform automatic actions when it is imported into the current PowerShell session. Run 'Edit-ProfileToImportTiPS' to update your PowerShell profile import tiPS automatically when a new session starts, or manually add 'Import-Module -Name tiPS' to your profile file."
 		}
 	}
 }
