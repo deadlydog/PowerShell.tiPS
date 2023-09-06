@@ -13,13 +13,23 @@ namespace tiPS
 		Monthly = 4
 	}
 
+	public enum ShowPowerShellTipCadence
+	{
+		Never = 0,
+		EveryStartup = 1,
+		Daily = 2,
+		Weekly = 3
+	}
+
 	public class Configuration
 	{
 		public ModuleAutoUpdateCadence AutoUpdateCadence { get; set; }
+		public ShowPowerShellTipCadence AutoShowPowerShellTipCadence { get; set; }
 
 		public Configuration()
 		{
 			AutoUpdateCadence = ModuleAutoUpdateCadence.Never;
+			AutoShowPowerShellTipCadence = ShowPowerShellTipCadence.Never;
 		}
 	}
 }
