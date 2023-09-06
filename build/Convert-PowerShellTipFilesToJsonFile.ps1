@@ -12,6 +12,8 @@ Param()
 [string] $powerShellTipsDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'PowerShellTips'
 [string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
 
+Write-Output "Generating updated PowerShellTips.json file from the tip files in '$powerShellTipsDirectoryPath'."
+
 Write-Verbose "Wiping out the contents of the JSON file '$powerShellTipsJsonFilePath' to ensure it can be loaded by the module."
 @{} | ConvertTo-Json | Out-File -FilePath $powerShellTipsJsonFilePath -Encoding UTF8 -Force
 
