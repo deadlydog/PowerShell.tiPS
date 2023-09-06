@@ -1,6 +1,7 @@
 function Edit-PowerShellProfileToImportTiPS
 {
 	[CmdletBinding(SupportsShouldProcess = $true)]
+	[OutputType([void])]
 	Param()
 
 	Process
