@@ -9,6 +9,6 @@ If you press Ctrl+R again, it will show the next most recent matching command. Y
 Note: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and newer.
 '@
 $tip.Example = ''
-$tip.Urls = @()
+$tip.Urls = @('https://woshub.com/powershell-commands-history/')
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, Syntax, Terminal, or Other.
