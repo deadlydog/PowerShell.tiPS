@@ -9,10 +9,10 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		Mock WriteAutomaticPowerShellTip {} -Verifiable
 	}
 
-	Context 'When the ShowPowerShellTipCadence is Never' {
+	Context 'When the WritePowerShellTipCadence is Never' {
 		It 'Should not show a tip' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Never
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Never
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
@@ -20,10 +20,10 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		}
 	}
 
-	Context 'When the ShowPowerShellTipCadence is EveryStartup' {
+	Context 'When the WritePowerShellTipCadence is EveryStartup' {
 		It 'Should show a tip' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::EveryStartup
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EveryStartup
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-2))
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
@@ -32,10 +32,10 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		}
 	}
 
-	Context 'When the ShowPowerShellTipCadence is Daily' {
+	Context 'When the WritePowerShellTipCadence is Daily' {
 		It 'Should update the module if the last update was more than 1 day ago' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Daily
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Daily
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-2))
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
@@ -45,7 +45,7 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 
 		It 'Should not update the module if the last update was less than 1 day ago' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Daily
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Daily
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date)
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
@@ -57,7 +57,7 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 	Context 'When the ShowPowerShellTipCandence is Weekly' {
 		It 'Should update the module if the last update was more than 7 days ago' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Weekly
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-8))
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
@@ -67,7 +67,7 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 
 		It 'Should not update the module if the last update was less than 7 days ago' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Weekly
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-6))
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config

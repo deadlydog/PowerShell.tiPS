@@ -12,12 +12,12 @@ function WriteAutomaticPowerShellTipIfNeeded
 	[int] $daysSinceLastAutomaticTipWritten = $timeSinceLastAutomaticTipWritten.Days
 
 	[bool] $shouldShowTip = $false
-	switch ($Config.AutoShowPowerShellTipCadence)
+	switch ($Config.AutoWritePowerShellTipCadence)
 	{
-		([tiPS.ShowPowerShellTipCadence]::Never) { $shouldShowTip = $false; break }
-		([tiPS.ShowPowerShellTipCadence]::EveryStartup) { $shouldShowTip = $true; break }
-		([tiPS.ShowPowerShellTipCadence]::Daily) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 1; break }
-		([tiPS.ShowPowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
+		([tiPS.WritePowerShellTipCadence]::Never) { $shouldShowTip = $false; break }
+		([tiPS.WritePowerShellTipCadence]::EveryStartup) { $shouldShowTip = $true; break }
+		([tiPS.WritePowerShellTipCadence]::Daily) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 1; break }
+		([tiPS.WritePowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
 	}
 
 	if ($shouldShowTip)
