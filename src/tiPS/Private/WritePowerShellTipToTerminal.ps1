@@ -14,7 +14,6 @@ function WritePowerShellTipToTerminal
 	[ConsoleColor] $urlsColor = [ConsoleColor]::Green
 	[ConsoleColor] $minPowerShellVersionColor = [ConsoleColor]::Red
 
-
 	# Calculate how many header characters to put on each side of the title to make it look nice.
 	[int] $numberOfCharactersInHeader = 80
 	[int] $numberOfHeaderCharactersOnEachSideOfTitle =
