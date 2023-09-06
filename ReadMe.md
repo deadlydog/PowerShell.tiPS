@@ -45,23 +45,53 @@ The tiPS PowerShell module can be downloaded and installed by running the follow
 Install-Module -Name tiPS -Scope CurrentUser
 ```
 
+### ⚙ Recommended configuration
+
+The following configuration is a good balance between getting new tips and not being overwhelmed by them.
+
+```powershell
+Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdateModule Weekly
+```
+
+## Commands
+
+### 📰 Show a tip
+
+To show a tip, run the following command:
+
+```powershell
+Write-PowerShellTip
+```
+
+or just use its alias:
+
+```powershell
+tips
+```
+
+### Get a tip
+
+To get a tip as an object, run the following command:
+
+```powershell
+Get-PowerShellTip
+```
+
 ### 🤖 Automatic tip on PowerShell startup
 
 To have a tip automatically displayed every time you open your PowerShell terminal, run the following command:
 
 ```powershell
-Set-TiPSConfiguration -AutomaticallyShowPowerShellTip EverySession
+Set-TiPSConfiguration -AutomaticallyWritePowerShellTip EverySession
 ```
-
-The above command will add a line to your PowerShell profile that will run the `tips` command every time you open your PowerShell terminal.
 
 You can disable this behavior by running the following command:
 
 ```powershell
-Set-TiPSConfiguration -AutomaticallyShowPowerShellTip Never
+Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Never
 ```
 
-### Automatic updates
+### ⬆ Automatic updates
 
 New tips are obtained by updating the tiPS module.
 Rather than having to remember to manually update the module to see up-to-date tips, you can have the module automatically update itself by running the following command:
@@ -74,32 +104,6 @@ You can disable this behavior by running the following command:
 
 ```powershell
 Set-TiPSConfiguration -AutomaticallyUpdateModule Never
-```
-
-## Usage
-
-### Show a tip
-
-To show a tip, run the following command:
-
-```powershell
-Write-PowerShellTip
-```
-
-This cmdlet can also be run using one of its aliases: `Write-PSTip`, `Write-Tip`, or `tips`.
-
-If you know the ID of the tip you want to show, you can use the `-Id` parameter to show that specific tip.
-
-```powershell
-Write-PowerShellTip -Id 1
-```
-
-### Get a tip
-
-To get a tip as an object, run the following command:
-
-```powershell
-Get-PowerShellTip
 ```
 
 ## ➕ How to contribute
