@@ -26,8 +26,11 @@ function WritePowerShellTipToTerminal
 
 	Write-Host $Tip.TipText
 
-	Write-Host 'Example: ' -ForegroundColor Yellow -NoNewline
-	Write-Host $Tip.Example -ForegroundColor Yellow
+	if (-not [string]::IsNullOrWhiteSpace($Tip.Example))
+	{
+		Write-Host 'Example: ' -ForegroundColor Yellow -NoNewline
+		Write-Host $Tip.Example -ForegroundColor Yellow
+	}
 
 	if ($Tip.UrlsAreProvided)
 	{
