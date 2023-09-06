@@ -3,10 +3,10 @@ BeforeAll {
 	. "$PSScriptRoot\AutomaticWritePowerShellTipFunctions.ps1"
 }
 
-Describe 'Calling ShowAutomaticPowerShellTipIfNeeded' {
+Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 	BeforeEach {
-		Mock GetLastAutomaticTipShownDateFilePath { return 'TestDrive:\LastAutomaticTipShownDate.txt' }
-		Mock ShowAutomaticPowerShellTip {} -Verifiable
+		Mock GetLastAutomaticTipWrittenDateFilePath { return 'TestDrive:\LastAutomaticTipWrittenDate.txt' }
+		Mock WriteAutomaticPowerShellTip {} -Verifiable
 	}
 
 	Context 'When the ShowPowerShellTipCadence is Never' {
@@ -14,9 +14,9 @@ Describe 'Calling ShowAutomaticPowerShellTipIfNeeded' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Never
 
-			ShowAutomaticPowerShellTipIfNeeded -Config $config
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
-			Assert-MockCalled ShowAutomaticPowerShellTip -Times 0 -Exactly
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
 		}
 	}
 
@@ -24,11 +24,11 @@ Describe 'Calling ShowAutomaticPowerShellTipIfNeeded' {
 		It 'Should show a tip' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::EveryStartup
-			WriteLastAutomaticTipShownDate -LastAutomaticTipShownDate ([DateTime]::Now.Date.AddDays(-2))
+			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-2))
 
-			ShowAutomaticPowerShellTipIfNeeded -Config $config
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
-			Assert-MockCalled ShowAutomaticPowerShellTip -Times 1 -Exactly
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 1 -Exactly
 		}
 	}
 
@@ -36,21 +36,21 @@ Describe 'Calling ShowAutomaticPowerShellTipIfNeeded' {
 		It 'Should update the module if the last update was more than 1 day ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Daily
-			WriteLastAutomaticTipShownDate -LastAutomaticTipShownDate ([DateTime]::Now.Date.AddDays(-2))
+			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-2))
 
-			ShowAutomaticPowerShellTipIfNeeded -Config $config
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
-			Assert-MockCalled ShowAutomaticPowerShellTip -Times 1 -Exactly
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 1 -Exactly
 		}
 
 		It 'Should not update the module if the last update was less than 1 day ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Daily
-			WriteLastAutomaticTipShownDate -LastAutomaticTipShownDate ([DateTime]::Now.Date)
+			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date)
 
-			ShowAutomaticPowerShellTipIfNeeded -Config $config
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
-			Assert-MockCalled ShowAutomaticPowerShellTip -Times 0 -Exactly
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
 		}
 	}
 
@@ -58,21 +58,21 @@ Describe 'Calling ShowAutomaticPowerShellTipIfNeeded' {
 		It 'Should update the module if the last update was more than 7 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Weekly
-			WriteLastAutomaticTipShownDate -LastAutomaticTipShownDate ([DateTime]::Now.Date.AddDays(-8))
+			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-8))
 
-			ShowAutomaticPowerShellTipIfNeeded -Config $config
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
-			Assert-MockCalled ShowAutomaticPowerShellTip -Times 1 -Exactly
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 1 -Exactly
 		}
 
 		It 'Should not update the module if the last update was less than 7 days ago' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoShowPowerShellTipCadence = [tiPS.ShowPowerShellTipCadence]::Weekly
-			WriteLastAutomaticTipShownDate -LastAutomaticTipShownDate ([DateTime]::Now.Date.AddDays(-6))
+			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-6))
 
-			ShowAutomaticPowerShellTipIfNeeded -Config $config
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
 
-			Assert-MockCalled ShowAutomaticPowerShellTip -Times 0 -Exactly
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
 		}
 	}
 }

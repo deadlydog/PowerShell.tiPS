@@ -1,4 +1,4 @@
-function ShowAutomaticPowerShellTipIfNeeded
+function WriteAutomaticPowerShellTipIfNeeded
 {
 	[CmdletBinding()]
 	[OutputType([void])]
@@ -7,22 +7,22 @@ function ShowAutomaticPowerShellTipIfNeeded
 		[tiPS.Configuration] $Config
 	)
 
-	[DateTime] $lastAutomaticTipShownDate = ReadLastAutomaticTipShownDateOrDefault
-	[TimeSpan] $timeSinceLastAutomaticTipShown = [DateTime]::Now - $lastAutomaticTipShownDate
-	[int] $daysSinceLastAutomaticTipShown = $timeSinceLastAutomaticTipShown.Days
+	[DateTime] $lastAutomaticTipWrittenDate = ReadLastAutomaticTipWrittenDateOrDefault
+	[TimeSpan] $timeSinceLastAutomaticTipWritten = [DateTime]::Now - $lastAutomaticTipWrittenDate
+	[int] $daysSinceLastAutomaticTipWritten = $timeSinceLastAutomaticTipWritten.Days
 
 	[bool] $shouldShowTip = $false
 	switch ($Config.AutoShowPowerShellTipCadence)
 	{
 		([tiPS.ShowPowerShellTipCadence]::Never) { $shouldShowTip = $false; break }
 		([tiPS.ShowPowerShellTipCadence]::EveryStartup) { $shouldShowTip = $true; break }
-		([tiPS.ShowPowerShellTipCadence]::Daily) { $shouldShowTip = $daysSinceLastAutomaticTipShown -ge 1; break }
-		([tiPS.ShowPowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipShown -ge 7; break }
+		([tiPS.ShowPowerShellTipCadence]::Daily) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 1; break }
+		([tiPS.ShowPowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
 	}
 
 	if ($shouldShowTip)
 	{
-		ShowAutomaticPowerShellTip
+		WriteAutomaticPowerShellTip
 	}
 	else
 	{
@@ -30,7 +30,7 @@ function ShowAutomaticPowerShellTipIfNeeded
 	}
 }
 
-function ShowAutomaticPowerShellTip
+function WriteAutomaticPowerShellTip
 {
 	[CmdletBinding()]
 	[OutputType([void])]
@@ -39,46 +39,46 @@ function ShowAutomaticPowerShellTip
 	Write-PowerShellTip
 
 	[DateTime] $todayWithoutTime = [DateTime]::Now.Date # Exclude the time for a better user experience.
-	WriteLastAutomaticTipShownDate -LastAutomaticTipShownDate $todayWithoutTime
+	WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate $todayWithoutTime
 }
 
-function ReadLastAutomaticTipShownDateOrDefault
+function ReadLastAutomaticTipWrittenDateOrDefault
 {
 	[CmdletBinding()]
 	[OutputType([DateTime])]
 	Param()
 
-	[DateTime] $lastAutomaticTipShownDate = [DateTime]::MinValue
-	[string] $lastAutomaticTipShownDateFilePath = GetLastAutomaticTipShownDateFilePath
-	if (Test-Path -Path $lastAutomaticTipShownDateFilePath -PathType Leaf)
+	[DateTime] $lastAutomaticTipWrittenDate = [DateTime]::MinValue
+	[string] $lastAutomaticTipWrittenDateFilePath = GetLastAutomaticTipWrittenDateFilePath
+	if (Test-Path -Path $lastAutomaticTipWrittenDateFilePath -PathType Leaf)
 	{
-		[string] $lastAutomaticTipShownDateString = Get-Content -Path $lastAutomaticTipShownDateFilePath -Raw
-		$lastAutomaticTipShownDate = [DateTime]::Parse($lastAutomaticTipShownDateString)
+		[string] $lastAutomaticTipWrittenDateString = Get-Content -Path $lastAutomaticTipWrittenDateFilePath -Raw
+		$lastAutomaticTipWrittenDate = [DateTime]::Parse($lastAutomaticTipWrittenDateString)
 	}
-	return $lastAutomaticTipShownDate
+	return $lastAutomaticTipWrittenDate
 }
 
-function WriteLastAutomaticTipShownDate
+function WriteLastAutomaticTipWrittenDate
 {
 	[CmdletBinding()]
 	[OutputType([void])]
 	Param
 	(
-		[DateTime] $LastAutomaticTipShownDate
+		[DateTime] $LastAutomaticTipWrittenDate
 	)
 
-	[string] $lastAutomaticTipShownDateFilePath = GetLastAutomaticTipShownDateFilePath
-	Write-Verbose "Writing last automatic tip shown date '$LastAutomaticTipShownDate' to '$lastAutomaticTipShownDateFilePath'."
-	$LastAutomaticTipShownDate.ToString() | Set-Content -Path $lastAutomaticTipShownDateFilePath -Force -NoNewline
+	[string] $lastAutomaticTipWrittenDateFilePath = GetLastAutomaticTipWrittenDateFilePath
+	Write-Verbose "Writing last automatic tip Written date '$LastAutomaticTipWrittenDate' to '$lastAutomaticTipWrittenDateFilePath'."
+	$LastAutomaticTipWrittenDate.ToString() | Set-Content -Path $lastAutomaticTipWrittenDateFilePath -Force -NoNewline
 }
 
-function GetLastAutomaticTipShownDateFilePath
+function GetLastAutomaticTipWrittenDateFilePath
 {
 	[CmdletBinding()]
 	[OutputType([string])]
 	Param()
 
 	[string] $appDataDirectoryPath = Get-TiPSDataDirectoryPath
-	[string] $lastAutomaticTipShownDateFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'LastAutomaticTipShownDate.txt'
-	return $lastAutomaticTipShownDateFilePath
+	[string] $lastAutomaticTipWrittenDateFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'LastAutomaticTipWrittenDate.txt'
+	return $lastAutomaticTipWrittenDateFilePath
 }
