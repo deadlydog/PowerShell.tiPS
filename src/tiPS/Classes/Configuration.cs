@@ -16,7 +16,7 @@ namespace tiPS
 	public enum WritePowerShellTipCadence
 	{
 		Never = 0,
-		EveryStartup = 1,
+		EverySession = 1,
 		Daily = 2,
 		Weekly = 3
 	}

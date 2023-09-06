@@ -15,7 +15,7 @@ function WriteAutomaticPowerShellTipIfNeeded
 	switch ($Config.AutoWritePowerShellTipCadence)
 	{
 		([tiPS.WritePowerShellTipCadence]::Never) { $shouldShowTip = $false; break }
-		([tiPS.WritePowerShellTipCadence]::EveryStartup) { $shouldShowTip = $true; break }
+		([tiPS.WritePowerShellTipCadence]::EverySession) { $shouldShowTip = $true; break }
 		([tiPS.WritePowerShellTipCadence]::Daily) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 1; break }
 		([tiPS.WritePowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
 	}

@@ -20,10 +20,10 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		}
 	}
 
-	Context 'When the WritePowerShellTipCadence is EveryStartup' {
+	Context 'When the WritePowerShellTipCadence is EverySession' {
 		It 'Should show a tip' {
 			$config = [tiPS.Configuration]::new()
-			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EveryStartup
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EverySession
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-2))
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
