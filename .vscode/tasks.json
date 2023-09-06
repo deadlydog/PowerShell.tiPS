@@ -13,11 +13,16 @@
 				"panel": "dedicated",
 				"clear": true
 			},
-			"problemMatcher": ["$func-powershell-watch"]
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
 		},
 		{
 			"label": "Run build tasks",
-			"dependsOn": ["Run PSScriptAnalyzer linter", "Convert PowerShellTips files to JSON file"],
+			"dependsOn": [
+				"Run PSScriptAnalyzer linter",
+				"Convert PowerShellTips files to JSON file"
+			],
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -46,6 +51,16 @@
 				"clear": true,
 				"group": "build"
 			}
+		},
+		{
+			"label": "Add new PowerShell tip",
+			"type": "shell",
+			"command": "./tools/New-PowerShellTip.ps1",
+			"group": "none",
+			"presentation": {
+				"reveal": "always"
+			},
+			"problemMatcher": []
 		}
 	]
 }
