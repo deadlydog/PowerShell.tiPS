@@ -45,8 +45,8 @@ function Set-TiPSConfiguration
 			}
 		}
 
-		[bool] $tiPSModuleIsImportedByProfile = Test-ProfileImportsTiPS
-		if (-not $tiPSModuleIsImportedByProfile)
+		[bool] $tiPSModuleIsImportedByPowerShellProfile = Test-ProfileImportsTiPS
+		if (-not $tiPSModuleIsImportedByPowerShellProfile)
 		{
 			Write-Warning "tiPS can only perform automatic actions when it is imported into the current PowerShell session. Run 'Edit-ProfileToImportTiPS' to update your PowerShell profile import tiPS automatically when a new session starts, or manually add 'Import-Module -Name tiPS' to your profile file."
 		}
