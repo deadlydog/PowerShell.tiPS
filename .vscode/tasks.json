@@ -47,7 +47,22 @@
 			"group": "build",
 			"presentation": {
 				"reveal": "always",
-				"panel": "dedicated",
+				"panel": "shared",
+				"clear": false,
+				"group": "build"
+			},
+			"dependsOn": [
+				"Ensure PowerShellTips filenames match their ID"
+			]
+		},
+		{
+			"label": "Ensure PowerShellTips filenames match their ID",
+			"type": "shell",
+			"command": "./tools/Rename-PowerShellTipFilesToMatchTheirId.ps1",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
 				"clear": true,
 				"group": "build"
 			}
