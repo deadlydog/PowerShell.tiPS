@@ -12,7 +12,7 @@ function Edit-PowerShellProfileToImportTiPS
 			return
 		}
 
-		[string] $profileFilePath = $PROFILE.CurrentUserAllHosts
+		[string] $profileFilePath = GetPowerShellProfileFilePath
 		[string] $contentToAddToProfile = 'Import-Module -Name tiPS # Added by tiPS.'
 
 		if (-not (Test-Path -Path $profileFilePath -PathType Leaf))
@@ -30,4 +30,10 @@ function Edit-PowerShellProfileToImportTiPS
 			Add-Content -Path $profileFilePath -Value $contentToAddToProfile -Force
 		}
 	}
+}
+
+# Use a function to get the file path so we can mock this function for testing.
+function GetPowerShellProfileFilePath
+{
+	return $PROFILE.CurrentUserAllHosts
 }
