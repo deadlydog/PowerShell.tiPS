@@ -1,6 +1,6 @@
 BeforeAll {
 	. "$PSScriptRoot\..\Classes\Configuration.ps1"
-	. "$PSScriptRoot\ModuleUpdateFunctions.ps1"
+	. "$PSScriptRoot\AutomaticModuleUpdateFunctions.ps1"
 }
 
 Describe 'Calling StartModuleUpdateIfNeeded' {
