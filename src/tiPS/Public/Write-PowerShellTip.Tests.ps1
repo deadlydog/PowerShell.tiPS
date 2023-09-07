@@ -1,5 +1,9 @@
 using module .\..\tiPS.psm1
 
+# Prevent PSScriptAnalyzer from throwing errors for using aliases when we want to test them.
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingCmdletAliases', '')]
+Param()
+
 BeforeAll {
 	New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking public functions called by the module.
 }
