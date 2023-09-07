@@ -4,6 +4,8 @@ function WriteAutomaticPowerShellTipIfNeeded
 	[OutputType([void])]
 	Param
 	(
+		[Parameter(Mandatory = $true, HelpMessage = 'The tiPS configuration used to determine if a tip should be written.')]
+		[ValidateNotNullOrEmpty()]
 		[tiPS.Configuration] $Config
 	)
 

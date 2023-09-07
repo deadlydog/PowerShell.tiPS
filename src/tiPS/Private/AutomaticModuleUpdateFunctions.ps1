@@ -4,6 +4,8 @@ function StartModuleUpdateIfNeeded
 	[OutputType([void])]
 	Param
 	(
+		[Parameter(Mandatory = $true, HelpMessage = 'The tiPS configuration to use to determine if the module should be updated.')]
+		[ValidateNotNullOrEmpty()]
 		[tiPS.Configuration] $Config
 	)
 

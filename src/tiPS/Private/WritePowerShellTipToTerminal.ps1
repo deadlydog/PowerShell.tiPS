@@ -6,6 +6,7 @@ function WritePowerShellTipToTerminal
 	Param
 	(
 		[Parameter(Mandatory = $true, HelpMessage = 'The PowerShell Tip to write to the terminal.')]
+		[ValidateNotNullOrEmpty()]
 		[tiPS.PowerShellTip] $Tip
 	)
 

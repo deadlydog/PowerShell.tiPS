@@ -5,6 +5,7 @@ function Set-TiPSConfiguration
 	Param
 	(
 		[Parameter(Mandatory = $true, ParameterSetName = 'EntireConfiguration', ValueFromPipeline = $true)]
+		[ValidateNotNullOrEmpty()]
 		[tiPS.Configuration] $Configuration,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
