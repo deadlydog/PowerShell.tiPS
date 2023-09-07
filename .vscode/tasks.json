@@ -6,6 +6,14 @@
 		{
 			"label": "Run all Pester tests",
 			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]}
+			},
 			"command": "Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
 			"group": "test",
 			"presentation": {
