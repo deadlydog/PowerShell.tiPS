@@ -6,7 +6,7 @@ BeforeAll {
 
 Describe 'Calling Edit-PowerShellProfileToImportTiPS' {
 	BeforeEach {
-		New-Variable -Name ContentToAddToProfile -Value 'Import-Module -Name tiPS # Added by tiPS.'
+		New-Variable -Name ContentToAddToProfile -Value 'Import-Module -Name tiPS # Added by tiPS to get automatic tips and updates.'
 
 		[string] $ProfileFilePath = 'TestDrive:\fakeProfile.ps1'
 		Mock -ModuleName $ModuleName -CommandName GetPowerShellProfileFilePath -MockWith { return $ProfileFilePath }

@@ -14,7 +14,7 @@ function Edit-PowerShellProfileToImportTiPS
 		}
 
 		[string] $profileFilePath = GetPowerShellProfileFilePath
-		[string] $contentToAddToProfile = 'Import-Module -Name tiPS # Added by tiPS.'
+		[string] $contentToAddToProfile = 'Import-Module -Name tiPS # Added by tiPS to get automatic tips and updates.'
 
 		if ([string]::IsNullOrWhiteSpace($profileFilePath))
 		{
