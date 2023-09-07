@@ -18,10 +18,10 @@ function Test-PowerShellProfileImportsTiPS
 	[string] $requiredContentRegex = 'Import-Module\s.*tiPS'
 	[Microsoft.PowerShell.Commands.MatchInfo] $results =
 		Select-String -Path $profileFilePathsThatExist -Pattern $requiredContentRegex
-	if ($null -ne $results -and $results.Matches.Count -gt 0)
+	if ($null -ne $results -and $results.Count -gt 0)
 	{
 		Write-Verbose "The tiPS module is imported by the following profile lines:"
-		$results.Matches | ForEach-Object {
+		$results | ForEach-Object {
 			Write-Verbose "  $($_.Path): $($_.Line)"
 		}
 		return $true
