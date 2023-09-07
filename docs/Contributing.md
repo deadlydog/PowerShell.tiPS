@@ -43,6 +43,15 @@ Repository root
 The Pester test files (*.Tests.ps1) are typically located in the same directory as the file being tested.
 These files are not included in the published module.
 
+## Building and testing locally
+
+The code is built and tested by GitHub Actions on every commit to the `main` branch and every PR opened against the `main` branch.
+
+When developing locally, you can use [the VS Code tasks](/.vscode/tasks.json) to simulate the build and test process and be notified of any problems before pushing your code up to GitHub.
+In VS Code open the command palette (Ctrl+Shift+P) and select `Tasks: Run Build Task` or `Tasks: Run Test Task`.
+
+You can also use [the TestLocalModule.ps1 script](/tools/TestLocalModule.ps1) to test your local changes and see what the final end-user experience looks like.
+
 ## ⁉ Why was a specific decision made
 
 Curious about some of the choices made in this project?
