@@ -107,20 +107,23 @@ Possible values for the `-AutomaticallyUpdateModule` parameter are `Never`, `Dai
 
 ## ➕ How to contribute
 
+tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
+
 Have a PowerShell tip you want to share?
+Know of a great module or community event that you think others should know about?
+
+Follow these steps to add your tip to tiPS:
 
 1. Fork this repo to your account.
 1. Clone the repo to your local machine, or open it in a GitHub Codespace, and create a new branch.
-1. Run the [New-PowerShellTip script](/tools/New-PowerShellTip.ps1) to create your new tip file in the [PowerShellTips directory](src/PowerShellTips/).
+1. Run the [New-PowerShellTip script](/tools/New-PowerShellTip.ps1) to create your new tip file in the [PowerShellTips directory](/src/PowerShellTips/).
 1. Modify it with your tip info and commit your changes.
 1. Submit a pull request from your fork back to this repo ([See GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)).
-
-tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
 
 tiPS is meant to be a community driven project, so please help make it better by contributing your tips and tricks.
 
 Issues and Pull Requests are welcome.
-See [the Contributing page](docs/Contributing.md) for more details.
+See [the Contributing page](/docs/Contributing.md) for more details.
 
 ## 📃 Changelog
 
