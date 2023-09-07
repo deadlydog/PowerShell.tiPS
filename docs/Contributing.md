@@ -55,4 +55,4 @@ You can also use [the TestLocalModule.ps1 script](/tools/TestLocalModule.ps1) to
 ## ⁉ Why was a specific decision made
 
 Curious about some of the choices made in this project?
-The reasons may be documented in the [Architecture Decision Records](docs/ArchitectureDecisionRecords).
+The reasons may be documented in the [Architecture Decision Records](/docs/ArchitectureDecisionRecords/).
