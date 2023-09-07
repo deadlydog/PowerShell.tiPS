@@ -39,6 +39,15 @@
 		{
 			"label": "Run PSScriptAnalyzer linter",
 			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
 			"command": "Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit",
 			"group": "build",
 			"presentation": {
@@ -51,6 +60,15 @@
 		{
 			"label": "Convert PowerShellTips files to JSON file",
 			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
 			"command": "./build/Convert-PowerShellTipFilesToJsonFile.ps1",
 			"group": "build",
 			"presentation": {
