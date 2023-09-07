@@ -6,3 +6,5 @@ Get-PowerShellTip
 Write-PowerShellTip
 
 Tips
+
+Test-PowerShellProfileImportsTiPS
