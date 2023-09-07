@@ -33,10 +33,18 @@ function Test-PowerShellProfileImportsTiPS
 # Use a function to get the file paths so we can mock this function for testing.
 function GetPowerShellProfileFilePaths
 {
-	return @(
-		$PROFILE.CurrentUserAllHosts
-		$PROFILE.CurrentUserCurrentHost
-		$PROFILE.AllUsersAllHosts
-		$PROFILE.AllUsersCurrentHost
-	)
+	[string[]] $profileFilePaths = @()
+
+	# The $PROFILE variable may not exist depending on the host or the context in which PowerShell was started.
+	if (Test-Path -Path variable:PROFILE)
+	{
+		$profileFilePaths = @(
+			$PROFILE.CurrentUserAllHosts
+			$PROFILE.CurrentUserCurrentHost
+			$PROFILE.AllUsersAllHosts
+			$PROFILE.AllUsersCurrentHost
+		)
+	}
+
+	return $profileFilePaths
 }

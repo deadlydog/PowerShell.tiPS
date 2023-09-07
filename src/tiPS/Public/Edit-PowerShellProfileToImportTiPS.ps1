@@ -16,6 +16,12 @@ function Edit-PowerShellProfileToImportTiPS
 		[string] $profileFilePath = GetPowerShellProfileFilePath
 		[string] $contentToAddToProfile = 'Import-Module -Name tiPS # Added by tiPS.'
 
+		if ([string]::IsNullOrWhiteSpace($profileFilePath))
+		{
+			Write-Error "Could not determine the PowerShell profile file path."
+			return
+		}
+
 		if (-not (Test-Path -Path $profileFilePath -PathType Leaf))
 		{
 			if ($PSCmdlet.ShouldProcess("PowerShell profile '$profileFilePath'", 'Create'))
@@ -36,5 +42,13 @@ function Edit-PowerShellProfileToImportTiPS
 # Use a function to get the file path so we can mock this function for testing.
 function GetPowerShellProfileFilePath
 {
-	return $PROFILE.CurrentUserAllHosts
+	[string] $profileFilePath = [string]::Empty
+
+	# The $PROFILE variable may not exist depending on the host or the context in which PowerShell was started.
+	if (Test-Path -Path variable:PROFILE)
+	{
+		$profileFilePath = $PROFILE.CurrentUserAllHosts
+	}
+
+	return $profileFilePath
 }
