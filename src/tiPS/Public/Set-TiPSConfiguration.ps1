@@ -1,6 +1,7 @@
 function Set-TiPSConfiguration
 {
 	[CmdletBinding(SupportsShouldProcess = $true, DefaultParameterSetName = 'PartialConfiguration')]
+	[OutputType([void])]
 	Param
 	(
 		[Parameter(Mandatory = $true, ParameterSetName = 'EntireConfiguration', ValueFromPipeline = $true)]

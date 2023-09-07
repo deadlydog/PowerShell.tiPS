@@ -1,7 +1,7 @@
 function Test-PowerShellProfileImportsTiPS
 {
 	[CmdletBinding()]
-	[OutputType([bool])]
+	[OutputType([System.Boolean])]
 	Param()
 
 	[string[]] $powerShellProfileFilePaths = GetPowerShellProfileFilePaths
