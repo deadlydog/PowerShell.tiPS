@@ -34,7 +34,9 @@ Describe 'Calling Edit-PowerShellProfileToImportTiPS' {
 		It 'Should add the import statement to the file' {
 			Edit-PowerShellProfileToImportTiPS
 
-			Get-Content -Path $ProfileFilePath -Raw | Should -Be "$existingProfileContent`r`n$ContentToAddToProfile`r`n"
+			$expectedContent = $existingProfileContent + [System.Environment]::NewLine +
+				$ContentToAddToProfile + [System.Environment]::NewLine
+			Get-Content -Path $ProfileFilePath -Raw | Should -Be $expectedContent
 		}
 	}
 
