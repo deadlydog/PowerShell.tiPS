@@ -1,7 +1,8 @@
 function Get-PowerShellTip
 {
 	[CmdletBinding(DefaultParameterSetName = 'Default')]
-	[OutputType([tiPS.PowerShellTip])]
+	[OutputType([tiPS.PowerShellTip], ParameterSetName = 'Default')]
+	[OutputType([System.Collections.Specialized.OrderedDictionary], ParameterSetName = 'AllTips')]
 	Param
 	(
 		[Parameter(ParameterSetName = 'Default', Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
@@ -13,7 +14,7 @@ function Get-PowerShellTip
 
 	if ($AllTips)
 	{
-		return $script:Tips.Values
+		return ReadAllPowerShellTipsFromJsonFile
 	}
 
 	if ([string]::IsNullOrWhiteSpace($TipId))
