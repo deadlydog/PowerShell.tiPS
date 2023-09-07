@@ -5,8 +5,9 @@ BeforeAll {
 
 Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 	BeforeEach {
-		Mock GetLastAutomaticTipWrittenDateFilePath { return 'TestDrive:\LastAutomaticTipWrittenDate.txt' }
-		Mock WriteAutomaticPowerShellTip {} -Verifiable
+		Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith { return 'TestDrive:\LastAutomaticTipWrittenDate.txt' }
+		Mock -CommandName WriteAutomaticPowerShellTip -MockWith {} -Verifiable
+		Mock -CommandName Test-PowerShellProfileImportsTiPS -MockWith { return $true }
 	}
 
 	Context 'When the WritePowerShellTipCadence is Never' {
@@ -69,6 +70,21 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
 			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-6))
+
+			WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+			Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
+		}
+	}
+
+	Context 'When the module is not imported by the PowerShell profile' {
+		BeforeEach {
+			Mock -CommandName Test-PowerShellProfileImportsTiPS -MockWith { return $false }
+		}
+
+		It 'Should not show a tip' {
+			$config = [tiPS.Configuration]::new()
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EverySession
 
 			WriteAutomaticPowerShellTipIfNeeded -Config $config
 

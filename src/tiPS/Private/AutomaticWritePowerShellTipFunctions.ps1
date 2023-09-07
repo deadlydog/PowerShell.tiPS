@@ -24,6 +24,13 @@ function WriteAutomaticPowerShellTipIfNeeded
 
 	if ($shouldShowTip)
 	{
+		[bool] $tiPSModuleIsImportedByPowerShellProfile = Test-PowerShellProfileImportsTiPS
+		if (-not $tiPSModuleIsImportedByPowerShellProfile)
+		{
+			Write-Verbose "tiPS is configured to write an automatic tip, but tiPS will only write automatic tips when it is imported from the PowerShell profile. This prevents a tip from being written when the user runs other tiPS cmdlets that cause tiPS to be imported into the current PowerShell session. Run 'Edit-ProfileToImportTiPS' to update your PowerShell profile import tiPS automatically when a new session starts, or manually add 'Import-Module -Name tiPS' to your profile file."
+			return
+		}
+
 		WriteAutomaticPowerShellTip
 	}
 	else
