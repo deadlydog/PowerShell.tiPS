@@ -31,7 +31,7 @@
 		{
 			"label": "Run PSScriptAnalyzer linter",
 			"type": "shell",
-			"command": "Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -ExcludeRule PSAvoidUsingWriteHost",
+			"command": "Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit",
 			"group": "build",
 			"presentation": {
 				"reveal": "always",
