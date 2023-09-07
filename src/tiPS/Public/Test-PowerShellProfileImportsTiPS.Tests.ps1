@@ -3,7 +3,7 @@ BeforeAll {
 }
 
 Describe 'Calling Test-PowerShellProfileImportsTiPS' {
-	Context 'When the PowerShell profiles do not exist' {
+	Context 'When the PowerShell profile files do not exist' {
 		BeforeEach {
 			Mock -CommandName GetPowerShellProfileFilePaths -MockWith { return @('TestDrive:\DoesNotExist.ps1') }
 		}
@@ -14,7 +14,7 @@ Describe 'Calling Test-PowerShellProfileImportsTiPS' {
 		}
 	}
 
-	Context 'When the PowerShell profiles do not import tiPS' {
+	Context 'When the PowerShell profiles exist, but do not import tiPS' {
 		BeforeEach {
 			$fakeProfileFilePath = 'TestDrive:\fakeProfile.ps1'
 			Set-Content -Path $fakeProfileFilePath -Force -Value @'
@@ -29,7 +29,7 @@ Describe 'Calling Test-PowerShellProfileImportsTiPS' {
 		}
 	}
 
-	Context 'When the PowerShell profiles do import tiPS' {
+	Context 'When the PowerShell profiles exist and do import tiPS' {
 		BeforeEach {
 			$fakeProfileFilePath = 'TestDrive:\fakeProfile.ps1'
 			Set-Content -Path $fakeProfileFilePath -Force -Value @'
