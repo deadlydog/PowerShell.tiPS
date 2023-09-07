@@ -9,7 +9,7 @@ function Test-PowerShellProfileImportsTiPS
 		$powerShellProfileFilePaths |
 		Where-Object { Test-Path -Path $_ -PathType Leaf }
 
-	if ($profileFilePathsThatExist.Count -eq 0)
+	if ($null -eq $profileFilePathsThatExist -or $profileFilePathsThatExist.Count -eq 0)
 	{
 		Write-Verbose "No PowerShell profile files exist."
 		return $false
@@ -46,5 +46,5 @@ function GetPowerShellProfileFilePaths
 		)
 	}
 
-	return $profileFilePaths
+	return ,$profileFilePaths
 }
