@@ -6,10 +6,10 @@ function Edit-PowerShellProfileToImportTiPS
 
 	Process
 	{
-		[bool] $moduleIsAlreadyInProfile = Test-PowerShellProfileImportsTiPS
-		if ($moduleIsAlreadyInProfile)
+		[bool] $moduleImportStatementIsAlreadyInProfile = Test-PowerShellProfileImportsTiPS
+		if ($moduleImportStatementIsAlreadyInProfile)
 		{
-			Write-Verbose "PowerShell profile already imports the tiPS module."
+			Write-Verbose "PowerShell profile already imports the tiPS module, so no changes are necessary."
 			return
 		}
 
