@@ -1,0 +1,40 @@
+function Edit-PowerShellProfileToImportTiPS
+{
+	[CmdletBinding(SupportsShouldProcess = $true)]
+	[OutputType([void])]
+	Param()
+
+	Process
+	{
+		[bool] $moduleIsAlreadyInProfile = Test-PowerShellProfileImportsTiPS
+		if ($moduleIsAlreadyInProfile)
+		{
+			Write-Verbose "PowerShell profile already imports the tiPS module."
+			return
+		}
+
+		[string] $profileFilePath = GetPowerShellProfileFilePath
+		[string] $contentToAddToProfile = 'Import-Module -Name tiPS # Added by tiPS.'
+
+		if (-not (Test-Path -Path $profileFilePath -PathType Leaf))
+		{
+			if ($PSCmdlet.ShouldProcess("PowerShell profile '$profileFilePath'", 'Create'))
+			{
+				Write-Verbose "Creating PowerShell profile '$profileFilePath'."
+				New-Item -Path $profileFilePath -ItemType File -Force > $null
+			}
+		}
+
+		if ($PSCmdlet.ShouldProcess("PowerShell profile '$profileFilePath'", 'Update'))
+		{
+			Write-Verbose "Adding '$contentToAddToProfile' to PowerShell profile '$profileFilePath'."
+			Add-Content -Path $profileFilePath -Value $contentToAddToProfile -Force
+		}
+	}
+}
+
+# Use a function to get the file path so we can mock this function for testing.
+function GetPowerShellProfileFilePath
+{
+	return $PROFILE.CurrentUserAllHosts
+}

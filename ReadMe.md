@@ -45,6 +45,13 @@ The tiPS PowerShell module can be downloaded and installed by running the follow
 Install-Module -Name tiPS -Scope CurrentUser
 ```
 
+In order for tiPS to show tips and update automatically, it must be imported every time you open a new PowerShell terminal.
+To have this happen automatically you can manually add `Import-Module -Name tiPS` to your PowerShell profile, or simply run the following command to do it for you:
+
+```powershell
+Edit-PowerShellProfileToImportTiPS
+```
+
 ### ⚙ Recommended configuration
 
 The following configuration is a good balance between getting new tips and not being overwhelmed by them.
@@ -63,7 +70,7 @@ To show a tip, run the following command:
 Write-PowerShellTip
 ```
 
-or just use its alias:
+or use its alias:
 
 ```powershell
 tips
@@ -85,11 +92,7 @@ To have a tip automatically displayed every time you open your PowerShell termin
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip EverySession
 ```
 
-You can disable this behavior by running the following command:
-
-```powershell
-Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Never
-```
+Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`, `EverySession`, `Daily`, and `Weekly`.
 
 ### ⬆ Automatic updates
 
@@ -100,11 +103,7 @@ Rather than having to remember to manually update the module to see up-to-date t
 Set-TiPSConfiguration -AutomaticallyUpdateModule Weekly
 ```
 
-You can disable this behavior by running the following command:
-
-```powershell
-Set-TiPSConfiguration -AutomaticallyUpdateModule Never
-```
+Possible values for the `-AutomaticallyUpdateModule` parameter are `Never`, `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
 
 ## ➕ How to contribute
 

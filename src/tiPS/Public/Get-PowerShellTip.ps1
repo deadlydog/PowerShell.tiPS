@@ -1,6 +1,7 @@
 function Get-PowerShellTip
 {
 	[CmdletBinding(DefaultParameterSetName = 'Default')]
+	[OutputType([tiPS.PowerShellTip])]
 	Param
 	(
 		[Parameter(ParameterSetName = 'Default', Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]

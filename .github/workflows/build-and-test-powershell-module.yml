@@ -46,7 +46,7 @@ jobs:
 
       - name: Run PowerShell linter with PSScriptAnalyzer
         shell: pwsh
-        run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -ExcludeRule PSAvoidUsingWriteHost
+        run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
 
       - name: Run Pester Tests
         shell: pwsh
