@@ -9,6 +9,12 @@ function WriteAutomaticPowerShellTipIfNeeded
 		[tiPS.Configuration] $Config
 	)
 
+	# For performance reasons, check if we should never write a tip before doing anything else.
+	if ($Config.AutoWritePowerShellTipCadence -eq [tiPS.WritePowerShellTipCadence]::Never)
+	{
+		return
+	}
+
 	[DateTime] $lastAutomaticTipWrittenDate = ReadLastAutomaticTipWrittenDateOrDefault
 	[TimeSpan] $timeSinceLastAutomaticTipWritten = [DateTime]::Now - $lastAutomaticTipWrittenDate
 	[int] $daysSinceLastAutomaticTipWritten = $timeSinceLastAutomaticTipWritten.Days

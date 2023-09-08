@@ -9,6 +9,12 @@ function StartModuleUpdateIfNeeded
 		[tiPS.Configuration] $Config
 	)
 
+	# For performance reasons, check if we should never update the module before doing anything else.
+	if ($Config.AutoUpdateCadence -eq [tiPS.ModuleAutoUpdateCadence]::Never)
+	{
+		return
+	}
+
 	[DateTime] $modulesLastUpdateDate = ReadModulesLastUpdateDateOrDefault
 	[TimeSpan] $timeSinceLastUpdate = [DateTime]::Now - $modulesLastUpdateDate
 	[int] $daysSinceLastUpdate = $timeSinceLastUpdate.Days
