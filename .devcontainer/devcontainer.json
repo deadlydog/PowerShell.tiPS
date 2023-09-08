@@ -29,7 +29,9 @@
 				"ms-vscode.powershell",
 				"yzhang.markdown-all-in-one",
 				"streetsidesoftware.code-spell-checker",
-				"EditorConfig.EditorConfig"
+				"EditorConfig.EditorConfig",
+				"TylerLeonhardt.vscode-inline-values-powershell",
+				"ionutvmi.path-autocomplete"
 			]
 		}
 	}
