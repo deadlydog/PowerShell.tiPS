@@ -54,11 +54,13 @@ Edit-PowerShellProfileToImportTiPS
 
 ### ⚙ Recommended configuration
 
-The following configuration is a good balance between getting new tips and not being overwhelmed by them.
+The following configuration is a good balance for displaying new tips automatically and not being overwhelmed by them.
 
 ```powershell
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdateModule Weekly
 ```
+
+By default tiPS does not automatically show tips or update itself, so you must configure it to do so.
 
 ## Commands
 
