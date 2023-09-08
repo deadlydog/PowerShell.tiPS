@@ -7,7 +7,7 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 	BeforeEach {
 		Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith { return 'TestDrive:\LastAutomaticTipWrittenDate.txt' }
 		Mock -CommandName WriteAutomaticPowerShellTip -MockWith {} -Verifiable
-		Mock -CommandName Test-PowerShellProfileImportsTiPS -MockWith { return $true }
+		Mock -CommandName TestPowerShellSessionIsInteractive -MockWith { return $true }
 	}
 
 	Context 'When the WritePowerShellTipCadence is Never' {
@@ -77,9 +77,9 @@ Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		}
 	}
 
-	Context 'When the module is not imported by the PowerShell profile' {
+	Context 'When the PowerShell session is not interactive' {
 		BeforeEach {
-			Mock -CommandName Test-PowerShellProfileImportsTiPS -MockWith { return $false }
+			Mock -CommandName TestPowerShellSessionIsInteractive -MockWith { return $false }
 		}
 
 		It 'Should not show a tip' {

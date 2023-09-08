@@ -62,6 +62,8 @@ Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdat
 
 By default tiPS does not automatically show tips or update itself, so you must configure it to do so.
 
+Tips will only be automatically shown in interactive PowerShell sessions, so that they do not appear unexpectedly when running scripts or other automated processes.
+
 ## Commands
 
 ### 📰 Show a tip

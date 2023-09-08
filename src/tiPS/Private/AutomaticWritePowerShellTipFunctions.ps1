@@ -24,10 +24,10 @@ function WriteAutomaticPowerShellTipIfNeeded
 
 	if ($shouldShowTip)
 	{
-		[bool] $tiPSModuleIsImportedByPowerShellProfile = Test-PowerShellProfileImportsTiPS
-		if (-not $tiPSModuleIsImportedByPowerShellProfile)
+		[bool] $isSessionInteractive = TestPowerShellSessionIsInteractive
+		if (-not $isSessionInteractive)
 		{
-			Write-Verbose "tiPS is configured to write an automatic tip, but tiPS will only write automatic tips when it is imported from the PowerShell profile. This prevents a tip from being written when the user runs other tiPS cmdlets that cause tiPS to be imported into the current PowerShell session. Run 'Edit-ProfileToImportTiPS' to update your PowerShell profile import tiPS automatically when a new session starts, or manually add 'Import-Module -Name tiPS' to your profile file."
+			Write-Verbose "tiPS is configured to write an automatic tip now, but this session is non-interactive. tiPS will only write automatic tips when it is imported into an interactive PowerShell session. This prevents a tip from being written at unexpected times, such as when the user or an automated process runs PowerShell scripts."
 			return
 		}
 
@@ -49,6 +49,43 @@ function WriteAutomaticPowerShellTip
 
 	[DateTime] $todayWithoutTime = [DateTime]::Now.Date # Exclude the time for a better user experience.
 	WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate $todayWithoutTime
+}
+
+function TestPowerShellSessionIsInteractive
+{
+	[CmdletBinding()]
+	[OutputType([bool])]
+	Param()
+
+	if (-not [Environment]::UserInteractive)
+	{
+		Write-Debug "The [Environment]::UserInteractive property shows this PowerShell session is not interactive."
+		return $false
+	}
+
+	[string[]] $typicalNonInteractiveCommandLineArguments = @(
+		'-Command'
+		'-c'
+		'-EncodedCommand'
+		'-e'
+		'-ec'
+		'-File'
+		'-f'
+		'-NonInteractive'
+	)
+
+	[string[]] $commandLineArgs = [Environment]::GetCommandLineArgs()
+	Write-Debug "The PowerShell command line arguments are '$commandLineArgs'."
+
+	[bool] $isNonInteractive = $commandLineArgs |
+		Where-Object { $_ -in $typicalNonInteractiveCommandLineArguments }
+
+	if ($isNonInteractive)
+	{
+		return $false
+	}
+
+	return $true
 }
 
 function ReadLastAutomaticTipWrittenDateOrDefault
