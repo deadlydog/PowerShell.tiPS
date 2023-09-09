@@ -14,15 +14,14 @@ Set-StrictMode -Version Latest
 	Get-ChildItem -Path $PSScriptRoot\Public -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
-[string[]] $functionFilesToImport = $classFilePaths + $privateFunctionFilePaths + $publicFunctionFilePaths
+[string[]] $functionFilePathsToImport = $classFilePaths + $privateFunctionFilePaths + $publicFunctionFilePaths
 
-$functionFilesToImport | ForEach-Object {
-	[string] $filePath = $_
-
+foreach ($filePath in $functionFilePathsToImport)
+{
 	try
 	{
 		Write-Debug "Dot-source importing functions/types from file '$filePath'."
-		. $_
+		. $filePath
 	}
 	catch
 	{
