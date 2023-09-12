@@ -4,8 +4,7 @@ function ReadAllPowerShellTipsFromJsonFile
 	[OutputType([System.Collections.Specialized.OrderedDictionary])]
 	Param()
 
-	[string] $moduleRootDirectoryPath = Split-Path -Path $PSScriptRoot -Parent
-	[string] $powerShellTipsJsonFilePath = Join-Path -Path $moduleRootDirectoryPath -ChildPath 'PowerShellTips.json'
+	[string] $powerShellTipsJsonFilePath = Join-Path -Path $script:PSModuleRoot -ChildPath 'PowerShellTips.json'
 
 	Write-Verbose "Reading PowerShell tips from '$powerShellTipsJsonFilePath'."
 	[tiPS.PowerShellTip[]] $tipObjects =
