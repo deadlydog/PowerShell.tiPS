@@ -10,14 +10,14 @@ Describe 'Get-PowerShellTip' {
 
 	Context 'Given a valid tip ID' {
 		It 'Should return the tip with the specified ID' {
-			$tip = Get-PowerShellTip -TipId '2023-07-16-powershell-is-open-source'
+			$tip = Get-PowerShellTip -Id '2023-07-16-powershell-is-open-source'
 			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
 		}
 	}
 
 	Context 'Given an invalid tip ID' {
 		It 'Should write an error' {
-			Get-PowerShellTip -TipId 'TipIdThatDoesNotExist' -ErrorVariable error -ErrorAction SilentlyContinue > $null
+			Get-PowerShellTip -Id 'TipIdThatDoesNotExist' -ErrorVariable error -ErrorAction SilentlyContinue > $null
 			$error | Should -Not -BeNullOrEmpty
 		}
 	}

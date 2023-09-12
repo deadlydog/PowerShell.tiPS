@@ -6,9 +6,9 @@ function Write-PowerShellTip
 	Param
 	(
 		[Parameter(Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
-		[string] $TipId
+		[string] $Id
 	)
 
-	[tiPS.PowerShellTip] $tip = Get-PowerShellTip -TipId $TipId
+	[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Id $Id
 	WritePowerShellTipToTerminal -Tip $tip
 }
