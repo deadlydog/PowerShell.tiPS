@@ -59,12 +59,48 @@
   {
     "CreatedDate": "2023-09-06T00:00:00",
     "Title": "Use Ctrl+Space to list all parameters, properties, and possibilities",
-    "TipText": "In the terminal, when you are typing a command, parameter, or property, press Ctrl+Space to see a list of all the possible options. If there is only a single option, it will auto-complete the command, parameter, or property for you. If there are many options, it will list them all for you to choose from, and you use the arrow keys to navigate the list and select one.\r\n\r\nFor example, if you type `Get-Process -` and then press Ctrl+Space, you will see all the possible parameters you can use with the `Get-Process` command.\r\n\r\nIf you have a variable, you can type `$variableName.` and then press Ctrl+Space to see all the properties and methods for the variable.\r\n\r\nIt will even autocomplete partial commands, variables, properties, and methods. If you type `Get-Pro` and press Ctrl+Space, it will list all the commands that start with `Get-Pro`, including their parameter sets.\r\n\r\nSimilarly, if you have the variables `$variable1` and `$variable2`, you can type `$var` and press Ctrl+Space to see all the variables that start with `$var`, including their type if available (e.g. [string], [int]).\r\n\r\nCtrl+Space is similar to using tab completion except it will show you all of the options, instead of just one option at a time and having to tab cycle through them.\r\n\r\nNote: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and newer.",
-    "Example": "Get-Process -<Ctrl+Space>",
+    "TipText": "In the terminal, when you are typing a command, parameter, or property, press Ctrl+Space to see a list of all the possible options. If there is only a single option, it will auto-complete the field for you. If there are many options, it will list them all for you to choose from and you can use the arrow keys to navigate the list and select one.\r\n\r\nCtrl+Space is similar to tab completion, except it will show you all of the options instead of just one option at a time and having to tab cycle through them.\r\n\r\nNote: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and newer.",
+    "Example": "- Type `Get-Process -` and press Ctrl+Space to list all the possible parameters you can use with the `Get-Process` command.\r\n- Type `$variableName.` and press Ctrl+Space to list all the properties and methods for the variable.\r\n- Type `Get-Pro` and press Ctrl+Space to list all the commands that start with `Get-Pro`, including their parameter sets.\r\n- Type part of a variable name (e.g. $var) and press Ctrl+Space to list all the variables that start with `$var`, including their type if available (e.g. [string], [int]).",
     "Urls": [
       "https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/"
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 4
+  },
+  {
+    "CreatedDate": "2023-09-11T00:00:00",
+    "Title": "Ensure prerequisites are met by using #Requires",
+    "TipText": "Use the #Requires statement to ensure that the environment meets the prerequisites for your script to run. You can use #Requires to check that:\r\n- A minimum PowerShell version is being used\r\n- PowerShell Desktop or PowerShell Core is being used\r\n- Specific modules or snap-ins are installed\r\n- The script is running as Administrator\r\n\r\nIf one of the required prerequisites are not met, PowerShell will throw an error and the script will not run.",
+    "Example": "#Requires -Version 7.2\r\n#Requires -PSEdition Core\r\n#Requires -Modules @{ ModuleName=\"Az.KeyVault\"; ModuleVersion=\"4.0.0\" }\r\n#Requires -RunAsAdministrator",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 3
+  },
+  {
+    "CreatedDate": "2023-09-11T00:00:00",
+    "Title": "Join the monthly PowerShell community call!",
+    "TipText": "The PowerShell Community Call is held on the 3rd Thursday of every month at 9:30 AM US Pacific Time. Topics include PowerShell 7, Windows OpenSSH, PSEditorServices/VSCode-PowerShell, PSScriptAnalyzer, PowerShell Gallery, and any other projects owned by the PowerShell Team.\r\n\r\nYou can join the Teams live event at https://aka.ms/JoinPSCall. The call is recorded and posted on YouTube.",
+    "Example": "",
+    "Urls": [
+      "https://github.com/PowerShell/PowerShell-RFC/blob/master/CommunityCall/README.md",
+      "https://powershell.org/series/powershell-community-call/",
+      "https://www.youtube.com/@powershellanddscteamchanne5739"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 0
+  },
+  {
+    "CreatedDate": "2023-09-11T00:00:00",
+    "Title": "Read and write Excel spreadsheets with ImportExcel",
+    "TipText": "Need to share large data sets with colleagues or your boss? Excel is still a popular way to do that. ImportExcel is a PowerShell module that makes it easy to read and write Excel spreadsheets. Use it to export your data to Excel, and even add charts and pivot tables. It's fast and doesn't require Excel to be installed on your computer. It's also cross-platform, so you can use it on Windows, macOS, and Linux.",
+    "Example": "[PSCustomObject[]] $data = @(\r\n\t[PSCustomObject] @{\r\n\t\tFirstName = 'John'\r\n\t\tLastName = 'Doe'\r\n\t\tAge = 42\r\n\t}\r\n\t[PSCustomObject] @{\r\n\t\tFirstName = 'Jane'\r\n\t\tLastName = 'Doe'\r\n\t\tAge = 39\r\n\t}\r\n)\r\n$data | Export-Excel -Path 'C:\\Temp\\Results.xlsx' -WorksheetName 'People' -FreezeTopRow -AutoFilter -AutoSize",
+    "Urls": [
+      "https://www.powershellgallery.com/packages/ImportExcel",
+      "https://github.com/dfinke/ImportExcel"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 2
   }
 ]
