@@ -23,7 +23,20 @@ foreach ($filePath in $functionFilePathsToImport)
 	try
 	{
 		Write-Debug "Dot-source importing functions/types from file '$filePath'."
-		. $filePath
+		. $filePath # 1180ms
+		# Invoke-Expression -Command (Get-Content -Path $filePath -Raw) # 1150ms
+		# Invoke-Expression -Command ([System.IO.File]::ReadAllText($filePath)) # 1120ms
+		# $ExecutionContext.InvokeCommand.InvokeScript( # 1140ms
+		# 	$false,
+		# 	(
+		# 		[scriptblock]::Create(
+		# 			[io.file]::ReadAllText(
+		# 				$filePath,
+		# 				[Text.Encoding]::UTF8
+		# 			)
+		# 		)
+		# 	), $null, $null
+		# )
 	}
 	catch
 	{
