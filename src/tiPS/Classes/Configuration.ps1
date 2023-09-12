@@ -4,6 +4,7 @@
 # Only add the types if they don't already exist. This is quicker than re-adding the types and it failing.
 if (-not ('tiPS.Configuration' -as [type]))
 {
-	[string] $classDefinition = [System.IO.File]::ReadAllText("$PSScriptRoot\Configuration.cs")
+	[string] $classDefinitionFilePath = Resolve-Path -Path "$PSScriptRoot\Configuration.cs"
+	[string] $classDefinition = [System.IO.File]::ReadAllText($classDefinitionFilePath)
 	Add-Type -Language CSharp -TypeDefinition $classDefinition
 }
