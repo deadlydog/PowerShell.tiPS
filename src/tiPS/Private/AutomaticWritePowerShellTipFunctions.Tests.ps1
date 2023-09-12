@@ -5,7 +5,10 @@ BeforeAll {
 
 Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 	BeforeEach {
-		Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith { return 'TestDrive:\LastAutomaticTipWrittenDate.txt' }
+		Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith {
+			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:\LastAutomaticTipWrittenDate.txt')
+		}
 		Mock -CommandName WriteAutomaticPowerShellTip -MockWith {} -Verifiable
 		Mock -CommandName TestPowerShellSessionIsInteractive -MockWith { return $true }
 	}

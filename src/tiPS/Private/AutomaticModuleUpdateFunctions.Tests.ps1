@@ -5,7 +5,10 @@ BeforeAll {
 
 Describe 'Calling StartModuleUpdateIfNeeded' {
 	BeforeEach {
-		Mock GetModulesLastUpdateDateFilePath { return 'TestDrive:\ModulesLastUpdateDate.txt' }
+		Mock GetModulesLastUpdateDateFilePath {
+			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:\ModulesLastUpdateDate.txt')
+		}
 		Mock UpdateModule {} -Verifiable
 	}
 
@@ -111,7 +114,10 @@ Describe 'Calling StartModuleUpdateIfNeeded' {
 
 Describe 'Updating the module' {
 	BeforeEach {
-		Mock GetModulesLastUpdateDateFilePath { return 'TestDrive:\ModulesLastUpdateDate.txt' }
+		Mock GetModulesLastUpdateDateFilePath {
+			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:\ModulesLastUpdateDate.txt')
+		}
 
 		# Update-Module is called from a background job, and we cannot mock calls inside a background job's scriptblock,
 		# so the best we can do to check if Update-Module was called is to mock Start-Job and ensure it was called.
