@@ -17,11 +17,12 @@ function WritePowerShellTipToTerminal
 	[ConsoleColor] $minPowerShellVersionColor = [ConsoleColor]::Red
 
 	# Calculate how many header characters to put on each side of the title to make it look nice.
-	[int] $numberOfCharactersInHeader = 80
+	[int] $numberOfCharactersInHeader = 90
+	[int] $headerContentLength = $Tip.Title.Length + 2 + $Tip.Category.ToString().Length + 3
 	[int] $numberOfHeaderCharactersOnEachSideOfTitle =
-		[Math]::Floor(($numberOfCharactersInHeader - ($Tip.Title.Length + 2)) / 2)
+		[Math]::Floor(($numberOfCharactersInHeader - ($headerContentLength)) / 2)
 	[int] $additionalHeaderCharacterNeeded = 0
-	if ($Tip.Title.Length % 2 -eq 1)
+	if ($headerContentLength % 2 -eq 1)
 	{
 		$additionalHeaderCharacterNeeded = 1
 	}
@@ -29,6 +30,7 @@ function WritePowerShellTipToTerminal
 	[string] $header =
 		('-' * $numberOfHeaderCharactersOnEachSideOfTitle) +
 		' ' + $Tip.Title + ' ' +
+		'[' + $Tip.Category + '] ' +
 		('-' * ($numberOfHeaderCharactersOnEachSideOfTitle + $additionalHeaderCharacterNeeded))
 	Write-Host $header -ForegroundColor $headerColor
 
