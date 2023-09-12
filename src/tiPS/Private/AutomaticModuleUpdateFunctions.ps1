@@ -73,7 +73,7 @@ function ReadModulesLastUpdateDateOrDefault
 	[string] $moduleUpdateDateFilePath = GetModulesLastUpdateDateFilePath
 	if (Test-Path -Path $moduleUpdateDateFilePath -PathType Leaf)
 	{
-		[string] $modulesLastUpdateDateString = Get-Content -Path $moduleUpdateDateFilePath -Raw
+		[string] $modulesLastUpdateDateString = [System.IO.File]::ReadAllText($moduleUpdateDateFilePath)
 		$modulesLastUpdateDate = [DateTime]::Parse($modulesLastUpdateDateString)
 	}
 	return $modulesLastUpdateDate

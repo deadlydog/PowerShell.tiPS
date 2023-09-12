@@ -20,7 +20,7 @@ function ReadConfigurationFromFileOrDefault
 	if (Test-Path -Path $configFilePath -PathType Leaf)
 	{
 		Write-Verbose "Reading configuration from '$configFilePath'."
-		$config = Get-Content -Path $configFilePath -Raw | ConvertFrom-Json
+		$config = [System.IO.File]::ReadAllText($configFilePath) | ConvertFrom-Json
 	}
 	return $config
 }

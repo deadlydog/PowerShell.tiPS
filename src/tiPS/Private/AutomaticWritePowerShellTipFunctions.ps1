@@ -104,7 +104,7 @@ function ReadLastAutomaticTipWrittenDateOrDefault
 	[string] $lastAutomaticTipWrittenDateFilePath = GetLastAutomaticTipWrittenDateFilePath
 	if (Test-Path -Path $lastAutomaticTipWrittenDateFilePath -PathType Leaf)
 	{
-		[string] $lastAutomaticTipWrittenDateString = Get-Content -Path $lastAutomaticTipWrittenDateFilePath -Raw
+		[string] $lastAutomaticTipWrittenDateString = [System.IO.File]::ReadAllText($lastAutomaticTipWrittenDateFilePath)
 		$lastAutomaticTipWrittenDate = [DateTime]::Parse($lastAutomaticTipWrittenDateString)
 	}
 	return $lastAutomaticTipWrittenDate
