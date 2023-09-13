@@ -44,6 +44,7 @@ foreach ($filePath in $functionFilePathsToImport)
 #Requires -Version 3.0
 Set-StrictMode -Version Latest
 
+# All module functions that reference a file path in the module should use this variable, rather than PSScriptRoot.
 New-Variable -Name 'PSModuleRoot' -Value `$PSScriptRoot -Option Constant -Scope Script
 
 $importedFileContents
