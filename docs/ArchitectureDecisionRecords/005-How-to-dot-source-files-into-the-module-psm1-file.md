@@ -45,7 +45,7 @@ While this does accomplish the goal, it introduces additional complexity and a n
 
 For now I'm going to stick with dot-sourcing the files individually in the .psm1 file.
 This is the simplest option and still allows us to use breakpoints in VS Code.
-Also, the performance difference between the different methods with the current number of files is low.
+Also, the performance difference between dot-sourcing and defining the code directly in the .psm1 file ~100ms, which is not too bad.
 If the dot-sourcing time becomes a problem as more files are added to the module, we can revisit this decision.
 
 ## Consequences
