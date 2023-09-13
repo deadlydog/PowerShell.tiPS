@@ -40,6 +40,9 @@ jobs:
         shell: pwsh
         run: $PSVersionTable
 
+      - name: Install dotnet CLI
+        uses: actions/setup-dotnet@v3
+
       - name: Build the C# assemblies
         shell: pwsh
         run: ./build/Build-CSharpAssemblies.ps1
