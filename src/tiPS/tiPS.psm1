@@ -1,6 +1,9 @@
 #Requires -Version 3.0
 Set-StrictMode -Version Latest
 
+# All module functions that reference a file path in the module should use this variable, rather than PSScriptRoot.
+New-Variable -Name 'PSModuleRoot' -Value $PSScriptRoot -Option Constant -Scope Script
+
 # Import all Classes and Private and Public functions from their respective directories, in that order.
 [string[]] $classFilePaths =
 	Get-ChildItem -Path $PSScriptRoot\Classes -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |

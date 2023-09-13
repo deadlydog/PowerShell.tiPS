@@ -4,7 +4,7 @@
 # Only add the types if they don't already exist. This is quicker than re-adding the types and it failing.
 if (-not ('tiPS.PowerShellTip' -as [type]))
 {
-	[string] $classDefinitionFilePath = Resolve-Path -Path "$PSScriptRoot\PowerShellTip.cs"
+	[string] $classDefinitionFilePath = Resolve-Path -Path "$script:PSModuleRoot\Classes\PowerShellTip.cs"
 	[string] $classDefinition = [System.IO.File]::ReadAllText($classDefinitionFilePath)
 	Add-Type -Language CSharp -TypeDefinition $classDefinition
 }
