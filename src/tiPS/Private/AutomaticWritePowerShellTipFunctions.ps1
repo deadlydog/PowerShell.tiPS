@@ -83,8 +83,9 @@ function TestPowerShellSessionIsInteractive
 	[string[]] $commandLineArgs = [Environment]::GetCommandLineArgs()
 	Write-Debug "The PowerShell command line arguments are '$commandLineArgs'."
 
-	[bool] $isNonInteractive = $commandLineArgs |
+	[string[]] $nonInteractiveArgMatches = $commandLineArgs |
 		Where-Object { $_ -in $typicalNonInteractiveCommandLineArguments }
+	[bool] $isNonInteractive = $nonInteractiveArgMatches.Count -gt 0
 
 	if ($isNonInteractive)
 	{
