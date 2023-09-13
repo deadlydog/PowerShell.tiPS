@@ -1,12 +1,7 @@
-// Windows PowerShell only supports C# 5.0, so we can't use any newer language features: https://stackoverflow.com/a/40789694/602585
-// List of C# versions and features: https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history
 using System;
 
 namespace tiPS
 {
-	// Ideally the enum would be in a separate file, but then we have to deal with writing assemblies to disk
-	// in order to load PowerShell types from 2 different files, so just define everything in a single file
-	// here for now: https://stackoverflow.com/a/20749076/602585
 	public enum TipCategory
 	{
 		Community, // Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
