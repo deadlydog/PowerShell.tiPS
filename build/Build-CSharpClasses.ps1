@@ -10,7 +10,7 @@ Param()
 [string] $csharpSlnFilePath = Join-Path -Path $csharpSolutionDirectoryPath -ChildPath 'tiPSClasses.sln'
 [string] $csharpClassesDllDirectoryPath = Join-Path -Path $csharpSolutionDirectoryPath -ChildPath 'tiPSClasses/bin/Release/netstandard2.0'
 
-Write-Output "Building C# sln in Release mode."
+Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
 & dotnet.exe build "$csharpSlnFilePath" --configuration Release
 
 Write-Output "Copying the DLL files in '$csharpClassesDllDirectoryPath' to the module's Classes directory '$moduleClassesDirectoryPath'."
