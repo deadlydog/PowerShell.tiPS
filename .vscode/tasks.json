@@ -99,7 +99,7 @@
 		{
 			"label": "Build C# assembly and copy to PowerShell module directory",
 			"type": "shell",
-			"command": "./build/Build-CSharpClasses.ps1",
+			"command": "./build/Build-CSharpAssemblies.ps1",
 			"group": "build",
 			"presentation": {
 				"reveal": "always",

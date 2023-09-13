@@ -1,4 +1,4 @@
-# This script builds the CSharp Classes DLL file and places it in the Classes directory of the module.
+# This script builds the C# DLL files and places them in the Classes directory of the module.
 
 [CmdletBinding()]
 Param()
