@@ -6,16 +6,16 @@ Accepted 2023-09-12
 
 ## Context
 
-After adding `Import-Module -Name tiPS` to my PowerShell profile, I noticed that it took noticeably longer to load my profile; more than 1 second.
-After some investigation [with Profiler](https://blog.danskingdom.com/Easily-profile-your-PowerShell-code-with-the-Profiler-module/) I found that the bulk of the time was spent dot-sourcing the files into the module.
+After adding `Import-Module -Name tiPS` to my PowerShell profile, we noticed that it took noticeably longer to load my profile; more than 1 second.
+After some investigation [with Profiler](https://blog.danskingdom.com/Easily-profile-your-PowerShell-code-with-the-Profiler-module/) We found that the bulk of the time was spent dot-sourcing the files into the module.
 The alternative is to define all of the module functions directly in the .psm1 file, but having a single large file with all of the module's code in it is not ideal for organization and maintainability.
-I decided to do some performance comparisons of the different ways to define the functions in the module.
+We decided to do some performance comparisons of the different ways to define the functions in the module.
 
 ### Comparison of different ways to define functions in the module
 
-I tried defining the functions directly in the .psm1 file, as well as 4 different ways to import the functions into the module.
+We tried defining the functions directly in the .psm1 file, as well as 4 different ways to import the functions into the module.
 When the tests were performed, there were 15 different files being imported into the module.
-I recorded the average time to load the module using each method:
+we recorded the average time to load the module using each method:
 
 1. (1060ms) Define all of the code directly in the .psm1 file.
 1. (1180ms) Dot-source each file individually in the .psm1 file: `. $filePath`
@@ -35,12 +35,12 @@ When using the `Invoke-Expression` or `$ExecutionContext.InvokeCommand.InvokeScr
 
 Our original assumption that the act of dot-sourcing the files was the cause of the slow startup time was incorrect.
 All of the methods tested took roughly the same amount of time to load the module, so the slow startup bottleneck lies somewhere else.
-Spoiler: I found it is when importing the C# classes.
+Spoiler: We found it is when importing the C# classes.
 
 ## Decision
 
 While defining the functions directly in the .psm1 file is the fastest, it's not a good option for maintainability.
-To try and get the best of both worlds, I created a `build/Generate-Psm1File.ps1` script that allows us to define the functions in separate files and then generate the .psm1 file with all of the functions defined in it.
+To try and get the best of both worlds, we created a `build/Generate-Psm1File.ps1` script that allows us to define the functions in separate files and then generate the .psm1 file with all of the functions defined in it.
 While this does accomplish the goal, it introduces additional complexity and a new script that needs to be maintained.
 
 For now I'm going to stick with dot-sourcing the files individually in the .psm1 file.
