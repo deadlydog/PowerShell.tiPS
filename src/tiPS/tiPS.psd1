@@ -15,7 +15,7 @@ RootModule = 'tiPS.psm1'
 ModuleVersion = '0.0.0'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Desktop', 'Core')
 
 # ID used to uniquely identify this module
 GUID = 'f4c65354-565d-4e4b-b922-c7dbceb953d6'
