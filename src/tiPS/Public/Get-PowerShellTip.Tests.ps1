@@ -1,4 +1,4 @@
-using module .\..\tiPS.psm1
+using module './../tiPS.psm1'
 
 Describe 'Get-PowerShellTip' {
 	Context 'Given no parameters' {
