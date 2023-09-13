@@ -10,6 +10,9 @@ Param()
 [string] $csharpSlnFilePath = Join-Path -Path $csharpSolutionDirectoryPath -ChildPath 'tiPSClasses.sln'
 [string] $csharpClassesDllDirectoryPath = Join-Path -Path $csharpSolutionDirectoryPath -ChildPath 'tiPSClasses/bin/Release/netstandard2.0'
 
+Write-Output "Deleting the DLL files in '$moduleClassesDirectoryPath' before rebuilding and replacing them."
+Remove-Item -Path "$moduleClassesDirectoryPath/*" -Include '*.dll' -Force
+
 Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
 & dotnet.exe build "$csharpSlnFilePath" --configuration Release
 
