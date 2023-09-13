@@ -33,6 +33,10 @@ I recorded the average time to load the module using each method:
 It is also worth noting that only the first two options of either defining the code directly in the .psm1 file or dot-sourcing the files individually allowed us to still put breakpoints in VS Code and have the debugger stop at them.
 When using the `Invoke-Expression` or `$ExecutionContext.InvokeCommand.InvokeScript` methods, the debugger would not stop at breakpoints in the imported files.
 
+Our original assumption that the act of dot-sourcing the files was the cause of the slow startup time was incorrect.
+All of the methods tested took roughly the same amount of time to load the module, so the slow startup bottleneck lies somewhere else.
+Spoiler: I found it is when importing the C# classes.
+
 ## Decision
 
 While defining the functions directly in the .psm1 file is the fastest, it's not a good option for maintainability.
@@ -41,6 +45,7 @@ While this does accomplish the goal, it introduces additional complexity and a n
 
 For now I'm going to stick with dot-sourcing the files individually in the .psm1 file.
 This is the simplest option and still allows us to use breakpoints in VS Code.
+Also, the performance difference between the different methods with the current number of files is low.
 If the dot-sourcing time becomes a problem as more files are added to the module, we can revisit this decision.
 
 ## Consequences
