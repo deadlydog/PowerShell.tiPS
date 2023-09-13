@@ -1,3 +1,11 @@
+# This script is not currently used.
+# This script can be used to generate and overwrite the tiPS.psm1 file. Rather than having to dot-source
+# all of the files into the module, this script will concatenate all of the files into a single file.
+# Dot-sourcing files adds a runtime performance penalty, increasing the load time of the module.
+# At this time, because there are not too many files, the performance penalty is only about 100ms, which
+# is acceptable. However, if the number of files increases this script can be used to improve performance.
+# We are not using this script currently as it would add complexity to the build process and maintenance.
+
 [string] $repositoryRoot = Split-Path $PSScriptRoot -Parent
 [string] $moduleDirectoryPath = Join-Path -Path $repositoryRoot -ChildPath 'src\tiPS'
 
