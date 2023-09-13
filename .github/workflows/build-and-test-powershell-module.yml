@@ -40,6 +40,10 @@ jobs:
         shell: pwsh
         run: $PSVersionTable
 
+      - name: Build the C# assemblies
+        shell: pwsh
+        run: ./build/Build-CSharpAssemblies.ps1
+
       - name: Generate PowerShellTips.json file
         shell: pwsh
         run: ./build/Convert-PowerShellTipFilesToJsonFile.ps1
