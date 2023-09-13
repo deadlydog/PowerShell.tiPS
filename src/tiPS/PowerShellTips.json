@@ -3,7 +3,7 @@
     "CreatedDate": "2023-07-16T00:00:00",
     "Title": "PowerShell is open source",
     "TipText": "Did you know that PowerShell is open source? You can contribute to the project on GitHub.",
-    "Example": "Example code to demonstrate the tip.",
+    "Example": "",
     "Urls": [
       "https://github.com/PowerShell/PowerShell"
     ],
