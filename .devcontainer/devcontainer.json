@@ -31,7 +31,8 @@
 				"streetsidesoftware.code-spell-checker",
 				"EditorConfig.EditorConfig",
 				"TylerLeonhardt.vscode-inline-values-powershell",
-				"ionutvmi.path-autocomplete"
+				"ionutvmi.path-autocomplete",
+				"ms-dotnettools.csdevkit"
 			]
 		}
 	}
