@@ -10,7 +10,8 @@
 			"username": "vscode",
 			"upgradePackages": "false",
 			"nonFreePackages": "true"
-		}
+		},
+		"ghcr.io/devcontainers/features/dotnet:2": "latest"
 	},
 
 	"postCreateCommand": "sudo chsh vscode -s \"$(which pwsh)\"; pwsh -c 'install-module Pester -force'; pwsh -c 'install-module PSScriptAnalyzer -force'",
