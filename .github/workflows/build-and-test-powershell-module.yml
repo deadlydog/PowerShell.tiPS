@@ -43,6 +43,7 @@ jobs:
       - name: Install dotnet CLI
         uses: actions/setup-dotnet@v3
         with:
+          dotnet-version: 7.x
           dotnet-quality: ga
 
       - name: Build the C# assemblies
