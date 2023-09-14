@@ -1,5 +1,23 @@
 function Get-TiPSDataDirectoryPath
 {
+<#
+	.SYNOPSIS
+	Get the tiPS data directory path.
+
+	.DESCRIPTION
+	Get the tiPS data directory path where the tiPS module stores all of its data for the current user.
+
+	.INPUTS
+	None. You cannot pipe objects to the function.
+
+	.OUTPUTS
+	A [string] of the directory path.
+
+	.EXAMPLE
+	Get-TiPSDataDirectoryPath
+
+	Get the tiPS data directory path.
+#>
 	[CmdletBinding()]
 	[OutputType([string])]
 	Param()
