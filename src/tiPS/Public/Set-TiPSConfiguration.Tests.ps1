@@ -54,4 +54,29 @@ Describe 'Setting the Configuration' {
 			$result.AutoWritePowerShellTipCadence | Should -Be Daily
 		}
 	}
+
+	Context 'When piping an object to the function' {
+		It 'Should set the configuration when a Configuration object is piped in' {
+			$config = [tiPS.Configuration]::new()
+			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::BiWeekly
+
+			$config | Set-TiPSConfiguration
+
+			$result = Get-TiPSConfiguration
+			$result | Should -Be $config
+		}
+
+		It 'Should set the configuration when an object with the same properties as a Configuration object is piped in' {
+			$config = @{
+				AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Monthly
+				AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
+			}
+
+			$config | Set-TiPSConfiguration
+
+			$result = Get-TiPSConfiguration
+			$result.AutoUpdateCadence | Should -Be ([tiPS.ModuleAutoUpdateCadence]::Monthly)
+			$result.AutoWritePowerShellTipCadence | Should -Be ([tiPS.WritePowerShellTipCadence]::Weekly)
+		}
+	}
 }

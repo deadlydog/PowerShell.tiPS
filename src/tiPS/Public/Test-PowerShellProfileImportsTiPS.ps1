@@ -1,5 +1,32 @@
 function Test-PowerShellProfileImportsTiPS
 {
+<#
+	.SYNOPSIS
+	Tests whether the PowerShell profile imports the tiPS module.
+
+	.DESCRIPTION
+	Tests whether the PowerShell profile imports the tiPS module.
+	Returns true if it finds an 'Import-Module -Name tiPS' statement in the profile, false otherwise.
+	This only looks in the default PowerShell profile paths.
+	If the tiPS module is imported from a dot-sourced file then this will return false.
+
+	.EXAMPLE
+	Test-PowerShellProfileImportsTiPS
+
+	This example tests whether the PowerShell profile imports the tiPS module.
+
+	.INPUTS
+	None. You cannot pipe objects to the function.
+
+	.OUTPUTS
+	System.Boolean representing if the tiPS module is imported by the PowerShell profile or not.
+
+	.NOTES
+	This function is intended to be used by the Edit-PowerShellProfileToImportTiPS function.
+
+	.LINK
+	Edit-PowerShellProfileToImportTiPS
+#>
 	[CmdletBinding()]
 	[OutputType([System.Boolean])]
 	Param()
