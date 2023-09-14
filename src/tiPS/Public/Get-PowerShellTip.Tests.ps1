@@ -38,4 +38,18 @@ Describe 'Get-PowerShellTip' {
 			$allTips.Count | Should -Be $numberOfTipsInJsonFile
 		}
 	}
+
+	Context 'By piping string IDs to it' {
+		It 'Should return the tip with the specified ID' {
+			$tip = '2023-07-16-powershell-is-open-source' | Get-PowerShellTip
+			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
+		}
+	}
+
+	Context 'By piping an object with an Id property to it' {
+		It 'Should return the tip with the specified ID' {
+			$tip = [pscustomobject]@{ Id = '2023-07-16-powershell-is-open-source' } | Get-PowerShellTip
+			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
+		}
+	}
 }

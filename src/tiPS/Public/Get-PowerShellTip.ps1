@@ -5,31 +5,36 @@ function Get-PowerShellTip
 	[OutputType([System.Collections.Specialized.OrderedDictionary], ParameterSetName = 'AllTips')]
 	Param
 	(
-		[Parameter(ParameterSetName = 'Default', Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
+		[Parameter(ParameterSetName = 'Default', Mandatory = $false,
+			ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true,
+			HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
 		[string] $Id,
 
 		[Parameter(ParameterSetName = 'AllTips', Mandatory = $false, HelpMessage = 'Return all tips.')]
 		[switch] $AllTips
 	)
 
-	if ($AllTips)
+	Process
 	{
-		return ReadAllPowerShellTipsFromJsonFile
-	}
-
-	if ([string]::IsNullOrWhiteSpace($Id))
-	{
-		$Id = $script:Tips.Keys | Get-Random -Count 1
-	}
-	else
-	{
-		if (-not $script:Tips.ContainsKey($Id))
+		if ($AllTips)
 		{
-			Write-Error "A tip with ID '$Id' does not exist."
-			return
+			return ReadAllPowerShellTipsFromJsonFile
 		}
-	}
 
-	[tiPS.PowerShellTip] $tip = $script:Tips[$Id]
-	return $tip
+		if ([string]::IsNullOrWhiteSpace($Id))
+		{
+			$Id = $script:Tips.Keys | Get-Random -Count 1
+		}
+		else
+		{
+			if (-not $script:Tips.ContainsKey($Id))
+			{
+				Write-Error "A tip with ID '$Id' does not exist."
+				return
+			}
+		}
+
+		[tiPS.PowerShellTip] $tip = $script:Tips[$Id]
+		return $tip
+	}
 }
