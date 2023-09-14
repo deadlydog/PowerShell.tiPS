@@ -35,10 +35,14 @@ function Write-PowerShellTip
 	[OutputType([void])]
 	Param
 	(
-		[Parameter(Mandatory = $false, HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
+		[Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true,
+			HelpMessage = 'The ID of the tip to write. If not supplied, a random tip will be written.')]
 		[string] $Id
 	)
 
-	[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Id $Id
-	WritePowerShellTipToTerminal -Tip $tip
+	Process
+	{
+		[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Id $Id
+		WritePowerShellTipToTerminal -Tip $tip
+	}
 }

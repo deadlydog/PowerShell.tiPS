@@ -9,19 +9,33 @@ BeforeAll {
 }
 
 Describe 'Write-PowerShellTip' {
+	BeforeEach {
+		Mock -ModuleName $ModuleName Write-Host { } -Verifiable
+	}
+
 	Context 'Using one of its aliases' {
 		It 'Should write a tip using Tips' {
-			Mock -ModuleName $ModuleName Write-Host { } -Verifiable
 			Tips
-			Should -InvokeVerifiable # Verify that the mock was called.
+			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
 		}
 	}
 
 	Context 'Given no parameters' {
 		It 'Should write a tip' {
-			Mock -ModuleName $ModuleName Write-Host { } -Verifiable
 			Write-PowerShellTip
-			Should -InvokeVerifiable # Verify that the mock was called.
+			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
+		}
+	}
+
+	Context 'Given an ID via piping' {
+		It 'Should write the tip with the specified ID' {
+			'2023-07-16-powershell-is-open-source' | Write-PowerShellTip
+			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
+		}
+
+		It 'Should write the tip with the specified ID of the object' {
+			[PsCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Write-PowerShellTip
+			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
 		}
 	}
 }
