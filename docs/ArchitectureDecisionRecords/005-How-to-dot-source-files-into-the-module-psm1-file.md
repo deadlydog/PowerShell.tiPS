@@ -40,7 +40,7 @@ Spoiler: We found it is when importing the C# classes.
 ## Decision
 
 While defining the functions directly in the .psm1 file is the fastest, it's not a good option for maintainability.
-To try and get the best of both worlds, we created a `build/Generate-Psm1File.ps1` script that allows us to define the functions in separate files and then generate the .psm1 file with all of the functions defined in it.
+To try and get the best of both worlds, we created a [build/Build-Psm1File.ps1](/build/Build-Psm1File.ps1) script that allows us to define the functions in separate files and then generate the .psm1 file with all of the functions defined in it.
 While this does accomplish the goal, it introduces additional complexity and a new script that needs to be maintained.
 
 For now I'm going to stick with dot-sourcing the files individually in the .psm1 file.
