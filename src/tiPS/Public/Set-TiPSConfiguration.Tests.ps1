@@ -7,7 +7,7 @@ BeforeAll {
 Describe 'Setting the Configuration' {
 	BeforeEach {
 		# Write the configuration to a temp location, instead of overwriting the current user's configuration.
-		Mock -ModuleName $ModuleName Get-TiPSDataDirectoryPath { return 'TestDrive:\tiPS' }
+		Mock -ModuleName $ModuleName Get-TiPSDataDirectoryPath { return 'TestDrive:/tiPS' }
 		Mock -ModuleName $ModuleName Test-PowerShellProfileImportsTiPS { return $true }
 	}
 

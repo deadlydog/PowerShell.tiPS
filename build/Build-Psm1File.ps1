@@ -17,15 +17,15 @@ Param()
 
 # Import all Classes and Private and Public functions from their respective directories, in that order.
 [string[]] $classFilePaths =
-	Get-ChildItem -Path $moduleDirectoryPath\Classes -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
+	Get-ChildItem -Path $moduleDirectoryPath/Classes -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
 [string[]] $privateFunctionFilePaths =
-	Get-ChildItem -Path $moduleDirectoryPath\Private -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
+	Get-ChildItem -Path $moduleDirectoryPath/Private -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
 [string[]] $publicFunctionFilePaths =
-	Get-ChildItem -Path $moduleDirectoryPath\Public -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
+	Get-ChildItem -Path $moduleDirectoryPath/Public -Recurse -Filter '*.ps1' -Exclude '*.Tests.ps1' |
 	Select-Object -ExpandProperty FullName
 
 [string[]] $functionFilePathsToImport = $classFilePaths + $privateFunctionFilePaths + $publicFunctionFilePaths

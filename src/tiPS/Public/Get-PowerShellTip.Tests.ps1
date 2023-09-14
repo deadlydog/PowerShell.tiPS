@@ -24,7 +24,7 @@ Describe 'Get-PowerShellTip' {
 
 	Context 'Given the All switch' {
 		It 'Should return all tips' {
-			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
 
 			[int] $numberOfTipsInJsonFile =
 			Get-Content -Path $powerShellTipsJsonFilePath |
