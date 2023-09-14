@@ -31,7 +31,7 @@ env:
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
@@ -39,6 +39,11 @@ jobs:
       - name: Display PowerShell version being used
         shell: pwsh
         run: $PSVersionTable
+
+      - name: Install dotnet CLI
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-quality: ga
 
       - name: Build the C# assemblies
         shell: pwsh
