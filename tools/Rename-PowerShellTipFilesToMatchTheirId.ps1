@@ -1,7 +1,7 @@
 # This script ensures that all PowerShell Tip files in the src/PowerShellTips directory have their ID as their filename.
 
-# Add the class types directly instead of importing the module, since all we need are the classes.
-Add-Type -Path "$PSScriptRoot/../src/tiPS/Classes/tiPSClasses.dll"
+# Add the class types directly instead of importing the entire module, since all we need are the classes.
+. "$PSScriptRoot/../src/tiPS/Classes/ImportTipsClassesAssembly.ps1"
 
 [string] $powerShellTipFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot/../src/PowerShellTips"
 

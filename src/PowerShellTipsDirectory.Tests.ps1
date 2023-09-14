@@ -1,6 +1,6 @@
 BeforeAll {
-	# Add the class types directly instead of importing the module, since all we need are the classes.
-	Add-Type -Path "$PSScriptRoot/tiPS/Classes/tiPSClasses.dll"
+	# Add the class types directly instead of importing the entire module, since all we need are the classes.
+	. "$PSScriptRoot/tiPS/Classes/ImportTipsClassesAssembly.ps1"
 }
 
 Describe 'The files in the PowerShellTips directory' {
