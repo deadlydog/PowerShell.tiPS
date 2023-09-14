@@ -1,4 +1,7 @@
-# This script is not currently used.
+# This script is not currently used, but is kept around because we may decide to use it later if
+# startup performance becomes a problem down the road. For more info, see
+# docs/ArchitectureDecisionRecords/005-How-to-dot-source-files-into-the-module-psm1-file.md.
+
 # This script can be used to generate and overwrite the tiPS.psm1 file. Rather than having to dot-source
 # all of the files into the module, this script will concatenate all of the files into a single file.
 # Dot-sourcing files adds a runtime performance penalty, increasing the load time of the module.
