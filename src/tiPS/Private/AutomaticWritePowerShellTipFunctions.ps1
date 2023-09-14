@@ -85,7 +85,7 @@ function TestPowerShellSessionIsInteractive
 
 	[string[]] $nonInteractiveArgMatches = $commandLineArgs |
 		Where-Object { $_ -in $typicalNonInteractiveCommandLineArguments }
-	[bool] $isNonInteractive = $nonInteractiveArgMatches.Count -gt 0
+	[bool] $isNonInteractive = $null -ne $nonInteractiveArgMatches -and $nonInteractiveArgMatches.Count -gt 0
 
 	if ($isNonInteractive)
 	{
