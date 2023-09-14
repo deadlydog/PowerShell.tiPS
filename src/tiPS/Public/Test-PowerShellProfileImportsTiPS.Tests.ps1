@@ -1,11 +1,11 @@
 BeforeAll {
-	. "$PSScriptRoot\Test-PowerShellProfileImportsTiPS.ps1"
+	. "$PSScriptRoot/Test-PowerShellProfileImportsTiPS.ps1"
 }
 
 Describe 'Calling Test-PowerShellProfileImportsTiPS' {
 	Context 'When the PowerShell profile files do not exist' {
 		BeforeEach {
-			Mock -CommandName GetPowerShellProfileFilePaths -MockWith { return @('TestDrive:\DoesNotExist.ps1') }
+			Mock -CommandName GetPowerShellProfileFilePaths -MockWith { return @('TestDrive:/DoesNotExist.ps1') }
 		}
 
 		It 'Should return false' {
@@ -16,7 +16,7 @@ Describe 'Calling Test-PowerShellProfileImportsTiPS' {
 
 	Context 'When the PowerShell profiles exist, but do not import tiPS' {
 		BeforeEach {
-			$fakeProfileFilePath = 'TestDrive:\fakeProfile.ps1'
+			$fakeProfileFilePath = 'TestDrive:/fakeProfile.ps1'
 			Set-Content -Path $fakeProfileFilePath -Force -Value @'
 # This is a fake PowerShell profile.
 '@
@@ -31,7 +31,7 @@ Describe 'Calling Test-PowerShellProfileImportsTiPS' {
 
 	Context 'When the PowerShell profiles exist and do import tiPS' {
 		BeforeEach {
-			$fakeProfileFilePath = 'TestDrive:\fakeProfile.ps1'
+			$fakeProfileFilePath = 'TestDrive:/fakeProfile.ps1'
 			Set-Content -Path $fakeProfileFilePath -Force -Value @'
 # This fake PowerShell profile imports tiPS.
 Import-Module -Name tiPS

@@ -1,14 +1,14 @@
 BeforeAll {
 	# Add the class types directly instead of importing the module, since all we need are the classes.
-	Add-Type -Path "$PSScriptRoot\..\Classes\tiPSClasses.dll"
-	. "$PSScriptRoot\AutomaticWritePowerShellTipFunctions.ps1"
+	Add-Type -Path "$PSScriptRoot/../Classes/tiPSClasses.dll"
+	. "$PSScriptRoot/AutomaticWritePowerShellTipFunctions.ps1"
 }
 
 Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 	BeforeEach {
 		Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith {
 			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:\LastAutomaticTipWrittenDate.txt')
+			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/LastAutomaticTipWrittenDate.txt')
 		}
 		Mock -CommandName WriteAutomaticPowerShellTip -MockWith {} -Verifiable
 		Mock -CommandName TestPowerShellSessionIsInteractive -MockWith { return $true }

@@ -1,6 +1,6 @@
 BeforeAll {
 	# Add the class types directly instead of importing the module, since all we need are the classes.
-	Add-Type -Path "$PSScriptRoot\tiPS\Classes\tiPSClasses.dll"
+	Add-Type -Path "$PSScriptRoot/tiPS/Classes/tiPSClasses.dll"
 }
 
 Describe 'The files in the PowerShellTips directory' {
@@ -11,14 +11,14 @@ Describe 'The files in the PowerShellTips directory' {
 		'[a-z0-9-]+' + # Followed by any number of lower-case kebab-case words.
 		'\.ps1$' # Ends with the file extension .ps1.
 
-		$tipFiles = Get-ChildItem -Path "$PSScriptRoot\PowerShellTips" -File
+		$tipFiles = Get-ChildItem -Path "$PSScriptRoot/PowerShellTips" -File
 		$tipFiles | ForEach-Object {
 			$_.Name | Should -cMatch $fileNameRegex
 		}
 	}
 
 	It 'Should have their file name match their ID' {
-		$tipFiles = Get-ChildItem -Path "$PSScriptRoot\PowerShellTips" -File
+		$tipFiles = Get-ChildItem -Path "$PSScriptRoot/PowerShellTips" -File
 		$tipFiles | ForEach-Object {
 			[tiPS.PowerShellTip] $tip = $null
 			. $_.FullName # Loads the tip into the $tip variable.
