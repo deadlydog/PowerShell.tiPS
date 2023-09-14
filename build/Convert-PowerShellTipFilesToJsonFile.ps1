@@ -6,7 +6,7 @@
 Param()
 
 [string] $thisScriptsDirectoryPath = $PSScriptRoot
-[string] $repoRootDirectoryPath = Split-Path -Path $thisScriptsDirectoryPath -Parent
+[string] $repoRootDirectoryPath = Split-Path -Path $thisScriptsDirectoryPath -Parent -Resolve
 [string] $srcDirectoryPath = Join-Path -Path $repoRootDirectoryPath -ChildPath 'src'
 [string] $moduleRootDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'tiPS'
 [string] $powerShellTipsDirectoryPath = Join-Path -Path $srcDirectoryPath -ChildPath 'PowerShellTips'

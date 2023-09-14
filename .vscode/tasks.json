@@ -26,15 +26,15 @@
 			]
 		},
 		{
-			"label": "Run build tasks",
-			"dependsOn": [
-				"Run PSScriptAnalyzer linter",
-				"Convert PowerShellTips files to JSON file"
-			],
+			"label": "Run all build tasks",
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			}
+			},
+			"dependsOn": [
+				"Run PSScriptAnalyzer linter",
+				"Convert PowerShellTips files to JSON file"
+			]
 		},
 		{
 			"label": "Run PSScriptAnalyzer linter",
@@ -85,6 +85,21 @@
 			"label": "Ensure PowerShellTips filenames match their ID",
 			"type": "shell",
 			"command": "./tools/Rename-PowerShellTipFilesToMatchTheirId.ps1",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": false,
+				"group": "build"
+			},
+			"dependsOn": [
+				"Build C# assembly and copy to PowerShell module directory"
+			]
+		},
+		{
+			"label": "Build C# assembly and copy to PowerShell module directory",
+			"type": "shell",
+			"command": "./build/Build-CSharpAssemblies.ps1",
 			"group": "build",
 			"presentation": {
 				"reveal": "always",

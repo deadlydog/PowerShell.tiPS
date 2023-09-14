@@ -3,15 +3,17 @@
 
 [string] $tipTitle = Read-Host -Prompt 'Enter the title for your new PowerShell tip (e.g. "PowerShell is open source")'
 
-# The Tip filename will be based on the date and title, so load a dummy PowerShellTip with the title to get the Id to use.
-. "$PSScriptRoot\..\src\tiPS\Classes\PowerShellTip.ps1"
-$tip = [tiPS.PowerShellTip]::new()
-$tip.CreatedDate = [DateTime]::Today
-$tip.Title = $tipTitle
+# Add the class types directly instead of importing the module, since all we need are the classes.
+Add-Type -Path "$PSScriptRoot\..\src\tiPS\Classes\tiPSClasses.dll"
 
-[string] $today = $tip.CreatedDate.ToString('yyyy-MM-dd')
+# The Tip filename is based on the ID, which is based on the date and title, so load a dummy PowerShellTip to get the filename to use.
+$dummyTip = [tiPS.PowerShellTip]::new()
+$dummyTip.CreatedDate = [DateTime]::Today
+$dummyTip.Title = $tipTitle
+
+[string] $today = $dummyTip.CreatedDate.ToString('yyyy-MM-dd')
 [string] $powerShellTipsFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot\..\src\PowerShellTips"
-[string] $newTipFileName = $tip.Id + '.ps1'
+[string] $newTipFileName = $dummyTip.Id + '.ps1'
 [string] $newTipFilePath = Join-Path -Path $powerShellTipsFilesDirectoryPath -ChildPath $newTipFileName
 [string] $tipTemplateFileContents = @"
 `$tip = [tiPS.PowerShellTip]::new()

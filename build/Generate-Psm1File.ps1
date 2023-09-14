@@ -6,8 +6,11 @@
 # is acceptable. However, if the number of files increases this script can be used to improve performance.
 # We are not using this script currently as it would add complexity to the build process and maintenance.
 
-[string] $repositoryRoot = Split-Path $PSScriptRoot -Parent
-[string] $moduleDirectoryPath = Join-Path -Path $repositoryRoot -ChildPath 'src\tiPS'
+[CmdletBinding()]
+Param()
+
+[string] $repositoryRoot = Split-Path $PSScriptRoot -Parent -Resolve
+[string] $moduleDirectoryPath = Join-Path -Path $repositoryRoot -ChildPath 'src/tiPS'
 
 # Import all Classes and Private and Public functions from their respective directories, in that order.
 [string[]] $classFilePaths =

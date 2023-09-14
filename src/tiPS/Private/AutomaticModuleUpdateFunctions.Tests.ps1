@@ -1,5 +1,6 @@
 BeforeAll {
-	. "$PSScriptRoot\..\Classes\Configuration.ps1"
+	# Add the class types directly instead of importing the module, since all we need are the classes.
+	Add-Type -Path "$PSScriptRoot\..\Classes\tiPSClasses.dll"
 	. "$PSScriptRoot\AutomaticModuleUpdateFunctions.ps1"
 }
 

@@ -1,5 +1,6 @@
 BeforeAll {
-	. "$PSScriptRoot\tiPS\Classes\PowerShellTip.ps1"
+	# Add the class types directly instead of importing the module, since all we need are the classes.
+	Add-Type -Path "$PSScriptRoot\tiPS\Classes\tiPSClasses.dll"
 }
 
 Describe 'The files in the PowerShellTips directory' {
