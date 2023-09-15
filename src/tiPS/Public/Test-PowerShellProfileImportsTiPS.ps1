@@ -32,10 +32,7 @@ function Test-PowerShellProfileImportsTiPS
 	[OutputType([System.Boolean])]
 	Param()
 
-	[string[]] $powerShellProfileFilePaths = GetPowerShellProfileFilePaths
-	[string[]] $profileFilePathsThatExist =
-		$powerShellProfileFilePaths |
-		Where-Object { Test-Path -Path $_ -PathType Leaf }
+	[string[]] $profileFilePathsThatExist = GetPowerShellProfileFilePathsThatExist
 
 	if ($null -eq $profileFilePathsThatExist -or $profileFilePathsThatExist.Count -eq 0)
 	{
@@ -57,23 +54,4 @@ function Test-PowerShellProfileImportsTiPS
 
 	Write-Verbose "The tiPS module is not imported by any of the PowerShell profiles: $profileFilePathsThatExist"
 	return $false
-}
-
-# Use a function to get the file paths so we can mock this function for testing.
-function GetPowerShellProfileFilePaths
-{
-	[string[]] $profileFilePaths = @()
-
-	# The $PROFILE variable may not exist depending on the host or the context in which PowerShell was started.
-	if (Test-Path -Path variable:PROFILE)
-	{
-		$profileFilePaths = @(
-			$PROFILE.CurrentUserAllHosts
-			$PROFILE.CurrentUserCurrentHost
-			$PROFILE.AllUsersAllHosts
-			$PROFILE.AllUsersCurrentHost
-		)
-	}
-
-	return ,$profileFilePaths
 }

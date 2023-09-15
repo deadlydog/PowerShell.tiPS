@@ -2,7 +2,7 @@ function Add-TiPSImportToPowerShellProfile
 {
 <#
 	.SYNOPSIS
-	Edits the user's PowerShell profile file to import the tiPS module.
+	Adds the tiPS Import-Module statement to the user's PowerShell profile file.
 
 	.DESCRIPTION
 	This function edits the user's PowerShell profile file to import the tiPS module, which can provide
@@ -20,7 +20,7 @@ function Add-TiPSImportToPowerShellProfile
 	.EXAMPLE
 	Add-TiPSImportToPowerShellProfile
 
-	This example edits the PowerShell profile to import the tiPS module.
+	This example edits the PowerShell profile to add a tiPS Import-Module statement.
 #>
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	[OutputType([void])]
@@ -35,8 +35,8 @@ function Add-TiPSImportToPowerShellProfile
 			return
 		}
 
-		[string] $profileFilePath = GetPowerShellProfileFilePath
-		[string] $contentToAddToProfile = 'Import-Module -Name tiPS # Added by tiPS to get automatic tips and updates.'
+		[string] $profileFilePath = GetPowerShellProfileFilePathToAddImportTo
+		[string] $contentToAddToProfile = GetImportStatementToAddToPowerShellProfile
 
 		if ([string]::IsNullOrWhiteSpace($profileFilePath))
 		{
@@ -59,18 +59,4 @@ function Add-TiPSImportToPowerShellProfile
 			Add-Content -Path $profileFilePath -Value $contentToAddToProfile -Force
 		}
 	}
-}
-
-# Use a function to get the file path so we can mock this function for testing.
-function GetPowerShellProfileFilePath
-{
-	[string] $profileFilePath = [string]::Empty
-
-	# The $PROFILE variable may not exist depending on the host or the context in which PowerShell was started.
-	if (Test-Path -Path variable:PROFILE)
-	{
-		$profileFilePath = $PROFILE.CurrentUserAllHosts
-	}
-
-	return $profileFilePath
 }
