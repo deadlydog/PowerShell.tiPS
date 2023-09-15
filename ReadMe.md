@@ -23,7 +23,7 @@ PowerShell tips delivered straight to your terminal 💻.
 
 ## 💬 Description
 
-`tiPS` is a PowerShell module that provides tips and tricks for PowerShell.
+`tiPS` is a cross-platform PowerShell module that provides PowerShell tips.
 This includes learning about things like:
 
 - PowerShell features
@@ -39,6 +39,10 @@ There are tons of great tips and tricks for PowerShell scattered around on the i
 This module brings tips to you with minimal effort required on your part.
 
 You can configure tiPS to show a tip every time you open your PowerShell terminal, or simply show a tip on demand by running the `tips` command.
+
+Nobody knows everything about PowerShell, and tiPS is meant to be a community driven project.
+Have a tip, module, blog post, or community event that you think others may find valuable?
+See the Contributing section below to have your tips added to tiPS.
 
 ## 🚀 Quick start
 
@@ -149,7 +153,7 @@ If tiPS is uninstalled, the directory is not automatically deleted; it must be d
 tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
 
 Have a PowerShell tip you want to share?
-Know of a great module or community event that you think others should know about?
+Know of a great module, blog post, or community event that you think others should know about?
 
 Follow these steps to add your tip to tiPS:
 
