@@ -31,7 +31,7 @@ This includes learning about things like:
 - PowerShell modules
 - PowerShell communities and events
 
-It is meant to be a low effort way to learn new things about PowerShell, and to help you become a better PowerShell user.
+tiPS provides a low-effort way to learn new things about PowerShell, and help you become a better PowerShell user.
 
 ## ❓ Why this exists
 
@@ -42,7 +42,7 @@ You can configure tiPS to show a tip every time you open your PowerShell termina
 
 ## 🚀 Quick start
 
-Copy and paste the following commands into your PowerShell terminal to install tiPS and have it automatically show you a new tip every day:
+Paste the following commands into your PowerShell terminal to install tiPS and have it automatically show you a new tip every day:
 
 ```powershell
 Install-Module -Name tiPS -Scope CurrentUser
@@ -54,7 +54,7 @@ That's it! The above commands are explained in more detail below.
 
 ### 💿 Installation
 
-The tiPS PowerShell module can be downloaded and installed by running the following command in PowerShell:
+The tiPS PowerShell module can be downloaded from [the PowerShell Gallery](https://www.powershellgallery.com/packages/tiPS) and installed by running the following command in PowerShell:
 
 ```powershell
 Install-Module -Name tiPS -Scope CurrentUser
@@ -77,14 +77,11 @@ Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdat
 
 By default tiPS does not automatically show tips or update itself, so you must configure it to do so.
 
-Tips will only be automatically shown in interactive PowerShell sessions.
-This prevents them from appearing unexpectedly when running scripts or other automated processes.
-
 ## Commands
 
 To see the full list of commands, use `Get-Command -Module tiPS`.
 You can then use `Get-Help <command>` to get more information about a specific command.
-Below are the most popular commands.
+Below are the most popular operations.
 
 ### 📰 Show a tip
 
@@ -118,6 +115,9 @@ Set-TiPSConfiguration -AutomaticallyWritePowerShellTip EverySession
 
 Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`, `EverySession`, `Daily`, and `Weekly`.
 
+Tips will only be automatically shown in interactive PowerShell sessions.
+This prevents them from appearing unexpectedly when running scripts or other automated processes.
+
 ### ⬆ Automatic updates
 
 New tips are obtained by updating the tiPS module.
@@ -133,7 +133,7 @@ Automatic updates are performed in a background job, so they will not block your
 The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
 Old versions of the module are automatically deleted after a successful update.
 
-### 💽 Get directory where user configuration is stored
+### 📁 Get directory where user configuration is stored
 
 To get the directory where the tiPS configuration and other related data is stored, run the following command:
 
@@ -142,7 +142,7 @@ Get-TiPSConfigurationDirectory
 ```
 
 To restore tiPS to the default configuration, simply delete the directory.
-If tiPS is uninstalled, the directory is not automatically deleted.
+If tiPS is uninstalled, the directory is not automatically deleted; it must be done manually.
 
 ## ➕ How to contribute
 
@@ -159,7 +159,7 @@ Follow these steps to add your tip to tiPS:
 1. Modify it with your tip info and commit your changes.
 1. Submit a pull request from your fork back to this repo ([See GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)).
 
-tiPS is meant to be a community driven project, so please help make it better by contributing your tips and tricks.
+tiPS is meant to be a community driven project, so please help make it better by contributing your tips.
 
 Issues, Discussions, and Pull Requests are welcome.
 See [the Contributing page](/docs/Contributing.md) for more details.
