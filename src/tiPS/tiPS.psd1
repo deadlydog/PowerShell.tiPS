@@ -76,6 +76,7 @@ FunctionsToExport = @(
   'Set-TiPSConfiguration'
   'Get-TiPSDataDirectoryPath'
   'Add-TiPSImportToPowerShellProfile'
+  'Remove-TiPSImportFromPowerShellProfile'
   'Test-PowerShellProfileImportsTiPS'
 )
 
