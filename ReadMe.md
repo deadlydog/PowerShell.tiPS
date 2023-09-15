@@ -33,16 +33,16 @@ This includes learning about things like:
 
 tiPS provides a low-effort way to learn new things about PowerShell, and help you become a better PowerShell user.
 
+tiPS is a community driven project.
+Have a tip, module, blog post, or community event that you think others may find valuable?
+See the Contributing section below for how to add your tips to tiPS.
+
 ## ❓ Why this exists
 
 There are tons of great tips and tricks for PowerShell scattered around on the internet, but they require you to actively go look for them.
 This module brings tips to you with minimal effort required on your part.
 
 You can configure tiPS to show a tip every time you open your PowerShell terminal, or simply show a tip on demand by running the `tips` command.
-
-Nobody knows everything about PowerShell, and tiPS is meant to be a community driven project.
-Have a tip, module, blog post, or community event that you think others may find valuable?
-See the Contributing section below to have your tips added to tiPS.
 
 ## 🚀 Quick start
 
