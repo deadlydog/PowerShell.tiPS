@@ -3,7 +3,7 @@
 ## Status
 
 Accepted 2023-09-12
-Updated 2023-09-15
+Decision changed and ADR updated 2023-09-15
 
 ## Context
 
@@ -51,7 +51,7 @@ This provides the best developer experience in terms of code organization, and s
 In the CI/CD pipeline, at build time we will use the [/build/Build-Psm1File.ps1](/build/Build-Psm1File.ps1) script to generate the concatenated .psm1 file with all of the functions defined directly in it.
 This will allow the published module to have the fastest startup time possible.
 
-At this time, the performance difference between dot-sourcing and defining the code directly in the .psm1 file is ~100ms.
+At this time, the performance difference between dot-sourcing and defining the code directly in the .psm1 file is ~120ms.
 As more functions are added to the module, this difference would increase.
 By generating the psm1 file at build time, we are ensuring that the startup time of the module will not increase as more functions are added.
 
