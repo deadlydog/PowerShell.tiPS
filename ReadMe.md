@@ -71,6 +71,8 @@ To have this happen automatically you can manually add `Import-Module -Name tiPS
 Add-TiPSImportToPowerShellProfile
 ```
 
+> You can remove the import statement from your PowerShell profile by running the `Remove-TiPSImportFromPowerShellProfile` command.
+
 ### ⚙ Recommended configuration
 
 The following configuration is a good balance for displaying new tips automatically and not being overwhelmed by them.
@@ -85,17 +87,17 @@ By default tiPS does not automatically show tips or update itself, so you must c
 
 To see the full list of commands, use `Get-Command -Module tiPS`.
 You can then use `Get-Help <command>` to get more information about a specific command.
-Below are the most popular operations.
+Below are the popular operations.
 
 ### 📰 Show a tip
 
-To show a nicely formatted tip in the terminal, run the following command:
+To show a nicely formatted tip in the terminal use:
 
 ```powershell
 Write-PowerShellTip
 ```
 
-or use its alias:
+or its alias:
 
 ```powershell
 tips
@@ -111,7 +113,7 @@ Get-PowerShellTip
 
 ### 🤖 Automatic tip on PowerShell startup
 
-To have a tip automatically displayed every time you open your PowerShell terminal, run the following command:
+To have a tip automatically displayed every time you open your PowerShell terminal, run:
 
 ```powershell
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip EverySession
@@ -125,7 +127,7 @@ This prevents them from appearing unexpectedly when running scripts or other aut
 ### ⬆ Automatic updates
 
 New tips are obtained by updating the tiPS module.
-Rather than having to remember to manually update the module to see up-to-date tips, you can have the module automatically update itself by running the following command:
+Instead of remembering to manually update the module to see up-to-date tips, you can have the module automatically update itself by running:
 
 ```powershell
 Set-TiPSConfiguration -AutomaticallyUpdateModule Weekly
@@ -137,16 +139,19 @@ Automatic updates are performed in a background job, so they will not block your
 The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
 Old versions of the module are automatically deleted after a successful update.
 
-### Uninstalling tiPS
+### ❌ Uninstalling tiPS
 
 If you imported tiPS into your PowerShell profile, the import statement will not be removed if you just uninstall the tiPS module.
-To remove the import statement from your PowerShell profile, run the following command:
+If you uninstall the module without removing the import statement, you will get an error message every time you open a PowerShell terminal.
+
+If you added the import statement to your PowerShell profile using the `Add-TiPSImportToPowerShellProfile`, you can remove it with:
 
 ```powershell
-Add-TiPSImportToPowerShellProfile -Remove
+Remove-TiPSImportFromPowerShellProfile
 ```
 
-To see if tiPS is imported in your PowerShell profile, and in which file, run the following command:
+If you manually added the import statement to your PowerShell profile, you will need to remove it manually.
+To see if tiPS is being imported by your PowerShell profile, and by which file, run the command:
 
 ```powershell
 Test-PowerShellProfileImportsTiPS -Verbose
@@ -154,7 +159,7 @@ Test-PowerShellProfileImportsTiPS -Verbose
 
 ### 📁 Get directory where user configuration is stored
 
-To get the directory where the tiPS configuration and other related data is stored, run the following command:
+To get the directory where the tiPS configuration and other related data is stored, run:
 
 ```powershell
 Get-TiPSConfigurationDirectory
@@ -162,6 +167,7 @@ Get-TiPSConfigurationDirectory
 
 To restore tiPS to the default configuration, simply delete the directory.
 If tiPS is uninstalled, the directory is not automatically deleted; it must be done manually.
+The directory is very small though, so it is not a big deal if it is left behind.
 
 ## ➕ How to contribute
 
