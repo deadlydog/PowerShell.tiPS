@@ -52,6 +52,10 @@ jobs:
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
 
+      - name: Build the concatinated psm1 file
+        shell: pwsh
+        run: ./build/Build-Psm1File.ps1
+
       - name: Run Pester Tests
         shell: pwsh
         run: |
@@ -67,10 +71,6 @@ jobs:
             CodeCoverage = @{ Enabled = $false }
           }
           Invoke-Pester -Configuration $pesterConfig
-
-      - name: Build the concatinated psm1 file
-        shell: pwsh
-        run: ./build/Build-Psm1File.ps1
 
       - name: Determine new version from Git tag and set environment variables
         shell: pwsh
