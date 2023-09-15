@@ -60,7 +60,7 @@ The tiPS PowerShell module can be downloaded from [the PowerShell Gallery](https
 Install-Module -Name tiPS -Scope CurrentUser
 ```
 
-In order for tiPS to show tips automatically, it must be imported every time you open a new PowerShell terminal.
+To show tips automatically, tiPS must be imported when the PowerShell session starts.
 To have this happen automatically you can manually add `Import-Module -Name tiPS` to your PowerShell profile, or simply run the following command to do it for you:
 
 ```powershell
@@ -85,7 +85,7 @@ Below are the most popular operations.
 
 ### 📰 Show a tip
 
-To show a tip in the terminal, run the following command:
+To show a nicely formatted tip in the terminal, run the following command:
 
 ```powershell
 Write-PowerShellTip
@@ -153,7 +153,7 @@ Know of a great module or community event that you think others should know abou
 
 Follow these steps to add your tip to tiPS:
 
-1. Fork this repo to your account.
+1. Fork this repo to your account ([See GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
 1. Clone the repo to your local machine, or open it in a GitHub Codespace, and create a new branch.
 1. Run the [New-PowerShellTip script](/tools/New-PowerShellTip.ps1) to create your new tip file in the [PowerShellTips directory](/src/PowerShellTips/).
 1. Modify it with your tip info and commit your changes.
