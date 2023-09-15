@@ -137,7 +137,7 @@ Automatic updates are performed in a background job, so they will not block your
 The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
 Old versions of the module are automatically deleted after a successful update.
 
-### Test if tiPS is imported by your PowerShell profile
+### 🔍 Test if tiPS is imported by your PowerShell profile
 
 To see if tiPS is imported in your PowerShell profile, and in which file, run the following command:
 
