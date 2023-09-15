@@ -52,6 +52,6 @@ function Test-PowerShellProfileImportsTiPS
 		return $true
 	}
 
-	Write-Verbose "The tiPS module is not imported by any of the PowerShell profiles: $profileFilePathsThatExist"
+	Write-Verbose "The tiPS module is not imported directly by any of the PowerShell profiles: $profileFilePathsThatExist"
 	return $false
 }
