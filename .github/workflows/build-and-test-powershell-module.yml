@@ -68,6 +68,10 @@ jobs:
           }
           Invoke-Pester -Configuration $pesterConfig
 
+      - name: Build the concatinated psm1 file
+        shell: pwsh
+        run: ./build/Build-Psm1File.ps1
+
       - name: Determine new version from Git tag and set environment variables
         shell: pwsh
         run: |

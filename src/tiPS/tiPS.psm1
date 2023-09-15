@@ -1,3 +1,7 @@
+# This file is generated and overwritten in the CI/CD pipeline by the build script /build/Build-Psm1File.ps1.
+# Any changes made to this file should be reflected in that script, otherwise they will not be present
+# in the module built and deployed by the CI/CD pipeline.
+
 #Requires -Version 3.0
 Set-StrictMode -Version Latest
 

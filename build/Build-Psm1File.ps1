@@ -1,13 +1,8 @@
-# This script is not currently used, but is kept around because we may decide to use it later if
-# startup performance becomes a problem down the road. For more info, see
+# This script is used in the CI/CD pipeline to generate and overwrite the tiPS.psm1 file.
+# Rather than having to dot-source all of the files into the module, this script will concatenate
+# all of the files into a single file. Dot-sourcing files at runtime is expensive and increases
+# the load time of the module, so we want to avoid it. For more info, see
 # docs/ArchitectureDecisionRecords/005-How-to-dot-source-files-into-the-module-psm1-file.md.
-
-# This script can be used to generate and overwrite the tiPS.psm1 file. Rather than having to dot-source
-# all of the files into the module, this script will concatenate all of the files into a single file.
-# Dot-sourcing files adds a runtime performance penalty, increasing the load time of the module.
-# At this time, because there are not too many files, the performance penalty is only about 100ms, which
-# is acceptable. However, if the number of files increases this script can be used to improve performance.
-# We are not using this script currently as it would add complexity to the build process and maintenance.
 
 [CmdletBinding()]
 Param()
