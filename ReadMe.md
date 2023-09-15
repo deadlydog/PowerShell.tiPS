@@ -172,6 +172,7 @@ Below is a short list of planned enhancements for tiPS:
 - Ability to show tips in a specific order. e.g. Newest tips first.
 - Ability to not show certain categories of tips. e.g. Do not show Community tips.
 - An easier way to add new tips. e.g. a simple web form that can be filled out.
+- A way to customize the look of the tip when it is displayed. e.g. add a border around it, change the colors, etc.
 
 ## 📃 Changelog
 
