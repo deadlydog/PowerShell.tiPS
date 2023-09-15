@@ -4,7 +4,7 @@ BeforeAll {
 	New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking public functions called by the module.
 }
 
-Describe 'Calling Edit-PowerShellProfileToImportTiPS' {
+Describe 'Calling Add-TiPSImportToPowerShellProfile' {
 	BeforeEach {
 		New-Variable -Name ContentToAddToProfile -Value 'Import-Module -Name tiPS # Added by tiPS to get automatic tips and updates.'
 
@@ -18,7 +18,7 @@ Describe 'Calling Edit-PowerShellProfileToImportTiPS' {
 		}
 
 		It 'Should create the file with the import statement' {
-			Edit-PowerShellProfileToImportTiPS
+			Add-TiPSImportToPowerShellProfile
 
 			Get-Content -Path $ProfileFilePath | Should -Be $ContentToAddToProfile
 		}
@@ -32,7 +32,7 @@ Describe 'Calling Edit-PowerShellProfileToImportTiPS' {
 		}
 
 		It 'Should add the import statement to the file' {
-			Edit-PowerShellProfileToImportTiPS
+			Add-TiPSImportToPowerShellProfile
 
 			$expectedContent = $existingProfileContent + [System.Environment]::NewLine +
 				$ContentToAddToProfile + [System.Environment]::NewLine
@@ -47,7 +47,7 @@ Describe 'Calling Edit-PowerShellProfileToImportTiPS' {
 		}
 
 		It 'Should not modify the file' {
-			Edit-PowerShellProfileToImportTiPS
+			Add-TiPSImportToPowerShellProfile
 
 			Get-Content -Path $ProfileFilePath | Should -Be $ContentToAddToProfile
 		}

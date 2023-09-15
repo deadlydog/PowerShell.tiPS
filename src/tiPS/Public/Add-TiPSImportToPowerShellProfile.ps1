@@ -1,4 +1,4 @@
-function Edit-PowerShellProfileToImportTiPS
+function Add-TiPSImportToPowerShellProfile
 {
 <#
 	.SYNOPSIS
@@ -18,7 +18,7 @@ function Edit-PowerShellProfileToImportTiPS
 	None. The function does not return any objects.
 
 	.EXAMPLE
-	Edit-PowerShellProfileToImportTiPS
+	Add-TiPSImportToPowerShellProfile
 
 	This example edits the PowerShell profile to import the tiPS module.
 #>

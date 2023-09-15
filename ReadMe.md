@@ -50,7 +50,7 @@ Paste the following commands into your PowerShell terminal to install tiPS and h
 
 ```powershell
 Install-Module -Name tiPS -Scope CurrentUser
-Edit-PowerShellProfileToImportTiPS
+Add-TiPSImportToPowerShellProfile
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdateModule Weekly
 ```
 
@@ -68,7 +68,7 @@ To show tips automatically, tiPS must be imported when the PowerShell session st
 To have this happen automatically you can manually add `Import-Module -Name tiPS` to your PowerShell profile, or simply run the following command to do it for you:
 
 ```powershell
-Edit-PowerShellProfileToImportTiPS
+Add-TiPSImportToPowerShellProfile
 ```
 
 ### ⚙ Recommended configuration
@@ -137,7 +137,14 @@ Automatic updates are performed in a background job, so they will not block your
 The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
 Old versions of the module are automatically deleted after a successful update.
 
-### 🔍 Test if tiPS is imported by your PowerShell profile
+### Uninstalling tiPS
+
+If you imported tiPS into your PowerShell profile, the import statement will not be removed if you just uninstall the tiPS module.
+To remove the import statement from your PowerShell profile, run the following command:
+
+```powershell
+Add-TiPSImportToPowerShellProfile -Remove
+```
 
 To see if tiPS is imported in your PowerShell profile, and in which file, run the following command:
 
