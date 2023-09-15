@@ -43,13 +43,18 @@ Describe 'Calling Add-TiPSImportToPowerShellProfile' {
 	Context 'When the PowerShell profile exists, and already imports tiPS' {
 		BeforeEach {
 			Mock -ModuleName $ModuleName -CommandName Test-PowerShellProfileImportsTiPS -MockWith { return $true }
-			Set-Content -Path $ProfileFilePath -Force -Value $ContentToAddToProfile
+			$fileContents = @"
+# Some code before the import statement
+$ContentToAddToProfile
+# Some code after the import statement
+"@
+			Set-Content -Path $ProfileFilePath -Force -Value $fileContents -NoNewline
 		}
 
 		It 'Should not modify the file' {
 			Add-TiPSImportToPowerShellProfile
 
-			Get-Content -Path $ProfileFilePath | Should -Be $ContentToAddToProfile
+			Get-Content -Path $ProfileFilePath -Raw | Should -Be $fileContents
 		}
 	}
 }
