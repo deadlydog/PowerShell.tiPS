@@ -13,7 +13,14 @@ function Test-PowerShellProfileImportsTiPS
 	.EXAMPLE
 	Test-PowerShellProfileImportsTiPS
 
-	This example tests whether the PowerShell profile imports the tiPS module.
+	Tests whether the PowerShell profile imports the tiPS module, returning true if it does and false otherwise.
+
+	.EXAMPLE
+	Test-PowerShellProfileImportsTiPS -Verbose
+
+	Tests whether the PowerShell profile imports the tiPS module, returning true if it does and false otherwise.
+	If true, the verbose output will list the profile file paths and the lines that import the tiPS module.
+	If false, the verbose output will list the profile file paths that it checked.
 
 	.INPUTS
 	None. You cannot pipe objects to the function.
