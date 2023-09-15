@@ -7,6 +7,12 @@ function Get-PowerShellTip
 	.DESCRIPTION
 	Get a PowerShellTip object. If no parameters are specified, a random tip is returned.
 
+	.PARAMETER Id
+	The ID of the tip to retrieve. If not supplied, a random tip will be returned.
+
+	.PARAMETER AllTips
+	Return all tips.
+
 	.INPUTS
 	You can pipe a [string] of the ID of the tip to retrieve, or a PsCustomObject with a [string] 'Id' property.
 
@@ -14,12 +20,6 @@ function Get-PowerShellTip
 	A [tiPS.PowerShellTip] object representing the PowerShell tip.
 
 	If the -AllTips switch is provided, a [System.Collections.Specialized.OrderedDictionary] is returned.
-
-	.PARAMETER Id
-	The ID of the tip to retrieve. If not supplied, a random tip will be returned.
-
-	.PARAMETER AllTips
-	Return all tips.
 
 	.EXAMPLE
 	Get-PowerShellTip
