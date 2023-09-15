@@ -1,5 +1,3 @@
-🚧 This repository is new and still under construction. The PowerShell module is not ready for consumption yet. 🚧
-
 <p align="center">
   <a href="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml"><img alt="Build status" src="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-and-test-powershell-module.yml/badge.svg"></a>
   <a href="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/deploy-powershell-module.yml"><img alt="Deploy status" src="https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/deploy-powershell-module.yml/badge.svg"></a>
@@ -25,7 +23,14 @@ PowerShell tips delivered straight to your terminal 💻.
 
 ## 💬 Description
 
-`tiPS` is a PowerShell module that provides tips and tricks for using PowerShell.
+`tiPS` is a PowerShell module that provides tips and tricks for PowerShell.
+This includes learning about things like:
+
+- PowerShell features
+- PowerShell best practices
+- PowerShell modules
+- PowerShell communities and events
+
 It is meant to be a low effort way to learn new things about PowerShell, and to help you become a better PowerShell user.
 
 ## ❓ Why this exists
@@ -33,9 +38,19 @@ It is meant to be a low effort way to learn new things about PowerShell, and to 
 There are tons of great tips and tricks for PowerShell scattered around on the internet, but they require you to actively go look for them.
 This module brings tips to you with minimal effort required on your part.
 
-You can configure tiPS to show a tip every time you open your PowerShell terminal, or you can show a tip on demand by running the `tips` command.
+You can configure tiPS to show a tip every time you open your PowerShell terminal, or simply show a tip on demand by running the `tips` command.
 
 ## 🚀 Quick start
+
+Copy and paste the following commands into your PowerShell terminal to install tiPS and have it automatically show you a new tip every day:
+
+```powershell
+Install-Module -Name tiPS -Scope CurrentUser
+Edit-PowerShellProfileToImportTiPS
+Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdateModule Weekly
+```
+
+That's it! The above commands are explained in more detail below.
 
 ### 💿 Installation
 
@@ -45,7 +60,7 @@ The tiPS PowerShell module can be downloaded and installed by running the follow
 Install-Module -Name tiPS -Scope CurrentUser
 ```
 
-In order for tiPS to show tips and update automatically, it must be imported every time you open a new PowerShell terminal.
+In order for tiPS to show tips automatically, it must be imported every time you open a new PowerShell terminal.
 To have this happen automatically you can manually add `Import-Module -Name tiPS` to your PowerShell profile, or simply run the following command to do it for you:
 
 ```powershell
@@ -62,13 +77,18 @@ Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdat
 
 By default tiPS does not automatically show tips or update itself, so you must configure it to do so.
 
-Tips will only be automatically shown in interactive PowerShell sessions, so that they do not appear unexpectedly when running scripts or other automated processes.
+Tips will only be automatically shown in interactive PowerShell sessions.
+This prevents them from appearing unexpectedly when running scripts or other automated processes.
 
 ## Commands
 
+To see the full list of commands, use `Get-Command -Module tiPS`.
+You can then use `Get-Help <command>` to get more information about a specific command.
+Below are the most popular commands.
+
 ### 📰 Show a tip
 
-To show a tip, run the following command:
+To show a tip in the terminal, run the following command:
 
 ```powershell
 Write-PowerShellTip
@@ -80,9 +100,9 @@ or use its alias:
 tips
 ```
 
-### Get a tip
+### 💁‍♂️ Get a tip
 
-To get a tip as an object, run the following command:
+To get a tip as an object that can be saved in a variable or piped to other commands, use:
 
 ```powershell
 Get-PowerShellTip
@@ -109,6 +129,21 @@ Set-TiPSConfiguration -AutomaticallyUpdateModule Weekly
 
 Possible values for the `-AutomaticallyUpdateModule` parameter are `Never`, `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
 
+Automatic updates are performed in a background job, so they will not block your PowerShell session from starting.
+The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
+Old versions of the module are automatically deleted after a successful update.
+
+### 💽 Get directory where user configuration is stored
+
+To get the directory where the tiPS configuration and other related data is stored, run the following command:
+
+```powershell
+Get-TiPSConfigurationDirectory
+```
+
+To restore tiPS to the default configuration, simply delete the directory.
+If tiPS is uninstalled, the directory is not automatically deleted.
+
 ## ➕ How to contribute
 
 tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
@@ -126,8 +161,17 @@ Follow these steps to add your tip to tiPS:
 
 tiPS is meant to be a community driven project, so please help make it better by contributing your tips and tricks.
 
-Issues and Pull Requests are welcome.
+Issues, Discussions, and Pull Requests are welcome.
 See [the Contributing page](/docs/Contributing.md) for more details.
+
+## 🛣 Roadmap
+
+Below is a short list of planned enhancements for tiPS:
+
+- Remember which tips have been shown to the user so that they are not shown again until all tips have been viewed.
+- Ability to show tips in a specific order. e.g. Newest tips first.
+- Ability to not show certain categories of tips. e.g. Do not show Community tips.
+- An easier way to add new tips. e.g. a simple web form that can be filled out.
 
 ## 📃 Changelog
 
