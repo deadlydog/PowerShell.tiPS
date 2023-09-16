@@ -1,10 +1,9 @@
 # Run this script to create a new PowerShell Tip file and open it.
 # You will be prompted for the tip's title, and then the file will open in your default editor.
 
-[string] $tipTitle = Read-Host -Prompt 'Enter the title for your new PowerShell tip (e.g. "PowerShell is open source")'
+using module './../src/tiPS'
 
-# Add the class types directly instead of importing the entire module, since all we need are the classes.
-. "$PSScriptRoot/../src/tiPS/Classes/ImportTipsClassesAssembly.ps1"
+[string] $tipTitle = Read-Host -Prompt 'Enter the title for your new PowerShell tip (e.g. "PowerShell is open source")'
 
 # The Tip filename is based on the ID, which is based on the date and title, so load a dummy PowerShellTip to get the filename to use.
 $dummyTip = [tiPS.PowerShellTip]::new()
