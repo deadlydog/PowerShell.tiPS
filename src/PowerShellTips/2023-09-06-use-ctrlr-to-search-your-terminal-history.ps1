@@ -11,4 +11,4 @@ Note: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and 
 $tip.Example = ''
 $tip.Urls = @('https://woshub.com/powershell-commands-history/')
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Terminal # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

@@ -9,4 +9,4 @@ You can join the Teams live event at https://aka.ms/JoinPSCall. The call is reco
 $tip.Example = ''
 $tip.Urls = @('https://github.com/PowerShell/PowerShell-RFC/blob/master/CommunityCall/README.md', 'https://powershell.org/series/powershell-community-call/', 'https://www.youtube.com/@powershellanddscteamchanne5739')
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Community # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

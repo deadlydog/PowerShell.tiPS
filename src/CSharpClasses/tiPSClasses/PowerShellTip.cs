@@ -5,10 +5,11 @@ namespace tiPS
 	public enum TipCategory
 	{
 		Community, // Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
+		CoreCmdlet, // Core cmdlet tips. e.g. Get-Process, Get-ChildItem, Get-Content, etc.
 		Editor, // Editor tips and extensions. e.g. VSCode, ISE, etc.
 		Module, // Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
 		Syntax, // Syntax tips. e.g. splatting, pipeline, etc.
-		Terminal, // Terminal shortcuts and tips. e.g. PSReadLine, ConEmu, etc.
+		Terminal, // Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.
 		Other // Tips that don't fit into any of the above categories.
 	}
 
