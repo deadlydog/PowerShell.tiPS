@@ -19,7 +19,7 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 3
+    "Category": 4
   },
   {
     "CreatedDate": "2023-08-28T00:00:00",
@@ -31,7 +31,7 @@
       "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-05T00:00:00",
@@ -43,7 +43,7 @@
       "https://stackoverflow.com/a/60996703/602585"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 3
+    "Category": 4
   },
   {
     "CreatedDate": "2023-09-06T00:00:00",
@@ -54,7 +54,7 @@
       "https://woshub.com/powershell-commands-history/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-06T00:00:00",
@@ -65,7 +65,7 @@
       "https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-11T00:00:00",
@@ -76,7 +76,7 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 3
+    "Category": 4
   },
   {
     "CreatedDate": "2023-09-11T00:00:00",
@@ -101,7 +101,7 @@
       "https://github.com/dfinke/ImportExcel"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 2
+    "Category": 3
   },
   {
     "CreatedDate": "2023-09-12T00:00:00",
@@ -113,6 +113,18 @@
       "https://4sysops.com/archives/parse-log-files-with-powershell/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 1
+  },
+  {
+    "CreatedDate": "2023-09-16T00:00:00",
+    "Title": "Use Out-GridView to view and select tabular data",
+    "TipText": "Instead of piping data to Out-Table, use Out-GridView. This opens a window with the data in a grid view, allowing you to interactively sort and filter the data. If you provide the -PassThru parameter, you can select one or more rows and the selected data will be returned to the pipeline, allowing you to save it to a variable or pipe it to other commands.\r\n\r\nNOTE: Out-GridView is only available on Windows.",
+    "Example": "Get-Process | Out-GridView -PassThru -Title \"Select processes to return\" | Select-Object -Property ProcessName,Id",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/out-gridview",
+      "https://woshub.com/using-out-gridview-table-powershell/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 1
   }
 ]
