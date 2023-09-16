@@ -44,6 +44,16 @@ This module brings tips to you with minimal effort required on your part.
 
 You can configure tiPS to show a tip every time you open your PowerShell terminal, or simply show a tip on demand by running the `tips` command.
 
+## Screenshots
+
+Calling the `tips` command to show a tip in the terminal:
+
+![Using the tips command to show a tip](/docs/Images/using-tips-command-to-show-a-tip.png)
+
+tiPS automatically showing a tip when PowerShell is opened:
+
+![tiPS showing a tip automatically](/docs/Images/tips-showing-a-tip-automatically.png)
+
 ## 🚀 Quick start
 
 Paste the following commands into your PowerShell terminal to install tiPS and have it automatically show you a new tip every day:
