@@ -1,6 +1,6 @@
+using module './../tiPS.psm1'
+
 BeforeAll {
-	# Add the class types directly instead of importing the entire module, since all we need are the classes.
-	. "$PSScriptRoot/../Classes/ImportTipsClassesAssembly.ps1"
 	. "$PSScriptRoot/AutomaticModuleUpdateFunctions.ps1"
 }
 
