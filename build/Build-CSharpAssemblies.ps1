@@ -11,7 +11,12 @@ Param()
 [string] $csharpClassesDllDirectoryPath = Join-Path -Path $csharpSolutionDirectoryPath -ChildPath 'tiPSClasses/bin/Release/netstandard2.0'
 
 Write-Output "Deleting the DLL files in '$moduleClassesDirectoryPath' before rebuilding and replacing them."
-Remove-Item -Path "$moduleClassesDirectoryPath/*" -Include '*.dll' -Force
+Remove-Item -Path "$moduleClassesDirectoryPath/*" -Include '*.dll' -Force -ErrorVariable removeDllFilesError
+
+if ($removeDllFilesError)
+{
+	throw "Error deleting the DLL files in '$moduleClassesDirectoryPath'. They are likely in use by another process that imported tiPS. Try closing all PowerShell sessions and running the build script again. Error: $removeDllFilesError"
+}
 
 Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
 & dotnet.exe build "$csharpSlnFilePath" --configuration Release

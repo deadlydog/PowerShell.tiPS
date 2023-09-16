@@ -1,7 +1,8 @@
 # This script ensures that all PowerShell Tip files in the src/PowerShellTips directory have their ID as their filename.
+# This script can be run on-demand when a Pester test complains that a file is not named correctly.
+# It is also run as part of the default VS Code build task.
 
-# Add the class types directly instead of importing the entire module, since all we need are the classes.
-. "$PSScriptRoot/../src/tiPS/Classes/ImportTipsClassesAssembly.ps1"
+using module './../src/tiPS'
 
 [string] $powerShellTipFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot/../src/PowerShellTips"
 

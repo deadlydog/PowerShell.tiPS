@@ -1,7 +1,4 @@
-BeforeAll {
-	# Add the class types directly instead of importing the entire module, since all we need are the classes.
-	. "$PSScriptRoot/tiPS/Classes/ImportTipsClassesAssembly.ps1"
-}
+using module './tiPS'
 
 Describe 'The files in the PowerShellTips directory' {
 	It 'Should have their file name in the correct format (yyyy-mm-dd-kebab-case-id.ps1)' {
