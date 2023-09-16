@@ -15,7 +15,7 @@ Remove-Item -Path "$moduleClassesDirectoryPath/*" -Include '*.dll' -Force -Error
 
 if ($removeDllFilesError)
 {
-	throw "Error deleting the DLL files in '$moduleClassesDirectoryPath'. They are likely in use by another process that imported tiPS. You can try closing all PowerShell sessions and trying again. Error: $removeDllFilesError"
+	throw "Error deleting the DLL files in '$moduleClassesDirectoryPath'. They are likely in use by another process that imported tiPS. Try closing all PowerShell sessions and running the build script again. Error: $removeDllFilesError"
 }
 
 Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
