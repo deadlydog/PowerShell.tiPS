@@ -33,7 +33,8 @@
 				"EditorConfig.EditorConfig",
 				"TylerLeonhardt.vscode-inline-values-powershell",
 				"ionutvmi.path-autocomplete",
-				"ms-dotnettools.csdevkit"
+				"ms-dotnettools.csdevkit",
+				"nhoizey.gremlins"
 			]
 		}
 	}
