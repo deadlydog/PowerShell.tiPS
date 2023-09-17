@@ -145,7 +145,10 @@
 			"group": "none",
 			"presentation": {
 				"reveal": "always"
-			}
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
 		}
 	]
 }
