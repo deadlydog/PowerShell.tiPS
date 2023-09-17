@@ -31,10 +31,16 @@ This can be multiple lines.
 
 Write-Output "Creating new PowerShell Tip file and opening it: $newTipFilePath"
 Set-Content -Path $newTipFilePath -Value $tipTemplateFileContents -Force
-Invoke-Item -Path $newTipFilePath -ErrorVariable openTipFileError
-
-# GitHub Codespace will throw an error when trying to open the file, but will open it fine using VS Code (code.exe).
-if ($openTipFileError)
+try
 {
-	& code "$newTipFilePath"
+	Invoke-Item -Path $newTipFilePath -ErrorVariable openTipFileError
+}
+catch
+{
+	# GitHub Codespace will throw an error when trying to open the file, but will open it fine using VS Code (code.exe).
+	# Use the try-catch to suppress the exception thrown in Codespace when it fails to open the file.
+	if ($openTipFileError)
+	{
+		& code "$newTipFilePath"
+	}
 }
