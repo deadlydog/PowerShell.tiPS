@@ -23,17 +23,17 @@ PowerShell tips delivered straight to your terminal 💻.
 
 ## 💬 Description
 
-`tiPS` is a cross-platform PowerShell module that provides PowerShell tips.
-This includes learning about things like:
+`tiPS` is a cross-platform PowerShell module that provides PowerShell tips for things like:
 
-- PowerShell features
-- PowerShell best practices
+- PowerShell features and best practices
 - PowerShell modules
+- Terminal keyboard shortcuts
+- Editor extensions to help with PowerShell development
 - PowerShell communities and events
 
 tiPS provides a low-effort way to learn new things about PowerShell, and help you become a better PowerShell user.
 
-tiPS is a community driven project.
+tiPS is community driven.
 Have a tip, module, blog post, or community event that you think others may find valuable?
 See the Contributing section below for how to add your tips to tiPS.
 
@@ -64,7 +64,10 @@ Add-TiPSImportToPowerShellProfile
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdateModule Weekly
 ```
 
-That's it! The above commands are explained in more detail below.
+That's it!
+Use the `tips` command to show a tip in the terminal, or just wait for tiPS to automatically show you a new tip every day.
+
+The above commands are explained in more detail below.
 
 ### 💿 Installation
 
@@ -137,7 +140,7 @@ This prevents them from appearing unexpectedly when running scripts or other aut
 ### ⬆ Automatic updates
 
 New tips are obtained by updating the tiPS module.
-Instead of remembering to manually update the module to see up-to-date tips, you can have the module automatically update itself by running:
+Instead of remembering to manually update the module, you can have the module automatically update itself by running:
 
 ```powershell
 Set-TiPSConfiguration -AutomaticallyUpdateModule Weekly
@@ -152,7 +155,7 @@ Old versions of the module are automatically deleted after a successful update.
 ### ❌ Uninstalling tiPS
 
 If you imported tiPS into your PowerShell profile, the import statement will not be removed if you just uninstall the tiPS module.
-If you uninstall the module without removing the import statement, you will get an error message every time you open a PowerShell terminal.
+If you uninstall the module without removing the import statement, you will get an error message every time you open a PowerShell terminal saying that it cannot find the tiPS module.
 
 If you added the import statement to your PowerShell profile using the `Add-TiPSImportToPowerShellProfile`, you can remove it with:
 
@@ -160,12 +163,14 @@ If you added the import statement to your PowerShell profile using the `Add-TiPS
 Remove-TiPSImportFromPowerShellProfile
 ```
 
-If you manually added the import statement to your PowerShell profile, you will need to remove it manually.
-To see if tiPS is being imported by your PowerShell profile, and by which file, run the command:
+If you manually added the import statement to your PowerShell profile, you may need to remove it manually.
+To see which PowerShell profile file and line is importing tiPS, if any, run the command:
 
 ```powershell
 Test-PowerShellProfileImportsTiPS -Verbose
 ```
+
+NOTE: This only looks for the import statement directly in your PowerShell profile files, not any other files that are dot-sourced from your profile.
 
 ### 📁 Get directory where user configuration is stored
 
