@@ -39,28 +39,44 @@ function Remove-TiPSImportFromPowerShellProfile
 		}
 
 		[string[]] $profileFilePathsThatExist = GetPowerShellProfileFilePathsThatExist
-		[string] $contentToRemoveFromProfile = GetImportStatementToAddToPowerShellProfile
+		[string[]] $importStatementsToRemoveFromProfile = @(
+			GetImportStatementToAddToPowerShellProfile
+			'Import-Module -Name tiPS -Force'
+			'Import-Module -Name tiPS'
+			'Import-Module tiPS -Force'
+			'Import-Module tiPS'
+		)
 
 		[bool] $atLeastOneProfileFileModified = $false
 		foreach ($profileFilePath in $profileFilePathsThatExist)
 		{
 			[string] $fileContents = Get-Content -Path $profileFilePath -Raw
-			if ($fileContents.Contains($contentToRemoveFromProfile))
+			foreach ($importStatement in $importStatementsToRemoveFromProfile)
 			{
-				if ($PSCmdlet.ShouldProcess("PowerShell profile '$profileFilePath'", 'Update'))
+				[regex] $importLineRegex =
+					'(?mi)' + # Enable multiline (match against newlines in the middle of the string) and case-insensitive matching.
+					'^' + # Match against the beginning of the line.
+					'\s*' + # Match any whitespace at the beginning of the line.
+					$importStatement + # Match the import statement.
+					'\s*' + # Match any whitespace at the end of the line.
+					'$' # Match against the end of the line.
+				if ($fileContents -match $importLineRegex)
 				{
-					Write-Verbose "Removing '$contentToRemoveFromProfile' from PowerShell profile '$profileFilePath'."
-					[string] $updatedFileContents = $fileContents -replace $contentToRemoveFromProfile, ''
-					Set-Content -Path $profileFilePath -Value $updatedFileContents -Force
-				}
+					if ($PSCmdlet.ShouldProcess("PowerShell profile '$profileFilePath'", 'Update'))
+					{
+						Write-Verbose "Removing '$($matches.Values)' from PowerShell profile '$profileFilePath'."
+						[string] $updatedFileContents = $fileContents -replace $importLineRegex, ''
+						Set-Content -Path $profileFilePath -Value $updatedFileContents -Force
+					}
 
-				$atLeastOneProfileFileModified = $true
+					$atLeastOneProfileFileModified = $true
+				}
 			}
 		}
 
 		if (-not $atLeastOneProfileFileModified)
 		{
-			Write-Warning "One of the PowerShell profiles does import the tiPS module, but not with the expected import statement '$contentToRemoveFromProfile'. Run 'Test-PowerShellProfileImportsTiPS -Verbose' to see which profile files import the tiPS module, and then manually remove the statement from the file."
+			Write-Warning "One of the PowerShell profiles does import the tiPS module, but not with the expected import statement. Run 'Test-PowerShellProfileImportsTiPS -Verbose' to see which profile files import the tiPS module, and then manually remove the statement from the file."
 		}
 	}
 }

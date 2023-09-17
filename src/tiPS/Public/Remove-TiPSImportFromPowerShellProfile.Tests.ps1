@@ -27,13 +27,73 @@ Describe 'Calling Remove-TiPSImportFromPowerShellProfile' {
 	Context 'When a PowerShell profile that imports tiPS exists' {
 		BeforeEach {
 			Mock -ModuleName $ModuleName -CommandName Test-PowerShellProfileImportsTiPS -MockWith { return $true }
-			Set-Content -Path $ProfileFilePath -Force -Value $ContentToAddToProfile
 		}
 
-		It 'Should remove the import statement from the profile file' {
+		It 'Should remove the import statement that was automatically added to the profile file' {
+			Set-Content -Path $ProfileFilePath -Force -Value $ContentToAddToProfile
+
 			Remove-TiPSImportFromPowerShellProfile
 
-			Get-Content -Path $ProfileFilePath | Should -Not -Contain $ContentToAddToProfile
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$ContentToAddToProfile*"
+		}
+
+		It 'Should remove a common import statement that was manually added to the profile file (1)' {
+			[string] $manuallyAddedImportStatement = 'Import-Module -Name tiPS -Force'
+			Set-Content -Path $ProfileFilePath -Force -Value $manuallyAddedImportStatement
+
+			Remove-TiPSImportFromPowerShellProfile
+
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$manuallyAddedImportStatement*"
+		}
+
+		It 'Should remove a common import statement that was manually added to the profile file (2)' {
+			[string] $manuallyAddedImportStatement = 'Import-Module -Name tiPS'
+			Set-Content -Path $ProfileFilePath -Force -Value $manuallyAddedImportStatement
+
+			Remove-TiPSImportFromPowerShellProfile
+
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$manuallyAddedImportStatement*"
+		}
+
+		It 'Should remove a common import statement that was manually added to the profile file (3)' {
+			[string] $manuallyAddedImportStatement = 'Import-Module tiPS -Force'
+			Set-Content -Path $ProfileFilePath -Force -Value $manuallyAddedImportStatement
+
+			Remove-TiPSImportFromPowerShellProfile
+
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$manuallyAddedImportStatement*"
+		}
+
+		It 'Should remove a common import statement that was manually added to the profile file (4)' {
+			[string] $manuallyAddedImportStatement = 'Import-Module tiPS'
+			Set-Content -Path $ProfileFilePath -Force -Value $manuallyAddedImportStatement
+
+			Remove-TiPSImportFromPowerShellProfile
+
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$manuallyAddedImportStatement*"
+		}
+
+		It 'Should remove a common import statement that was manually added to the profile file with whitespace' {
+			[string] $manuallyAddedImportStatement = 'Import-Module -Name tiPS -Force'
+			Set-Content -Path $ProfileFilePath -Force -Value "	$manuallyAddedImportStatement  "
+
+			Remove-TiPSImportFromPowerShellProfile
+
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$manuallyAddedImportStatement*"
+		}
+
+		It 'Should remove a common import statement that was manually added to a multiline profile file with whitespace' {
+			[string] $manuallyAddedImportStatement = 'Import-Module -Name tiPS'
+			[string] $profileContents = @"
+Import-Module oh-my-posh
+	  $manuallyAddedImportStatement
+Import-Module posh-git
+"@
+			Set-Content -Path $ProfileFilePath -Force -Value $profileContents
+
+			Remove-TiPSImportFromPowerShellProfile
+
+			Get-Content -Path $ProfileFilePath -Raw | Should -Not -BeLike "*$manuallyAddedImportStatement*"
 		}
 	}
 }
