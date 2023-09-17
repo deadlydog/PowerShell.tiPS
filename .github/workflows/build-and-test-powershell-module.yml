@@ -42,7 +42,7 @@ jobs:
 
       - name: Build the C# assemblies
         shell: pwsh
-        run: ./build/Build-CSharpAssemblies.ps1
+        run: ./build/Build-CSharpAssemblies.ps1 -Force
 
       - name: Generate PowerShellTips.json file
         shell: pwsh

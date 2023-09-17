@@ -14,7 +14,7 @@
 						"-Command"
 					]}
 			},
-			"command": "Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
+			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
 			"group": "test",
 			"presentation": {
 				"reveal": "always",
@@ -55,7 +55,10 @@
 				"panel": "dedicated",
 				"clear": true,
 				"group": "build"
-			}
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
 		},
 		{
 			"label": "Convert PowerShellTips files to JSON file",
@@ -84,6 +87,15 @@
 		{
 			"label": "Ensure PowerShellTips filenames match their ID",
 			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
 			"command": "./tools/Rename-PowerShellTipFilesToMatchTheirId.ps1",
 			"group": "build",
 			"presentation": {
@@ -99,7 +111,16 @@
 		{
 			"label": "Build C# assembly and copy to PowerShell module directory",
 			"type": "shell",
-			"command": "./build/Build-CSharpAssemblies.ps1",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			"command": "./build/Build-CSharpAssemblies.ps1 -Force",
 			"group": "build",
 			"presentation": {
 				"reveal": "always",
@@ -111,12 +132,20 @@
 		{
 			"label": "Add new PowerShell tip",
 			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
 			"command": "./tools/New-PowerShellTip.ps1",
 			"group": "none",
 			"presentation": {
 				"reveal": "always"
-			},
-			"problemMatcher": []
+			}
 		}
 	]
 }
