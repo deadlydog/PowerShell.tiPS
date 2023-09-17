@@ -30,7 +30,7 @@ if ($removeDllFilesError)
 }
 
 Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
-& dotnet.exe build "$csharpSlnFilePath" --configuration Release
+& dotnet build "$csharpSlnFilePath" --configuration Release
 
 Write-Output "Copying the DLL files in '$csharpClassesDllDirectoryPath' to the module's Classes directory '$moduleClassesDirectoryPath'."
 Copy-Item -Path "$csharpClassesDllDirectoryPath/*" -Destination $moduleClassesDirectoryPath -Include '*.dll' -Force
