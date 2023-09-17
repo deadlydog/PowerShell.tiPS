@@ -42,7 +42,7 @@ See the Contributing section below for how to add your tips to tiPS.
 There are tons of great tips and tricks for PowerShell scattered around on the internet, but they require you to actively go look for them.
 This module brings tips to you with minimal effort required on your part.
 
-You can configure tiPS to show a tip every time you open your PowerShell terminal, or simply show a tip on demand by running the `tips` command.
+You can configure tiPS to show a tip every time you open your PowerShell terminal, or show a tip on demand by running the `tips` command.
 
 ## Screenshots
 
