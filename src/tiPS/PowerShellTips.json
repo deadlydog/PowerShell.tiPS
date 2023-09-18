@@ -126,5 +126,28 @@
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 1
+  },
+  {
+    "CreatedDate": "2023-09-17T00:00:00",
+    "Title": "Use F2 to toggle PSReadLine predictions to list view",
+    "TipText": "PSReadLine v2.1.0 introduced history-based predictions. As you type, PSReadLine will show you a command that you previously typed, thinking that you may want to run the same command again. You can use the right-arrow to accept the suggestion.\r\n\r\nIf you want to see more predictions, you can press the F2 key to swap from Inline View (which only shows a single suggestion), to List View, which shows many. You can then use the up and down arrow keys to select a command from the list.\r\n\r\nUse 'Update-Module -Name PSReadLine' to update to the latest version of PSReadLine and use these features.",
+    "Example": "Type \"Get-\" and then press F2 to see a list of commands that you have previously typed that start with \"Get-\"",
+    "Urls": [
+      "https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/",
+      "https://learn.microsoft.com/en-us/powershell/module/psreadline/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 5
+  },
+  {
+    "CreatedDate": "2023-09-18T00:00:00",
+    "Title": "Split long lines of code into multiple lines",
+    "TipText": "Long lines of code can be difficult to read, especially when doing code reviews and for users not using word-wrap in their editors. It is good practice to try and avoid long lines of code.\r\n\r\nPowerShell lines can naturally be split into multiple lines at many operators, such as =, +, -, |, {, -eq, etc.\r\n\r\nIf you need to split a line at an unnatural location, you can use the backtick character (`) at the end of each line. This is generally discouraged though as the backtick can be hard to see, easy to forget, and a space after the backtick breaks the line continuation. However, there are times when it may still be useful.",
+    "Example": "# Split into multiple lines using natural operators.\r\n[bool] $arrayIsNullOrEmpty =\r\n    $null -eq $myIntegerArray -or\r\n    $myIntegerArray.Length -eq 0\r\n\r\n[int[]] $valuesGreaterThan10AndSorted =\r\n    $myIntegerArray |\r\n    Where-Object {\r\n        $_ -gt 10\r\n    } |\r\n    Sort-Object\r\n\r\n[string] $myString =\r\n    'This is a very long string that is split into multiple lines ' +\r\n    'using the + operator.'\r\n\r\n# Split into multiple lines at an unnatural locations using the backtick.\r\nGet-ChildItem `\r\n    -Path 'C:\\' `\r\n    -Recurse `\r\n    -File `\r\n    -Filter '*.txt'",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-7.3#line-continuation"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
   }
 ]
