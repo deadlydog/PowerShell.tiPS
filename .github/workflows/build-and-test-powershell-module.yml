@@ -35,6 +35,9 @@ jobs:
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
 
       - name: Display PowerShell version being used
         shell: pwsh
@@ -55,6 +58,13 @@ jobs:
       - name: Build the concatinated psm1 file
         shell: pwsh
         run: ./build/Build-Psm1File.ps1
+
+      - name: Run Super Linter across the entire repo
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Pester Tests
         shell: pwsh
