@@ -31,7 +31,7 @@ we recorded the average time to load the module using each method:
       $false,
       ([scriptblock]::Create([System.IO.File]::ReadAllText($filePath, [Text.Encoding]::UTF8))),
       $null, $null)
-   ```
+    ```
 
 It is also worth noting that only the first two options of either defining the code directly in the .psm1 file or dot-sourcing the files individually allowed us to still put breakpoints in VS Code and have the debugger stop at them.
 When using the `Invoke-Expression` or `$ExecutionContext.InvokeCommand.InvokeScript` methods, the debugger would not stop at breakpoints in the imported files.
