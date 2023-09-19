@@ -9,6 +9,9 @@ In addition, if you want to get the last N lines of a file, you can use the `-Ta
 Once you are done monitoring the file, you can press `Ctrl+C` to stop the command.
 '@
 $tip.Example = 'Get-Content -Path $filePath -Wait -Tail 10'
-$tip.Urls = @('https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content', 'https://4sysops.com/archives/parse-log-files-with-powershell/')
+$tip.Urls = @(
+	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content',
+	'https://4sysops.com/archives/parse-log-files-with-powershell/'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::CoreCmdlet # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

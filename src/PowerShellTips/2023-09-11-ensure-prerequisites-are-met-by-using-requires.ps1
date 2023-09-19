@@ -16,6 +16,8 @@ $tip.Example = @'
 #Requires -Modules @{ ModuleName="Az.KeyVault"; ModuleVersion="4.0.0" }
 #Requires -RunAsAdministrator
 '@
-$tip.Urls = @('https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires')
+$tip.Urls = @(
+	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

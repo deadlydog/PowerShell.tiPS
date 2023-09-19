@@ -24,7 +24,10 @@ A short description of the tip.
 This can be multiple lines.
 '@
 `$tip.Example = 'Example code to demonstrate the tip. This can also be multiple lines if needed.'
-`$tip.Urls = @('https://OneTwoOrThreeUrls', 'https://ToLearnMoreAboutTheTip')
+`$tip.Urls = @(
+	'https://OneTwoOrThreeUrls'
+	'https://ToLearnMoreAboutTheTip'
+)
 `$tip.MinPowerShellVersion = '0.0'
 `$tip.Category = [tiPS.TipCategory]::Other # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
 "@

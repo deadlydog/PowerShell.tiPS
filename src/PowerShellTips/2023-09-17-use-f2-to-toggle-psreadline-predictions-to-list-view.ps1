@@ -9,6 +9,9 @@ If you want to see more predictions, you can press the F2 key to swap from Inlin
 Use 'Update-Module -Name PSReadLine' to update to the latest version of PSReadLine and use these features.
 '@
 $tip.Example = 'Type "Get-" and then press F2 to see a list of commands that you have previously typed that start with "Get-"'
-$tip.Urls = @('https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/', 'https://learn.microsoft.com/en-us/powershell/module/psreadline/')
+$tip.Urls = @(
+	'https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/'
+	'https://learn.microsoft.com/en-us/powershell/module/psreadline/'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Terminal # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

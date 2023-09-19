@@ -7,6 +7,9 @@ Instead of piping data to Out-Table, use Out-GridView. This opens a window with 
 NOTE: Out-GridView is only available on Windows.
 '@
 $tip.Example = 'Get-Process | Out-GridView -PassThru -Title "Select processes to return" | Select-Object -Property ProcessName,Id'
-$tip.Urls = @('https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/out-gridview', 'https://woshub.com/using-out-gridview-table-powershell/')
+$tip.Urls = @(
+	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/out-gridview'
+	'https://woshub.com/using-out-gridview-table-powershell/'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::CoreCmdlet # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

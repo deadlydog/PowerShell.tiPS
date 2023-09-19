@@ -14,6 +14,8 @@ $tip.Example = @'
 - Type `Get-Pro` and press Ctrl+Space to list all the commands that start with `Get-Pro`, including their parameter sets.
 - Type part of a variable name (e.g. $var) and press Ctrl+Space to list all the variables that start with `$var`, including their type if available (e.g. [string], [int]).
 '@
-$tip.Urls = @('https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/')
+$tip.Urls = @(
+	'https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Terminal # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.

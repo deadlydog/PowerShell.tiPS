@@ -7,6 +7,10 @@ The PowerShell Community Call is held on the 3rd Thursday of every month at 9:30
 You can join the Teams live event at https://aka.ms/JoinPSCall. The call is recorded and posted on YouTube.
 '@
 $tip.Example = ''
-$tip.Urls = @('https://github.com/PowerShell/PowerShell-RFC/blob/master/CommunityCall/README.md', 'https://powershell.org/series/powershell-community-call/', 'https://www.youtube.com/@powershellanddscteamchanne5739')
+$tip.Urls = @(
+	'https://github.com/PowerShell/PowerShell-RFC/blob/master/CommunityCall/README.md'
+	'https://powershell.org/series/powershell-community-call/'
+	'https://www.youtube.com/@powershellanddscteamchanne5739'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Community # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
