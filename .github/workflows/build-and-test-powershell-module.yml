@@ -31,7 +31,7 @@ env:
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: windows-latest # Use Windows agent to ensure dotnet.exe is available to build C# assemblies.
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
