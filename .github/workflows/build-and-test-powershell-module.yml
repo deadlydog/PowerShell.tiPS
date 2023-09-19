@@ -31,7 +31,7 @@ env:
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: windows-latest # Use Windows agent to ensure dotnet.exe is available to build C# assemblies.
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
@@ -52,11 +52,7 @@ jobs:
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
 
-      - name: Build the concatinated psm1 file
-        shell: pwsh
-        run: ./build/Build-Psm1File.ps1
-
-      - name: Run Pester Tests
+      - name: Run Pester tests and generate code coverage report
         shell: pwsh
         run: |
           Write-Output "Pester version being used:"
@@ -67,7 +63,42 @@ jobs:
           $pesterConfig = New-PesterConfiguration @{
             Output = @{ Verbosity = 'Detailed' }
             Run = @{ Throw = $true }
-            TestResult = @{ Enabled = $true }
+            TestResult = @{
+              Enabled = $true
+              OutputPath = 'test-results-nunit.xml'
+            }
+            CodeCoverage = @{
+              Enabled = $true
+              OutputPath = 'code-coverage-jacoco.xml'
+              Path = 'src/' # Only include code coverage for the module's source code, not build or deployment scripts.
+            }
+          }
+          Invoke-Pester -Configuration $pesterConfig
+
+      - name: Add code coverage report to PR
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: code-coverage-jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 60
+          min-coverage-changed-files: 60
+
+      - name: Build the concatinated psm1 file
+        shell: pwsh
+        run: ./build/Build-Psm1File.ps1 -DeleteSourceFilesAfterImport
+
+      - name: Run Pester tests again to ensure the concatinated psm1 file works as expected
+        shell: pwsh
+        run: |
+          Write-Output "Pester version being used:"
+          Import-Module -Name Pester
+          Get-Module -Name Pester
+
+          Write-Output "Running all Pester tests in the repo:"
+          $pesterConfig = New-PesterConfiguration @{
+            Output = @{ Verbosity = 'Detailed' }
+            Run = @{ Throw = $true }
+            TestResult = @{ Enabled = $false }
             CodeCoverage = @{ Enabled = $false }
           }
           Invoke-Pester -Configuration $pesterConfig
