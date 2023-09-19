@@ -5,7 +5,11 @@
 # docs/ArchitectureDecisionRecords/005-How-to-dot-source-files-into-the-module-psm1-file.md.
 
 [CmdletBinding()]
-Param()
+Param
+(
+	[Parameter(Mandatory = $false, HelpMessage = 'If provided, the source files will be deleted after importing their contents into the generated psm1 module file.')]
+	[switch] $DeleteSourceFilesAfterImport
+)
 
 [string] $repositoryRoot = Split-Path $PSScriptRoot -Parent -Resolve
 [string] $moduleDirectoryPath = Join-Path -Path $repositoryRoot -ChildPath 'src/tiPS'
@@ -38,6 +42,12 @@ foreach ($filePath in $functionFilePathsToImport)
 	{
 		Write-Error "Failed to read and append functions/types from file '$filePath': $_"
 	}
+}
+
+if ($DeleteSourceFilesAfterImport)
+{
+	Write-Verbose "Deleting source files from '$moduleDirectoryPath'."
+	Remove-Item -Path $functionFilePathsToImport -Force
 }
 
 [string] $moduleFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath 'tiPS.psm1'

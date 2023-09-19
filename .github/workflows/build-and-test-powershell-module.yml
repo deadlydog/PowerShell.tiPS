@@ -54,7 +54,7 @@ jobs:
 
       - name: Build the concatinated psm1 file
         shell: pwsh
-        run: ./build/Build-Psm1File.ps1
+        run: ./build/Build-Psm1File.ps1 -DeleteSourceFilesAfterImport
 
       - name: Run Pester Tests
         shell: pwsh
