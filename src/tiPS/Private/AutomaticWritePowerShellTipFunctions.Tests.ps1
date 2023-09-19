@@ -1,6 +1,6 @@
 using module './../tiPS.psm1'
 
-InModuleScope tiPS { # Must use InModuleScope to call private functions of the module.
+InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functions of the module.
 	Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		BeforeEach {
 			Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith {
