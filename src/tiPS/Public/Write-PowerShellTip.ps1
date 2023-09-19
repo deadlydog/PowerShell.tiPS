@@ -43,6 +43,9 @@ function Write-PowerShellTip
 	Process
 	{
 		[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Id $Id
-		WritePowerShellTipToTerminal -Tip $tip
+		if ($null -ne $tip)
+		{
+			WritePowerShellTipToTerminal -Tip $tip
+		}
 	}
 }

@@ -13,16 +13,30 @@ Describe 'Write-PowerShellTip' {
 		Mock -ModuleName $ModuleName Write-Host { } -Verifiable
 	}
 
-	Context 'Using one of its aliases' {
-		It 'Should write a tip using Tips' {
-			Tips
+	Context 'Given no parameters' {
+		It 'Should write a tip' {
+			{ Write-PowerShellTip } | Should -Not -Throw
 			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
 		}
 	}
 
-	Context 'Given no parameters' {
-		It 'Should write a tip' {
-			Write-PowerShellTip
+	Context 'Given a valid tip ID' {
+		It 'Should write the tip to the terminal without error' {
+			{ Write-PowerShellTip -Id '2023-07-16-powershell-is-open-source' } | Should -Not -Throw
+			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
+		}
+	}
+
+	Context 'Given an invalid tip ID' {
+		It 'Should write an error' {
+			Write-PowerShellTip -Id 'TipIdThatDoesNotExist' -ErrorVariable tipError -ErrorAction SilentlyContinue > $null
+			$tipError | Should -Not -BeNullOrEmpty
+		}
+	}
+
+	Context 'Using one of its aliases' {
+		It 'Should write a tip using Tips' {
+			{ Tips } | Should -Not -Throw
 			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
 		}
 	}
