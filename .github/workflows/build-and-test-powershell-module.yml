@@ -71,6 +71,7 @@ jobs:
             CodeCoverage = @{
               Enabled = $true
               OutputPath = 'code-coverage-jacoco.xml'
+              Path = 'src/' # Only include code coverage for the module's source code, not build or deployment scripts.
             }
           }
           Invoke-Pester -Configuration $pesterConfig
