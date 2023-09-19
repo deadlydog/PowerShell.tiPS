@@ -87,7 +87,7 @@ jobs:
         shell: pwsh
         run: ./build/Build-Psm1File.ps1 -DeleteSourceFilesAfterImport
 
-      - name: Run Pester tests again to ensure the concatinated psm1 file works
+      - name: Run Pester tests again to ensure the concatinated psm1 file works as expected
         shell: pwsh
         run: |
           Write-Output "Pester version being used:"
