@@ -142,10 +142,48 @@
   {
     "CreatedDate": "2023-09-18T00:00:00",
     "Title": "Split long lines of code into multiple lines",
-    "TipText": "Long lines of code can be difficult to read, especially when doing code reviews and for users not using word-wrap in their editors. It is good practice to try and avoid long lines of code.\r\n\r\nPowerShell lines can naturally be split into multiple lines at many operators, such as =, +, -, |, {, -eq, etc.\r\n\r\nIf you need to split a line at an unnatural location, you can use the backtick character (`) at the end of each line. This is generally discouraged though as the backtick can be hard to see, easy to forget, and a space after the backtick breaks the line continuation. However, there are times when it may still be useful.",
+    "TipText": "Long lines of code can be difficult to read, especially when doing code reviews in a web browser and for users not using word-wrap in their editors. It is good practice to try and avoid long lines of code.\r\n\r\nPowerShell lines can naturally be split into multiple lines at many operators, such as =, +, -, |, {, -eq, etc.\r\n\r\nIf you need to split a line at an unnatural location, you can use the backtick character (`) at the end of each line. This is generally discouraged though as the backtick can be hard to see, easy to forget, and a space after the backtick breaks the line continuation. However, there are times when it may still be useful.",
     "Example": "# Split into multiple lines using natural operators.\r\n[bool] $arrayIsNullOrEmpty =\r\n    $null -eq $myIntegerArray -or\r\n    $myIntegerArray.Length -eq 0\r\n\r\n[int[]] $valuesGreaterThan10AndSorted =\r\n    $myIntegerArray |\r\n    Where-Object {\r\n        $_ -gt 10\r\n    } |\r\n    Sort-Object\r\n\r\n[string] $myString =\r\n    'This is a very long string that is split into multiple lines ' +\r\n    'using the + operator.'\r\n\r\n# Split into multiple lines at an unnatural locations using the backtick.\r\nGet-ChildItem `\r\n    -Path 'C:\\' `\r\n    -Recurse `\r\n    -File `\r\n    -Filter '*.txt'",
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-7.3#line-continuation"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
+  },
+  {
+    "CreatedDate": "2023-09-19T00:00:00",
+    "Title": "Use Splatting for nicer code and dynamic parameters",
+    "TipText": "Splatting allows you to pass parameters to a function as a hashtable. This can make your code more readable when you have a lot of parameters to pass to a function. It also allows you to build the parameters dynamically.\r\n\r\nTo use splatting, create a hashtable with the parameter names as the keys and the parameter values as the values. Then, pass the hashtable to the function using the `@` operator.\r\n\r\nYou can also use splatting with arrays, where the array values are passed to the function as positional parameters.\r\n\r\nIn a function, you can use the $PSBoundParameters automatic variable to access the parameters that were passed to the function. This allows you to modify and extend the given parameters before passing them to another function.",
+    "Example": "$hashtableParameters = @{\r\n    Path = \"test.txt\"\r\n    Destination = \"test2.txt\"\r\n    WhatIf = $true\r\n}\r\nCopy-Item @hashtableParameters\r\n\r\n$arrayParameters = \"test.txt\", \"test2.txt\"\r\nCopy-Item @arrayParameters -WhatIf",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting",
+      "https://adamtheautomator.com/powershell-splatting/",
+      "https://4sysops.com/archives/use-splatting-and-psboundparameters-to-pass-parameters-in-powershell/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
+  },
+  {
+    "CreatedDate": "2023-09-21T00:00:00",
+    "Title": "Use Here-strings for hardcoded multiline strings",
+    "TipText": "When you are defining multiline strings in code, you could create a string and use `r`n or [Environment]::NewLine to create new lines in it. If it is a long string, you may even choose to break it into multiple lines in code and concatenate them using the + operator. However, this can be cumbersome to both write and read. Instead, you can use a here-string to define a multiline string.\r\n\r\nA here-string is a string that is defined between two `@ symbols. The here-string can be defined with single or double quotes. If you use single quotes, the string will be a literal string and no variable expansion will occur. If you use double quotes, variable expansion will occur.\r\n\r\nHere-strings allow you to define and see a multiline string in your code exactly as it will appear when it is output.",
+    "Example": "[string] $multilineString = @'\r\nThis is the first line of the string.\r\nThis is the second line of the string.\r\n\r\n  There is a blank line above this line, and 2 spaces at the start of this line.\r\nThis $variable will not be expanded because we used single quotes.\r\n`'@\r\n\r\n[int] $johnDoeAge = 42\r\n[string] $jsonString = @\"\r\n{\r\n    \"Name\": \"John Doe\",\r\n    \"Age\": $johnDoeAge\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_quoting_rules#here-strings",
+      "https://devblogs.microsoft.com/scripting/maximizing-the-power-of-here-string-in-powershell-for-configuration-data"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 4
+  },
+  {
+    "CreatedDate": "2023-09-21T00:00:00",
+    "Title": "Use PSBoundParameters to check if a parameter was provided",
+    "TipText": "When writing a function you may want to check if a parameter was provided by the caller. With reference types (e.g. [string]) you can simply check if the parameter is null, but what is $null is a valid value for the parameter and you need to take different action if the parameter was not provided? Similarly, what if the parameter is a value type (e.g. [int]) and you need to take action if the caller provided the default value (e.g. zero), but not if they didn't provide the parameter?\r\n\r\nYou can check if a parameter was passed to a script/function by using the $PSBoundParameters automatic variable. This variable contains a hashtable of all parameters that were passed to the function, and you can use the ContainsKey function to check if a specific parameter was passed.",
+    "Example": "function Test-ParameterWasPassed([string] $OptionalParameter = $null)\r\n{\r\n\tif ($PSBoundParameters.ContainsKey('OptionalParameter'))\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was passed.'\r\n\t}\r\n\telse\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was not passed.'\r\n\t}\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psboundparameters",
+      "https://devblogs.microsoft.com/powershell/checking-for-bound-parameters/",
+      "https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/"
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 4
