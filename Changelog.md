@@ -3,7 +3,17 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
-## v0.3.4 - September 29, 2023
+## v0.4.0 - September 23, 2023
+
+Features:
+
+- Added new `Performance` category for tips.
+
+Breaking Changes:
+
+- Renamed the `CoreCmdlet` category to `NativeCmdlet`.
+
+## v0.3.4 - September 19, 2023
 
 Fixes:
 
@@ -19,7 +29,7 @@ Features:
 
 Features:
 
-- Added new CoreCmdlet category for tips.
+- Added new `CoreCmdlet` category for tips.
 
 ## v0.1.1 - September 15, 2023
 
