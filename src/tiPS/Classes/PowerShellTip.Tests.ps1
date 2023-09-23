@@ -48,7 +48,7 @@ Describe 'Trimming all tip properties' {
 			$validTip.Category = 'Community'
 		}
 
-		It 'Should trim the whitespace from all of the properties' {
+		It 'Should trim the leading and trailing whitespace from all of the properties' {
 			[tiPS.PowerShellTip] $tip = $validTip
 			[string] $title = ' Title of the tip '
 			[string] $expectedTitle = 'Title of the tip'
