@@ -35,6 +35,7 @@ foreach ($tipFilePath in $tipFilePaths)
 	$tip = $null
 	. $tipFilePath
 
+	$tip.TrimAllProperties()
 	$tip.Validate()
 	$tips.Add($tip) > $null
 }
