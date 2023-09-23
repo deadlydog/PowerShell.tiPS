@@ -201,6 +201,17 @@
   },
   {
     "CreatedDate": "2023-09-23T00:00:00",
+    "Title": "Define hardcoded array items on new lines without commas",
+    "TipText": "When defining hardcoded arrays with many values in PowerShell, you can define each item on a new line without commas. This makes it easier to read and maintain the array items, and you don't have to worry about commas when adding or rearranging items.\r\n\r\nIf you choose to define multiple array values on a single line, then you will need a comma between each item on the line.",
+    "Example": "[string[]] $stringArray = @(\r\n    'Notice that each item is on a new line without commas.'\r\n    'This is much easier to read and maintain.'\r\n    'And you can add comments to explain each item if needed.' # Like this.\r\n)\r\n\r\n[int[]] $intArray = @(1, 2, 3)",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.3#create-an-array"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 5
+  },
+  {
+    "CreatedDate": "2023-09-23T00:00:00",
     "Title": "Use $PSVersionTable to get PowerShell session info",
     "TipText": "The $PSVersionTable automatic variable contains information about the current PowerShell session, including the PowerShell version, operating system, and more.",
     "Example": "Write-Output \"The PowerShell version being used is $($PSVersionTable.PSVersion)\"\r\n\r\nWrite-Output \"Below is the full contents of the `$PSVersionTable variable:\"\r\n$PSVersionTable",
