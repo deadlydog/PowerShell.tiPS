@@ -19,7 +19,7 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
     "CreatedDate": "2023-08-28T00:00:00",
@@ -31,7 +31,7 @@
       "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 5
+    "Category": 6
   },
   {
     "CreatedDate": "2023-09-05T00:00:00",
@@ -43,7 +43,7 @@
       "https://stackoverflow.com/a/60996703/602585"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-06T00:00:00",
@@ -54,7 +54,7 @@
       "https://woshub.com/powershell-commands-history/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 5
+    "Category": 6
   },
   {
     "CreatedDate": "2023-09-06T00:00:00",
@@ -65,18 +65,7 @@
       "https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 5
-  },
-  {
-    "CreatedDate": "2023-09-11T00:00:00",
-    "Title": "Ensure prerequisites are met by using #Requires",
-    "TipText": "Use the #Requires statement to ensure that the environment meets the prerequisites for your script to run. You can use #Requires to check that:\r\n- A minimum PowerShell version is being used\r\n- PowerShell Desktop or PowerShell Core is being used\r\n- Specific modules or snap-ins are installed\r\n- The script is running as Administrator\r\n\r\nIf one of the required prerequisites are not met, PowerShell will throw an error and the script will not run.",
-    "Example": "#Requires -Version 7.2\r\n#Requires -PSEdition Core\r\n#Requires -Modules @{ ModuleName=\"Az.KeyVault\"; ModuleVersion=\"4.0.0\" }\r\n#Requires -RunAsAdministrator",
-    "Urls": [
-      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires"
-    ],
-    "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 6
   },
   {
     "CreatedDate": "2023-09-11T00:00:00",
@@ -101,7 +90,18 @@
       "https://github.com/dfinke/ImportExcel"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 3
+    "Category": 2
+  },
+  {
+    "CreatedDate": "2023-09-11T00:00:00",
+    "Title": "Ensure prerequisites are met by using #Requires",
+    "TipText": "Use the #Requires statement to ensure that the environment meets the prerequisites for your script to run. You can use #Requires to check that:\r\n- A minimum PowerShell version is being used\r\n- PowerShell Desktop or PowerShell Core is being used\r\n- Specific modules or snap-ins are installed\r\n- The script is running as Administrator\r\n\r\nIf one of the required prerequisites are not met, PowerShell will throw an error and the script will not run.",
+    "Example": "#Requires -Version 7.2\r\n#Requires -PSEdition Core\r\n#Requires -Modules @{ ModuleName=\"Az.KeyVault\"; ModuleVersion=\"4.0.0\" }\r\n#Requires -RunAsAdministrator",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-12T00:00:00",
@@ -113,7 +113,7 @@
       "https://4sysops.com/archives/parse-log-files-with-powershell/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 1
+    "Category": 3
   },
   {
     "CreatedDate": "2023-09-16T00:00:00",
@@ -125,7 +125,7 @@
       "https://woshub.com/using-out-gridview-table-powershell/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 1
+    "Category": 3
   },
   {
     "CreatedDate": "2023-09-17T00:00:00",
@@ -137,7 +137,7 @@
       "https://learn.microsoft.com/en-us/powershell/module/psreadline/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 5
+    "Category": 6
   },
   {
     "CreatedDate": "2023-09-18T00:00:00",
@@ -148,7 +148,7 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-7.3#line-continuation"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-19T00:00:00",
@@ -161,7 +161,20 @@
       "https://4sysops.com/archives/use-splatting-and-psboundparameters-to-pass-parameters-in-powershell/"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
+  },
+  {
+    "CreatedDate": "2023-09-21T00:00:00",
+    "Title": "Use PSBoundParameters to check if a parameter was provided",
+    "TipText": "When writing a function you may want to check if a parameter was provided by the caller. With reference types (e.g. [string]) you can simply check if the parameter is null, but what is $null is a valid value for the parameter and you need to take different action if the parameter was not provided? Similarly, what if the parameter is a value type (e.g. [int]) and you need to take action if the caller provided the default value (e.g. zero), but not if they didn't provide the parameter?\r\n\r\nYou can check if a parameter was passed to a script/function by using the $PSBoundParameters automatic variable. This variable contains a hashtable of all parameters that were passed to the function, and you can use the ContainsKey function to check if a specific parameter was passed.",
+    "Example": "function Test-ParameterWasPassed([string] $OptionalParameter = $null)\r\n{\r\n\tif ($PSBoundParameters.ContainsKey('OptionalParameter'))\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was passed.'\r\n\t}\r\n\telse\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was not passed.'\r\n\t}\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psboundparameters",
+      "https://devblogs.microsoft.com/powershell/checking-for-bound-parameters/",
+      "https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 5
   },
   {
     "CreatedDate": "2023-09-21T00:00:00",
@@ -173,17 +186,15 @@
       "https://devblogs.microsoft.com/scripting/maximizing-the-power-of-here-string-in-powershell-for-configuration-data"
     ],
     "MinPowerShellVersion": "0.0",
-    "Category": 4
+    "Category": 5
   },
   {
-    "CreatedDate": "2023-09-21T00:00:00",
-    "Title": "Use PSBoundParameters to check if a parameter was provided",
-    "TipText": "When writing a function you may want to check if a parameter was provided by the caller. With reference types (e.g. [string]) you can simply check if the parameter is null, but what is $null is a valid value for the parameter and you need to take different action if the parameter was not provided? Similarly, what if the parameter is a value type (e.g. [int]) and you need to take action if the caller provided the default value (e.g. zero), but not if they didn't provide the parameter?\r\n\r\nYou can check if a parameter was passed to a script/function by using the $PSBoundParameters automatic variable. This variable contains a hashtable of all parameters that were passed to the function, and you can use the ContainsKey function to check if a specific parameter was passed.",
-    "Example": "function Test-ParameterWasPassed([string] $OptionalParameter = $null)\r\n{\r\n\tif ($PSBoundParameters.ContainsKey('OptionalParameter'))\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was passed.'\r\n\t}\r\n\telse\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was not passed.'\r\n\t}\r\n}",
+    "CreatedDate": "2023-09-22T00:00:00",
+    "Title": "Avoid Array addition",
+    "TipText": "Array addition is an expensive and inefficient operation and can usually be replaced by PowerShell explicit loop assignment.\r\n\r\nUse a `List<T>` instead in those cases when adding to a collection while looping is required.",
+    "Example": "# Array addition:\r\n$items = @()\r\nforeach ($i in 0..10) {\r\n    $items += $i\r\n}\r\n\r\n# Can be easily replaced with explicit assignment:\r\n$items = foreach ($i in 0..10) {\r\n    $i\r\n}\r\n\r\n# And, when not possible, a List<T> is recommended:\r\n$items = [System.Collections.Generic.List[int]]::new()\r\nforeach ($i in 0..10) {\r\n    $items.Add($i)\r\n}",
     "Urls": [
-      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psboundparameters",
-      "https://devblogs.microsoft.com/powershell/checking-for-bound-parameters/",
-      "https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/"
+      "https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.3#array-addition"
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 4
