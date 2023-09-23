@@ -76,6 +76,8 @@ jobs:
           Invoke-Pester -Configuration $pesterConfig
 
       - name: Add code coverage report to PR
+        # Adding the code coverage report is not supported for manual workflow runs.
+        if: github.event_name != 'workflow_dispatch'
         uses: madrapps/jacoco-report@v1.6.1
         with:
           paths: code-coverage-jacoco.xml
