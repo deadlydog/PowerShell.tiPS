@@ -36,7 +36,7 @@ function WritePowerShellTipToTerminal
 
 	Write-Host $Tip.TipText -ForegroundColor $tipTextColor
 
-	if (-not [string]::IsNullOrWhiteSpace($Tip.Example))
+	if ($Tip.ExampleIsProvided)
 	{
 		Write-Host 'Example: ' -ForegroundColor $exampleColor -NoNewline
 		Write-Host $Tip.Example -ForegroundColor $exampleColor

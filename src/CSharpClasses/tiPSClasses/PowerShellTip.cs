@@ -45,6 +45,11 @@ namespace tiPS
 			}
 		}
 
+		public bool ExampleIsProvided
+		{
+			get { return !string.IsNullOrWhiteSpace(Example); }
+		}
+
 		public bool UrlsAreProvided
 		{
 			get { return Urls != null && Urls.Length > 0; }
