@@ -8,7 +8,7 @@
 # The Tip filename is based on the ID, which is based on the date and title, so load a dummy PowerShellTip to get the filename to use.
 $dummyTip = [tiPS.PowerShellTip]::new()
 $dummyTip.CreatedDate = [DateTime]::Today
-$dummyTip.Title = $tipTitle
+$dummyTip.Title = $tipTitle.Trim()
 
 [string] $today = $dummyTip.CreatedDate.ToString('yyyy-MM-dd')
 [string] $powerShellTipsFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot/../src/PowerShellTips"
