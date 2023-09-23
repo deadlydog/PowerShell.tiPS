@@ -1,5 +1,82 @@
 using module './../tiPS.psm1'
 
+Describe 'Trimming all tip properties' {
+	Context 'Given none of the properties need whitespace trimmed' {
+		BeforeEach {
+			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
+			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+			$validTip.Title = 'Title of the tip'
+			$validTip.TipText = 'Tip Text'
+			$validTip.Example = 'Example'
+			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
+			$validTip.MinPowerShellVersion = '5.1'
+			$validTip.Category = 'Community'
+		}
+
+		It 'Should not change any of the properties' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			[string] $title = 'Title of the tip'
+			[string] $tipText = 'Tip Text'
+			[string] $example = 'Example'
+			[string[]] $urls = @('https://Url1.com', 'http://Url2.com')
+			[string] $minPowerShellVersion = '5.1'
+			$tip.Title = $title
+			$tip.TipText = $tipText
+			$tip.Example = $example
+			$tip.Urls = $urls
+			$tip.MinPowerShellVersion = $minPowerShellVersion
+
+			{ $tip.TrimAllProperties() } | Should -Not -Throw
+
+			$tip.Title | Should -Be $title
+			$tip.TipText | Should -Be $tipText
+			$tip.Example | Should -Be $example
+			$tip.Urls | Should -Be $urls
+			$tip.MinPowerShellVersion | Should -Be $minPowerShellVersion
+		}
+	}
+
+	Context 'Given the properties need whitespace trimmed' {
+		BeforeEach {
+			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
+			$validTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+			$validTip.Title = 'Title of the tip'
+			$validTip.TipText = 'Tip Text'
+			$validTip.Example = 'Example'
+			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
+			$validTip.MinPowerShellVersion = '5.1'
+			$validTip.Category = 'Community'
+		}
+
+		It 'Should trim the leading and trailing whitespace from all of the properties' {
+			[tiPS.PowerShellTip] $tip = $validTip
+			[string] $title = ' Title of the tip '
+			[string] $expectedTitle = 'Title of the tip'
+			[string] $tipText = '	Tip Text	'
+			[string] $expectedTipText = 'Tip Text'
+			[string] $example = ' Example'
+			[string] $expectedExample = 'Example'
+			[string[]] $urls = @('https://Url1.com   ', '   http://Url2.com')
+			[string[]] $expectedUrls = @('https://Url1.com', 'http://Url2.com')
+			[string] $minPowerShellVersion = '5.1 '
+			[string] $expectedMinPowerShellVersion = '5.1'
+			$tip.Title = $title
+			$tip.TipText = $tipText
+			$tip.Example = $example
+			$tip.Urls = $urls
+			$tip.MinPowerShellVersion = $minPowerShellVersion
+
+			{ $tip.TrimAllProperties() } | Should -Not -Throw
+
+			$tip.Title | Should -Be $expectedTitle
+			$tip.TipText | Should -Be $expectedTipText
+			$tip.Example | Should -Be $expectedExample
+			$tip.Urls | Should -Be $expectedUrls
+			$tip.MinPowerShellVersion | Should -Be $expectedMinPowerShellVersion
+		}
+	}
+}
+
 Describe 'Validating a PowerShellTip' {
 	Context 'Given the PowerShellTip has invalid properties' {
 		BeforeEach {

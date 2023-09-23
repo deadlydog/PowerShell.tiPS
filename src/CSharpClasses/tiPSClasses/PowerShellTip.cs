@@ -45,6 +45,11 @@ namespace tiPS
 			}
 		}
 
+		public bool ExampleIsProvided
+		{
+			get { return !string.IsNullOrWhiteSpace(Example); }
+		}
+
 		public bool UrlsAreProvided
 		{
 			get { return Urls != null && Urls.Length > 0; }
@@ -53,6 +58,18 @@ namespace tiPS
 		public bool MinPowerShellVersionIsProvided
 		{
 			get { return !string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0"; }
+		}
+
+		public void TrimAllProperties()
+		{
+			Title = Title.Trim();
+			TipText = TipText.Trim();
+			Example = Example.Trim();
+			MinPowerShellVersion = MinPowerShellVersion.Trim();
+			for (int i = 0; i < Urls.Length; i++)
+			{
+				Urls[i] = Urls[i].Trim();
+			}
 		}
 
 		public void Validate()

@@ -23,7 +23,9 @@ A short description of the tip.
 
 This can be multiple lines.
 '@
-`$tip.Example = 'Example code to demonstrate the tip. This can also be multiple lines if needed.'
+`$tip.Example = @'
+Example code to demonstrate the tip. This can also be multiple lines if needed.
+'@
 `$tip.Urls = @(
 	'https://OneTwoOrThreeUrls'
 	'https://ToLearnMoreAboutTheTip'
