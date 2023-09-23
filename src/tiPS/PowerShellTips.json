@@ -201,23 +201,23 @@
   },
   {
     "CreatedDate": "2023-09-23T00:00:00",
-    "Title": "Use Flags to allow multiple enum values",
-    "TipText": "You can use the [Flags()] attribute to allow multiple enum values to be used at once. In addition to the attribute, you need to set the enum values to powers of 2 (1, 2, 4, 8, 16, etc.). This allows you to use the bitwise operators to combine enum values.\r\n\r\nWhen using a flags enum you must be careful to not use the -eq operator to check if a variable contains a specific enum value. This will only return true if the variable contains only that enum value. Instead, use the -band operator or the .HasFlag() method to check if the variable contains a specific enum value.",
-    "Example": "[Flags()]\r\nenum FileAttributes {\r\n    Archive    = 1\r\n    Compressed = 2\r\n    Device     = 4\r\n    Directory  = 8\r\n    Encrypted  = 16\r\n    Hidden     = 32\r\n}\r\n\r\n# Set a variable to multiple enum values.\r\n$attributes = [FileAttributes]::Archive + [FileAttributes]::Hidden\r\n$attributes += [FileAttributes]::Compressed\r\n\r\n# Check if the variable contains a specific enum value.\r\n$attributes -eq [FileAttributes]::Archive # False\r\n$attributes -band [FileAttributes]::Archive # True\r\n$attributes.HasFlag([FileAttributes]::Archive) # True",
+    "Title": "Use $PSVersionTable to get PowerShell session info",
+    "TipText": "The $PSVersionTable automatic variable contains information about the current PowerShell session, including the PowerShell version, operating system, and more.",
+    "Example": "Write-Output \"The PowerShell version being used is $($PSVersionTable.PSVersion)\"\r\n\r\nWrite-Output \"Below is the full contents of the `$PSVersionTable variable:\"\r\n$PSVersionTable",
     "Urls": [
-      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum#enumerations-as-flags",
-      "https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/"
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psversiontable"
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
     "CreatedDate": "2023-09-23T00:00:00",
-    "Title": "Use $PSVersionTable to get PowerShell session info",
-    "TipText": "The $PSVersionTable automatic variable contains information about the current PowerShell session, including the PowerShell version, operating system, and more.",
-    "Example": "Write-Output \"The PowerShell version being used is $($PSVersionTable.PSVersion)\"\r\n\r\nWrite-Output \"Below is the full contents of the `$PSVersionTable variable:\"\r\n$PSVersionTable",
+    "Title": "Use Flags to allow multiple enum values",
+    "TipText": "You can use the [Flags()] attribute to allow multiple enum values to be used at once. In addition to the attribute, you need to set the enum values to powers of 2 (1, 2, 4, 8, 16, etc.). This allows you to use the bitwise operators to combine enum values.\r\n\r\nWhen using a flags enum you must be careful to not use the -eq operator to check if a variable contains a specific enum value. This will only return true if the variable contains only that enum value. Instead, use the -band operator or the .HasFlag() method to check if the variable contains a specific enum value.",
+    "Example": "[Flags()]\r\nenum FileAttributes {\r\n    Archive    = 1\r\n    Compressed = 2\r\n    Device     = 4\r\n    Directory  = 8\r\n    Encrypted  = 16\r\n    Hidden     = 32\r\n}\r\n\r\n# Set a variable to multiple enum values.\r\n$attributes = [FileAttributes]::Archive + [FileAttributes]::Hidden\r\n$attributes += [FileAttributes]::Compressed\r\n\r\n# Check if the variable contains a specific enum value.\r\n$attributes -eq [FileAttributes]::Archive # False\r\n$attributes -band [FileAttributes]::Archive # True\r\n$attributes.HasFlag([FileAttributes]::Archive) # True",
     "Urls": [
-      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psversiontable"
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum#enumerations-as-flags",
+      "https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/"
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 5

@@ -62,7 +62,7 @@ Write-Verbose "The following read-only properties will be excluded from the JSON
 
 Write-Verbose "Writing $numberOfTips PowerShell Tip objects to JSON file '$powerShellTipsJsonFilePath'."
 $tips |
-	Sort-Object -Property CreatedDate |
+	Sort-Object -Property CreatedDate, Title |
 	Select-Object -ExcludeProperty $readOnlyClassPropertyNames |
 	ConvertTo-Json -Depth 100 |
 	Out-File -FilePath $powerShellTipsJsonFilePath -Encoding UTF8 -Force
