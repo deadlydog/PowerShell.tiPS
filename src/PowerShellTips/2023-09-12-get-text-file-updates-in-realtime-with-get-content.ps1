@@ -14,4 +14,4 @@ $tip.Urls = @(
 	'https://4sysops.com/archives/parse-log-files-with-powershell/'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::CoreCmdlet # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::NativeCmdlet # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

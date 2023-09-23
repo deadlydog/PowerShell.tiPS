@@ -27,4 +27,4 @@ $tip.Urls = @(
 	'https://4sysops.com/archives/use-splatting-and-psboundparameters-to-pass-parameters-in-powershell/'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Syntax # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

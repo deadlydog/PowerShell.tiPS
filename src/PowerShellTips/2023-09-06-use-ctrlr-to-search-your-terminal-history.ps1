@@ -13,4 +13,4 @@ $tip.Urls = @(
 	'https://woshub.com/powershell-commands-history/'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Terminal # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

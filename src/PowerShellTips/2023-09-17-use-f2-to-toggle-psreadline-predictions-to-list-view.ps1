@@ -14,4 +14,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/psreadline/'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Terminal # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
