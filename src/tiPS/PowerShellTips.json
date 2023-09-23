@@ -165,6 +165,18 @@
   },
   {
     "CreatedDate": "2023-09-21T00:00:00",
+    "Title": "Use Here-strings for hardcoded multiline strings",
+    "TipText": "When you are defining multiline strings in code, you could create a string and use `r`n or [Environment]::NewLine to create new lines in it. If it is a long string, you may even choose to break it into multiple lines in code and concatenate them using the + operator. However, this can be cumbersome to both write and read. Instead, you can use a here-string to define a multiline string.\r\n\r\nA here-string is a string that is defined between two `@ symbols. The here-string can be defined with single or double quotes. If you use single quotes, the string will be a literal string and no variable expansion will occur. If you use double quotes, variable expansion will occur.\r\n\r\nHere-strings allow you to define and see a multiline string in your code exactly as it will appear when it is output.",
+    "Example": "[string] $multilineString = @'\r\nThis is the first line of the string.\r\nThis is the second line of the string.\r\n\r\n  There is a blank line above this line, and 2 spaces at the start of this line.\r\nThis $variable will not be expanded because we used single quotes.\r\n`'@\r\n\r\n[int] $johnDoeAge = 42\r\n[string] $jsonString = @\"\r\n{\r\n    \"Name\": \"John Doe\",\r\n    \"Age\": $johnDoeAge\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_quoting_rules#here-strings",
+      "https://devblogs.microsoft.com/scripting/maximizing-the-power-of-here-string-in-powershell-for-configuration-data"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 5
+  },
+  {
+    "CreatedDate": "2023-09-21T00:00:00",
     "Title": "Use PSBoundParameters to check if a parameter was provided",
     "TipText": "When writing a function you may want to check if a parameter was provided by the caller. With reference types (e.g. [string]) you can simply check if the parameter is null, but what is $null is a valid value for the parameter and you need to take different action if the parameter was not provided? Similarly, what if the parameter is a value type (e.g. [int]) and you need to take action if the caller provided the default value (e.g. zero), but not if they didn't provide the parameter?\r\n\r\nYou can check if a parameter was passed to a script/function by using the $PSBoundParameters automatic variable. This variable contains a hashtable of all parameters that were passed to the function, and you can use the ContainsKey function to check if a specific parameter was passed.",
     "Example": "function Test-ParameterWasPassed([string] $OptionalParameter = $null)\r\n{\r\n\tif ($PSBoundParameters.ContainsKey('OptionalParameter'))\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was passed.'\r\n\t}\r\n\telse\r\n\t{\r\n\t\tWrite-Output 'OptionalParameter was not passed.'\r\n\t}\r\n}",
@@ -172,18 +184,6 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psboundparameters",
       "https://devblogs.microsoft.com/powershell/checking-for-bound-parameters/",
       "https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/"
-    ],
-    "MinPowerShellVersion": "0.0",
-    "Category": 5
-  },
-  {
-    "CreatedDate": "2023-09-21T00:00:00",
-    "Title": "Use Here-strings for hardcoded multiline strings",
-    "TipText": "When you are defining multiline strings in code, you could create a string and use `r`n or [Environment]::NewLine to create new lines in it. If it is a long string, you may even choose to break it into multiple lines in code and concatenate them using the + operator. However, this can be cumbersome to both write and read. Instead, you can use a here-string to define a multiline string.\r\n\r\nA here-string is a string that is defined between two `@ symbols. The here-string can be defined with single or double quotes. If you use single quotes, the string will be a literal string and no variable expansion will occur. If you use double quotes, variable expansion will occur.\r\n\r\nHere-strings allow you to define and see a multiline string in your code exactly as it will appear when it is output.",
-    "Example": "[string] $multilineString = @'\r\nThis is the first line of the string.\r\nThis is the second line of the string.\r\n\r\n  There is a blank line above this line, and 2 spaces at the start of this line.\r\nThis $variable will not be expanded because we used single quotes.\r\n`'@\r\n\r\n[int] $johnDoeAge = 42\r\n[string] $jsonString = @\"\r\n{\r\n    \"Name\": \"John Doe\",\r\n    \"Age\": $johnDoeAge\r\n}",
-    "Urls": [
-      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_quoting_rules#here-strings",
-      "https://devblogs.microsoft.com/scripting/maximizing-the-power-of-here-string-in-powershell-for-configuration-data"
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 5
@@ -198,5 +198,17 @@
     ],
     "MinPowerShellVersion": "0.0",
     "Category": 4
+  },
+  {
+    "CreatedDate": "2023-09-23T00:00:00",
+    "Title": "Use Flags to allow multiple enum values",
+    "TipText": "You can use the [Flags()] attribute to allow multiple enum values to be used at once. In addition to the attribute, you need to set the enum values to powers of 2 (1, 2, 4, 8, 16, etc.). This allows you to use the bitwise operators to combine enum values.\r\n\r\nWhen using a flags enum you must be careful to not use the -eq operator to check if a variable contains a specific enum value. This will only return true if the variable contains only that enum value. Instead, use the -band operator or the .HasFlag() method to check if the variable contains a specific enum value.",
+    "Example": "[Flags()]\r\nenum FileAttributes {\r\n    Archive    = 1\r\n    Compressed = 2\r\n    Device     = 4\r\n    Directory  = 8\r\n    Encrypted  = 16\r\n    Hidden     = 32\r\n}\r\n\r\n# Set a variable to multiple enum values.\r\n$attributes = [FileAttributes]::Archive + [FileAttributes]::Hidden\r\n$attributes += [FileAttributes]::Compressed\r\n\r\n# Check if the variable contains a specific enum value.\r\n$attributes -eq [FileAttributes]::Archive # False\r\n$attributes -band [FileAttributes]::Archive # True\r\n$attributes.HasFlag([FileAttributes]::Archive) # True",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum?view=powershell-7.3#enumerations-as-flags",
+      "https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/"
+    ],
+    "MinPowerShellVersion": "0.0",
+    "Category": 5
   }
 ]
