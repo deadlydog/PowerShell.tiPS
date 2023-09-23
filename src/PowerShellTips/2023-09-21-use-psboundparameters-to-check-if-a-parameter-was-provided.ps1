@@ -25,4 +25,4 @@ $tip.Urls = @(
 	'https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Syntax # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

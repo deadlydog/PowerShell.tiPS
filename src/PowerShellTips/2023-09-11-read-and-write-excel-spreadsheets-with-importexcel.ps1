@@ -24,4 +24,4 @@ $tip.Urls = @(
 	'https://github.com/dfinke/ImportExcel'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Module # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Module # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

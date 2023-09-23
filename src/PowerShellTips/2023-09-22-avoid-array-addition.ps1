@@ -28,4 +28,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.3#array-addition'
 )
 $tip.MinPowerShellVersion = '0.0'
-$tip.Category = [tiPS.TipCategory]::Syntax # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Performance # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

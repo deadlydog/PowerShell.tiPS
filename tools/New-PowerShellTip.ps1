@@ -29,7 +29,7 @@ This can be multiple lines.
 	'https://ToLearnMoreAboutTheTip'
 )
 `$tip.MinPowerShellVersion = '0.0'
-`$tip.Category = [tiPS.TipCategory]::Other # Community, CoreCmdlet, Editor, Module, Syntax, Terminal, or Other.
+`$tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
 "@
 
 Write-Output "Creating new PowerShell Tip file and opening it: $newTipFilePath"
