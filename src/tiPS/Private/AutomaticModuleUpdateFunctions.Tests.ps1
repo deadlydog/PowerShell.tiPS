@@ -136,4 +136,21 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$updatedDate | Should -Be $today
 		}
 	}
+
+	Describe 'Calling WriteModulesLastUpdateDate' {
+		BeforeEach {
+			Mock GetModulesLastUpdateDateFilePath {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the File.WriteAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/ModulesLastUpdateDate.txt')
+			}
+		}
+
+		It 'Should write the date, and only the date, to the file' {
+			$today = [DateTime]::Now.Date
+			WriteModulesLastUpdateDate -ModulesLastUpdateDate $today
+
+			$modulesLastUpdateDate = Get-Content -Path (GetModulesLastUpdateDateFilePath)
+			$modulesLastUpdateDate | Should -Be $today
+		}
+	}
 }

@@ -122,7 +122,7 @@ function WriteLastAutomaticTipWrittenDate
 
 	[string] $lastAutomaticTipWrittenDateFilePath = GetLastAutomaticTipWrittenDateFilePath
 	Write-Verbose "Writing last automatic tip Written date '$LastAutomaticTipWrittenDate' to '$lastAutomaticTipWrittenDateFilePath'."
-	$LastAutomaticTipWrittenDate.ToString() | Set-Content -Path $lastAutomaticTipWrittenDateFilePath -Force -NoNewline
+	[System.IO.File]::WriteAllText($lastAutomaticTipWrittenDateFilePath, $LastAutomaticTipWrittenDate.ToString())
 }
 
 function GetLastAutomaticTipWrittenDateFilePath

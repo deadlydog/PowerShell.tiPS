@@ -93,4 +93,21 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			}
 		}
 	}
+
+	Describe 'Calling WriteLastAutomaticTipWrittenDate' {
+		BeforeEach {
+			Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the File.WriteAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/LastAutomaticTipWrittenDate.txt')
+			}
+		}
+
+		It 'Should write the date, and only the date, to the file' {
+			$today = [DateTime]::Now.Date
+			WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate $today
+
+			$lastAutomaticTipWrittenDate = Get-Content -Path (GetLastAutomaticTipWrittenDateFilePath)
+			$lastAutomaticTipWrittenDate | Should -Be $today
+		}
+	}
 }

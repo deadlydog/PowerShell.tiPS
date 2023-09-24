@@ -90,7 +90,7 @@ function WriteModulesLastUpdateDate
 
 	[string] $moduleUpdateDateFilePath = GetModulesLastUpdateDateFilePath
 	Write-Verbose "Writing modules last update date '$ModulesLastUpdateDate' to '$moduleUpdateDateFilePath'."
-	$ModulesLastUpdateDate.ToString() | Set-Content -Path $moduleUpdateDateFilePath -Force -NoNewline
+	[System.IO.File]::WriteAllText($moduleUpdateDateFilePath, $ModulesLastUpdateDate.ToString())
 }
 
 function GetModulesLastUpdateDateFilePath
