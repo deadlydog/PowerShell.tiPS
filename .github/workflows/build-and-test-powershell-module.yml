@@ -36,10 +36,8 @@ jobs:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
 
-      - name: Run spell check
+      - name: Run spellcheck
         uses: streetsidesoftware/cspell-action@v3
-        with:
-          incremental_files_only: false
 
       - name: Display PowerShell version being used
         shell: pwsh
