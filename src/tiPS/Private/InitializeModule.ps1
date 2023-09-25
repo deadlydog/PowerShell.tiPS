@@ -12,6 +12,9 @@ function InitializeModule
 	[tiPS.Configuration] $config = ReadConfigurationFromFileOrDefault
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
 
+	Write-Debug 'Removing tips that have already been seen from the $Tips variable.'
+	RemoveTipsAlreadySeen -Tips $script:Tips
+
 	Write-Debug "Checking if we should write a PowerShell tip, and writing one if needed."
 	WriteAutomaticPowerShellTipIfNeeded -Config $script:TiPSConfiguration
 
