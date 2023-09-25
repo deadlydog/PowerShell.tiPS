@@ -1,3 +1,5 @@
+// This is the configuration file for cspell. Use it to define legitimate words that are not in the dictionary.
+// Used by the streetsidesoftware.code-spell-checker VS Code extension and streetsidesoftware/cspell-action@v3 GitHub Action.
 {
     "version": "0.2",
     "ignorePaths": [],
