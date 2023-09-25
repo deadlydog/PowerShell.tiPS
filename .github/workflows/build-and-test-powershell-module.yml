@@ -36,7 +36,7 @@ jobs:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
 
-      - name: Run the spell checker
+      - name: Run spell check
         uses: streetsidesoftware/cspell-action@v3
         with:
           incremental_files_only: false

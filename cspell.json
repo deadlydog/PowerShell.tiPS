@@ -5,9 +5,11 @@
     "dictionaries": [],
     "words": [],
     "ignoreWords": [
+			"Codespace", // GitHub Codespaces
 			"Codespaces", // GitHub Codespaces
 			"colours", // Canadian spelling
 			"devcontainer", // VS Code devcontainer
+			"gifs", // Plural of GIF
 			"hashtable", // PowerShell Hashtable
 			"Hmmss", // Time format
 			"jacoco", // Java code coverage
