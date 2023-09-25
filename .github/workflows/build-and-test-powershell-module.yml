@@ -36,6 +36,9 @@ jobs:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
 
+      - name: Run the spell checker
+        uses: streetsidesoftware/cspell-action@v3
+
       - name: Display PowerShell version being used
         shell: pwsh
         run: $PSVersionTable
