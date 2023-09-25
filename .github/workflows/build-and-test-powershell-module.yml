@@ -38,6 +38,8 @@ jobs:
 
       - name: Run the spell checker
         uses: streetsidesoftware/cspell-action@v3
+        with:
+          incremental_files_only: false
 
       - name: Display PowerShell version being used
         shell: pwsh
@@ -88,11 +90,11 @@ jobs:
           min-coverage-overall: 60
           min-coverage-changed-files: 60
 
-      - name: Build the concatinated psm1 file
+      - name: Build the concatenated psm1 file
         shell: pwsh
         run: ./build/Build-Psm1File.ps1 -DeleteSourceFilesAfterImport
 
-      - name: Run Pester tests again to ensure the concatinated psm1 file works as expected
+      - name: Run Pester tests again to ensure the concatenated psm1 file works as expected
         shell: pwsh
         run: |
           Write-Output "Pester version being used:"
@@ -197,7 +199,7 @@ jobs:
           Write-Output "Copying the module files to the Stable artifact directory '$stableArtifactModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $stableArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
-          # Prerelase version numbers can only contain 'a-zA-Z0-9' characters.
+          # Prerelease version numbers can only contain 'a-zA-Z0-9' characters.
           [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
           [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
           [string] $prereleaseVersionNumberPostfix = 'ci' + $dateTime + 'SHA' + $truncatedCommitSha
