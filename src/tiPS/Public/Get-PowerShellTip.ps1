@@ -68,20 +68,68 @@ function Get-PowerShellTip
 			return ReadAllPowerShellTipsFromJsonFile
 		}
 
-		if ([string]::IsNullOrWhiteSpace($Id))
+		[bool] $allTipsHaveBeenSeen = $script:Tips.Count -eq 0
+		if ($allTipsHaveBeenSeen)
+		{
+			ResetUnseenTips
+		}
+
+		[bool] $tipIdWasProvided = (-not [string]::IsNullOrWhiteSpace($Id))
+		if ($tipIdWasProvided)
+		{
+			[bool] $unseenTipsDoesNotContainTipId = (-not $script:Tips.ContainsKey($Id))
+			if ($unseenTipsDoesNotContainTipId)
+			{
+				[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
+				[bool] $tipIdDoesNotExist = (-not $allTips.ContainsKey($Id))
+				if ($tipIdDoesNotExist)
+				{
+					Write-Error "A tip with ID '$Id' does not exist."
+					return
+				}
+				[tiPS.PowerShellTip] $tip = $allTips[$Id]
+				return $tip
+			}
+		}
+		# A Tip ID was not provided, so get a random one.
+		else
 		{
 			$Id = $script:Tips.Keys | Get-Random -Count 1
 		}
-		else
-		{
-			if (-not $script:Tips.ContainsKey($Id))
-			{
-				Write-Error "A tip with ID '$Id' does not exist."
-				return
-			}
-		}
 
 		[tiPS.PowerShellTip] $tip = $script:Tips[$Id]
+		MarkTipIdAsSeen -TipId $Id
 		return $tip
+	}
+}
+
+function ResetUnseenTips
+{
+	[CmdletBinding()]
+	[OutputType([void])]
+	Param()
+
+	$script:Tips = ReadAllPowerShellTipsFromJsonFile
+	ClearTipIdsAlreadySeen
+}
+
+function MarkTipIdAsSeen
+{
+	[CmdletBinding()]
+	[OutputType([void])]
+	Param
+	(
+		[Parameter(Mandatory = $true, HelpMessage = 'The ID of the tip to mark as seen.')]
+		[string] $TipId
+	)
+
+	$script:Tips.Remove($TipId)
+	if ($script:Tips.Count -eq 0)
+	{
+		ResetUnseenTips
+	}
+	else
+	{
+		AppendTipIdToTipIdsAlreadySeen -TipId $TipId
 	}
 }
