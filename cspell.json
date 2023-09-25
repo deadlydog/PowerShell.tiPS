@@ -5,9 +5,16 @@
     "dictionaries": [],
     "words": [],
     "ignoreWords": [
-			"jacoco",
-			"nunit",
-			"pwsh"
+			"Codespaces", // GitHub Codespaces
+			"colours", // Canadian spelling
+			"devcontainer", // VS Code devcontainer
+			"hashtable", // PowerShell Hashtable
+			"Hmmss", // Time format
+			"jacoco", // Java code coverage
+			"madrapps", // GitHub action
+			"netstandard", // .NET Standard project target
+			"nunit", // .NET unit testing framework
+			"pwsh" // PowerShell Core
 		],
     "import": []
 }

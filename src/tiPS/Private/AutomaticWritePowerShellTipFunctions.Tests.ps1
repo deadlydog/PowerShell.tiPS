@@ -56,7 +56,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			}
 		}
 
-		Context 'When the ShowPowerShellTipCandence is Weekly' {
+		Context 'When the WritePowerShellTipCadence is Weekly' {
 			It 'Should update the module if the last update was more than 7 days ago' {
 				$config = [tiPS.Configuration]::new()
 				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
