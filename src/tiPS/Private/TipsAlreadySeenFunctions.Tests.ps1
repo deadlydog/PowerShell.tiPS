@@ -1,22 +1,22 @@
 using module './../tiPS.psm1'
 
-BeforeAll {
-	function CloneTip([tiPS.PowerShellTip] $tip)
-	{
-		[tiPS.PowerShellTip] $newTip = [tiPS.PowerShellTip]::new()
-		$newTip.CreatedDate = $tip.CreatedDate
-		$newTip.Title = $tip.Title
-		$newTip.TipText = $tip.TipText
-		$newTip.Example = $tip.Example
-		$newTip.Urls = $tip.Urls
-		$newTip.MinPowerShellVersion = $tip.MinPowerShellVersion
-		$newTip.Category = $tip.Category
-		return $newTip
-	}
-}
-
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functions of the module.
 	Describe 'Calling RemoveTipsAlreadySeen' {
+		BeforeAll {
+			function CloneTip([tiPS.PowerShellTip] $tip)
+			{
+				[tiPS.PowerShellTip] $newTip = [tiPS.PowerShellTip]::new()
+				$newTip.CreatedDate = $tip.CreatedDate
+				$newTip.Title = $tip.Title
+				$newTip.TipText = $tip.TipText
+				$newTip.Example = $tip.Example
+				$newTip.Urls = $tip.Urls
+				$newTip.MinPowerShellVersion = $tip.MinPowerShellVersion
+				$newTip.Category = $tip.Category
+				return $newTip
+			}
+		}
+		
 		BeforeEach {
 			Mock -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
 				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
