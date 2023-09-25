@@ -9,7 +9,7 @@ function RemoveTipsAlreadySeen
 	)
 
 	[string[]] $tipIdsAlreadySeen = ReadTipIdsAlreadySeenOrDefault
-	if ($null -ne $tipIdsAlreadySeen -and $tipIdsAlreadySeen.Count -gt 0)
+	if ($tipIdsAlreadySeen.Count -gt 0)
 	{
 		Write-Verbose "Removing $($tipIdsAlreadySeen.Count) tips that have already been seen."
 		foreach ($tipId in $tipIdsAlreadySeen)
@@ -31,7 +31,8 @@ function ReadTipIdsAlreadySeenOrDefault
 	{
 		$tipIdsAlreadySeen = [System.IO.File]::ReadAllLines($tipIdsAlreadySeenFilePath)
 	}
-	return $tipIdsAlreadySeen
+
+	return ,$tipIdsAlreadySeen
 }
 
 function AppendTipIdToTipIdsAlreadySeen
@@ -44,8 +45,9 @@ function AppendTipIdToTipIdsAlreadySeen
 	)
 
 	[string] $tipIdsAlreadySeenFilePath = GetTipIdsAlreadySeenFilePath
+	[string[]] $tipIdAsArray = @($TipId)
 	Write-Verbose "Appending Tip ID '$TipId' to '$tipIdsAlreadySeenFilePath'."
-	[System.IO.File]::AppendAllLines($tipIdsAlreadySeenFilePath, $TipId)
+	[System.IO.File]::AppendAllLines($tipIdsAlreadySeenFilePath, $tipIdAsArray)
 }
 
 function ClearTipIdsAlreadySeen
