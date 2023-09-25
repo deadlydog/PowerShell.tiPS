@@ -42,8 +42,8 @@ try
 }
 catch
 {
-	# GitHub Codespace will throw an error when trying to open the file, but will open it fine using VS Code (code.exe).
-	# Use the try-catch to suppress the exception thrown in Codespace when it fails to open the file.
+	# GitHub Codespaces will throw an error when trying to open the file, but will open it fine using VS Code (code.exe).
+	# Use the try-catch to suppress the exception thrown in Codespaces when it fails to open the file.
 	if ($openTipFileError)
 	{
 		& code "$newTipFilePath"
