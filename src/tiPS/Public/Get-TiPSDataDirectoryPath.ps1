@@ -28,12 +28,5 @@ function Get-TiPSDataDirectoryPath
 		Join-Path -Path $usersLocalAppDataPath -ChildPath (
 		Join-Path -Path 'PowerShell' -ChildPath 'tiPS')
 
-	[bool] $directoryDoesNotExist = -not (Test-Path -Path $appDataDirectoryPath -PathType Container)
-	if ($directoryDoesNotExist)
-	{
-		Write-Verbose "Creating tiPS data directory '$appDataDirectoryPath'."
-		New-Item -Path $appDataDirectoryPath -ItemType Directory -Force > $null
-	}
-
 	return $appDataDirectoryPath
 }

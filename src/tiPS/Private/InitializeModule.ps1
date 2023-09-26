@@ -4,6 +4,9 @@ function InitializeModule
 	[OutputType([void])]
 	Param()
 
+	Write-Debug "Ensuring the tiPS data directory exists."
+	EnsureTiPSAppDataDirectoryExists
+
 	Write-Debug 'Reading in configuration from JSON file and storing it in a $TiPSConfiguration variable for access by other module functions.'
 	[tiPS.Configuration] $config = ReadConfigurationFromFileOrDefault
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
@@ -20,4 +23,15 @@ function InitializeModule
 
 	Write-Debug 'Checking if the module needs to be updated, and updating it if needed.'
 	StartModuleUpdateIfNeeded -Config $script:TiPSConfiguration
+}
+
+function EnsureTiPSAppDataDirectoryExists
+{
+	[string] $appDataDirectoryPath = Get-TiPSDataDirectoryPath
+	[bool] $directoryDoesNotExist = -not (Test-Path -Path $appDataDirectoryPath -PathType Container)
+	if ($directoryDoesNotExist)
+	{
+		Write-Verbose "Creating tiPS data directory '$appDataDirectoryPath'."
+		New-Item -Path $appDataDirectoryPath -ItemType Directory -Force > $null
+	}
 }
