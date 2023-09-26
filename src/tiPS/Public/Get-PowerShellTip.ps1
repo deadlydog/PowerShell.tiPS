@@ -7,11 +7,18 @@ function Get-PowerShellTip
 	.DESCRIPTION
 	Get a PowerShellTip object. If no parameters are specified, a random tip is returned.
 
+	The list of tips already shown is stored in a file in the TiPS data directory.
+	If no parameters are provided, a random tip is returned from the list of tips that have not yet been shown.
+	When a tip is shown, it is added to the list.
+	If all tips have been shown, the list is reset.
+
 	.PARAMETER Id
 	The ID of the tip to retrieve. If not supplied, a random tip will be returned.
 
 	.PARAMETER AllTips
 	Return all tips.
+
+	When this parameter is used, the list of tips shown is not updated.
 
 	.INPUTS
 	You can pipe a [string] of the ID of the tip to retrieve, or a PsCustomObject with a [string] 'Id' property.
@@ -24,7 +31,7 @@ function Get-PowerShellTip
 	.EXAMPLE
 	Get-PowerShellTip
 
-	Get a random tip.
+	Get a random tip that has not been shown yet.
 
 	.EXAMPLE
 	Get-PowerShellTip -Id '2023-07-16-powershell-is-open-source'
@@ -44,7 +51,7 @@ function Get-PowerShellTip
 	.EXAMPLE
 	[PSCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Get-PowerShellTip
 
-	Pipe an object with a [string] 'Id' property.
+	Pipe an object with a [string] 'Id' property of the tip to retrieve.
 #>
 
 	[CmdletBinding(DefaultParameterSetName = 'Default')]
@@ -68,20 +75,69 @@ function Get-PowerShellTip
 			return ReadAllPowerShellTipsFromJsonFile
 		}
 
-		if ([string]::IsNullOrWhiteSpace($Id))
+		[bool] $allTipsHaveBeenShown = $script:UnshownTips.Count -eq 0
+		if ($allTipsHaveBeenShown)
 		{
-			$Id = $script:Tips.Keys | Get-Random -Count 1
+			ResetUnshownTips
+		}
+
+		[bool] $tipIdWasProvided = (-not [string]::IsNullOrWhiteSpace($Id))
+		if ($tipIdWasProvided)
+		{
+			[bool] $unshownTipsDoesNotContainTipId = (-not $script:UnshownTips.ContainsKey($Id))
+			if ($unshownTipsDoesNotContainTipId)
+			{
+				[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
+				[bool] $tipIdDoesNotExist = (-not $allTips.ContainsKey($Id))
+				if ($tipIdDoesNotExist)
+				{
+					Write-Error "A tip with ID '$Id' does not exist."
+					return
+				}
+				[tiPS.PowerShellTip] $tip = $allTips[$Id]
+				return $tip
+			}
 		}
 		else
 		{
-			if (-not $script:Tips.ContainsKey($Id))
-			{
-				Write-Error "A tip with ID '$Id' does not exist."
-				return
-			}
+			Write-Verbose "A Tip ID was not provided, so getting a random one from the unshown tips."
+			$Id = $script:UnshownTips.Keys | Get-Random -Count 1
 		}
 
-		[tiPS.PowerShellTip] $tip = $script:Tips[$Id]
+		[tiPS.PowerShellTip] $tip = $script:UnshownTips[$Id]
+		MarkTipIdAsShown -TipId $Id
 		return $tip
+	}
+}
+
+function ResetUnshownTips
+{
+	[CmdletBinding()]
+	[OutputType([void])]
+	Param()
+
+	Write-Verbose "Resetting the list of unshown tips, and clearing the list of shown tips."
+	$script:UnshownTips = ReadAllPowerShellTipsFromJsonFile
+	ClearTipIdsAlreadyShown
+}
+
+function MarkTipIdAsShown
+{
+	[CmdletBinding()]
+	[OutputType([void])]
+	Param
+	(
+		[Parameter(Mandatory = $true, HelpMessage = 'The ID of the tip to mark as shown.')]
+		[string] $TipId
+	)
+
+	$script:UnshownTips.Remove($TipId)
+	if ($script:UnshownTips.Count -eq 0)
+	{
+		ResetUnshownTips
+	}
+	else
+	{
+		AppendTipIdToTipIdsAlreadyShown -TipId $TipId
 	}
 }

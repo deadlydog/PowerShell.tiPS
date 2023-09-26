@@ -208,9 +208,7 @@ See [the Contributing page](/docs/Contributing.md) for more details.
 
 Below is a short list of planned enhancements for tiPS:
 
-- Remember which tips have been shown to the user so that they are not shown again until all tips have been viewed.
 - Ability to show tips in a specific order. e.g. Newest tips first.
-- Ability to not show certain categories of tips. e.g. Do not show Community tips.
 - An easier way to add new tips. e.g. a simple web form that can be filled out.
 - A way to customize the look of the tip when it is displayed. e.g. add a border around it, change the colors, etc.
 

@@ -27,5 +27,6 @@ function Get-TiPSDataDirectoryPath
 	[string] $appDataDirectoryPath =
 		Join-Path -Path $usersLocalAppDataPath -ChildPath (
 		Join-Path -Path 'PowerShell' -ChildPath 'tiPS')
+
 	return $appDataDirectoryPath
 }
