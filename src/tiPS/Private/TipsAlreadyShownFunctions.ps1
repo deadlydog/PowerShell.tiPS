@@ -23,6 +23,9 @@ function ReadTipIdsAlreadyShownOrDefault
 {
 	[CmdletBinding()]
 	[OutputType([string[]])]
+	# PSScriptAnalyzer does not properly handle the OutputType attribute for string arrays, so just
+	# suppress the warning: https://github.com/PowerShell/PSScriptAnalyzer/issues/1471#issuecomment-1735962402
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseOutputTypeCorrectly', '')]
 	Param()
 
 	[string[]] $tipIdsAlreadyShown = @()
