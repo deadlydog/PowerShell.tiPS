@@ -5,6 +5,13 @@ BeforeAll {
 }
 
 Describe 'Get-PowerShellTip' {
+	BeforeEach {
+		Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
+			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadySeen.txt')
+		}
+	}
+
 	Context 'Given no parameters' {
 		It 'Should return a tip' {
 			$tip = Get-PowerShellTip
@@ -60,6 +67,8 @@ Describe 'Get-PowerShellTip' {
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level variables of the module.
 	Describe 'Get-PowerShellTip in module scope' {
 		BeforeAll {
+			New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
+
 			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
 			[int] $numberOfTipsInJsonFile =
 			Get-Content -Path $powerShellTipsJsonFilePath |
@@ -70,6 +79,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 		}
 
 		BeforeEach {
+			Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
+				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadySeen.txt')
+			}
+
 			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
 			$ValidTip.CreatedDate = [DateTime]::Parse('2023-01-15')
 			$ValidTip.Title = 'Title of the tip'
