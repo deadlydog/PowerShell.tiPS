@@ -91,9 +91,9 @@ function Get-PowerShellTip
 				return $tip
 			}
 		}
-		# A Tip ID was not provided, so get a random one.
 		else
 		{
+			Write-Verbose "A Tip ID was not provided, so getting a random one."
 			$Id = $script:UnseenTips.Keys | Get-Random -Count 1
 		}
 
@@ -109,6 +109,7 @@ function ResetUnseenTips
 	[OutputType([void])]
 	Param()
 
+	Write-Verbose "Resetting the list of unseen tips, and clearing the list of seen tips."
 	$script:UnseenTips = ReadAllPowerShellTipsFromJsonFile
 	ClearTipIdsAlreadySeen
 }
