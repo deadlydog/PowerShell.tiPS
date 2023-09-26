@@ -77,8 +77,8 @@ function Get-PowerShellTip
 		[bool] $tipIdWasProvided = (-not [string]::IsNullOrWhiteSpace($Id))
 		if ($tipIdWasProvided)
 		{
-			[bool] $UnshownTipsDoesNotContainTipId = (-not $script:UnshownTips.ContainsKey($Id))
-			if ($UnshownTipsDoesNotContainTipId)
+			[bool] $unshownTipsDoesNotContainTipId = (-not $script:UnshownTips.ContainsKey($Id))
+			if ($unshownTipsDoesNotContainTipId)
 			{
 				[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
 				[bool] $tipIdDoesNotExist = (-not $allTips.ContainsKey($Id))
@@ -93,7 +93,7 @@ function Get-PowerShellTip
 		}
 		else
 		{
-			Write-Verbose "A Tip ID was not provided, so getting a random one."
+			Write-Verbose "A Tip ID was not provided, so getting a random one from the unshown tips."
 			$Id = $script:UnshownTips.Keys | Get-Random -Count 1
 		}
 
