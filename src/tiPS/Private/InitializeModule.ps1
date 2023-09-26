@@ -4,13 +4,13 @@ function InitializeModule
 	[OutputType([void])]
 	Param()
 
-	Write-Debug 'Reading all tips from JSON file and storing them in a $Tips variable for access by other module functions.'
-	[hashtable] $tipHashTable = ReadAllPowerShellTipsFromJsonFile
-	New-Variable -Name 'Tips' -Value $tipHashtable -Scope Script
-
 	Write-Debug 'Reading in configuration from JSON file and storing it in a $TiPSConfiguration variable for access by other module functions.'
 	[tiPS.Configuration] $config = ReadConfigurationFromFileOrDefault
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
+
+	Write-Debug 'Reading all tips from JSON file and storing them in a $Tips variable for access by other module functions.'
+	[hashtable] $tipHashTable = ReadAllPowerShellTipsFromJsonFile
+	New-Variable -Name 'Tips' -Value $tipHashtable -Scope Script
 
 	Write-Debug 'Removing tips that have already been seen from the $Tips variable.'
 	RemoveTipsAlreadySeen -Tips $script:Tips
