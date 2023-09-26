@@ -1,5 +1,9 @@
 using module './../tiPS.psm1'
 
+BeforeAll {
+	New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
+}
+
 Describe 'Get-PowerShellTip' {
 	Context 'Given no parameters' {
 		It 'Should return a tip' {
@@ -25,9 +29,8 @@ Describe 'Get-PowerShellTip' {
 	Context 'Given the All switch' {
 		It 'Should return all tips' {
 			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
-
 			[int] $numberOfTipsInJsonFile =
-			Get-Content -Path $powerShellTipsJsonFilePath |
+				Get-Content -Path $powerShellTipsJsonFilePath |
 				ConvertFrom-Json |
 				Measure-Object |
 				Select-Object -ExpandProperty Count
@@ -50,6 +53,58 @@ Describe 'Get-PowerShellTip' {
 		It 'Should return the tip with the specified ID' {
 			$tip = [PsCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Get-PowerShellTip
 			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
+		}
+	}
+}
+
+InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level variables of the module.
+	Describe 'Get-PowerShellTip in module scope' {
+		BeforeAll {
+			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
+			[int] $numberOfTipsInJsonFile =
+			Get-Content -Path $powerShellTipsJsonFilePath |
+				ConvertFrom-Json |
+				Measure-Object |
+				Select-Object -ExpandProperty Count
+			New-Variable -Name TotalNumberOfTips -Value $numberOfTipsInJsonFile -Option Constant -Force
+		}
+
+		BeforeEach {
+			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+			$ValidTip.CreatedDate = [DateTime]::Parse('2023-01-15')
+			$ValidTip.Title = 'Title of the tip'
+			$ValidTip.TipText = 'Tip Text'
+			$ValidTip.Example = 'Example'
+			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+			$ValidTip.MinPowerShellVersion = '5.1'
+			$ValidTip.Category = 'Community'
+		}
+
+		Context 'When all of the tips have been seen' {
+			BeforeEach {
+				$script:Tips.Clear()
+			}
+
+			It 'Should reset the tips script variable to include all tips and return one of them' {
+				$tip = Get-PowerShellTip
+
+				$tip | Should -Not -BeNullOrEmpty
+				$script:Tips.Count | Should -Be ($TotalNumberOfTips - 1)
+			}
+		}
+
+		Context 'When only one tip is still left to be seen' {
+			BeforeEach {
+				$script:Tips.Clear()
+				$script:Tips.Add($ValidTip.Id, $ValidTip)
+			}
+
+			It 'Should return the last tip and reset the unseen tips variable to include all tips' {
+				$tip = Get-PowerShellTip
+
+				$tip.Id | Should -Be $ValidTip.Id
+				$script:Tips.Count | Should -Be $TotalNumberOfTips
+			}
 		}
 	}
 }
