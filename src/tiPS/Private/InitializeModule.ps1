@@ -8,12 +8,12 @@ function InitializeModule
 	[tiPS.Configuration] $config = ReadConfigurationFromFileOrDefault
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
 
-	Write-Debug 'Reading all tips from JSON file and storing them in a $Tips variable for access by other module functions.'
+	Write-Debug 'Reading all tips from JSON file and storing them in a $UnseenTips variable for access by other module functions.'
 	[hashtable] $tipHashTable = ReadAllPowerShellTipsFromJsonFile
-	New-Variable -Name 'Tips' -Value $tipHashtable -Scope Script
+	New-Variable -Name 'UnseenTips' -Value $tipHashtable -Scope Script
 
-	Write-Debug 'Removing tips that have already been seen from the $Tips variable.'
-	RemoveTipsAlreadySeen -Tips $script:Tips
+	Write-Debug 'Removing tips that have already been seen from the $UnseenTips variable.'
+	RemoveTipsAlreadySeen -Tips $script:UnseenTips
 
 	Write-Debug "Checking if we should write a PowerShell tip, and writing one if needed."
 	WriteAutomaticPowerShellTipIfNeeded -Config $script:TiPSConfiguration

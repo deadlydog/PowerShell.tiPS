@@ -68,7 +68,7 @@ function Get-PowerShellTip
 			return ReadAllPowerShellTipsFromJsonFile
 		}
 
-		[bool] $allTipsHaveBeenSeen = $script:Tips.Count -eq 0
+		[bool] $allTipsHaveBeenSeen = $script:UnseenTips.Count -eq 0
 		if ($allTipsHaveBeenSeen)
 		{
 			ResetUnseenTips
@@ -77,7 +77,7 @@ function Get-PowerShellTip
 		[bool] $tipIdWasProvided = (-not [string]::IsNullOrWhiteSpace($Id))
 		if ($tipIdWasProvided)
 		{
-			[bool] $unseenTipsDoesNotContainTipId = (-not $script:Tips.ContainsKey($Id))
+			[bool] $unseenTipsDoesNotContainTipId = (-not $script:UnseenTips.ContainsKey($Id))
 			if ($unseenTipsDoesNotContainTipId)
 			{
 				[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
@@ -94,10 +94,10 @@ function Get-PowerShellTip
 		# A Tip ID was not provided, so get a random one.
 		else
 		{
-			$Id = $script:Tips.Keys | Get-Random -Count 1
+			$Id = $script:UnseenTips.Keys | Get-Random -Count 1
 		}
 
-		[tiPS.PowerShellTip] $tip = $script:Tips[$Id]
+		[tiPS.PowerShellTip] $tip = $script:UnseenTips[$Id]
 		MarkTipIdAsSeen -TipId $Id
 		return $tip
 	}
@@ -109,7 +109,7 @@ function ResetUnseenTips
 	[OutputType([void])]
 	Param()
 
-	$script:Tips = ReadAllPowerShellTipsFromJsonFile
+	$script:UnseenTips = ReadAllPowerShellTipsFromJsonFile
 	ClearTipIdsAlreadySeen
 }
 
@@ -123,8 +123,8 @@ function MarkTipIdAsSeen
 		[string] $TipId
 	)
 
-	$script:Tips.Remove($TipId)
-	if ($script:Tips.Count -eq 0)
+	$script:UnseenTips.Remove($TipId)
+	if ($script:UnseenTips.Count -eq 0)
 	{
 		ResetUnseenTips
 	}

@@ -82,28 +82,28 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 
 		Context 'When all of the tips have been seen' {
 			BeforeEach {
-				$script:Tips.Clear()
+				$script:UnseenTips.Clear()
 			}
 
 			It 'Should reset the tips script variable to include all tips and return one of them' {
 				$tip = Get-PowerShellTip
 
 				$tip | Should -Not -BeNullOrEmpty
-				$script:Tips.Count | Should -Be ($TotalNumberOfTips - 1)
+				$script:UnseenTips.Count | Should -Be ($TotalNumberOfTips - 1)
 			}
 		}
 
 		Context 'When only one tip is still left to be seen' {
 			BeforeEach {
-				$script:Tips.Clear()
-				$script:Tips.Add($ValidTip.Id, $ValidTip)
+				$script:UnseenTips.Clear()
+				$script:UnseenTips.Add($ValidTip.Id, $ValidTip)
 			}
 
 			It 'Should return the last tip and reset the unseen tips variable to include all tips' {
 				$tip = Get-PowerShellTip
 
 				$tip.Id | Should -Be $ValidTip.Id
-				$script:Tips.Count | Should -Be $TotalNumberOfTips
+				$script:UnseenTips.Count | Should -Be $TotalNumberOfTips
 			}
 		}
 	}
