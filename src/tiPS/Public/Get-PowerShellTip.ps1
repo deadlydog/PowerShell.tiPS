@@ -68,17 +68,17 @@ function Get-PowerShellTip
 			return ReadAllPowerShellTipsFromJsonFile
 		}
 
-		[bool] $allTipsHaveBeenSeen = $script:UnseenTips.Count -eq 0
-		if ($allTipsHaveBeenSeen)
+		[bool] $allTipsHaveBeenShown = $script:UnshownTips.Count -eq 0
+		if ($allTipsHaveBeenShown)
 		{
-			ResetUnseenTips
+			ResetUnshownTips
 		}
 
 		[bool] $tipIdWasProvided = (-not [string]::IsNullOrWhiteSpace($Id))
 		if ($tipIdWasProvided)
 		{
-			[bool] $unseenTipsDoesNotContainTipId = (-not $script:UnseenTips.ContainsKey($Id))
-			if ($unseenTipsDoesNotContainTipId)
+			[bool] $UnshownTipsDoesNotContainTipId = (-not $script:UnshownTips.ContainsKey($Id))
+			if ($UnshownTipsDoesNotContainTipId)
 			{
 				[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
 				[bool] $tipIdDoesNotExist = (-not $allTips.ContainsKey($Id))
@@ -94,43 +94,43 @@ function Get-PowerShellTip
 		else
 		{
 			Write-Verbose "A Tip ID was not provided, so getting a random one."
-			$Id = $script:UnseenTips.Keys | Get-Random -Count 1
+			$Id = $script:UnshownTips.Keys | Get-Random -Count 1
 		}
 
-		[tiPS.PowerShellTip] $tip = $script:UnseenTips[$Id]
-		MarkTipIdAsSeen -TipId $Id
+		[tiPS.PowerShellTip] $tip = $script:UnshownTips[$Id]
+		MarkTipIdAsShown -TipId $Id
 		return $tip
 	}
 }
 
-function ResetUnseenTips
+function ResetUnshownTips
 {
 	[CmdletBinding()]
 	[OutputType([void])]
 	Param()
 
-	Write-Verbose "Resetting the list of unseen tips, and clearing the list of seen tips."
-	$script:UnseenTips = ReadAllPowerShellTipsFromJsonFile
-	ClearTipIdsAlreadySeen
+	Write-Verbose "Resetting the list of unshown tips, and clearing the list of shown tips."
+	$script:UnshownTips = ReadAllPowerShellTipsFromJsonFile
+	ClearTipIdsAlreadyShown
 }
 
-function MarkTipIdAsSeen
+function MarkTipIdAsShown
 {
 	[CmdletBinding()]
 	[OutputType([void])]
 	Param
 	(
-		[Parameter(Mandatory = $true, HelpMessage = 'The ID of the tip to mark as seen.')]
+		[Parameter(Mandatory = $true, HelpMessage = 'The ID of the tip to mark as shown.')]
 		[string] $TipId
 	)
 
-	$script:UnseenTips.Remove($TipId)
-	if ($script:UnseenTips.Count -eq 0)
+	$script:UnshownTips.Remove($TipId)
+	if ($script:UnshownTips.Count -eq 0)
 	{
-		ResetUnseenTips
+		ResetUnshownTips
 	}
 	else
 	{
-		AppendTipIdToTipIdsAlreadySeen -TipId $TipId
+		AppendTipIdToTipIdsAlreadyShown -TipId $TipId
 	}
 }

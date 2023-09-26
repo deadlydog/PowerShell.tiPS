@@ -6,9 +6,9 @@ BeforeAll {
 
 Describe 'Get-PowerShellTip' {
 	BeforeEach {
-		Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
+		Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
 			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadySeen.txt')
+			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
 		}
 	}
 
@@ -79,9 +79,9 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 		}
 
 		BeforeEach {
-			Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
+			Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
 				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadySeen.txt')
+				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
 			}
 
 			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
@@ -94,30 +94,30 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 			$ValidTip.Category = 'Community'
 		}
 
-		Context 'When all of the tips have been seen' {
+		Context 'When all of the tips have been shown' {
 			BeforeEach {
-				$script:UnseenTips.Clear()
+				$script:UnshownTips.Clear()
 			}
 
 			It 'Should reset the tips script variable to include all tips and return one of them' {
 				$tip = Get-PowerShellTip
 
 				$tip | Should -Not -BeNullOrEmpty
-				$script:UnseenTips.Count | Should -Be ($TotalNumberOfTips - 1)
+				$script:UnshownTips.Count | Should -Be ($TotalNumberOfTips - 1)
 			}
 		}
 
-		Context 'When only one tip is still left to be seen' {
+		Context 'When only one tip is still left to be shown' {
 			BeforeEach {
-				$script:UnseenTips.Clear()
-				$script:UnseenTips.Add($ValidTip.Id, $ValidTip)
+				$script:UnshownTips.Clear()
+				$script:UnshownTips.Add($ValidTip.Id, $ValidTip)
 			}
 
-			It 'Should return the last tip and reset the unseen tips variable to include all tips' {
+			It 'Should return the last tip and reset the unshown tips variable to include all tips' {
 				$tip = Get-PowerShellTip
 
 				$tip.Id | Should -Be $ValidTip.Id
-				$script:UnseenTips.Count | Should -Be $TotalNumberOfTips
+				$script:UnshownTips.Count | Should -Be $TotalNumberOfTips
 			}
 		}
 	}

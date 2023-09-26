@@ -1,7 +1,7 @@
 using module './../tiPS.psm1'
 
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functions of the module.
-	Describe 'Calling RemoveTipsAlreadySeen' {
+	Describe 'Calling RemoveTipsAlreadyShown' {
 		BeforeAll {
 			function CloneTip([tiPS.PowerShellTip] $tip)
 			{
@@ -16,11 +16,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 				return $newTip
 			}
 		}
-		
+
 		BeforeEach {
-			Mock -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
+			Mock -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
 				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadySeen.txt')
+				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
 			}
 
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
@@ -47,13 +47,13 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			}
 			$testTips.Count | Should -Be 3 # This is here to eliminate the PSScriptAnalyzer warning about unused variables.
 
-			ClearTipIdsAlreadySeen
+			ClearTipIdsAlreadyShown
 		}
 
-		It 'Should remove a tip that has already been seen' {
-			AppendTipIdToTipIdsAlreadySeen -TipId $testTip1.Id
+		It 'Should remove a tip that has already been shown' {
+			AppendTipIdToTipIdsAlreadyShown -TipId $testTip1.Id
 
-			RemoveTipsAlreadySeen -Tips $testTips
+			RemoveTipsAlreadyShown -Tips $testTips
 
 			$testTips.Keys | Should -Not -Contain $testTip1.Id
 			$testTips.Keys | Should -Contain $testTip2.Id
@@ -61,11 +61,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$testTips.Count | Should -Be 2
 		}
 
-		It 'Should remove multiple tips that have already been seen' {
-			AppendTipIdToTipIdsAlreadySeen -TipId $testTip1.Id
-			AppendTipIdToTipIdsAlreadySeen -TipId $testTip2.Id
+		It 'Should remove multiple tips that have already been shown' {
+			AppendTipIdToTipIdsAlreadyShown -TipId $testTip1.Id
+			AppendTipIdToTipIdsAlreadyShown -TipId $testTip2.Id
 
-			RemoveTipsAlreadySeen -Tips $testTips
+			RemoveTipsAlreadyShown -Tips $testTips
 
 			$testTips.Keys | Should -Not -Contain $testTip1.Id
 			$testTips.Keys | Should -Not -Contain $testTip2.Id
@@ -73,12 +73,12 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$testTips.Count | Should -Be 1
 		}
 
-		It 'Should remove all of the tips if they have all been seen' {
-			AppendTipIdToTipIdsAlreadySeen -TipId $testTip1.Id
-			AppendTipIdToTipIdsAlreadySeen -TipId $testTip2.Id
-			AppendTipIdToTipIdsAlreadySeen -TipId $testTip3.Id
+		It 'Should remove all of the tips if they have all been shown' {
+			AppendTipIdToTipIdsAlreadyShown -TipId $testTip1.Id
+			AppendTipIdToTipIdsAlreadyShown -TipId $testTip2.Id
+			AppendTipIdToTipIdsAlreadyShown -TipId $testTip3.Id
 
-			RemoveTipsAlreadySeen -Tips $testTips
+			RemoveTipsAlreadyShown -Tips $testTips
 
 			$testTips.Keys | Should -Not -Contain $testTip1.Id
 			$testTips.Keys | Should -Not -Contain $testTip2.Id
@@ -86,8 +86,8 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$testTips.Count | Should -Be 0
 		}
 
-		It 'Should not remove any tips if none have already been seen' {
-			RemoveTipsAlreadySeen -Tips $testTips
+		It 'Should not remove any tips if none have already been shown' {
+			RemoveTipsAlreadyShown -Tips $testTips
 
 			$testTips.Keys | Should -Contain $testTip1.Id
 			$testTips.Keys | Should -Contain $testTip2.Id
@@ -96,40 +96,40 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 		}
 	}
 
-	Describe 'Calling ClearTipIdsAlreadySeen' {
+	Describe 'Calling ClearTipIdsAlreadyShown' {
 		BeforeEach {
-			Mock -CommandName GetTipIdsAlreadySeenFilePath -MockWith {
+			Mock -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
 				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadySeen.txt')
+				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
 			}
 		}
 
 		Context 'When the file does not exist' {
 			It 'Should not throw an exception' {
-				[string] $filePath = GetTipIdsAlreadySeenFilePath
+				[string] $filePath = GetTipIdsAlreadyShownFilePath
 				if (Test-Path -Path $filePath -PathType Leaf)
 				{
 					Remove-Item -Path $filePath -Force
 				}
 
-				{ ClearTipIdsAlreadySeen } | Should -Not -Throw
+				{ ClearTipIdsAlreadyShown } | Should -Not -Throw
 			}
 		}
 
 		Context 'When the file exists' {
 			It 'Should clear all Tip IDs from the file' {
-				AppendTipIdToTipIdsAlreadySeen -TipId 'TestTipId'
+				AppendTipIdToTipIdsAlreadyShown -TipId 'TestTipId'
 
-				ClearTipIdsAlreadySeen
+				ClearTipIdsAlreadyShown
 
-				$tipIdsAlreadySeen = ReadTipIdsAlreadySeenOrDefault
-				$tipIdsAlreadySeen.Count | Should -Be 0
+				$tipIdsAlreadyShown = ReadTipIdsAlreadyShownOrDefault
+				$tipIdsAlreadyShown.Count | Should -Be 0
 			}
 
 			It 'Should not throw an error if the file is already empty' {
-				ClearTipIdsAlreadySeen
+				ClearTipIdsAlreadyShown
 
-				{ ClearTipIdsAlreadySeen } | Should -Not -Throw
+				{ ClearTipIdsAlreadyShown } | Should -Not -Throw
 			}
 		}
 	}
