@@ -3,6 +3,12 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## vNext
+
+Features:
+
+- Remember which tips have been shown and don't show them again until all tips have been shown.
+
 ## v0.4.0 - September 23, 2023
 
 Features:
