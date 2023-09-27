@@ -3,9 +3,13 @@ using module './../tiPS.psm1'
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functions of the module.
 	Describe 'Calling StartModuleUpdateIfNeeded' {
 		BeforeEach {
-			Mock GetModulesLastUpdateDateFilePath {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/ModulesLastUpdateDate.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
+				# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
+				$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
+				if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+				return $directoryPath
 			}
 			Mock UpdateModule {} -Verifiable
 		}
@@ -112,9 +116,13 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 
 	Describe 'Updating the module' {
 		BeforeEach {
-			Mock GetModulesLastUpdateDateFilePath {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/ModulesLastUpdateDate.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
+				# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
+				$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
+				if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+				return $directoryPath
 			}
 
 			# Update-Module is called from a background job, and we cannot mock calls inside a background job's scriptblock,
@@ -139,9 +147,13 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 
 	Describe 'Calling WriteModulesLastUpdateDate' {
 		BeforeEach {
-			Mock GetModulesLastUpdateDateFilePath {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.WriteAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/ModulesLastUpdateDate.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
+				# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
+				$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
+				if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+				return $directoryPath
 			}
 		}
 

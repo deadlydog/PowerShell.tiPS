@@ -6,9 +6,13 @@ BeforeAll {
 
 Describe 'Get-PowerShellTip' {
 	BeforeEach {
-		Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
-			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
+		# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+		Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+			# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
+			# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
+			$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
+			if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+			return $directoryPath
 		}
 	}
 
@@ -79,9 +83,13 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 		}
 
 		BeforeEach {
-			Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
+			# Write the configuration to a temp location, instead of overwriting the current user's configuration.
+			Mock -ModuleName $ModuleName -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
+				# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
+				$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
+				if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+				return $directoryPath
 			}
 
 			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
