@@ -20,10 +20,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 		BeforeEach {
 			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
 			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
-				# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
-				$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
-				if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
 				return $directoryPath
 			}
 
@@ -104,10 +105,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 		BeforeEach {
 			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
 			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the .NET System.IO.File methods methods cannot resolve
-				# the TestDrive provider, and we cannot use Resolve-Path because the path does not exist yet.
-				$directoryPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/tiPS')
-				if (-not (Test-Path -Path $directoryPath)) { New-Item -Path $directoryPath -ItemType Directory -Force > $null }
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
 				return $directoryPath
 			}
 		}
