@@ -18,9 +18,14 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 		}
 
 		BeforeEach {
-			Mock -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
 			}
 
 			[tiPS.PowerShellTip] $validTip = [tiPS.PowerShellTip]::new()
@@ -98,9 +103,14 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 
 	Describe 'Calling ClearTipIdsAlreadyShown' {
 		BeforeEach {
-			Mock -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
 			}
 		}
 

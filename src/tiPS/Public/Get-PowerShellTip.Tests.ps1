@@ -6,9 +6,14 @@ BeforeAll {
 
 Describe 'Get-PowerShellTip' {
 	BeforeEach {
-		Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
-			# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-			return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
+		# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+		Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+			[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+			if (-not (Test-Path -Path $directoryPath -PathType Container))
+			{
+				New-Item -Path $directoryPath -ItemType Directory -Force > $null
+			}
+			return $directoryPath
 		}
 	}
 
@@ -37,7 +42,7 @@ Describe 'Get-PowerShellTip' {
 		It 'Should return all tips' {
 			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
 			[int] $numberOfTipsInJsonFile =
-				Get-Content -Path $powerShellTipsJsonFilePath |
+			Get-Content -Path $powerShellTipsJsonFilePath |
 				ConvertFrom-Json |
 				Measure-Object |
 				Select-Object -ExpandProperty Count
@@ -79,9 +84,14 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 		}
 
 		BeforeEach {
-			Mock -ModuleName $ModuleName -CommandName GetTipIdsAlreadyShownFilePath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/TipsAlreadyShown.txt')
+			# Write the configuration to a temp location, instead of overwriting the current user's configuration.
+			Mock -ModuleName $ModuleName -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
 			}
 
 			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()

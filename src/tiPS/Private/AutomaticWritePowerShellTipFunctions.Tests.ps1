@@ -3,9 +3,14 @@ using module './../tiPS.psm1'
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functions of the module.
 	Describe 'Calling WriteAutomaticPowerShellTipIfNeeded' {
 		BeforeEach {
-			Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.ReadAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/LastAutomaticTipWrittenDate.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
 			}
 			Mock -CommandName WriteAutomaticPowerShellTip -MockWith {} -Verifiable
 			Mock -CommandName TestPowerShellSessionIsInteractive -MockWith { return $true }
@@ -96,9 +101,14 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 
 	Describe 'Calling WriteLastAutomaticTipWrittenDate' {
 		BeforeEach {
-			Mock -CommandName GetLastAutomaticTipWrittenDateFilePath -MockWith {
-				# We have to use GetUnresolvedProviderPathFromPSPath because the File.WriteAllText method cannot read from the TestDrive provider, and we cannot use Resolve-Path because the file does not exist yet.
-				return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('TestDrive:/LastAutomaticTipWrittenDate.txt')
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
 			}
 		}
 
