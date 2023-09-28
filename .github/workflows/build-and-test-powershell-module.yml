@@ -27,6 +27,7 @@ env:
   prereleaseArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the deployment workflow.
   stableArtifactName: 'StableModuleArtifact' # Must match the name in the deployment workflow.
   deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the deployment workflow.
+  ciReportsDirectoryPath: './ci-reports'
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
@@ -68,11 +69,11 @@ jobs:
             Run = @{ Throw = $true }
             TestResult = @{
               Enabled = $true
-              OutputPath = 'test-results-nunit.xml'
+              OutputPath = '${{ env.ciReportsDirectoryPath }}/test-results-nunit.xml'
             }
             CodeCoverage = @{
               Enabled = $true
-              OutputPath = 'code-coverage-jacoco.xml'
+              OutputPath = '${{ env.ciReportsDirectoryPath }}/code-coverage-jacoco.xml'
               Path = 'src/' # Only include code coverage for the module's source code, not build or deployment scripts.
             }
           }
@@ -83,7 +84,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch'
         uses: madrapps/jacoco-report@v1.6.1
         with:
-          paths: code-coverage-jacoco.xml
+          paths: ${{ env.ciReportsDirectoryPath }}/code-coverage-jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 60
           min-coverage-changed-files: 60
@@ -261,3 +262,9 @@ jobs:
         with:
           name: ${{ env.deployFilesArtifactName }}
           path: ${{ env.deployFilesArtifactDirectoryPath }}
+
+      - name: Upload CI reports artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ci-reports
+          path: ${{ env.ciReportsDirectoryPath }}
