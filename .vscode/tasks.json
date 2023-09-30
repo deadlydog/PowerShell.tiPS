@@ -12,9 +12,36 @@
 					"args": [
 						"-NoProfile",
 						"-Command"
-					]}
+					]
+				}
 			},
 			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
+		},
+		{
+			"label": "Run Pester code coverage",
+			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }; CodeCoverage = @{ Enabled = $true }})",
 			"group": "test",
 			"presentation": {
 				"reveal": "always",
