@@ -6,5 +6,4 @@ $tip.Example = ''
 $tip.Urls = @(
 	'https://github.com/PowerShell/PowerShell'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Community

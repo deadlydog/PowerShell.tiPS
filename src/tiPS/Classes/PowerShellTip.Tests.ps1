@@ -9,7 +9,6 @@ Describe 'Trimming all tip properties' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
@@ -19,12 +18,10 @@ Describe 'Trimming all tip properties' {
 			[string] $tipText = 'Tip Text'
 			[string] $example = 'Example'
 			[string[]] $urls = @('https://Url1.com', 'http://Url2.com')
-			[string] $minPowerShellVersion = '5.1'
 			$tip.Title = $title
 			$tip.TipText = $tipText
 			$tip.Example = $example
 			$tip.Urls = $urls
-			$tip.MinPowerShellVersion = $minPowerShellVersion
 
 			{ $tip.TrimAllProperties() } | Should -Not -Throw
 
@@ -32,7 +29,6 @@ Describe 'Trimming all tip properties' {
 			$tip.TipText | Should -Be $tipText
 			$tip.Example | Should -Be $example
 			$tip.Urls | Should -Be $urls
-			$tip.MinPowerShellVersion | Should -Be $minPowerShellVersion
 		}
 	}
 
@@ -44,7 +40,6 @@ Describe 'Trimming all tip properties' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
@@ -58,13 +53,10 @@ Describe 'Trimming all tip properties' {
 			[string] $expectedExample = 'Example'
 			[string[]] $urls = @('https://Url1.com   ', '   http://Url2.com')
 			[string[]] $expectedUrls = @('https://Url1.com', 'http://Url2.com')
-			[string] $minPowerShellVersion = '5.1 '
-			[string] $expectedMinPowerShellVersion = '5.1'
 			$tip.Title = $title
 			$tip.TipText = $tipText
 			$tip.Example = $example
 			$tip.Urls = $urls
-			$tip.MinPowerShellVersion = $minPowerShellVersion
 
 			{ $tip.TrimAllProperties() } | Should -Not -Throw
 
@@ -72,7 +64,6 @@ Describe 'Trimming all tip properties' {
 			$tip.TipText | Should -Be $expectedTipText
 			$tip.Example | Should -Be $expectedExample
 			$tip.Urls | Should -Be $expectedUrls
-			$tip.MinPowerShellVersion | Should -Be $expectedMinPowerShellVersion
 		}
 	}
 }
@@ -86,7 +77,6 @@ Describe 'Validating a PowerShellTip' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
@@ -126,24 +116,6 @@ Describe 'Validating a PowerShellTip' {
 			{ $tip.Validate() } | Should -Throw
 		}
 
-		It 'Should throw an error when an invalid MinPowerShellVersion is supplied' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = 'Not a valid version'
-			{ $tip.Validate() } | Should -Throw
-		}
-
-		It 'Should throw an error when a version with a Build is supplied' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = '5.1.1'
-			{ $tip.Validate() } | Should -Throw
-		}
-
-		It 'Should throw an error when a version with a Revision is supplied' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = '5.1.0.1'
-			{ $tip.Validate() } | Should -Throw
-		}
-
 		It 'Should throw an error when an invalid Category is supplied' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			{ $tip.Category = 'InvalidCategory' } | Should -Throw
@@ -158,24 +130,11 @@ Describe 'Validating a PowerShellTip' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
 		It 'Should not throw an error when all properties are valid' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
-			{ $tip.Validate() } | Should -Not -Throw
-		}
-
-		It 'Should not throw an error when the MinPowerShellVersion is 0.0' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = '0.0'
-			{ $tip.Validate() } | Should -Not -Throw
-		}
-
-		It 'Should not throw an error when the MinPowerShellVersion is an empty string' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = ''
 			{ $tip.Validate() } | Should -Not -Throw
 		}
 	}
@@ -190,7 +149,6 @@ Describe 'Getting the Id property' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
@@ -219,7 +177,6 @@ Describe 'Checking if URLs are provided' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
@@ -238,7 +195,6 @@ Describe 'Checking if URLs are provided' {
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @()
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 
@@ -252,58 +208,6 @@ Describe 'Checking if URLs are provided' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Urls = $null
 			$tip.UrlsAreProvided | Should -BeFalse
-		}
-	}
-}
-
-Describe 'Checking if a MinPowerShellVersion was provided' {
-	Context 'Given the PowerShellTip has a MinPowerShellVersion' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
-			$ValidTip.Category = 'Community'
-		}
-
-		It 'Should return true when a MinPowerShellVersion is supplied' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = '5.1'
-			$tip.MinPowerShellVersionIsProvided | Should -BeTrue
-		}
-	}
-
-	Context 'Given the PowerShellTip does not have a MinPowerShellVersion' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '0.0'
-			$ValidTip.Category = 'Community'
-		}
-
-		It 'Should return false when the MinPowerShellVersion is 0.0' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = '0.0'
-			$tip.MinPowerShellVersionIsProvided | Should -BeFalse
-		}
-
-		It 'Should return false when the MinPowerShellVersion is an empty string' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = ''
-			$tip.MinPowerShellVersionIsProvided | Should -BeFalse
-		}
-
-		It 'Should return false when the MinPowerShellVersion is a whitespace string' {
-			[tiPS.PowerShellTip] $tip = $ValidTip
-			$tip.MinPowerShellVersion = ' '
-			$tip.MinPowerShellVersionIsProvided | Should -BeFalse
 		}
 	}
 }

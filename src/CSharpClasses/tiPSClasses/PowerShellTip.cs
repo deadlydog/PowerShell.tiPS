@@ -21,7 +21,6 @@ namespace tiPS
 		public string TipText { get; set; }
 		public string Example { get; set; }
 		public string[] Urls { get; set; }
-		public string MinPowerShellVersion { get; set; } // Use a string because System.Version is not deserialized correctly from JSON, and it's a bit more user friendly when specifying the version.
 		public TipCategory Category { get; set; }
 
 		public PowerShellTip()
@@ -31,7 +30,6 @@ namespace tiPS
 			TipText = string.Empty;
 			Example = string.Empty;
 			Urls = Array.Empty<string>();
-			MinPowerShellVersion = string.Empty;
 			Category = TipCategory.Other;
 		}
 
@@ -55,17 +53,11 @@ namespace tiPS
 			get { return Urls != null && Urls.Length > 0; }
 		}
 
-		public bool MinPowerShellVersionIsProvided
-		{
-			get { return !string.IsNullOrWhiteSpace(MinPowerShellVersion) && MinPowerShellVersion != "0.0"; }
-		}
-
 		public void TrimAllProperties()
 		{
 			Title = Title.Trim();
 			TipText = TipText.Trim();
 			Example = Example.Trim();
-			MinPowerShellVersion = MinPowerShellVersion.Trim();
 			for (int i = 0; i < Urls.Length; i++)
 			{
 				Urls[i] = Urls[i].Trim();
@@ -117,26 +109,6 @@ namespace tiPS
 				if (!isValidUrl)
 				{
 					throw new ArgumentException("The Urls property value '" + url + "' is not a valid URL.");
-				}
-			}
-
-			if (MinPowerShellVersionIsProvided)
-			{
-				Version version;
-				bool isValidVersionNumber = Version.TryParse(MinPowerShellVersion, out version);
-				if (!isValidVersionNumber)
-				{
-					throw new ArgumentException("The MinPowerShellVersion property value '" + MinPowerShellVersion + "' is not a valid version number.");
-				}
-
-				if (version == new Version(0, 0) && MinPowerShellVersion != "0.0")
-				{
-					throw new ArgumentException("To specify that there is no minimum PowerShell version, use a MinPowerShellVersion property value of '0.0' instead of '" + MinPowerShellVersion + "'.");
-				}
-
-				if (version.Build > 0 || version.Revision > 0)
-				{
-					throw new ArgumentException("The MinPowerShellVersion property value should be of the format 'Major.Minor'. The value '" + MinPowerShellVersion + "' is not valid.");
 				}
 			}
 		}

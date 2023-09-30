@@ -7,7 +7,6 @@
     "Urls": [
       "https://github.com/PowerShell/PowerShell"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 0
   },
   {
@@ -18,7 +17,6 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -30,7 +28,6 @@
       "https://learn.microsoft.com/powershell/module/psreadline/about/about_psreadline",
       "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 6
   },
   {
@@ -42,7 +39,6 @@
       "https://powershellexplained.com/2018-12-23-Powershell-null-everything-you-wanted-to-know/",
       "https://stackoverflow.com/a/60996703/602585"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -53,7 +49,6 @@
     "Urls": [
       "https://woshub.com/powershell-commands-history/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 6
   },
   {
@@ -64,7 +59,6 @@
     "Urls": [
       "https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 6
   },
   {
@@ -75,7 +69,6 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -88,7 +81,6 @@
       "https://powershell.org/series/powershell-community-call/",
       "https://www.youtube.com/@powershellanddscteamchanne5739"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 0
   },
   {
@@ -100,7 +92,6 @@
       "https://www.powershellgallery.com/packages/ImportExcel",
       "https://github.com/dfinke/ImportExcel"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 2
   },
   {
@@ -112,7 +103,6 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content",
       "https://4sysops.com/archives/parse-log-files-with-powershell/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 3
   },
   {
@@ -124,7 +114,6 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/out-gridview",
       "https://woshub.com/using-out-gridview-table-powershell/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 3
   },
   {
@@ -136,7 +125,6 @@
       "https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/",
       "https://learn.microsoft.com/en-us/powershell/module/psreadline/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 6
   },
   {
@@ -147,7 +135,6 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-7.3#line-continuation"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -160,7 +147,6 @@
       "https://adamtheautomator.com/powershell-splatting/",
       "https://4sysops.com/archives/use-splatting-and-psboundparameters-to-pass-parameters-in-powershell/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -172,7 +158,6 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_quoting_rules#here-strings",
       "https://devblogs.microsoft.com/scripting/maximizing-the-power-of-here-string-in-powershell-for-configuration-data"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -185,7 +170,6 @@
       "https://devblogs.microsoft.com/powershell/checking-for-bound-parameters/",
       "https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -196,7 +180,6 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.3#array-addition"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 4
   },
   {
@@ -207,7 +190,6 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.3#create-an-array"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -218,7 +200,6 @@
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psversiontable"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -230,7 +211,6 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum#enumerations-as-flags",
       "https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   },
   {
@@ -241,7 +221,6 @@
     "Urls": [
       "https://www.linkedin.com/feed/update/urn:li:activity:7113300637735407618/"
     ],
-    "MinPowerShellVersion": "0.0",
     "Category": 5
   }
 ]

@@ -100,7 +100,6 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 			$ValidTip.TipText = 'Tip Text'
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.MinPowerShellVersion = '5.1'
 			$ValidTip.Category = 'Community'
 		}
 

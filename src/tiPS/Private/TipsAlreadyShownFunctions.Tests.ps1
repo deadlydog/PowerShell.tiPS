@@ -11,7 +11,6 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 				$newTip.TipText = $tip.TipText
 				$newTip.Example = $tip.Example
 				$newTip.Urls = $tip.Urls
-				$newTip.MinPowerShellVersion = $tip.MinPowerShellVersion
 				$newTip.Category = $tip.Category
 				return $newTip
 			}
@@ -34,7 +33,6 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$validTip.TipText = 'Tip Text'
 			$validTip.Example = 'Example'
 			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$validTip.MinPowerShellVersion = '5.1'
 			$validTip.Category = 'Community'
 
 			# Clone our valid tip to make multiple instances.

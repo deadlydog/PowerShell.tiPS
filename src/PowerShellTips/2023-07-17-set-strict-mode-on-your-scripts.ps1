@@ -6,5 +6,4 @@ $tip.Example = 'Set-StrictMode -Version Latest'
 $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax

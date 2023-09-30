@@ -22,6 +22,8 @@ $dummyTip.Title = $tipTitle.Trim()
 A short description of the tip.
 
 This can be multiple lines.
+
+If tip is for a new feature, mention the PowerShell version the tip was introduced in.
 '@
 `$tip.Example = @'
 Example code to demonstrate the tip. This can also be multiple lines if needed.
@@ -30,7 +32,6 @@ Example code to demonstrate the tip. This can also be multiple lines if needed.
 	'https://OneTwoOrThreeUrls'
 	'https://ToLearnMoreAboutTheTip'
 )
-`$tip.MinPowerShellVersion = '0.0'
 `$tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
 "@
 

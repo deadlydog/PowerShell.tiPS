@@ -24,5 +24,4 @@ $tip.Urls = @(
 	'https://devblogs.microsoft.com/powershell/checking-for-bound-parameters/'
 	'https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
