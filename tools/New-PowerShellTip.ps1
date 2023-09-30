@@ -1,7 +1,26 @@
 # Run this script to create a new PowerShell Tip file and open it.
 # You will be prompted for the tip's title, and then the file will open in your default editor.
 
-[string] $tipTitle = Read-Host -Prompt 'Enter the title for your new PowerShell tip (e.g. "PowerShell is open source")'
+# Prompt the user for a title for the new PowerShell Tip.
+[string] $tipTitle = [string]::Empty
+[int] $maxTitleLength = 75
+do
+{
+	[string] $tipTitle = Read-Host -Prompt 'Enter the title for your new PowerShell tip (e.g. "PowerShell is open source")'
+
+	[bool] $titleWasNotProvided = [string]::IsNullOrWhiteSpace($tipTitle)
+	if ($titleWasNotProvided)
+	{
+		Write-Warning 'A title was not provided, so exiting script.'
+		return
+	}
+
+	[int] $titleLength = $tipTitle.Length
+	if ($titleLength -gt $maxTitleLength)
+	{
+		Write-Output "The title must be $maxTitleLength characters or less. You entered $titleLength characters. Please enter a shorter title."
+	}
+} while ($titleLength -gt $maxTitleLength)
 
 . "$PSScriptRoot/Helpers/ImportBuiltModule.ps1"
 
