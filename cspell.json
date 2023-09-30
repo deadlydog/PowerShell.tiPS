@@ -14,6 +14,7 @@
 	"ignoreWords": [
 		"Codespace", // GitHub Codespaces
 		"Codespaces", // GitHub Codespaces
+		"dawidd", // GitHub action author
 		"devcontainer", // VS Code devcontainer
 		"hashtable", // PowerShell Hashtable
 		"Hmmss", // Time format
