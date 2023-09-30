@@ -8,19 +8,19 @@ A way to get the best of both worlds is to create a class that implements the Sy
 '@
 $tip.Example = @'
 class AllowedParameterValues : System.Management.Automation.IValidateSetValuesGenerator {
-	[string[]] GetValidValues() {
-		# Populate these values dynamically by querying a database, reading a file, calling an API, etc.
-		$values = @('Value1', 'Value2', 'Value3')
-		return $values
-	}
+    [string[]] GetValidValues() {
+        # Populate these values dynamically by querying a database, reading a file, calling an API, etc.
+        $values = @('Value1', 'Value2', 'Value3')
+        return $values
+    }
 }
 
 function Test-ValidateSet {
-	param (
-		[ValidateSet([AllowedParameterValues])]
-		[string] $Value
-	)
-	return $Value
+    param (
+        [ValidateSet([AllowedParameterValues])]
+        [string] $Value
+    )
+    return $Value
 }
 
 Test-ValidateSet -Value # Tab complete here to see the dynamic values.

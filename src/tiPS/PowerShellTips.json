@@ -237,8 +237,10 @@
     "CreatedDate": "2023-09-29T00:00:00",
     "Title": "Use dynamic values in ValidateSet while maintaining tab completion",
     "TipText": "The ValidateSet attribute is a great way to limit the values that can be passed to a parameter, and it provides tab autocompletion for the parameter values. Typically if you wanted to use dynamic values you would use the ValidateScript attribute instead, but then you lose the tab autocompletion.\r\n\r\nA way to get the best of both worlds is to create a class that implements the System.Management.Automation.IValidateSetValuesGenerator interface. This interface has a single method, GetValidValues(), that returns an array of strings. You can put the logic to dynamically retrieve your allowed parameter values in the GetValidValues() method. You can then use the ValidateSet attribute with the type of your class, and the tab autocompletion will work as expected.",
-    "Example": "class AllowedParameterValues : System.Management.Automation.IValidateSetValuesGenerator {\r\n\t[string[]] GetValidValues() {\r\n\t\t# Populate these values dynamically by querying a database, reading a file, calling an API, etc.\r\n\t\t$values = @('Value1', 'Value2', 'Value3')\r\n\t\treturn $values\r\n\t}\r\n}\r\n\r\nfunction Test-ValidateSet {\r\n\tparam (\r\n\t\t[ValidateSet([AllowedParameterValues])]\r\n\t\t[string] $Value\r\n\t)\r\n\treturn $Value\r\n}\r\n\r\nTest-ValidateSet -Value # Tab complete here to see the dynamic values.",
-    "Urls": [],
+    "Example": "class AllowedParameterValues : System.Management.Automation.IValidateSetValuesGenerator {\r\n    [string[]] GetValidValues() {\r\n        # Populate these values dynamically by querying a database, reading a file, calling an API, etc.\r\n        $values = @('Value1', 'Value2', 'Value3')\r\n        return $values\r\n    }\r\n}\r\n\r\nfunction Test-ValidateSet {\r\n    param (\r\n        [ValidateSet([AllowedParameterValues])]\r\n        [string] $Value\r\n    )\r\n    return $Value\r\n}\r\n\r\nTest-ValidateSet -Value # Tab complete here to see the dynamic values.",
+    "Urls": [
+      "https://www.linkedin.com/feed/update/urn:li:activity:7113300637735407618/"
+    ],
     "MinPowerShellVersion": "0.0",
     "Category": 5
   }
