@@ -25,6 +25,8 @@ function Test-ValidateSet {
 
 Test-ValidateSet -Value # Tab complete here to see the dynamic values.
 '@
-$tip.Urls = @()
+$tip.Urls = @(
+	'https://www.linkedin.com/feed/update/urn:li:activity:7113300637735407618/'
+)
 $tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
