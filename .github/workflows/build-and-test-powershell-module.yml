@@ -261,3 +261,8 @@ jobs:
         with:
           name: ${{ env.deployFilesArtifactName }}
           path: ${{ env.deployFilesArtifactDirectoryPath }}
+
+      - name: Trigger the deployment workflow
+        uses: ./.github/workflows/deploy-powershell-module.yml
+        with:
+          buildWorkflowRunId: ${{ github.run_id }}
