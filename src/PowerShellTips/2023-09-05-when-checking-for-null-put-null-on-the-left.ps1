@@ -14,5 +14,4 @@ $tip.Urls = @(
 	'https://powershellexplained.com/2018-12-23-Powershell-null-everything-you-wanted-to-know/'
 	'https://stackoverflow.com/a/60996703/602585'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

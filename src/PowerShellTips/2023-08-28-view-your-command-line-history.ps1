@@ -10,5 +10,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/powershell/module/psreadline/about/about_psreadline'
 	'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Terminal

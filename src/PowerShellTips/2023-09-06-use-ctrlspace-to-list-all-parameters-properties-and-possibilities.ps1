@@ -17,5 +17,4 @@ $tip.Example = @'
 $tip.Urls = @(
 	'https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

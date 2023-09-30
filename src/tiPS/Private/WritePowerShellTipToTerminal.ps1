@@ -14,7 +14,6 @@ function WritePowerShellTipToTerminal
 	[ConsoleColor] $tipTextColor = [ConsoleColor]::White
 	[ConsoleColor] $exampleColor = [ConsoleColor]::Yellow
 	[ConsoleColor] $urlsColor = [ConsoleColor]::Green
-	[ConsoleColor] $minPowerShellVersionColor = [ConsoleColor]::Red
 
 	# Calculate how many header characters to put on each side of the title to make it look nice.
 	[int] $numberOfCharactersInHeader = 90
@@ -46,12 +45,6 @@ function WritePowerShellTipToTerminal
 	{
 		Write-Host 'More information: ' -ForegroundColor $urlsColor -NoNewline
 		Write-Host $Tip.Urls -ForegroundColor $urlsColor
-	}
-
-	if ($Tip.MinPowerShellVersionIsProvided)
-	{
-		Write-Host 'Required PowerShell version or greater: ' -ForegroundColor $minPowerShellVersionColor -NoNewline
-		Write-Host $Tip.MinPowerShellVersion -ForegroundColor $minPowerShellVersionColor
 	}
 
 	Write-Host ('-' * $numberOfCharactersInHeader) -ForegroundColor $headerColor

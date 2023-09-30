@@ -30,5 +30,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum#enumerations-as-flags'
 	'https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.

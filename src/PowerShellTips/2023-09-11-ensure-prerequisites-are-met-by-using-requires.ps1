@@ -19,5 +19,4 @@ $tip.Example = @'
 $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires'
 )
-$tip.MinPowerShellVersion = '0.0'
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
