@@ -38,7 +38,7 @@ function WritePowerShellTipToTerminal
 
 	if ($Tip.ExampleIsProvided)
 	{
-		Write-Host 'Example: ' -ForegroundColor $exampleColor -NoNewline
+		Write-Host 'Example:' -ForegroundColor $exampleColor
 		Write-Host $Tip.Example -ForegroundColor $exampleColor
 	}
 
