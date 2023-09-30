@@ -3,6 +3,17 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## v0.6.0 - September 30, 2023
+
+Features:
+
+- Add a newline after the tip's "Example:" header to make the example code easier to read and look nicer.
+- Made New-PowerShellTip.ps1 script more resilient to bad user input.
+
+Breaking Changes:
+
+- Removed the `MinPowerShellVersion` property from the `PowerShellTip` class, as it was not used often enough to justify the complexity it added to be a 1st class property.
+
 ## v0.5.0 - September 26, 2023
 
 Features:
