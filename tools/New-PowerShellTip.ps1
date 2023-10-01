@@ -52,6 +52,15 @@ Example code to demonstrate the tip. This can also be multiple lines if needed.
 	'https://ToLearnMoreAboutTheTip'
 )
 `$tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+
+# Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
+# Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.
+# Module: Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
+# NativeCmdlet: Native cmdlet tips. e.g. Get-Process, Get-ChildItem, Get-Content, etc.
+# Performance: Tips to improve performance. e.g. foreach vs ForEach-Object, ForEach-Object -Parallel, etc.
+# Syntax: Syntax tips. e.g. splatting, pipeline, etc.
+# Terminal: Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.
+# Other: Tips that don't fit into any of the other categories.
 "@
 
 Write-Output "Creating new PowerShell Tip file and opening it: $newTipFilePath"
