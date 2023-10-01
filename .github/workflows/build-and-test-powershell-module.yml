@@ -268,4 +268,4 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     uses: ./.github/workflows/deploy-powershell-module.yml
     with:
-      buildWorkflowRunId: ${{ github.run_id }}
+      buildWorkflowRunId: '${{ github.run_id }}'
