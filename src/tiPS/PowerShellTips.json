@@ -222,5 +222,16 @@
       "https://www.linkedin.com/feed/update/urn:li:activity:7113300637735407618/"
     ],
     "Category": 5
+  },
+  {
+    "CreatedDate": "2023-10-02T00:00:00",
+    "Title": "Quickly create temporary file",
+    "TipText": "Quickly create a temporary file by using the New-TemporaryFile command, or the GetTempFileName() .NET function.\r\n\r\nThis is handy when you want save data to a temporary log file and not worry about path/permissions/filename. The temporary file will be created in \"C:\\Users\\USER\\AppData\\Local\\Temp\\1\\some-tmp.tmp\".",
+    "Example": "# Create temp file and get the path to it using the .NET class.\r\n[string] $tmpFile = [System.IO.Path]::GetTempFileName()\r\n\r\n# Or use the native PowerShell cmdlet instead, which returns a full FileInfo object.\r\n[System.IO.FileInfo] $tmpFile = New-TemporaryFile\r\n\r\n# Easily write/read/remove the temp file.\r\n\"Some data to be saved\" | Out-File $tmpFile\r\n\r\n# Cleanup when you no longer need it.\r\nRemove-Item $tmpFile",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-temporaryfile",
+      "https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename#system-io-path-gettempfilename"
+    ],
+    "Category": 5
   }
 ]

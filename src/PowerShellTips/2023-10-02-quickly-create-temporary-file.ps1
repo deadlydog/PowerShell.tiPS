@@ -1,24 +1,27 @@
 $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2023-10-02')
-$tip.Title = 'Quickly create temporary file in PowerShell'
+$tip.Title = 'Quickly create temporary file'
 $tip.TipText = @'
-Quickly create a temporary file using dotnet class.
+Quickly create a temporary file by using the New-TemporaryFile command, or the GetTempFileName() .NET function.
 
-This is handy when you want save data to a temporary log file and not worry about path/permissions/filename.
-Temporary file will be created in "C:\Users\USER\AppData\Local\Temp\1\some-tmp.tmp" and automatically cleaned up after reboot.
+This is handy when you want save data to a temporary log file and not worry about path/permissions/filename. The temporary file will be created in "C:\Users\USER\AppData\Local\Temp\1\some-tmp.tmp".
 '@
 $tip.Example = @'
-$tmpFile = [System.IO.Path]::GetTempFileName()
-# Using native PowerShell cmdlet
-$tmpFile = New-TemporaryFile
-# Easily write/read/remove
+# Create temp file and get the path to it using the .NET class.
+[string] $tmpFile = [System.IO.Path]::GetTempFileName()
+
+# Or use the native PowerShell cmdlet instead, which returns a full FileInfo object.
+[System.IO.FileInfo] $tmpFile = New-TemporaryFile
+
+# Easily write/read/remove the temp file.
 "Some data to be saved" | Out-File $tmpFile
-# Cleanup when you no longer need it
+
+# Cleanup when you no longer need it.
 Remove-Item $tmpFile
 '@
 $tip.Urls = @(
-	'https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename?view=net-7.0#system-io-path-gettempfilename'
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-temporaryfile'
+	'https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename#system-io-path-gettempfilename'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
 
