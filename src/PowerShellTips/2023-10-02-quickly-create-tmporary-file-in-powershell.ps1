@@ -1,6 +1,6 @@
 $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2023-10-02')
-$tip.Title = 'Quickly create tmporary file in PowerShell'
+$tip.Title = 'Quickly create temporary file in PowerShell'
 $tip.TipText = @'
 Quickly create a temporary file using dotnet class.
 
@@ -9,6 +9,8 @@ Temporary file will be created in "C:\Users\USER\AppData\Local\Temp\1\some-tmp.t
 '@
 $tip.Example = @'
 $tmpFile = [System.IO.Path]::GetTempFileName()
+# Using native PowerShell cmdlet
+$tmpFile = New-TemporaryFile
 # Easily write/read/remove
 "Some data to be saved" | Out-File $tmpFile
 # Cleanup when you no longer need it
@@ -16,6 +18,7 @@ Remove-Item $tmpFile
 '@
 $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename?view=net-7.0#system-io-path-gettempfilename'
+	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-temporaryfile'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
 
