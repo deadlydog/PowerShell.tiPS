@@ -1,18 +1,7 @@
 name: deploy
 
 on:
-  workflow_run:
-    workflows: [build]
-    types: [completed]
-    branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      workflowRunId:
-        description: 'The build workflow run ID containing the artifacts to use. The run ID can be found in the URL of the build workflow run.'
-        type: number
-        required: true
+  workflow_call:
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
@@ -20,23 +9,18 @@ env:
   stableModuleArtifactName: 'StableModuleArtifact' # Must match the name in the build workflow.
   deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
-  workflowRunId: ${{ github.event_name == 'workflow_dispatch' && inputs.workflowRunId || github.event.workflow_run.id }} # Ternary operator to use input value if manually triggered, otherwise use the workflow_run.id value.
 
 jobs:
   publish-prerelease-module:
-    # Only run the deployment if manually triggered, or the build workflow succeeded.
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
     steps:
-      - name: Download prerelease module artifact from triggered workflow
-        uses: dawidd6/action-download-artifact@v2
+      - name: Download prerelease module artifact
+        uses: actions/download-artifact@v3
         with:
-          run_id: ${{ env.workflowRunId }}
           name: ${{ env.prereleaseModuleArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
-          search_artifacts: true
 
       - name: Publish prerelease PowerShell module
         shell: pwsh
@@ -82,13 +66,11 @@ jobs:
           Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
           Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
-      - name: Download deploy files artifact from triggered workflow
-        uses: dawidd6/action-download-artifact@v2
+      - name: Download deploy files artifact
+        uses: actions/download-artifact@v3
         with:
-          run_id: ${{ env.workflowRunId }}
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
-          search_artifacts: true
 
       - name: Run smoke tests
         shell: pwsh
@@ -126,12 +108,10 @@ jobs:
           Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          run_id: ${{ env.workflowRunId }}
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
-          search_artifacts: true
 
       - name: Run smoke tests
         shell: powershell
@@ -159,12 +139,10 @@ jobs:
       stableVersionNumber: ${{ steps.output-version-number.outputs.StableVersionNumber }}
     steps:
       - name: Download stable module artifact from triggered workflow
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          run_id: ${{ env.workflowRunId }}
           name: ${{ env.stableModuleArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
-          search_artifacts: true
 
       - name: Publish stable PowerShell module
         shell: pwsh
@@ -209,12 +187,10 @@ jobs:
           Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          run_id: ${{ env.workflowRunId }}
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
-          search_artifacts: true
 
       - name: Run smoke tests
         shell: pwsh
@@ -252,12 +228,10 @@ jobs:
           Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          run_id: ${{ env.workflowRunId }}
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
-          search_artifacts: true
 
       - name: Run smoke tests
         shell: powershell
