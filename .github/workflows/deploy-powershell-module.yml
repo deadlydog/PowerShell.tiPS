@@ -17,7 +17,7 @@ jobs:
       prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
     steps:
       - name: Download prerelease module artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.prereleaseModuleArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
@@ -67,7 +67,7 @@ jobs:
           Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
@@ -108,7 +108,7 @@ jobs:
           Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
@@ -139,7 +139,7 @@ jobs:
       stableVersionNumber: ${{ steps.output-version-number.outputs.StableVersionNumber }}
     steps:
       - name: Download stable module artifact from triggered workflow
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.stableModuleArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
@@ -187,7 +187,7 @@ jobs:
           Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
@@ -228,7 +228,7 @@ jobs:
           Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
       - name: Download deploy files artifact from triggered workflow
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
