@@ -233,5 +233,39 @@
       "https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename#system-io-path-gettempfilename"
     ],
     "Category": 5
+  },
+  {
+    "CreatedDate": "2023-10-02T00:00:00",
+    "Title": "Use PowerShell classes for strongly-typed objects",
+    "TipText": "PowerShell 5.0 introduced classes. Classes allow you to create strongly-typed objects, encapsulating properties and methods. This allows you to keep related data together and to define functions for manipulating the data, allowing for validation if necessary. Classes also allow for inheritance.\r\n\r\nThere are some caveats to working with classes in PowerShell though:\r\n- If you make changes to the class definition you must reload the PowerShell session for the changes to take effect.\r\n- PowerShell classes defined in modules are not exported when 'Import-Module' is used; Instead the 'using module' syntax must be used.",
+    "Example": "class Employee\r\n{\r\n\t[string] $FirstName\r\n\t[string] $LastName\r\n\t[DateTime] $DateOfBirth\r\n\t[int] $Salary\r\n\r\n\t[string] GetFullName()\r\n\t{\r\n\t\treturn \"$this.FirstName $this.LastName\"\r\n\t}\r\n\r\n\t[void] IncreaseSalary([int] $amount)\r\n\t{\r\n\t\t$this.Salary += $amount\r\n\t}\r\n}\r\n\r\n$employee = [Employee]::new()\r\n$employee.FirstName = 'John'\r\n$employee.LastName = 'Doe'\r\n$employee.DateOfBirth = [DateTime]::Parse('1983-01-15')\r\n$employee.Salary = 50000\r\n$employee.GetFullName()\r\n$employee.IncreaseSalary(10000)",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_classes",
+      "https://xainey.github.io/2016/powershell-classes-and-concepts/",
+      "https://blog.danskingdom.com/PowerShell-class-definition-pros-cons-and-performance-comparison/"
+    ],
+    "Category": 5
+  },
+  {
+    "CreatedDate": "2023-10-03T00:00:00",
+    "Title": "PowerShell DevOps Global Summit 2024",
+    "TipText": "The PowerShell DevOps Global Summit will be held in Bellevue, Washington, USA from April 8 - 11, 2024. The conference is a great place to learn about PowerShell and DevOps, and to meet and network with other people in the PowerShell community.\r\n\r\nWant to speak at the conference? The call for speakers is open from October 1 to November 15, 2023.",
+    "Example": "",
+    "Urls": [
+      "https://www.powershellsummit.org/",
+      "https://sessionize.com/pshsummit24/"
+    ],
+    "Category": 0
+  },
+  {
+    "CreatedDate": "2023-10-03T00:00:00",
+    "Title": "Process file lines with the switch statement",
+    "TipText": "While the switch statement is typically used to evaluate a single value, it can also be used to evaluate arrays. By using the -File parameter with the switch statement, it will treat each line of the file as an array item, allowing you to process a text file line-by-line and take actions when a specific value is found. You can use the typical switch parameters to match on exact text, wildcards, or regular expressions.",
+    "Example": "# Output the file contents to the console, converting error lines to errors, and warning lines to warnings.\r\nswitch -Wildcard -File $path\r\n{\r\n    'Error*'\r\n    {\r\n        Write-Error -Message $PSItem\r\n    }\r\n    'Warning*'\r\n    {\r\n        Write-Warning -Message $PSItem\r\n    }\r\n    default\r\n    {\r\n        Write-Output $PSItem\r\n    }\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-switch#-file",
+      "https://twitter.com/dfinke/status/1698733677285388581"
+    ],
+    "Category": 5
   }
 ]
