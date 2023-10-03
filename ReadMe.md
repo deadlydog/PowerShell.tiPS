@@ -199,7 +199,7 @@ Follow these steps to add your tip to tiPS:
 1. Modify it with your tip info and commit your changes.
 1. Submit a pull request from your fork back to this repo ([See GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)).
 
-🎦 [This video](https://youtu.be/OBg1KJf8sC4?si=CXEtMmaaZ3ybQAVF) walks through the above steps, showing how to contribute a new tip.
+🎦 [This video](https://youtu.be/OBg1KJf8sC4?si=CXEtMmaaZ3ybQAVF) walks through the above steps, showing how to contribute a new tip 🎦
 
 tiPS is meant to be a community driven project, so please help make it better by contributing your tips.
 
