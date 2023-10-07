@@ -12,4 +12,4 @@ $tip.Urls = @(
 	'https://powershell.org/series/powershell-community-call/'
 	'https://www.youtube.com/@powershellanddscteamchanne5739'
 )
-$tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.

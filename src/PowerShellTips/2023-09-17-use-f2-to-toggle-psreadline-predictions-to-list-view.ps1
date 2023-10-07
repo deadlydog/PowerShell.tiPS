@@ -13,4 +13,4 @@ $tip.Urls = @(
 	'https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/'
 	'https://learn.microsoft.com/en-us/powershell/module/psreadline/'
 )
-$tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
