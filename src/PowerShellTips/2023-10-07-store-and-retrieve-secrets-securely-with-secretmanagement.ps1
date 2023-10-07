@@ -25,7 +25,7 @@ $tip.Urls = @(
 	'https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/'
 	'https://www.pdq.com/blog/how-to-manage-powershell-secrets-with-secretsmanagement/'
 )
-$tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Security # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
 
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
 # Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.
