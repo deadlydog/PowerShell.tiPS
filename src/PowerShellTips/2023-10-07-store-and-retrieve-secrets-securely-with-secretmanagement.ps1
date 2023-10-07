@@ -22,6 +22,7 @@ Get-Secret -Name MySecret
 '@
 $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.secretmanagement/?view=ps-modules'
+	'https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/'
 	'https://www.pdq.com/blog/how-to-manage-powershell-secrets-with-secretsmanagement/'
 )
 $tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
