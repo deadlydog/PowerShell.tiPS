@@ -23,4 +23,4 @@ $tip.Urls = @(
 	'https://www.powershellgallery.com/packages/ImportExcel'
 	'https://github.com/dfinke/ImportExcel'
 )
-$tip.Category = [tiPS.TipCategory]::Module # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Module # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.

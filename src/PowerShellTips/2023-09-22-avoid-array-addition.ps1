@@ -27,4 +27,4 @@ foreach ($i in 0..10) {
 $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.3#array-addition'
 )
-$tip.Category = [tiPS.TipCategory]::Performance # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Performance # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.

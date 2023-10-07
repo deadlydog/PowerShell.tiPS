@@ -19,4 +19,4 @@ $tip.Example = @'
 $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires'
 )
-$tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.

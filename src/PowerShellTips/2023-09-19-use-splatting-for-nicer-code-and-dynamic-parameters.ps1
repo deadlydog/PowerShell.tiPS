@@ -26,4 +26,4 @@ $tip.Urls = @(
 	'https://adamtheautomator.com/powershell-splatting/'
 	'https://4sysops.com/archives/use-splatting-and-psboundparameters-to-pass-parameters-in-powershell/'
 )
-$tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Syntax, Terminal, or Other.
+$tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
