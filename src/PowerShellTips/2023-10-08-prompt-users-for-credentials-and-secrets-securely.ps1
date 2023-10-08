@@ -1,6 +1,6 @@
 $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2023-10-08')
-$tip.Title = 'Prompting users for credentials and secrets'
+$tip.Title = 'Prompt users for credentials and secrets securely'
 $tip.TipText = @'
 Sometimes we write scripts that prompt the user for their credentials, or for a secret like a password. We should avoid retrieving these values in plain text.
 

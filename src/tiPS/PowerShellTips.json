@@ -282,7 +282,7 @@
   },
   {
     "CreatedDate": "2023-10-08T00:00:00",
-    "Title": "Prompting users for credentials and secrets",
+    "Title": "Prompt users for credentials and secrets securely",
     "TipText": "Sometimes we write scripts that prompt the user for their credentials, or for a secret like a password. We should avoid retrieving these values in plain text.\r\n\r\nTo securely prompt a user for their credentials use the Get-Credential cmdlet. This will prompt the user for their username and password, and return a PSCredential object with the password stored as a SecureString.\r\n\r\nThe securely prompt a user for a secret, use the Read-Host cmdlet with the -AsSecureString parameter. This will prompt the user for a secret and return a SecureString.\r\n\r\nMost cmdlets that require sensitive info will accept PSCredential or SecureString objects. In the rare case that you need the secret as plain text, you can convert the SecureString to plain text. This should be avoided if possible, as it exposes the secret in memory.",
     "Example": "# Prompt user for their username and password. The password will be stored as a SecureString.\r\n[PSCredential] $userCredentials = Get-Credential -Message 'Enter your credentials'\r\n\r\n# Some webhooks contain secrets, so treat them as sensitive.\r\n[SecureString] $secureWebhook = Read-Host -Prompt 'Enter the webhook URL' -AsSecureString\r\n\r\n# Convert a SecureString to plain text. AVOID THIS WHEN POSSIBLE.\r\n[string] $plainTextWebhook = [System.Net.NetworkCredential]::new('', $secureWebhook).Password",
     "Urls": [
