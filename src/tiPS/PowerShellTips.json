@@ -291,5 +291,26 @@
       "https://www.pdq.com/blog/secure-password-with-powershell-encrypting-credentials-part-1/"
     ],
     "Category": 5
+  },
+  {
+    "CreatedDate": "2023-10-09T00:00:00",
+    "Title": "PowerShell Conference Europe 2024",
+    "TipText": "PSConfEU 2024 will be held June 24 - 27, 2024. Save the date!\r\n\r\nMore details will be released at PSConfEU MiniCon on October 24, 2023.",
+    "Example": "",
+    "Urls": [
+      "https://psconf.eu/"
+    ],
+    "Category": 0
+  },
+  {
+    "CreatedDate": "2023-10-09T00:00:00",
+    "Title": "PSConfEU 2023 MiniCon",
+    "TipText": "The PSConfEU 2023 MiniCon will be held on October 24, 2023. Save the date!\r\n\r\nPSConfEU 2023 MiniCon is a free virtual event open to all of the PowerShell community. Wherever you are, join and say hi! There will be multiple sessions in several tracks, and many speakers and leaders of the community will be there to talk to you!",
+    "Example": "",
+    "Urls": [
+      "https://psconf.eu/",
+      "https://app.gather.town/events/It0l-Wx8TQmTI93yQvs-"
+    ],
+    "Category": 0
   }
 ]
