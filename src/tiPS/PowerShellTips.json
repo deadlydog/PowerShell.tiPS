@@ -315,6 +315,17 @@
   },
   {
     "CreatedDate": "2023-10-11T00:00:00",
+    "Title": "Create test files of arbitrary size",
+    "TipText": "When doing performance testing it can be useful to have a file of a specific size to test with. Creating files of a specific size is fairly straightforward with the System.IO.FileStream class.",
+    "Example": "[string] $fileName = [System.IO.Path]::GetRandomFileName()\r\n[string] $filePath = Join-Path -Path (Get-Location) -ChildPath $fileName\r\n[int64] $fileSize = 10MB\r\n\r\ntry {\r\n    $tempFile = [System.IO.FileStream]::new($filePath, Create, ReadWrite)\r\n    $tempFile.SetLength($fileSize)\r\n    $tempFile.Close()\r\n\r\n    Write-Output 'Created the following temp file:'\r\n    Get-ChildItem $filePath | Select-Object FullName,DirectoryName,Name,Length,CreationTime\r\n} catch {\r\n    Write-Error $_\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/dotnet/api/system.io.filestream",
+      "https://claytonerrington.com/blog/creating-a-test-file"
+    ],
+    "Category": 8
+  },
+  {
+    "CreatedDate": "2023-10-11T00:00:00",
     "Title": "Get file name from URL",
     "TipText": "If you have a URL that contains a path to a file, you can use the [URI] class to extract the file path and name.",
     "Example": "PS> [URI] $uri = 'https://some-server.com/Path/To/File.txt?someQueryParameter=123#Heading1'\r\n\r\nPS> $uri\r\nAbsolutePath   : /Path/To/File.txt\r\nAbsoluteUri    : https://some-server.com/Path/To/File.txt?someQueryParameter=123#Heading1\r\nPathAndQuery   : /Path/To/File.txt?someQueryParameter=123\r\nSegments       : {/, Path/, To/, File.txt}\r\nHost           : some-server.com\r\nPort           : 443\r\nQuery          : ?someQueryParameter=123\r\nFragment       : #Heading1\r\nScheme         : https\r\n\r\nPS> Split-Path -Path $uri.AbsolutePath -Leaf\r\nFile.txt\r\n\r\nPS> Split-Path -Path $uri.AbsolutePath -LeafBase\r\nFile",
