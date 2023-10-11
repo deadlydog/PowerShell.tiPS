@@ -312,5 +312,16 @@
       "https://app.gather.town/events/It0l-Wx8TQmTI93yQvs-"
     ],
     "Category": 0
+  },
+  {
+    "CreatedDate": "2023-10-11T00:00:00",
+    "Title": "Get file name from URL",
+    "TipText": "If you have a URL that contains a path to a file, you can use the [URI] class to extract the file path and name.",
+    "Example": "PS> [URI] $uri = 'https://some-server.com/Path/To/File.txt?someQueryParameter=123#Heading1'\r\n\r\nPS> $uri\r\nAbsolutePath   : /Path/To/File.txt\r\nAbsoluteUri    : https://some-server.com/Path/To/File.txt?someQueryParameter=123#Heading1\r\nPathAndQuery   : /Path/To/File.txt?someQueryParameter=123\r\nSegments       : {/, Path/, To/, File.txt}\r\nHost           : some-server.com\r\nPort           : 443\r\nQuery          : ?someQueryParameter=123\r\nFragment       : #Heading1\r\nScheme         : https\r\n\r\nPS> Split-Path -Path $uri.AbsolutePath -Leaf\r\nFile.txt\r\n\r\nPS> Split-Path -Path $uri.AbsolutePath -LeafBase\r\nFile",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/dotnet/api/system.uri",
+      "https://twitter.com/devopsjeremy/status/1709773064563744888?s=46&t=-Ox1iPV67-4Vqb8wIZ275A"
+    ],
+    "Category": 8
   }
 ]
