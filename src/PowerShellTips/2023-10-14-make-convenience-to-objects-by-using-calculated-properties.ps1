@@ -8,7 +8,7 @@ The easiest way to add calculated properties is by using the `Select-Object` cmd
 '@
 $tip.Example = @'
 # Get the first process and add a single calculated property to show how long it has been running.
-❯ Get-Process | Select-Object -First 1 -Property ProcessName,StartTime,@{ Name = "RunningTime"; Expression = { (Get-Date) - $_.StartTime } }
+> Get-Process | Select-Object -First 1 -Property ProcessName,StartTime,@{ Name = "RunningTime"; Expression = { (Get-Date) - $_.StartTime } }
 
 ProcessName StartTime              RunningTime
 ----------- ---------              -----------
@@ -16,7 +16,7 @@ ProcessName StartTime              RunningTime
 
 
 # Add multiple calculated properties (split into multiple lines for readability).
-❯ Get-Process | Select-Object -First 1 -Property ProcessName,`
+> Get-Process | Select-Object -First 1 -Property ProcessName,`
     StartTime,@{ Name = "RunningTime"; Expression = { (Get-Date) - $_.StartTime } },`
     WorkingSet,@{ Name = "WorkingSetMb"; Expression = { $_.WorkingSet / 1MB }}
 
