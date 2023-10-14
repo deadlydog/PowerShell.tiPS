@@ -334,5 +334,16 @@
       "https://twitter.com/devopsjeremy/status/1709773064563744888?s=46&t=-Ox1iPV67-4Vqb8wIZ275A"
     ],
     "Category": 8
+  },
+  {
+    "CreatedDate": "2023-10-14T00:00:00",
+    "Title": "Make convenience to objects by using calculated properties",
+    "TipText": "PowerShell is a dynamic language, which means that you can add properties to objects on the fly. By using calculated properties, you can add properties to objects that are calculated from other properties on the object, or data from external sources.\r\n\r\nThe easiest way to add calculated properties is by using the `Select-Object` cmdlet to return a new object back with the additional properties. You provide a hashtable to the `-Property` parameter, with a `Name` key for the name of the new property and an `Expression` key for the value. You can add as many calculated properties as you want.",
+    "Example": "# Get the first process and add a single calculated property to show how long it has been running.\r\n❯ Get-Process | Select-Object -First 1 -Property ProcessName,StartTime,@{ Name = \"RunningTime\"; Expression = { (Get-Date) - $_.StartTime } }\r\n\r\nProcessName StartTime              RunningTime\r\n----------- ---------              -----------\r\n1Password   10/14/2023 12:59:24 PM 00:32:59.1893342\r\n\r\n\r\n# Add multiple calculated properties (split into multiple lines for readability).\r\n❯ Get-Process | Select-Object -First 1 -Property ProcessName,`\r\n    StartTime,@{ Name = \"RunningTime\"; Expression = { (Get-Date) - $_.StartTime } },`\r\n    WorkingSet,@{ Name = \"WorkingSetMb\"; Expression = { $_.WorkingSet / 1MB }}\r\n\r\nProcessName  : 1Password\r\nStartTime    : 10/14/2023 12:59:24 PM\r\nRunningTime  : 00:33:03.0717040\r\nWorkingSet   : 73527296\r\nWorkingSetMb : 70.12109375",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_calculated_properties",
+      "https://4sysops.com/archives/add-a-calculated-property-with-select-object-in-powershell/"
+    ],
+    "Category": 6
   }
 ]
