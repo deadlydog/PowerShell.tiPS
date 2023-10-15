@@ -100,8 +100,13 @@ function Get-PowerShellTip
 		}
 		else
 		{
-			Write-Verbose "A Tip ID was not provided, so getting a random one from the unshown tips."
-			$Id = $script:UnshownTips.Keys | Get-Random -Count 1
+			Write-Verbose "A Tip ID was not provided, so getting an unshown tip based on the user's configuration."
+			switch ($script:TiPSConfiguration.TipRetrievalOrder)
+			{
+				([tiPS.TipRetrievalOrder]::NewestFirst) { $Id = $script:UnshownTips.Keys[-1] }
+				([tiPS.TipRetrievalOrder]::OldestFirst) { $Id = $script:UnshownTips.Keys[0] }
+				([tiPS.TipRetrievalOrder]::Random) { $Id = $script:UnshownTips.Keys | Get-Random -Count 1 }
+			}
 		}
 
 		[tiPS.PowerShellTip] $tip = $script:UnshownTips[$Id]
