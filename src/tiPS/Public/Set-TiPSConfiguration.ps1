@@ -87,7 +87,6 @@ function Set-TiPSConfiguration
 			if ($PSCmdlet.ShouldProcess('tiPS configuration', 'Set'))
 			{
 				$script:TiPSConfiguration = $Configuration
-				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
 		}
 
@@ -97,7 +96,6 @@ function Set-TiPSConfiguration
 			if ($PSCmdlet.ShouldProcess('tiPS configuration AutoUpdateCadence property', 'Set'))
 			{
 				$script:TiPSConfiguration.AutoUpdateCadence = $AutomaticallyUpdateModule
-				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
 		}
 
@@ -107,7 +105,6 @@ function Set-TiPSConfiguration
 			if ($PSCmdlet.ShouldProcess('tiPS configuration AutoWritePowerShellTipCadence property', 'Set'))
 			{
 				$script:TiPSConfiguration.AutoWritePowerShellTipCadence = $AutomaticallyWritePowerShellTip
-				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
 		}
 
@@ -117,10 +114,13 @@ function Set-TiPSConfiguration
 			if ($PSCmdlet.ShouldProcess('tiPS configuration TipRetrievalOrder property', 'Set'))
 			{
 				$script:TiPSConfiguration.TipRetrievalOrder = $TipRetrievalOrder
-				WriteConfigurationToFile -Config $script:TiPSConfiguration
 			}
 		}
 
+		Write-Debug "Saving the tiPS configuration to the configuration file."
+		WriteConfigurationToFile -Config $script:TiPSConfiguration
+
+		Write-Debug "Ensuring the user's PowerShell profile imports the tiPS module if their config expects it."
 		[bool] $automaticActionsAreConfigured =
 			$script:TiPSConfiguration.AutoUpdateCadence -ne [tiPS.ModuleAutoUpdateCadence]::Never -or
 			$script:TiPSConfiguration.AutoWritePowerShellTipCadence -ne [tiPS.WritePowerShellTipCadence]::Never
