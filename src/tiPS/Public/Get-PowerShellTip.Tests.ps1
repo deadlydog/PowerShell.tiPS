@@ -63,7 +63,7 @@ Describe 'Get-PowerShellTip' {
 
 	Context 'By piping an object with an Id property to it' {
 		It 'Should return the tip with the specified ID' {
-			$tip = [PsCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Get-PowerShellTip
+			$tip = [PSCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Get-PowerShellTip
 			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
 		}
 	}

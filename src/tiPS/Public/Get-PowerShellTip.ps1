@@ -21,7 +21,7 @@ function Get-PowerShellTip
 	When this parameter is used, the list of tips shown is not updated.
 
 	.INPUTS
-	You can pipe a [string] of the ID of the tip to retrieve, or a PsCustomObject with a [string] 'Id' property.
+	You can pipe a [string] of the ID of the tip to retrieve, or a PSCustomObject with a [string] 'Id' property.
 
 	.OUTPUTS
 	A [tiPS.PowerShellTip] object representing the PowerShell tip.

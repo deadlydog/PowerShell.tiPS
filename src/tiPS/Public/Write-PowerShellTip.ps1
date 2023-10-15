@@ -15,7 +15,7 @@ function Write-PowerShellTip
 	If no tip with the specified ID exists, an error is written.
 
 	.INPUTS
-	You can pipe a [string] of the ID of the tip to write, or a PsCustomObject with a [string] 'Id' property.
+	You can pipe a [string] of the ID of the tip to write, or a PSCustomObject with a [string] 'Id' property.
 
 	.OUTPUTS
 	None. The function does not return any objects.
