@@ -57,6 +57,19 @@ Describe 'Get-PowerShellTip' {
 			$allTips | Should -Not -BeNullOrEmpty
 			$allTips.Count | Should -Be $numberOfTipsInJsonFile
 		}
+
+		It 'Should return the tips ordered by Created Date from oldest to newest' {
+			$allTips = Get-PowerShellTip -All
+
+			$allTips | Should -Not -BeNullOrEmpty
+
+			$previousTipDate = [DateTime]::MinValue
+			foreach ($tip in $allTips.Values)
+			{
+				$tip.CreatedDate | Should -BeGreaterOrEqual $previousTipDate
+				$previousTipDate = $tip.CreatedDate
+			}
+		}
 	}
 
 	Context 'When piping string IDs to it' {
