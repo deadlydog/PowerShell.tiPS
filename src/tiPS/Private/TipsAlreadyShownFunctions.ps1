@@ -5,7 +5,7 @@ function RemoveTipsAlreadyShown
 	Param
 	(
 		[Parameter(Mandatory = $true, HelpMessage = 'The hashtable of tips to remove tips that have already been shown from.')]
-		[hashtable] $Tips
+		[System.Collections.Specialized.OrderedDictionary] $Tips
 	)
 
 	[string[]] $tipIdsAlreadyShown = ReadTipIdsAlreadyShownOrDefault

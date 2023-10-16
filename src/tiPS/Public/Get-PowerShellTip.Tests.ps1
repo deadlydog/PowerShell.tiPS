@@ -7,13 +7,22 @@ BeforeAll {
 Describe 'Get-PowerShellTip' {
 	BeforeEach {
 		# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
-		Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+		Mock -ModuleName $ModuleName -CommandName Get-TiPSDataDirectoryPath -MockWith {
 			[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
 			if (-not (Test-Path -Path $directoryPath -PathType Container))
 			{
 				New-Item -Path $directoryPath -ItemType Directory -Force > $null
 			}
 			return $directoryPath
+		}
+
+		function GetAllTipsFromJsonFile
+		{
+			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
+			[PSCustomObject[]] $allTips =
+				Get-Content -Path $powerShellTipsJsonFilePath |
+				ConvertFrom-Json
+			return $allTips
 		}
 	}
 
@@ -40,12 +49,8 @@ Describe 'Get-PowerShellTip' {
 
 	Context 'Given the All switch' {
 		It 'Should return all tips' {
-			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
-			[int] $numberOfTipsInJsonFile =
-			Get-Content -Path $powerShellTipsJsonFilePath |
-				ConvertFrom-Json |
-				Measure-Object |
-				Select-Object -ExpandProperty Count
+			[PSCustomObject[]] $allTipsFromJsonFile = GetAllTipsFromJsonFile
+			[int] $numberOfTipsInJsonFile = $allTipsFromJsonFile.Count
 
 			$allTips = Get-PowerShellTip -All
 
@@ -54,17 +59,57 @@ Describe 'Get-PowerShellTip' {
 		}
 	}
 
-	Context 'By piping string IDs to it' {
+	Context 'When piping string IDs to it' {
 		It 'Should return the tip with the specified ID' {
 			$tip = '2023-07-16-powershell-is-open-source' | Get-PowerShellTip
 			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
 		}
 	}
 
-	Context 'By piping an object with an Id property to it' {
+	Context 'When piping an object with an Id property to it' {
 		It 'Should return the tip with the specified ID' {
 			$tip = [PSCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Get-PowerShellTip
 			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
+		}
+	}
+
+	Context 'Given no parameters and the tip retrieval order specified in the configuration' {
+		BeforeAll {
+			# Prevent warnings from being thrown when setting the TipRetrievalOrder in the tests because the module is not imported by the PowerShell profile.
+			Set-TiPSConfiguration -AutomaticallyUpdateModule Never -AutomaticallyWritePowerShellTip Never
+		}
+
+		BeforeEach {
+			InModuleScope -ModuleName $ModuleName {
+				# Ensure that all tips are available to be selected by Get-PowerShellTip so it can get the oldest or newest one.
+				ResetUnshownTips
+			}
+		}
+
+		It 'Should return the newest tip when the tip retrieval order is NewestFirst' {
+			[PSCustomObject[]] $allTipsFromJsonFile = GetAllTipsFromJsonFile
+			[DateTime] $newestTipDate = $allTipsFromJsonFile |
+				Sort-Object -Property CreatedDate |
+				Select-Object -Last 1 -ExpandProperty CreatedDate
+
+			Set-TiPSConfiguration -TipRetrievalOrder NewestFirst
+
+			$tip = Get-PowerShellTip
+
+			$tip.CreatedDate | Should -Be $newestTipDate
+		}
+
+		It 'Should return the oldest tip when the tip retrieval order is OldestFirst' {
+			[PSCustomObject[]] $allTipsFromJsonFile = GetAllTipsFromJsonFile
+			[DateTime] $oldestTipDate = $allTipsFromJsonFile |
+				Sort-Object -Property CreatedDate |
+				Select-Object -First 1 -ExpandProperty CreatedDate
+
+			Set-TiPSConfiguration -TipRetrievalOrder OldestFirst
+
+			$tip = Get-PowerShellTip
+
+			$tip.CreatedDate | Should -Be $oldestTipDate
 		}
 	}
 }

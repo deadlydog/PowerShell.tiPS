@@ -9,9 +9,10 @@ function ReadAllPowerShellTipsFromJsonFile
 	Write-Verbose "Reading PowerShell tips from '$powerShellTipsJsonFilePath'."
 	[tiPS.PowerShellTip[]] $tipObjects =
 		[System.IO.File]::ReadAllText($powerShellTipsJsonFilePath) | # Use .NET method instead of Get-Content for performance.
-		ConvertFrom-Json
+		ConvertFrom-Json |
+		Sort-Object -Property CreatedDate
 
-	[hashtable] $tipHashtable = [ordered]@{}
+	[System.Collections.Specialized.OrderedDictionary] $tipHashtable = [System.Collections.Specialized.OrderedDictionary]::new()
 	foreach ($tip in $tipObjects)
 	{
 		$tipHashtable[$tip.Id] = $tip

@@ -84,11 +84,11 @@ function Get-PowerShellTip
 		[bool] $tipIdWasProvided = (-not [string]::IsNullOrWhiteSpace($Id))
 		if ($tipIdWasProvided)
 		{
-			[bool] $unshownTipsDoesNotContainTipId = (-not $script:UnshownTips.ContainsKey($Id))
+			[bool] $unshownTipsDoesNotContainTipId = (-not $script:UnshownTips.Contains($Id))
 			if ($unshownTipsDoesNotContainTipId)
 			{
 				[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
-				[bool] $tipIdDoesNotExist = (-not $allTips.ContainsKey($Id))
+				[bool] $tipIdDoesNotExist = (-not $allTips.Contains($Id))
 				if ($tipIdDoesNotExist)
 				{
 					Write-Error "A tip with ID '$Id' does not exist."
@@ -103,8 +103,8 @@ function Get-PowerShellTip
 			Write-Verbose "A Tip ID was not provided, so getting an unshown tip based on the user's configuration."
 			switch ($script:TiPSConfiguration.TipRetrievalOrder)
 			{
-				([tiPS.TipRetrievalOrder]::NewestFirst) { $Id = $script:UnshownTips.Keys[-1]; break }
-				([tiPS.TipRetrievalOrder]::OldestFirst) { $Id = $script:UnshownTips.Keys[0]; break }
+				([tiPS.TipRetrievalOrder]::NewestFirst) { $Id = $script:UnshownTips.Keys | Select-Object -Last 1; break }
+				([tiPS.TipRetrievalOrder]::OldestFirst) { $Id = $script:UnshownTips.Keys | Select-Object -First 1; break }
 				([tiPS.TipRetrievalOrder]::Random) { $Id = $script:UnshownTips.Keys | Get-Random -Count 1; break }
 			}
 		}

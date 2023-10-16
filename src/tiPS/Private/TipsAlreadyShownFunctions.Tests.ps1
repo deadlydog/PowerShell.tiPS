@@ -43,11 +43,10 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$testTip2.Title = 'Tip 2'
 			$testTip3.Title = 'Tip 3'
 
-			[hashtable] $testTips = @{
-				($testTip1.Id) = $testTip1
-				($testTip2.Id) = $testTip2
-				($testTip3.Id) = $testTip3
-			}
+			[System.Collections.Specialized.OrderedDictionary] $testTips = [System.Collections.Specialized.OrderedDictionary]::new()
+			$testTips.Add($testTip1.Id, $testTip1)
+			$testTips.Add($testTip2.Id, $testTip2)
+			$testTips.Add($testTip3.Id, $testTip3)
 			$testTips.Count | Should -Be 3 # This is here to eliminate the PSScriptAnalyzer warning about unused variables.
 
 			ClearTipIdsAlreadyShown
