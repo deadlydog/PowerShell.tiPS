@@ -48,7 +48,7 @@ Describe 'Write-PowerShellTip' {
 		}
 
 		It 'Should write the tip with the specified ID of the object' {
-			[PsCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Write-PowerShellTip
+			[PSCustomObject]@{ Id = '2023-07-16-powershell-is-open-source' } | Write-PowerShellTip
 			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
 		}
 	}

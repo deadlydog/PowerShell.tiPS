@@ -10,12 +10,14 @@ function ReadAllPowerShellTipsFromJsonFile
 	[tiPS.PowerShellTip[]] $tipObjects =
 		[System.IO.File]::ReadAllText($powerShellTipsJsonFilePath) | # Use .NET method instead of Get-Content for performance.
 		ConvertFrom-Json
+		# We assume the tips are sorted by CreatedDate when added to the json file, so we don't need to sort them again here.
+		# Otherwise we would just append '| Sort-Object -Property CreatedDate' here.
 
-	[hashtable] $tipHashtable = [ordered]@{}
+	[System.Collections.Specialized.OrderedDictionary] $tipDictionary = [System.Collections.Specialized.OrderedDictionary]::new()
 	foreach ($tip in $tipObjects)
 	{
-		$tipHashtable[$tip.Id] = $tip
+		$tipDictionary[$tip.Id] = $tip
 	}
 
-	return $tipHashtable
+	return $tipDictionary
 }

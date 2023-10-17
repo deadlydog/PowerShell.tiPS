@@ -15,6 +15,7 @@ Describe 'Setting the Configuration' {
 		It 'Should set the configuration' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::BiWeekly
+			$config.TipRetrievalOrder = [tiPS.TipRetrievalOrder]::Random
 
 			Set-TiPSConfiguration -Configuration $config
 
@@ -25,10 +26,10 @@ Describe 'Setting the Configuration' {
 
 	Context 'When setting the AutomaticallyUpdateModule property' {
 		It 'Should set the property to the proper value when using strongly-typed input' {
-			Set-TiPSConfiguration -AutomaticallyUpdateModule ([tiPS.ModuleAutoUpdateCadence]::BiWeekly)
+			Set-TiPSConfiguration -AutomaticallyUpdateModule ([tiPS.ModuleAutoUpdateCadence]::Daily)
 
 			$result = Get-TiPSConfiguration
-			$result.AutoUpdateCadence | Should -Be ([tiPS.ModuleAutoUpdateCadence]::BiWeekly)
+			$result.AutoUpdateCadence | Should -Be ([tiPS.ModuleAutoUpdateCadence]::Daily)
 		}
 
 		It 'Should set the property to the proper value when using string input' {
@@ -55,10 +56,27 @@ Describe 'Setting the Configuration' {
 		}
 	}
 
+	Context 'When setting the TipRetrievalOrder property' {
+		It 'Should set the property to the proper value when using strongly-typed input' {
+			Set-TiPSConfiguration -TipRetrievalOrder ([tiPS.TipRetrievalOrder]::OldestFirst)
+
+			$result = Get-TiPSConfiguration
+			$result.TipRetrievalOrder | Should -Be ([tiPS.TipRetrievalOrder]::OldestFirst)
+		}
+
+		It 'Should set the property to the proper value when using string input' {
+			Set-TiPSConfiguration -TipRetrievalOrder NewestFirst
+
+			$result = Get-TiPSConfiguration
+			$result.TipRetrievalOrder | Should -Be NewestFirst
+		}
+	}
+
 	Context 'When piping an object to the function' {
 		It 'Should set the configuration when a Configuration object is piped in' {
 			$config = [tiPS.Configuration]::new()
 			$config.AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::BiWeekly
+			$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
 
 			$config | Set-TiPSConfiguration
 
@@ -70,6 +88,7 @@ Describe 'Setting the Configuration' {
 			$config = @{
 				AutoUpdateCadence = [tiPS.ModuleAutoUpdateCadence]::Monthly
 				AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Weekly
+				TipRetrievalOrder = [tiPS.TipRetrievalOrder]::OldestFirst
 			}
 
 			$config | Set-TiPSConfiguration
@@ -77,6 +96,7 @@ Describe 'Setting the Configuration' {
 			$result = Get-TiPSConfiguration
 			$result.AutoUpdateCadence | Should -Be ([tiPS.ModuleAutoUpdateCadence]::Monthly)
 			$result.AutoWritePowerShellTipCadence | Should -Be ([tiPS.WritePowerShellTipCadence]::Weekly)
+			$result.TipRetrievalOrder | Should -Be ([tiPS.TipRetrievalOrder]::OldestFirst)
 		}
 	}
 }
