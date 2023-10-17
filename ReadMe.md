@@ -26,7 +26,7 @@ PowerShell tips delivered straight to your terminal 💻.
 `tiPS` is a cross-platform PowerShell module that provides PowerShell tips for things like:
 
 - PowerShell features and best practices
-- PowerShell modules
+- Helpful and cool PowerShell modules
 - Terminal keyboard shortcuts
 - Editor extensions to help with PowerShell development
 - PowerShell communities and events
