@@ -12,8 +12,8 @@ function InitializeModule
 	New-Variable -Name 'TiPSConfiguration' -Value $config -Scope Script
 
 	Write-Debug 'Reading all tips from JSON file and storing them in a $UnshownTips variable for access by other module functions.'
-	[System.Collections.Specialized.OrderedDictionary] $tipHashTable = ReadAllPowerShellTipsFromJsonFile
-	New-Variable -Name 'UnshownTips' -Value $tipHashtable -Scope Script
+	[System.Collections.Specialized.OrderedDictionary] $tipDictionary = ReadAllPowerShellTipsFromJsonFile
+	New-Variable -Name 'UnshownTips' -Value $tipDictionary -Scope Script
 
 	Write-Debug 'Removing tips that have already been shown from the $UnshownTips variable.'
 	RemoveTipsAlreadyShown -Tips $script:UnshownTips
