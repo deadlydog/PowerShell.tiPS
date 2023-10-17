@@ -3,6 +3,14 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## vNext
+
+Features:
+
+- Added TipRetrievalOrder configuration option to allow users to control the order in which tips are retrieved;
+  NewestFirst, OldestFirst, or Random.
+  Default is NewestFirst.
+
 ## v0.7.0 - October 7, 2023
 
 Features:
