@@ -13,11 +13,11 @@ function ReadAllPowerShellTipsFromJsonFile
 		# We assume the tips are sorted by CreatedDate when added to the json file, so we don't need to sort them again here.
 		# Otherwise we would just append '| Sort-Object -Property CreatedDate' here.
 
-	[System.Collections.Specialized.OrderedDictionary] $tipHashtable = [System.Collections.Specialized.OrderedDictionary]::new()
+	[System.Collections.Specialized.OrderedDictionary] $tipDictionary = [System.Collections.Specialized.OrderedDictionary]::new()
 	foreach ($tip in $tipObjects)
 	{
-		$tipHashtable[$tip.Id] = $tip
+		$tipDictionary[$tip.Id] = $tip
 	}
 
-	return $tipHashtable
+	return $tipDictionary
 }
