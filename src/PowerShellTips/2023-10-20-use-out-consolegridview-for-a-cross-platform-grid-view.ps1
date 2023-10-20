@@ -7,10 +7,11 @@ The Out-GridView cmdlet is very useful, but it only works on Windows. The Micros
 You can use Out-ConsoleGridView to display a table of data that the user is able to interactively navigate. The user can select rows from the list that can be saved to a variable or piped to another command, allowing you to perform actions on the selected rows.
 '@
 $tip.Example = @'
-Example code to demonstrate the tip. This can also be multiple lines if needed.
+Install-Module Microsoft.PowerShell.ConsoleGuiTools
+
+Get-Process | Out-ConsoleGridView -Title "Select processes to return" | Select-Object -Property ProcessName,Id
 '@
 $tip.Urls = @(
-	'https://www.powershellgallery.com/packages/Microsoft.PowerShell.ConsoleGuiTools/'
 	'https://github.com/PowerShell/GraphicalTools/'
 )
 $tip.Category = [tiPS.TipCategory]::Module # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
