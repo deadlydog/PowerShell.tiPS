@@ -345,5 +345,16 @@
       "https://4sysops.com/archives/add-a-calculated-property-with-select-object-in-powershell/"
     ],
     "Category": 6
+  },
+  {
+    "CreatedDate": "2023-10-20T00:00:00",
+    "Title": "Use Out-ConsoleGridView for a cross-platform grid view",
+    "TipText": "The Out-GridView cmdlet is very useful, but it only works on Windows. The Microsoft.PowerShell.ConsoleGuiTools module provides a cross-platform alternative called Out-ConsoleGridView. Rather than opening a new window, it displays the grid view in the current terminal window.\r\n\r\nYou can use Out-ConsoleGridView to display a table of data that the user is able to interactively navigate. The user can select rows from the list that can be saved to a variable or piped to another command, allowing you to perform actions on the selected rows.",
+    "Example": "Example code to demonstrate the tip. This can also be multiple lines if needed.",
+    "Urls": [
+      "https://www.powershellgallery.com/packages/Microsoft.PowerShell.ConsoleGuiTools/",
+      "https://github.com/PowerShell/GraphicalTools/"
+    ],
+    "Category": 2
   }
 ]
