@@ -355,5 +355,15 @@
       "https://github.com/PowerShell/GraphicalTools/"
     ],
     "Category": 2
+  },
+  {
+    "CreatedDate": "2023-10-21T00:00:00",
+    "Title": "Learn about a random PowerShell cmdlet or topic",
+    "TipText": "The tiPS module (which is bringing you these tips) is a great way to learn PowerShell every day. There are other ways to learn PowerShell every day too. Use the example code to learn about a random PowerShell cmdlet or topic. Try adding it to your daily routine, or even to your PowerShell profile.",
+    "Example": "# Show the Help documentation for a random native cmdlet.\r\nGet-Command -Module Microsoft*,Cim*,PS* | Get-Random | Get-Help -ShowWindow\r\n\r\n# Show the Help documentation for a random PowerShell About topic.\r\nGet-Random -input (Get-Help about*) | Get-Help -ShowWindow\r\n\r\n# Open your PowerShell profile in VS Code so you can add the below code to it\r\n# to automatically see Help documentation each time you start a new PowerShell\r\n# session on Mondays before 10am.\r\ncode $Profile\r\n\r\n[DateTime] $now = Get-Date\r\nif ($now.DayOfWeek -eq 'Monday' -and $now.Hour -lt 10)\r\n{\r\n    Get-Command -Module Microsoft*,Cim*,PS* | Get-Random | Get-Help -ShowWindow\r\n    Get-Random -input (Get-Help about*) | Get-Help -ShowWindow\r\n}",
+    "Urls": [
+      "https://jdhitsolutions.com/blog/essential-powershell-resources/"
+    ],
+    "Category": 8
   }
 ]
