@@ -1,25 +1,19 @@
 name: build
 
 on:
-  push:
-    branches: [ "main" ]
-    paths: [ "src/**", "build/**", "deploy/**", ".github/workflows/**" ]
   pull_request:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
+
+  workflow_call:
     inputs:
       versionNumber:
         description: 'The version number to use for the module. This should be in the format of "Major.Minor.Patch". e.g. "1.0.0". Future builds will increment from this version number. This input is optional. If not provided, the previous version numbers Patch will be incremented.'
         required: false
         type: string
         default: ''
-      deploy:
-        description: 'Deploy the build artifacts. Only has effect when not building the main branch.'
-        required: false
-        type: boolean
-        default: false
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
@@ -266,10 +260,3 @@ jobs:
         with:
           name: ${{ env.deployFilesArtifactName }}
           path: ${{ env.deployFilesArtifactDirectoryPath }}
-
-  trigger-deployment:
-    needs: build-and-test
-    # Only trigger a deployment if this build is for a push (not a PR) and is for the default branch (main).
-    if: inputs.deploy || (github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
-    uses: ./.github/workflows/deploy-powershell-module.yml
-    secrets: inherit
