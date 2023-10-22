@@ -14,6 +14,16 @@ on:
         required: false
         type: string
         default: ''
+    outputs:
+      prereleaseModuleArtifactName:
+        description: 'The name of the prerelease artifact.'
+        value: ${{ jobs.build-and-test.outputs.prereleaseArtifactName }}
+      stableModuleArtifactName:
+        description: 'The name of the stable artifact.'
+        value: ${{ jobs.build-and-test.outputs.stableArtifactName }}
+      deployFilesArtifactName:
+        description: 'The name of the deploy files artifact.'
+        value: ${{ jobs.build-and-test.outputs.deployFilesArtifactName }}
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
@@ -23,14 +33,18 @@ env:
   prereleaseArtifactDirectoryPath: './artifacts/Prerelease'
   stableArtifactDirectoryPath: './artifacts/Stable'
   deployFilesArtifactDirectoryPath: './artifacts/deploy'
-  prereleaseArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the deployment workflow.
-  stableArtifactName: 'StableModuleArtifact' # Must match the name in the deployment workflow.
-  deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the deployment workflow.
+  prereleaseArtifactName: 'PrereleaseModuleArtifact'
+  stableArtifactName: 'StableModuleArtifact'
+  deployFilesArtifactName: 'DeployFilesArtifact'
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
   build-and-test:
     runs-on: windows-latest # Use Windows agent to ensure dotnet.exe is available to build C# assemblies.
+    outputs:
+      prereleaseArtifactName: ${{ env.prereleaseArtifactName }}
+      stableArtifactName: ${{ env.stableArtifactName }}
+      deployFilesArtifactName: ${{ env.deployFilesArtifactName }}
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3

@@ -16,9 +16,6 @@ on:
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
-  prereleaseModuleArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the build workflow.
-  stableModuleArtifactName: 'StableModuleArtifact' # Must match the name in the build workflow.
-  deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
 
 jobs:
@@ -36,7 +33,7 @@ jobs:
       - name: Download prerelease module artifact
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.prereleaseModuleArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.prereleaseModuleArtifactName }}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Publish prerelease PowerShell module
@@ -86,7 +83,7 @@ jobs:
       - name: Download deploy files artifact
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -127,7 +124,7 @@ jobs:
       - name: Download deploy files artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -158,7 +155,7 @@ jobs:
       - name: Download stable module artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.stableModuleArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.stableModuleArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Publish stable PowerShell module
@@ -206,7 +203,7 @@ jobs:
       - name: Download deploy files artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -247,7 +244,7 @@ jobs:
       - name: Download deploy files artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
