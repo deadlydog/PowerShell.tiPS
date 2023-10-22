@@ -45,7 +45,7 @@ jobs:
         id: output-version-number
         shell: pwsh
         run: |
-          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/${{ needs.run-build-and-test.outputs.powerShellModuleName }}.psd1"
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/${{ needs.run-build-and-test.outputs.powerShellModuleName }}/${{ needs.run-build-and-test.outputs.powerShellModuleName }}.psd1"
           Write-Output "Reading module manifest from '$moduleManifestPath'."
           [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
           [string] $versionNumber = $manifest.ModuleVersion
