@@ -22,14 +22,13 @@ env:
   artifactsDirectoryPath: './artifacts'
 
 jobs:
-  build-and-test:
+  run-build-and-test:
     uses: ./.github/workflows/build-and-test-powershell-module.yml
     with:
       versionNumber: ${{ github.event.inputs.versionNumber }}
-    # secrets: inherit
 
   publish-prerelease-module:
-    needs: build-and-test
+    needs: run-build-and-test
     runs-on: ubuntu-latest
     outputs:
       prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
