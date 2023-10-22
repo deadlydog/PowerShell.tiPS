@@ -15,6 +15,9 @@ on:
         type: string
         default: ''
     outputs:
+      powerShellModuleName:
+        description: 'The name of the PowerShell module being built.'
+        value: ${{ jobs.build-and-test.outputs.powerShellModuleName }}
       prereleaseModuleArtifactName:
         description: 'The name of the prerelease module artifact created by the build.'
         value: ${{ jobs.build-and-test.outputs.prereleaseModuleArtifactName }}
@@ -26,7 +29,7 @@ on:
         value: ${{ jobs.build-and-test.outputs.deployFilesArtifactName }}
 
 env:
-  powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
+  powerShellModuleName: 'tiPS'
   powerShellModuleDirectoryPath: './src/tiPS'
   powerShellModuleManifestFileName: 'tiPS.psd1'
   deployFilesDirectoryPath: './deploy'
@@ -42,6 +45,7 @@ jobs:
   build-and-test:
     runs-on: windows-latest # Use Windows agent to ensure dotnet.exe is available to build C# assemblies.
     outputs:
+      powerShellModuleName: ${{ env.powerShellModuleName }}
       prereleaseModuleArtifactName: ${{ env.prereleaseModuleArtifactName }}
       stableModuleArtifactName: ${{ env.stableModuleArtifactName }}
       deployFilesArtifactName: ${{ env.deployFilesArtifactName }}
