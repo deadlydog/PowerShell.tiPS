@@ -1,7 +1,18 @@
 name: deploy
 
 on:
-  workflow_call:
+  push:
+    branches: main
+    paths: [ "src/**", "build/**", "deploy/**", ".github/workflows/**" ]
+
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+    inputs:
+      versionNumber:
+        description: 'The version number to use for the module. This should be in the format of "Major.Minor.Patch". e.g. "1.0.0". Future builds will increment from this version number. This input is optional. If not provided, the previous version numbers Patch will be incremented.'
+        required: false
+        type: string
+        default: ''
 
 env:
   powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
@@ -11,7 +22,14 @@ env:
   artifactsDirectoryPath: './artifacts'
 
 jobs:
+  build-and-test:
+    uses: ./.github/workflows/build-and-test-powershell-module.yml
+    with:
+      versionNumber: ${{ github.event.inputs.versionNumber }}
+    secrets: inherit
+
   publish-prerelease-module:
+    needs: build-and-test
     runs-on: ubuntu-latest
     outputs:
       prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
