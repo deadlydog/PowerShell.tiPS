@@ -60,7 +60,7 @@ jobs:
         run: Start-Sleep -Seconds 30
 
   test-prerelease-module-in-pwsh:
-    needs: publish-prerelease-module
+    needs: [run-build-and-test, publish-prerelease-module]
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
@@ -104,7 +104,7 @@ jobs:
           Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   test-prerelease-module-in-windows-powershell:
-    needs: publish-prerelease-module
+    needs: [run-build-and-test, publish-prerelease-module]
     runs-on: windows-latest
     steps:
       - name: Display PowerShell version being used
@@ -145,7 +145,7 @@ jobs:
           Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   publish-stable-module:
-    needs: [test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
+    needs: [run-build-and-test, test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
     runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
     outputs:
@@ -180,7 +180,7 @@ jobs:
         run: Start-Sleep -Seconds 30
 
   test-stable-module-in-pwsh:
-    needs: publish-stable-module
+    needs: [run-build-and-test, publish-stable-module]
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
@@ -224,7 +224,7 @@ jobs:
           Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   test-stable-module-in-windows-powershell:
-    needs: publish-stable-module
+    needs: [run-build-and-test, publish-stable-module]
     runs-on: windows-latest
     steps:
       - name: Display PowerShell version being used
