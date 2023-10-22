@@ -26,7 +26,7 @@ jobs:
     uses: ./.github/workflows/build-and-test-powershell-module.yml
     with:
       versionNumber: ${{ github.event.inputs.versionNumber }}
-    secrets: inherit
+    # secrets: inherit
 
   publish-prerelease-module:
     needs: build-and-test
