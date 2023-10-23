@@ -31,7 +31,6 @@ on:
 env:
   powerShellModuleName: 'tiPS'
   powerShellModuleDirectoryPath: './src/tiPS'
-  powerShellModuleManifestFileName: 'tiPS.psd1'
   deployFilesDirectoryPath: './deploy'
   prereleaseModuleArtifactName: 'PrereleaseModuleArtifact'
   prereleaseModuleArtifactDirectoryPath: './artifacts/Prerelease'
@@ -181,7 +180,7 @@ jobs:
           Write-Output "Reading in environment variables."
           [string] $moduleName = $Env:powerShellModuleName
           [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
-          [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
+          [string] $moduleManifestFileName = $moduleName + '.psd1'
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
 
