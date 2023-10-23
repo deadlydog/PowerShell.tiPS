@@ -38,14 +38,16 @@ jobs:
       - name: Publish prerelease PowerShell module
         shell: pwsh
         run: |
-          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/${{ needs.run-build-and-test.outputs.powerShellModuleName }}"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$moduleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
       - name: Make prerelease version number available to downstream jobs
         id: output-version-number
         shell: pwsh
         run: |
-          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/${{ needs.run-build-and-test.outputs.powerShellModuleName }}/${{ needs.run-build-and-test.outputs.powerShellModuleName }}.psd1"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$moduleName/$moduleName.psd1"
           Write-Output "Reading module manifest from '$moduleManifestPath'."
           [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
           [string] $versionNumber = $manifest.ModuleVersion
@@ -160,14 +162,16 @@ jobs:
       - name: Publish stable PowerShell module
         shell: pwsh
         run: |
-          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/${{ needs.run-build-and-test.outputs.powerShellModuleName }}"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$moduleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
       - name: Make stable version number available to downstream jobs
         id: output-version-number
         shell: pwsh
         run: |
-          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/${{ needs.run-build-and-test.outputs.powerShellModuleName }}/${{ needs.run-build-and-test.outputs.powerShellModuleName }}.psd1"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$moduleName/$moduleName.psd1"
           Write-Output "Reading module manifest from '$moduleManifestPath'."
           [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
           [string] $versionNumber = $manifest.ModuleVersion
