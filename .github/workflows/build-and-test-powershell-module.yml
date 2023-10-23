@@ -14,23 +14,40 @@ on:
         required: false
         type: string
         default: ''
+    outputs:
+      powerShellModuleName:
+        description: 'The name of the PowerShell module being built.'
+        value: ${{ jobs.build-and-test.outputs.powerShellModuleName }}
+      prereleaseModuleArtifactName:
+        description: 'The name of the prerelease module artifact created by the build.'
+        value: ${{ jobs.build-and-test.outputs.prereleaseModuleArtifactName }}
+      stableModuleArtifactName:
+        description: 'The name of the stable module artifact created by the build.'
+        value: ${{ jobs.build-and-test.outputs.stableModuleArtifactName }}
+      deployFilesArtifactName:
+        description: 'The name of the deploy files artifact created by the build.'
+        value: ${{ jobs.build-and-test.outputs.deployFilesArtifactName }}
 
 env:
-  powerShellModuleName: 'tiPS' # Must match the name in the deployment workflow.
+  powerShellModuleName: 'tiPS'
   powerShellModuleDirectoryPath: './src/tiPS'
-  powerShellModuleManifestFileName: 'tiPS.psd1'
   deployFilesDirectoryPath: './deploy'
-  prereleaseArtifactDirectoryPath: './artifacts/Prerelease'
-  stableArtifactDirectoryPath: './artifacts/Stable'
+  prereleaseModuleArtifactName: 'PrereleaseModuleArtifact'
+  prereleaseModuleArtifactDirectoryPath: './artifacts/Prerelease'
+  stableModuleArtifactName: 'StableModuleArtifact'
+  stableModuleArtifactDirectoryPath: './artifacts/Stable'
+  deployFilesArtifactName: 'DeployFilesArtifact'
   deployFilesArtifactDirectoryPath: './artifacts/deploy'
-  prereleaseArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the deployment workflow.
-  stableArtifactName: 'StableModuleArtifact' # Must match the name in the deployment workflow.
-  deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the deployment workflow.
   ciVersionTagPrefix: 'ci-version-'
 
 jobs:
   build-and-test:
     runs-on: windows-latest # Use Windows agent to ensure dotnet.exe is available to build C# assemblies.
+    outputs:
+      powerShellModuleName: ${{ env.powerShellModuleName }}
+      prereleaseModuleArtifactName: ${{ env.prereleaseModuleArtifactName }}
+      stableModuleArtifactName: ${{ env.stableModuleArtifactName }}
+      deployFilesArtifactName: ${{ env.deployFilesArtifactName }}
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v3
@@ -163,9 +180,9 @@ jobs:
           Write-Output "Reading in environment variables."
           [string] $moduleName = $Env:powerShellModuleName
           [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
-          [string] $moduleManifestFileName = $Env:powerShellModuleManifestFileName
-          [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseArtifactDirectoryPath -ChildPath $moduleName
-          [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableArtifactDirectoryPath -ChildPath $moduleName
+          [string] $moduleManifestFileName = $moduleName + '.psd1'
+          [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
+          [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
 
           Write-Output "Reading in dynamic environment variables."
           [string] $newVersionNumber = $Env:NewVersionNumber
@@ -246,14 +263,14 @@ jobs:
       - name: Upload prerelease module artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.prereleaseArtifactName }}
-          path: ${{ env.prereleaseArtifactDirectoryPath }}
+          name: ${{ env.prereleaseModuleArtifactName }}
+          path: ${{ env.prereleaseModuleArtifactDirectoryPath }}
 
       - name: Upload stable module artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.stableArtifactName }}
-          path: ${{ env.stableArtifactDirectoryPath }}
+          name: ${{ env.stableModuleArtifactName }}
+          path: ${{ env.stableModuleArtifactDirectoryPath }}
 
       - name: Upload deploy files artifact
         uses: actions/upload-artifact@v3

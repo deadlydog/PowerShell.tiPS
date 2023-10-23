@@ -15,21 +15,16 @@ on:
         default: ''
 
 env:
-  powerShellModuleName: 'tiPS' # Must match the name in the build workflow.
-  prereleaseModuleArtifactName: 'PrereleaseModuleArtifact' # Must match the name in the build workflow.
-  stableModuleArtifactName: 'StableModuleArtifact' # Must match the name in the build workflow.
-  deployFilesArtifactName: 'DeployFilesArtifact' # Must match the name in the build workflow.
   artifactsDirectoryPath: './artifacts'
 
 jobs:
-  build-and-test:
+  run-build-and-test:
     uses: ./.github/workflows/build-and-test-powershell-module.yml
     with:
       versionNumber: ${{ github.event.inputs.versionNumber }}
-    secrets: inherit
 
   publish-prerelease-module:
-    needs: build-and-test
+    needs: run-build-and-test
     runs-on: ubuntu-latest
     outputs:
       prereleaseVersionNumber: ${{ steps.output-version-number.outputs.prereleaseVersionNumber }}
@@ -37,20 +32,22 @@ jobs:
       - name: Download prerelease module artifact
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.prereleaseModuleArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.prereleaseModuleArtifactName }}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Publish prerelease PowerShell module
         shell: pwsh
         run: |
-          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$moduleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
       - name: Make prerelease version number available to downstream jobs
         id: output-version-number
         shell: pwsh
         run: |
-          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName/$Env:powerShellModuleName.psd1"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$moduleName/$moduleName.psd1"
           Write-Output "Reading module manifest from '$moduleManifestPath'."
           [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
           [string] $versionNumber = $manifest.ModuleVersion
@@ -65,7 +62,7 @@ jobs:
         run: Start-Sleep -Seconds 30
 
   test-prerelease-module-in-pwsh:
-    needs: publish-prerelease-module
+    needs: [run-build-and-test, publish-prerelease-module]
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
@@ -78,7 +75,7 @@ jobs:
       - name: Install prerelease module from PowerShell Gallery
         shell: pwsh
         run: |
-          [string] $moduleName = $Env:powerShellModuleName
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
           [string] $prereleaseVersionNumber = '${{ needs.publish-prerelease-module.outputs.prereleaseVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
@@ -87,7 +84,7 @@ jobs:
       - name: Download deploy files artifact
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -106,10 +103,10 @@ jobs:
           Invoke-Pester -Configuration $pesterConfig
 
           Write-Output "Displaying the installed module version that was used for the smoke tests."
-          Get-Module -Name $Env:powerShellModuleName
+          Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   test-prerelease-module-in-windows-powershell:
-    needs: publish-prerelease-module
+    needs: [run-build-and-test, publish-prerelease-module]
     runs-on: windows-latest
     steps:
       - name: Display PowerShell version being used
@@ -119,7 +116,7 @@ jobs:
       - name: Install prerelease module from PowerShell Gallery
         shell: powershell
         run: |
-          [string] $moduleName = $Env:powerShellModuleName
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
           [string] $prereleaseVersionNumber = '${{ needs.publish-prerelease-module.outputs.prereleaseVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
@@ -128,7 +125,7 @@ jobs:
       - name: Download deploy files artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -147,10 +144,10 @@ jobs:
           Invoke-Pester -Configuration $pesterConfig
 
           Write-Output "Displaying the installed module version that was used for the smoke tests."
-          Get-Module -Name $Env:powerShellModuleName
+          Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   publish-stable-module:
-    needs: [test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
+    needs: [run-build-and-test, test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
     runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
     outputs:
@@ -159,20 +156,22 @@ jobs:
       - name: Download stable module artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.stableModuleArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.stableModuleArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Publish stable PowerShell module
         shell: pwsh
         run: |
-          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleDirectoryPath = "$Env:artifactsDirectoryPath/$moduleName"
           Publish-Module -Path $moduleDirectoryPath -NuGetApiKey '${{ secrets.POWERSHELL_GALLERY_API_KEY }}' -Verbose
 
       - name: Make stable version number available to downstream jobs
         id: output-version-number
         shell: pwsh
         run: |
-          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$Env:powerShellModuleName/$Env:powerShellModuleName.psd1"
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+          [string] $moduleManifestPath = "$Env:artifactsDirectoryPath/$moduleName/$moduleName.psd1"
           Write-Output "Reading module manifest from '$moduleManifestPath'."
           [hashtable] $manifest = Get-Content -Path $moduleManifestPath -Raw | Invoke-Expression
           [string] $versionNumber = $manifest.ModuleVersion
@@ -185,7 +184,7 @@ jobs:
         run: Start-Sleep -Seconds 30
 
   test-stable-module-in-pwsh:
-    needs: publish-stable-module
+    needs: [run-build-and-test, publish-stable-module]
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
@@ -198,7 +197,7 @@ jobs:
       - name: Install stable module from PowerShell Gallery
         shell: pwsh
         run: |
-          [string] $moduleName = $Env:powerShellModuleName
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
           [string] $stableVersionNumber = '${{ needs.publish-stable-module.outputs.stableVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
@@ -207,7 +206,7 @@ jobs:
       - name: Download deploy files artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -226,10 +225,10 @@ jobs:
           Invoke-Pester -Configuration $pesterConfig
 
           Write-Output "Displaying the installed module version that was used for the smoke tests."
-          Get-Module -Name $Env:powerShellModuleName
+          Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   test-stable-module-in-windows-powershell:
-    needs: publish-stable-module
+    needs: [run-build-and-test, publish-stable-module]
     runs-on: windows-latest
     steps:
       - name: Display PowerShell version being used
@@ -239,7 +238,7 @@ jobs:
       - name: Install stable module from PowerShell Gallery
         shell: powershell
         run: |
-          [string] $moduleName = $Env:powerShellModuleName
+          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
           [string] $stableVersionNumber = '${{ needs.publish-stable-module.outputs.stableVersionNumber }}'
 
           Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
@@ -248,7 +247,7 @@ jobs:
       - name: Download deploy files artifact from triggered workflow
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.deployFilesArtifactName}}
+          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
           path: ${{ env.artifactsDirectoryPath }}
 
       - name: Run smoke tests
@@ -267,4 +266,4 @@ jobs:
           Invoke-Pester -Configuration $pesterConfig
 
           Write-Output "Displaying the installed module version that was used for the smoke tests."
-          Get-Module -Name $Env:powerShellModuleName
+          Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
