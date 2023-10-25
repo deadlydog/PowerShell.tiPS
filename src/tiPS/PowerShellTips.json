@@ -376,5 +376,16 @@
       "https://jdhitsolutions.com/blog/essential-powershell-resources/"
     ],
     "Category": 8
+  },
+  {
+    "CreatedDate": "2023-10-24T00:00:00",
+    "Title": "Use trap to catch unhandled exceptions",
+    "TipText": "Similarly to how you can catch terminating errors (i.e. exceptions) with a try-catch block, you can use the `trap` keyword to catch unhandled terminating errors in a script or function. The trap keyword is a global exception handler, allowing you to catch and handle terminating errors in the current scope and all child scopes.\r\n\r\nWhen an exception is caught by a trap statement, you can use the `break` statement to abort execution of the script or function, or use the `continue` statement to continue execution where the script left off. If you do not use either of these statements, execution will continue after the trap statement.\r\n\r\nYou can defined multiple traps at different scopes. Also, like catch blocks, you can restrict trap blocks to only catch exceptions of a certain type.",
+    "Example": "trap {\r\n    [bool] $imFeelingLucky = (Get-Random -Maximum 10) -eq 5\r\n    if ($imFeelingLucky)\r\n    {\r\n        Write-Warning \"I'm feeling lucky, so I'll continue execution.\"\r\n        continue\r\n    }\r\n    Write-Error \"The following unhandled error occurred, so exiting script: $_\"\r\n    break\r\n}\r\n\r\nInvokingAFunctionThatDoesNotExist # Will throw an exception, which will be caught by the trap.\r\n\r\nWrite-Output \"I see you're feeling lucky today.\"",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_trap",
+      "https://www.sconstantinou.com/powershell-trap/"
+    ],
+    "Category": 6
   }
 ]
