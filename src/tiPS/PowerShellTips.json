@@ -387,5 +387,17 @@
       "https://www.sconstantinou.com/powershell-trap/"
     ],
     "Category": 6
+  },
+  {
+    "CreatedDate": "2023-10-28T00:00:00",
+    "Title": "Write events to the Windows Event Viewer with Write-EventLog",
+    "TipText": "When logging from scripts or modules, a common practice is to log to the console or a log file. Another option is to log to the Windows Event Viewer with the `Write-EventLog` cmdlet. This allows you to log to the Application, System, or Security logs, or create a new log specifically for your script or module.\r\n\r\nThis can be especially useful when using a centralized monitoring solution like System Center Orchestrator or Azure Monitor, as they can monitor the Windows Event Viewer from multiple servers for specific events. You can also use the `Get-EventLog` cmdlet to manually retrieve events from the Windows Event Viewer on the local or remote computers.\r\n\r\nThe `Write-EventLog` cmdlet is available on Windows PowerShell and PowerShell, but can only be used on Windows.\r\nThe `New-EventLog` and `Write-EventLog` cmdlets may require elevated permissions (i.e. run as admin).",
+    "Example": "# You must first create the \"Source\" before you can write to it.\r\nNew-EventLog -LogName Application -Source \"My Script\"\r\nWrite-EventLog -LogName Application -Source \"My Script\" -EntryType Information -EventID 1 -Message \"This is a test message.\"\r\n\r\n# You can also create a new log just for your script.\r\nNew-EventLog -LogName \"My Script Log\" -Source \"My Script\"\r\nWrite-EventLog -LogName \"My Script Log\" -Source \"My Script\" -EntryType Error -EventID 99 -Message \"This is a test error message.\"",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-eventlog",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/write-eventlog",
+      "https://devblogs.microsoft.com/scripting/how-to-use-powershell-to-write-to-event-logs/"
+    ],
+    "Category": 3
   }
 ]
