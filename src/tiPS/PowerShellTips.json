@@ -399,5 +399,15 @@
       "https://devblogs.microsoft.com/scripting/how-to-use-powershell-to-write-to-event-logs/"
     ],
     "Category": 3
+  },
+  {
+    "CreatedDate": "2023-10-31T00:00:00",
+    "Title": "Use Select-Object * to see all object properties",
+    "TipText": "When an object is written to the console, PowerShell by default hides many of its properties. This is to make the output easier to read, but it can hide many useful properties that you may not know exist. This can be detrimental when interactively exploring objects in the console.\r\n\r\nTo see all properties of an object, and their values, use the `Select-Object` cmdlet with the `-Property *` parameter.",
+    "Example": "# See the properties of an object shown by default (for comparison).\r\nGet-Process | Select-Object -First 1\r\n\r\n# See all properties of an object.\r\nGet-Process | Select-Object -First 1 -Property *\r\n\r\n# Shorthand alternatives for Select-Object -Property *.\r\nGet-Process | Select-Object -First 1 *\r\nGet-Process | Select-Object *\r\nGet-Process | Select *",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object"
+    ],
+    "Category": 3
   }
 ]
