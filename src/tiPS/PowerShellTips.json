@@ -409,5 +409,16 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object"
     ],
     "Category": 3
+  },
+  {
+    "CreatedDate": "2023-11-01T00:00:00",
+    "Title": "Use Get-Member to see an object's type, methods, and properties",
+    "TipText": "When interactively exploring on the command line, use the `Get-Member` cmdlet to see an object's type, methods, properties, and events. This is especially useful when you're not sure what type of object you're working with, such as those returned by other cmdlets.\r\n\r\nGet-Member will also show the type of each property and method, such as if they are a native property, an alias, or a property that was dynamically added using `Add-Member`. It also shows the parameters that each method accepts, and its return type.",
+    "Example": "# See all of the properties and methods of the objects returned by Get-Process.\r\nGet-Process | Get-Member\r\n\r\n# Shorthand for Get-Member is gm.\r\nGet-Process | gm\r\n\r\nYou can also use the -InputObject property instead of piping to Get-Member.\r\n$process = Get-Process | Select-Object -First 1\r\nGet-Member -InputObject $process",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-member",
+      "https://linuxhint.com/use-get-member-powershell/"
+    ],
+    "Category": 3
   }
 ]
