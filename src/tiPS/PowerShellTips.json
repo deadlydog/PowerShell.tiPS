@@ -420,5 +420,17 @@
       "https://linuxhint.com/use-get-member-powershell/"
     ],
     "Category": 3
+  },
+  {
+    "CreatedDate": "2023-11-05T00:00:00",
+    "Title": "Get and Set the clipboard contents",
+    "TipText": "You can capture the contents of the clipboard to a variable with the Get-Clipboard command. Similarly, you can set the contents of the clipboard with the Set-Clipboard command. This is useful for automating interactive tasks that involve the user copying and pasting text or files.",
+    "Example": "# Capture the contents of the clipboard to a variable.\r\nRead-Host -Prompt \"Copy all of the files you want to rename to the clipboard, then press Enter.\"\r\n$filesToRename = Get-Clipboard\r\n\r\n$renamedFiles = SomeFunctionToRenameFiles $filesToRename\r\n\r\n# Set the contents of the clipboard to the renamed files.\r\n$renamedFiles | Set-Clipboard\r\nWrite-Host \"The renamed files are now on the clipboard, ready for you to paste somewhere else.\"",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-clipboard",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-clipboard",
+      "https://adamtheautomator.com/powershell-copy-to-clipboard/"
+    ],
+    "Category": 3
   }
 ]
