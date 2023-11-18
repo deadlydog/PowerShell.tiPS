@@ -443,5 +443,16 @@
       "https://ilovepowershell.com/powershell-modern/ultimate-guide-to-using-powershell-add-member-cmdlet/"
     ],
     "Category": 3
+  },
+  {
+    "CreatedDate": "2023-11-18T00:00:00",
+    "Title": "The ternary operator can replace if-else statements",
+    "TipText": "PowerShell 7.0 introduced the ternary operator. This can useful for replacing very short if-else statements.\r\n\r\nThe ternary operator syntax is as follows: <condition> ? <if-true> : <if-false>\r\n\r\nWhile the ternary operator can reduce the number of lines required, not everyone will find it more readable than an if-else statement. Use your best judgement when deciding whether to use the ternary operator or an if-else statement, and remember that it is only available in PowerShell 7.0 and later.",
+    "Example": "# Example of using an if-else statement to set a variable.\r\nif (Test-Path $path) {\r\n    $message = \"Path exists\"\r\n}\r\nelse {\r\n    $message = \"Path not found\"\r\n}\r\n\r\n# The equivalent statement using the ternary operator.\r\n$message = (Test-Path $path) ? \"Path exists\" : \"Path not found\"\r\n\r\n# Another example of using the ternary operator to toggle a service between started and stopped.\r\n$service = Get-Service ServiceNameToToggleOnOrOff\r\n$service.Status -eq 'Running' ? (Stop-Service $service) : (Start-Service $service)",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators#ternary-operator--if-true--if-false",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_if#using-the-ternary-operator-syntax"
+    ],
+    "Category": 6
   }
 ]
