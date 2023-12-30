@@ -44,7 +44,7 @@ This module brings tips to you with minimal effort required on your part.
 
 You can configure tiPS to show a tip every time you open your PowerShell terminal, or show a tip on demand by running the `tips` command.
 
-## Screenshots
+## 🖼 Screenshots
 
 Calling the `tips` command to show a tip in the terminal:
 
