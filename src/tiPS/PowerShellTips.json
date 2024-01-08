@@ -454,5 +454,16 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_if#using-the-ternary-operator-syntax"
     ],
     "Category": 6
+  },
+  {
+    "CreatedDate": "2024-01-07T00:00:00",
+    "Title": "Use null-coalescing to avoid nulls and null checks",
+    "TipText": "PowerShell 7.0 introduced the null-coalescing operator (??). This can help reduce the number of explicit null checks you need to write.\r\n\r\nThe null-coalescing operator syntax is as follows: <value> ?? <value-if-null>\r\n\r\nIf the value on the left-hand side of the operator is not null, the statement on the right-hand side of the operator will not be evaluated.\r\n\r\nNull-coalescing can be used in expressions, conditional (if) statements, and variable assignments.",
+    "Example": "# $x is null so the value on the right-hand side of the operator is returned.\r\n> $x = $null\r\n> $x ?? 'Default value for x'\r\nDefault value for x\r\n\r\n# $y is not null so the value on the left-hand side of the operator is returned.\r\n> $y = 'Explicit value for y'\r\n> $y ?? 'Default value for y'\r\nExplicit value for y\r\n\r\n# The null-coalescing operator can be used in variable assignments.\r\n# Since $x is null, $z is assigned the value of $y.\r\n> $z = $x ?? $y\r\n> $z\r\nExplicit value for y\r\n\r\n# Use the above expression ($z = $x ?? $y) instead of:\r\nif ($null -eq $x) {\r\n    $z = $y\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators?view=powershell-7.4#null-coalescing-operator-",
+      "https://toastit.dev/2020/03/10/ps7now-null-conditional/"
+    ],
+    "Category": 6
   }
 ]
