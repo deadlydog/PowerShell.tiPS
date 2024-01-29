@@ -247,6 +247,7 @@ jobs:
 
           # To avoid a 403 error on 'git push', ensure you have granted your GitHub Actions workflow read/write permission.
           # In your GitHub repo: Settings > Actions > General > Workflow permissions > Read and write permissions
+          # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#configuring-the-default-github_token-permissions
 
           Write-Output "Removing the previous CI version tag '$previousCiVersionTag'."
           & git tag -d $previousCiVersionTag
