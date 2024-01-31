@@ -53,6 +53,30 @@
 			]
 		},
 		{
+			"label": "Test module manifest validity",
+			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			"command": "Test-ModuleManifest -Path ./src/tiPS/tiPS.psd1",
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"group": "build"
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
+		},
+		{
 			"label": "Run all build tasks",
 			"group": {
 				"kind": "build",
