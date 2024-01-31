@@ -465,5 +465,15 @@
       "https://toastit.dev/2020/03/10/ps7now-null-conditional/"
     ],
     "Category": 6
+  },
+  {
+    "CreatedDate": "2024-01-17T00:00:00",
+    "Title": "PowerShell has a Discord Community",
+    "TipText": "Join the PowerShell Virtual User Group on Discord to connect with some of the brightest minds to get help, discuss scripts, challenge others and socialize.",
+    "Example": "",
+    "Urls": [
+      "https://discord.gg/powershell"
+    ],
+    "Category": 0
   }
 ]
