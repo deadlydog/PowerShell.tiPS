@@ -225,6 +225,12 @@ jobs:
           Write-Output "Updating the stable manifest's version number from '$currentManifestVersionNumber' to '$newVersionNumber'."
           Replace-TextInFile -filePath $stableManifestFilePath -textToReplace $currentManifestVersionNumberLine -replacementText "ModuleVersion = '$newVersionNumber'"
 
+          Write-Output "Testing the Prerelease manifest file '$prereleaseManifestFilePath' to ensure it is valid."
+          Test-ModuleManifest -Path $prereleaseManifestFilePath
+
+          Write-Output "Testing the Stable manifest file '$stableManifestFilePath' to ensure it is valid."
+          Test-ModuleManifest -Path $stableManifestFilePath
+
       - name: Create deploy files artifact
         shell: pwsh
         run: |
