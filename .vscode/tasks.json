@@ -69,8 +69,7 @@
 			"presentation": {
 				"reveal": "always",
 				"panel": "dedicated",
-				"clear": true,
-				"group": "build"
+				"clear": true
 			},
 			"problemMatcher": [
 				"$func-powershell-watch"
