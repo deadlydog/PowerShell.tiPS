@@ -23,6 +23,7 @@ namespace tiPS
 		public string Example { get; set; }
 		public string[] Urls { get; set; }
 		public TipCategory Category { get; set; }
+		public DateTime ExpiryDate { get; set; }
 
 		public PowerShellTip()
 		{
@@ -32,6 +33,7 @@ namespace tiPS
 			Example = string.Empty;
 			Urls = Array.Empty<string>();
 			Category = TipCategory.Other;
+			ExpiryDate = DateTime.MaxValue;
 		}
 
 		public string Id

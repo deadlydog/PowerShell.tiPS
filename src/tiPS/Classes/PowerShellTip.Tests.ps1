@@ -10,6 +10,7 @@ Describe 'Trimming all tip properties' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		It 'Should not change any of the properties' {
@@ -41,6 +42,7 @@ Describe 'Trimming all tip properties' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		It 'Should trim the leading and trailing whitespace from all of the properties' {
@@ -78,6 +80,7 @@ Describe 'Validating a PowerShellTip' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		It 'Should throw an error when the CreatedDate has not been set' {
@@ -131,6 +134,7 @@ Describe 'Validating a PowerShellTip' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		It 'Should not throw an error when all properties are valid' {
@@ -150,6 +154,7 @@ Describe 'Getting the Id property' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		It 'Should create the Id properly from the other property values' {
@@ -178,6 +183,7 @@ Describe 'Checking if URLs are provided' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		It 'Should return true when URLs are supplied' {

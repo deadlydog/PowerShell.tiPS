@@ -11,6 +11,7 @@ $tip.Urls = @(
 	'https://psconf.eu/'
 )
 $tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.ExpiryDate = [DateTime]::Parse('2024-06-27') # Optional. If the tip is not relevant after a certain date, set the expiration date. e.g. Announcing a conference or event.
 
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
 # Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.

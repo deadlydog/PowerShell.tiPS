@@ -27,6 +27,7 @@ Write-Verbose "Finding all PowerShell tip files in '$powerShellTipsDirectoryPath
 
 [System.Collections.ArrayList] $tips = @()
 [int] $numberOfTipFiles = $tipFilePaths.Count
+[int] $numberOfExpiredTipFiles = 0
 
 Write-Verbose "Reading in and validating $numberOfTipFiles PowerShell tip files."
 foreach ($tipFilePath in $tipFilePaths)
@@ -37,13 +38,22 @@ foreach ($tipFilePath in $tipFilePaths)
 
 	$tip.TrimAllProperties()
 	$tip.Validate()
+
+	if ($tip.ExpiryDate -lt [DateTime]::Today)
+	{
+		Write-Verbose "Skipping expired tip: $($tip.Title)"
+		$numberOfExpiredTipFiles++
+		continue
+	}
+
 	$tips.Add($tip) > $null
 }
 
 [int] $numberOfTips = $tips.Count
-if ($numberOfTips -ne $numberOfTipFiles)
+[int] $numberOfNonExpiredTipFiles = $numberOfTipFiles - $numberOfExpiredTipFiles
+if ($numberOfTips -ne $numberOfNonExpiredTipFiles)
 {
-	throw "Found $numberOfTipFiles tip files, but read in $numberOfTips tips. The number of tip files and tips should match."
+	throw "Found $numberOfNonExpiredTipFiles non-expired tip files ($numberOfTipFiles files, but $numberOfExpiredTipFiles were expired), but read in $numberOfTips tips. The number of non-expired tip files and tips should match."
 }
 
 if ($numberOfTips -eq 0)

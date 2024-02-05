@@ -3,6 +3,13 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## v1.1.0 - February 4, 2024
+
+Features:
+
+- Added an `ExpiryDate` property to the `PowerShellTip` class to allow tips to be automatically removed after a certain date.
+  This is useful for tips that are no longer relevant after a certain date, such as tips about a specific event or conference.
+
 ## v1.0.0 - October 16, 2023
 
 Features:
