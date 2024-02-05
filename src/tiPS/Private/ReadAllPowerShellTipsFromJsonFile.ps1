@@ -16,6 +16,11 @@ function ReadAllPowerShellTipsFromJsonFile
 	[System.Collections.Specialized.OrderedDictionary] $tipDictionary = [System.Collections.Specialized.OrderedDictionary]::new()
 	foreach ($tip in $tipObjects)
 	{
+		if ($tip.ExpiryDate -lt [DateTime]::Today)
+		{
+			Write-Verbose "Skipping adding expired tip: $($tip.Title)"
+			continue
+		}
 		$tipDictionary[$tip.Id] = $tip
 	}
 
