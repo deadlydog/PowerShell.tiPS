@@ -48,14 +48,17 @@ Describe 'Get-PowerShellTip' {
 	}
 
 	Context 'Given the All switch' {
-		It 'Should return all tips' {
+		It 'Should return all non-expired tips' {
 			[PSCustomObject[]] $allTipsFromJsonFile = GetAllTipsFromJsonFile
-			[int] $numberOfTipsInJsonFile = $allTipsFromJsonFile.Count
+			[int] $numberOfNonExpiredTipsInJsonFile = $allTipsFromJsonFile |
+				Where-Object { $_.ExpiryDate -ge [DateTime]::Today } |
+				Measure-Object |
+				Select-Object -ExpandProperty Count
 
 			$allTips = Get-PowerShellTip -All
 
 			$allTips | Should -Not -BeNullOrEmpty
-			$allTips.Count | Should -Be $numberOfTipsInJsonFile
+			$allTips.Count | Should -Be $numberOfNonExpiredTipsInJsonFile
 		}
 
 		It 'Should return the tips ordered by Created Date from oldest to newest' {

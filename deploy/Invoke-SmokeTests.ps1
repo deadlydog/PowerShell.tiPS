@@ -34,6 +34,12 @@ Describe 'Get-PowerShellTip' {
 			$allTips | Should -Not -BeNullOrEmpty
 			$allTips.Count | Should -BeGreaterThan 2
 		}
+
+		It 'Should not return any expired tips, as they should have been removed during initialization' {
+			$allTips = Get-PowerShellTip -All
+			$expiredTips = $allTips.Values | Where-Object { $_.ExpiryDate -lt [DateTime]::Today }
+			$expiredTips | Should -BeNullOrEmpty
+		}
 	}
 }
 
