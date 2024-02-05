@@ -80,6 +80,16 @@ The testing process performs the following operations:
 1. Run Pester against all of the files that end in `.Tests.ps1` in the entire repo.
 1. (Pipeline deploy only) After the module is deployed to the PowerShell Gallery, the module is downloaded from the PowerShell Gallery and the [Invoke-SmokeTests.ps1](/deploy/Invoke-SmokeTests.ps1) script is run against it on Windows PowerShell, and PowerShell Core on Windows, MacOS, and Ubuntu to validate the module is working as expected on all platforms.
 
+### Increasing the module version
+
+The module uses [semantic versioning](https://semver.org/).
+The module version's Patch is automatically bumped by the GitHub Actions workflow when a commit is made to the `main` branch.
+
+To bump the Major or Minor version, manually run [the deploy workflow](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-test-and-deploy-powershell-module.yml) on the `main` branch and specify the new version number as a parameter.
+e.g. If you want to bump the version from 1.0.18 to 1.1.0, you would run the deploy workflow and specify `1.1.0` for the version number.
+
+To see what the current version number is, you can look at the last run in [the deploy workflow](https://github.com/deadlydog/PowerShell.tiPS/actions/workflows/build-test-and-deploy-powershell-module.yml) and look at the details of the `build-and-test` job and its `Create Stable and Prerelease module artifacts` step to see what the manifest's version number was set to.
+
 ### ⁉ Why was a specific decision made
 
 Curious about some of the choices made in this project?
