@@ -159,6 +159,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
 		}
 
 		Context 'When all of the tips have been shown' {
