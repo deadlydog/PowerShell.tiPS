@@ -217,7 +217,7 @@ Below is a short list of planned enhancements for tiPS:
 
 See what's changed in the module over time by viewing [the changelog](Changelog.md).
 
-## 💳 Donate
+## ❤ Donate to support this project
 
 Buy me a bagel for providing this module open source and for free 🙂
 
