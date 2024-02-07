@@ -7,6 +7,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
+  # Allows the deployment workflow to call this workflow.
   workflow_call:
     inputs:
       versionNumber:
@@ -14,6 +15,7 @@ on:
         required: false
         type: string
         default: ''
+    # Outputs required by the deployment workflow.
     outputs:
       powerShellModuleName:
         description: 'The name of the PowerShell module being built.'
