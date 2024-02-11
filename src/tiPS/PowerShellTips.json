@@ -507,5 +507,16 @@
     ],
     "Category": 0,
     "ExpiryDate": "9999-12-31T23:59:59.9999999"
+  },
+  {
+    "CreatedDate": "2024-02-11T00:00:00",
+    "Title": "Play PowerShelldle to test and expand your PowerShell knowledge",
+    "TipText": "Head on over to https://powershelldle.com. PowerShelldle is a Wordle-like game where you guess a new PowerShell cmdlet each day.\r\n\r\nPlay with your friends and colleagues. It's a fun way to test and expand your PowerShell knowledge.",
+    "Example": "",
+    "Urls": [
+      "https://powershelldle.com"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999"
   }
 ]
