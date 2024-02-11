@@ -510,6 +510,17 @@
   },
   {
     "CreatedDate": "2024-02-11T00:00:00",
+    "Title": "Get web request from browser dev tools",
+    "TipText": "Open up your web browser's developer tools (usually by pressing the F12 key) and navigate to the Network tab to see the network requests that are being made when you load a page. You can right-click on a request and copy it as PowerShell. This will copy the request and all headers as a PowerShell command that you can paste in your scripts.\r\n\r\nThis is an easy way to explore APIs and help automate flows that you typically do in the browser. You may even find APIs that are not listed in the web application's documentation, but beware that endpoints not listed in documentation may change without notice.",
+    "Example": "",
+    "Urls": [
+      "https://x.com/_mbanana/status/1714337624674939081?s=20"
+    ],
+    "Category": 8,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+  },
+  {
+    "CreatedDate": "2024-02-11T00:00:00",
     "Title": "Play PowerShelldle to test and expand your PowerShell knowledge",
     "TipText": "Head on over to https://powershelldle.com. PowerShelldle is a Wordle-like game where you guess a new PowerShell cmdlet each day.\r\n\r\nPlay with your friends and colleagues. It's a fun way to test and expand your PowerShell knowledge.",
     "Example": "",
