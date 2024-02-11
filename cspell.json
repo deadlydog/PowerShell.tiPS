@@ -22,7 +22,9 @@
 		"madrapps", // GitHub action author
 		"netstandard", // .NET Standard project target
 		"nunit", // .NET unit testing framework
-		"pwsh" // PowerShell Core
+		"pwsh", // PowerShell Core
+		"PowerShelldle", // PowerShell game
+		"Worldle" // Game
 	],
 	"import": []
 }
