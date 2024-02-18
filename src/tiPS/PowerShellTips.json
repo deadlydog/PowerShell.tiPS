@@ -532,6 +532,17 @@
   },
   {
     "CreatedDate": "2024-02-18T00:00:00",
+    "Title": "See variable values inline while debugging",
+    "TipText": "The Visual Studio Code extension \"Inline Values support for PowerShell\" by Tyler Leonhardt is great. While you are debugging and stepping through your PowerShell code, it shows the values of variables inline in the editor.\r\n\r\nWithout this extension, to see a variable's value you would need to hover your mouse over the variable, type it into your debug prompt,look for it in the Locals debug pane, or add it to the Watch list debug pane. Being able to see the variable values without having to take any additional steps is a huge time saver and makes debugging much easier.\r\n\r\nIf you try the extension and love it, show your appreciation by giving it a rating and review on the Visual Studio Code Marketplace.",
+    "Example": "",
+    "Urls": [
+      "https://marketplace.visualstudio.com/items?itemName=TylerLeonhardt.vscode-inline-values-powershell"
+    ],
+    "Category": 1,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+  },
+  {
+    "CreatedDate": "2024-02-18T00:00:00",
     "Title": "Use Get-Help -Online to view the help in your web browser",
     "TipText": "You can use Get-Help to view the documentation for a cmdlet. This will use the help files on your local machine, which may be out of date. You can update your local files with Update-Help, but it uses more disk space and may take a while to run.\r\n\r\nTo easily ensure you are viewing the most up-to-date help, use the -Online parameter. This will open the help docs in your default web browser. Some people prefer to view the help docs in their web browser because it is easily searchable, and you can have multiple tabs open at once for different cmdlets.\r\n\r\nCAUTION: The web browser will default to showing the help for the latest version of PowerShell. If you are using an older version of PowerShell, be sure to change the version picker to the version of PowerShell you are using.",
     "Example": "# Use your local help, which may not be up-to-date.\r\nGet-Help Get-Item\r\n\r\n# Open the help in your default web browser.\r\nGet-Help Get-Item -Online",

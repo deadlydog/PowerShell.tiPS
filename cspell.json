@@ -7,8 +7,8 @@
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
 	"words": [
-		"colours", // Canadian spelling
-		"gifs", // Plural of GIF
+		"colours",
+		"gifs",
 		"unshown"
 	],
 	"ignoreWords": [
@@ -19,6 +19,7 @@
 		"hashtable", // PowerShell Hashtable
 		"Hmmss", // Time format
 		"jacoco", // Java code coverage
+		"Leonhardt", // Person's name
 		"madrapps", // GitHub action author
 		"netstandard", // .NET Standard project target
 		"nunit", // .NET unit testing framework
