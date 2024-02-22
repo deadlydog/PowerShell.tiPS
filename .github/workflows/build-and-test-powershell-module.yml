@@ -181,7 +181,7 @@ jobs:
 
           Write-Output "Reading in environment variables."
           [string] $moduleName = $Env:powerShellModuleName
-          [string] $moduleDirectoryPath = Resolve-Path -Path $Env:powerShellModuleDirectoryPath
+          [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
           [string] $moduleManifestFileName = $moduleName + '.psd1'
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
