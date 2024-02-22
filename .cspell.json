@@ -8,6 +8,7 @@
 	"words": [
 		"colours",
 		"gifs",
+		"hashtable", // PowerShell Hashtable
 		"unshown"
 	],
 	"ignoreWords": [
@@ -15,7 +16,6 @@
 		"Codespaces", // GitHub Codespaces
 		"dawidd", // GitHub action author
 		"devcontainer", // VS Code devcontainer
-		"hashtable", // PowerShell Hashtable
 		"Hmmss", // Time format
 		"jacoco", // Java code coverage
 		"Leonhardt", // Person's name
