@@ -1,6 +1,5 @@
 {
-	// See https://go.microsoft.com/fwlink/?LinkId=733558
-	// for the documentation about the tasks.json format
+	// For more info about out the tasks.json format see: https://code.visualstudio.com/docs/editor/tasks
 	"version": "2.0.0",
 	"tasks": [
 		{
