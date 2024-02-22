@@ -1,11 +1,10 @@
 // This is the configuration file for cspell.
 // Use this to define legitimate words not in the dictionary, and other words the spellcheck should ignore.
 // Used by the streetsidesoftware.code-spell-checker VS Code extension and streetsidesoftware/cspell-action@v3 GitHub Action.
+// For more information on configuration, see https://cspell.org/configuration/.
 {
 	"version": "0.2",
 	"ignorePaths": [],
-	"dictionaryDefinitions": [],
-	"dictionaries": [],
 	"words": [
 		"colours",
 		"gifs",
@@ -26,6 +25,5 @@
 		"pwsh", // PowerShell Core
 		"PowerShelldle", // PowerShell game
 		"Wordle" // Game
-	],
-	"import": []
+	]
 }
