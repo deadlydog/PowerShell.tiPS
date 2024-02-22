@@ -3,78 +3,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Run all Pester tests",
-			"type": "shell",
-			"options": {
-				"shell": {
-					"executable": "pwsh",
-					"args": [
-						"-NoProfile",
-						"-Command"
-					]
-				}
-			},
-			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
-			"group": {
-				"kind": "test",
-				"isDefault": true
-			},
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true
-			},
-			"problemMatcher": [
-				"$func-powershell-watch"
-			]
-		},
-		{
-			"label": "Run Pester code coverage",
-			"type": "shell",
-			"options": {
-				"shell": {
-					"executable": "pwsh",
-					"args": [
-						"-NoProfile",
-						"-Command"
-					]
-				}
-			},
-			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }; CodeCoverage = @{ Enabled = $true }})",
-			"group": "test",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true
-			},
-			"problemMatcher": [
-				"$func-powershell-watch"
-			]
-		},
-		{
-			"label": "Test module manifest validity",
-			"type": "shell",
-			"options": {
-				"shell": {
-					"executable": "pwsh",
-					"args": [
-						"-NoProfile",
-						"-Command"
-					]
-				}
-			},
-			"command": "Test-ModuleManifest -Path ./src/tiPS/tiPS.psd1",
-			"group": "test",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true
-			},
-			"problemMatcher": [
-				"$func-powershell-watch"
-			]
-		},
-		{
 			"label": "Run all build tasks",
 			"group": {
 				"kind": "build",
@@ -83,6 +11,16 @@
 			"dependsOn": [
 				"Run PSScriptAnalyzer linter",
 				"Convert PowerShellTips files to JSON file"
+			]
+		},
+		{
+			"label": "Run all test tasks",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"dependsOn": [
+				"Run all Pester tests"
 			]
 		},
 		{
@@ -177,6 +115,75 @@
 				"clear": true,
 				"group": "build"
 			}
+		},
+		{
+			"label": "Run all Pester tests",
+			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }})",
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
+		},
+		{
+			"label": "Run Pester code coverage",
+			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			"command": "./build/Build-CSharpAssemblies.ps1; Invoke-Pester -Configuration (New-PesterConfiguration @{ Output = @{ Verbosity = 'Detailed' }; CodeCoverage = @{ Enabled = $true }})",
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
+		},
+		{
+			"label": "Test module manifest validity",
+			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			"command": "Test-ModuleManifest -Path ./src/tiPS/tiPS.psd1",
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
 		},
 		{
 			"label": "Add new PowerShell tip",
