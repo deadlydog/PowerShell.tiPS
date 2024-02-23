@@ -1,5 +1,5 @@
 # These tests are runs as part of the deployment process to ensure the newly published module is working as expected.
-# These tests run against the installed module, not the source code, so they do not use mocks and are more of a real-world test.
+# These tests run against the installed module, not the source code, so they are more of a real-world test and do not use mocks.
 # Since mocks are not used, we must be careful to not rely on state stored on the machine, such as the module Configuration file.
 # To run these tests on your local machine, see the comments in the BeforeAll block.
 
