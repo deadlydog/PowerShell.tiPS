@@ -551,5 +551,16 @@
     ],
     "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999"
+  },
+  {
+    "CreatedDate": "2024-02-26T00:00:00",
+    "Title": "VS Code keybinding to always run PowerShell",
+    "TipText": "VS Code is the preferred IDE to write and run PowerShell scripts. If the workspace has a .vscode\\launch.json file configured though, pressing F5 may run the application instead of running the PowerShell script that you have in focus. To force VS Code to always run the PowerShell script in focus, you can add a keyboard shortcut to the keybindings.json file.\r\n\r\nTo add the keybinding, press Ctrl+Shift+P to open the Command Palette, open \"Preferences: Open Keyboard Shortcuts (JSON)\", and then add the following JSON to the keybindings.json file:\r\n\r\n{\r\n    \"key\": \"f5\",\r\n    \"command\": \"PowerShell.Debug.Start\",\r\n    \"when\": \"editorTextFocus && debugState == 'inactive' && editorLangId == 'powershell'\"\r\n}",
+    "Example": "",
+    "Urls": [
+      "https://coryknox.dev/posts/2024/run-powershell-no-mater-what/"
+    ],
+    "Category": 1,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999"
   }
 ]
