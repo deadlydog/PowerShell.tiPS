@@ -558,9 +558,21 @@
     "TipText": "VS Code is the preferred IDE to write and run PowerShell scripts. If the workspace has a .vscode\\launch.json file configured though, pressing F5 may run the application instead of running the PowerShell script that you have in focus. To force VS Code to always run the PowerShell script in focus, you can add a keyboard shortcut to the keybindings.json file.\r\n\r\nTo add the keybinding, press Ctrl+Shift+P to open the Command Palette, open \"Preferences: Open Keyboard Shortcuts (JSON)\", and then add the following JSON to the keybindings.json file:\r\n\r\n{\r\n    \"key\": \"f5\",\r\n    \"command\": \"PowerShell.Debug.Start\",\r\n    \"when\": \"editorTextFocus && debugState == 'inactive' && editorLangId == 'powershell'\"\r\n}",
     "Example": "",
     "Urls": [
-      "https://coryknox.dev/posts/2024/run-powershell-no-mater-what/"
+      "https://coryknox.dev/posts/2024/run-powershell-no-mater-what/",
+      "https://twitter.com/CoryKnox/status/1762253942753493451"
     ],
     "Category": 1,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+  },
+  {
+    "CreatedDate": "2024-03-04T00:00:00",
+    "Title": "Get filesystem friendly DateTime with Get-Date",
+    "TipText": "It's common to use a date timestamp in a filename for things like log files. The default output of Get-Date includes characters that are not valid for the filesystem, such as colons. You can use the -Format parameter to specify a custom format, or leverage the built-in FileDate and FileDateTime formats that are filesystem friendly.",
+    "Example": "PS> Get-Date\r\nMonday, March 4, 2024 9:43:18 AM\r\n\r\nPS> Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'\r\n2024-03-04_09-43-37\r\n\r\nPS> Get-Date -Format FileDate\r\n20240304\r\n\r\nPS> Get-Date -Format FileDateTime\r\n20240304T0943556270\r\n\r\nPS> Get-Date -Format FileDateTimeUniversal\r\n20240304T1544081746Z",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-date?view=powershell-7.4#-format"
+    ],
+    "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999"
   }
 ]
