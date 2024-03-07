@@ -3,6 +3,12 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## v1.2.0 - March 7, 2024
+
+Features:
+
+- Add a newline after the tip's "More information:" header and each URL to make it look nicer.
+
 ## v1.1.0 - February 4, 2024
 
 Features:

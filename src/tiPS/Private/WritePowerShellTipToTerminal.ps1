@@ -43,8 +43,8 @@ function WritePowerShellTipToTerminal
 
 	if ($Tip.UrlsAreProvided)
 	{
-		Write-Host 'More information: ' -ForegroundColor $urlsColor -NoNewline
-		Write-Host $Tip.Urls -ForegroundColor $urlsColor
+		Write-Host 'More information: ' -ForegroundColor $urlsColor
+		Write-Host ($Tip.Urls -join [System.Environment]::NewLine) -ForegroundColor $urlsColor
 	}
 
 	Write-Host ('-' * $numberOfCharactersInHeader) -ForegroundColor $headerColor
