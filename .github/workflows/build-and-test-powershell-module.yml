@@ -40,7 +40,6 @@ env:
   stableModuleArtifactDirectoryPath: './artifacts/Stable'
   deployFilesArtifactName: 'DeployFilesArtifact'
   deployFilesArtifactDirectoryPath: './artifacts/deploy'
-  ciVersionTagPrefix: 'ci-version-'
 
 jobs:
   build-and-test:
@@ -53,6 +52,8 @@ jobs:
     steps:
       - name: Checkout the repo source code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history so that GitVersion can determine the version number.
 
       - name: Run spellcheck
         uses: streetsidesoftware/cspell-action@v5
@@ -126,44 +127,14 @@ jobs:
           }
           Invoke-Pester -Configuration $pesterConfig
 
-      - name: Determine new version from Git tag and set environment variables
-        shell: pwsh
-        run: |
-          [string] $ciVersionTagPrefix = $Env:ciVersionTagPrefix
-          [string] $ciTagSearchPattern = $ciVersionTagPrefix + '*'
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
 
-          Write-Output "Fetching all git tags, in case they were not included with the git checkout."
-          & git fetch --tags origin
-
-          Write-Output "Searching for CI version git tag by using search pattern '$ciTagSearchPattern'."
-          [string] $ciVersionTag = (& git tag --list $ciTagSearchPattern)
-          Write-Output "CI version git tag is '$ciVersionTag'."
-
-          if ([string]::IsNullOrWhiteSpace($ciVersionTag))
-          {
-            Write-Output "No CI version git tag was found. Assuming this is the first CI build and setting the version number to 0.0.0."
-            $ciVersionTag = $ciVersionTagPrefix + '0.0.0'
-          }
-
-          [string] $previousVersionNumber = $ciVersionTag -replace $ciVersionTagPrefix, ''
-
-          Write-Output "Previous version number was '$previousVersionNumber'. Determining what the new version number should be."
-          [string] $newVersionNumber = '${{ inputs.versionNumber }}'
-          if ([string]::IsNullOrWhiteSpace($newVersionNumber))
-          {
-            Write-Output "No version number was provided. Incrementing the previous version number."
-            $currentVersion = [System.Version]::new($previousVersionNumber)
-            $newVersion = [System.Version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1)
-            $newVersionNumber = $newVersion.ToString()
-          }
-          else
-          {
-            Write-Output "Version number '$newVersionNumber' was provided. Using it as the new version number."
-          }
-
-          Write-Output "Setting new environment variables 'NewVersionNumber=$newVersionNumber' and 'PreviousCiVersionTag=$ciVersionTag'."
-          "NewVersionNumber=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-          "PreviousCiVersionTag=$ciVersionTag" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Determine the new version
+        id: git-version
+        uses: gittools/actions/gitversion/execute@v0
 
       - name: Create Stable and Prerelease module artifacts
         shell: pwsh
@@ -175,8 +146,10 @@ jobs:
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
 
-          Write-Output "Reading in dynamic environment variables."
-          [string] $newVersionNumber = $Env:NewVersionNumber
+          Write-Output "Getting version numbers to use."
+          [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
+          # Prerelease version numbers can only contain 'a-zA-Z0-9' characters.
+          [string] $prereleaseVersionNumberPostfix = '${{ steps.git-version.outputs.preReleaseTag }}' -replace '[^a-zA-Z0-9]', ''
 
           Write-Output "Copying the module files to the Prerelease artifact directory '$prereleaseArtifactModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
@@ -189,13 +162,7 @@ jobs:
           [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
           [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
 
-          Write-Output "Determining prerelease version number."
-          # Prerelease version numbers can only contain 'a-zA-Z0-9' characters.
-          [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
-          [string] $truncatedCommitSha = $Env:GITHUB_SHA.Substring(0, 7)
-          [string] $prereleaseVersionNumberPostfix = 'ci' + $dateTime + 'SHA' + $truncatedCommitSha
-
-          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber$prereleaseVersionNumberPostfix'."
+          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber-$prereleaseVersionNumberPostfix'."
           Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $newVersionNumber -Prerelease $prereleaseVersionNumberPostfix
 
           Write-Output "Updating the stable manifest's version number to '$newVersionNumber'."
@@ -221,22 +188,12 @@ jobs:
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         shell: pwsh
         run: |
-          [string] $previousCiVersionTag = $Env:PreviousCiVersionTag
-          [string] $newVersionNumber = $Env:NewVersionNumber
-          [string] $newCiVersionTag = $Env:ciVersionTagPrefix + $newVersionNumber
+          [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
           [string] $newVersionTag = "v$newVersionNumber"
 
           # To avoid a 403 error on 'git push', ensure you have granted your GitHub Actions workflow read/write permission.
           # In your GitHub repo: Settings > Actions > General > Workflow permissions > Read and write permissions
           # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#configuring-the-default-github_token-permissions
-
-          Write-Output "Removing the previous CI version tag '$previousCiVersionTag'."
-          & git tag -d $previousCiVersionTag
-          & git push origin --delete $previousCiVersionTag
-
-          Write-Output "Creating new CI version tag '$newCiVersionTag'."
-          & git tag $newCiVersionTag
-          & git push origin $newCiVersionTag
 
           Write-Output "Tagging commit with new version tag '$newVersionTag'."
           & git tag $newVersionTag

@@ -17,6 +17,7 @@
 		"Codespaces", // GitHub Codespaces
 		"dawidd", // GitHub action author
 		"devcontainer", // VS Code devcontainer
+		"gittools", // GitHub action author
 		"Hmmss", // Time format
 		"jacoco", // Java code coverage
 		"Leonhardt", // Person's name
