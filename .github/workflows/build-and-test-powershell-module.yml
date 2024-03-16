@@ -139,9 +139,14 @@ jobs:
       - name: Determine the new version number
         shell: pwsh
         run: |
-          Write-Output "Getting new version numbers to use."
           [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
           [string] $prereleaseLabel = '${{ steps.git-version.outputs.preReleaseTag }}'
+
+          [string] $manuallyProvidedVersionNumber = '${{ inputs.versionNumber }}'
+          if (-not [string]::IsNullOrWhiteSpace($manuallyProvidedVersionNumber)) {
+            Write-Output "Using manually provided version number '$manuallyProvidedVersionNumber'."
+            $newVersionNumber = $manuallyProvidedVersionNumber
+          }
 
           # The preReleaseTag is empty when building the default branch, so manually create a prerelease version number if needed.
           if ([string]::IsNullOrWhiteSpace($prereleaseLabel)) {
@@ -151,7 +156,7 @@ jobs:
           # PowerShell prerelease labels can only contain the characters 'a-zA-Z0-9', so sanitize it if needed.
           $newVersionNumberPrereleaseLabel = $prereleaseLabel -replace [^a-zA-Z0-9], ''
 
-          Write-Output "Setting new environment variables 'NewVersionNumberMajorMinorPatch=$newVersionNumber' and 'NewVersionNumberPrereleaseLabel=$ciVersionTag'."
+          Write-Output "Setting new environment variables 'NewVersionNumberMajorMinorPatch=$newVersionNumber' and 'NewVersionNumberPrereleaseLabel=$newVersionNumberPrereleaseLabel'."
           "NewVersionNumberMajorMinorPatch=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
           "NewVersionNumberPrereleaseLabel=$newVersionNumberPrereleaseLabel" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
