@@ -3,6 +3,9 @@
 [CmdletBinding()]
 Param
 (
+	[Parameter(Mandatory = $false, HelpMessage = 'The version number to build the assemblies with, in the format "Major.Minor.Build.Revision". Default is "1.0.0.0".')]
+	[string] $VersionNumber = '1.0.0.0',
+
 	[Parameter(Mandatory = $false, HelpMessage = 'If specified, the module DLL files will be rebuilt even if they already exist. Otherwise, they will only be built if they do not exist.')]
 	[switch] $Force
 )
@@ -30,7 +33,7 @@ if ($removeDllFilesError)
 }
 
 Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
-& dotnet build "$csharpSlnFilePath" --configuration Release
+& dotnet build "$csharpSlnFilePath" --configuration Release -p:Version=$VersionNumber
 
 Write-Output "Copying the DLL files in '$csharpClassesDllDirectoryPath' to the module's Classes directory '$moduleClassesDirectoryPath'."
 Copy-Item -Path "$csharpClassesDllDirectoryPath/*" -Destination $moduleClassesDirectoryPath -Include '*.dll' -Force
