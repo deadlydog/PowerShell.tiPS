@@ -145,7 +145,11 @@ jobs:
           [string] $moduleManifestFileName = $moduleName + '.psd1'
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
+
+          Write-Output "Getting version numbers to use."
           [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
+          # Prerelease version numbers can only contain 'a-zA-Z0-9' characters.
+          [string] $prereleaseVersionNumberPostfix = '${{ steps.git-version.outputs.preReleaseTag }}' -replace '[^a-zA-Z0-9]', ''
 
           Write-Output "Copying the module files to the Prerelease artifact directory '$prereleaseArtifactModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
@@ -157,10 +161,6 @@ jobs:
           [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
           [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
           [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
-
-          Write-Output "Determining prerelease version number."
-          # Prerelease version numbers can only contain 'a-zA-Z0-9' characters.
-          [string] $prereleaseVersionNumberPostfix = '${{ steps.git-version.outputs.preReleaseTag }}'
 
           Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber$prereleaseVersionNumberPostfix'."
           Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $newVersionNumber -Prerelease $prereleaseVersionNumberPostfix
