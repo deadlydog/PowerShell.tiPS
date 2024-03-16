@@ -169,8 +169,8 @@ jobs:
           [string] $moduleManifestFileName = $moduleName + '.psd1'
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
-          [string] $versionNumber = $Env:NewVersionNumberMajorMinorPatch
-          [string] $prereleaseVersionNumberLabel = $Env:NewVersionNumberPrereleaseLabel
+          [string] $newVersionNumber = $Env:NewVersionNumberMajorMinorPatch
+          [string] $newVersionNumberPrereleaseLabel = $Env:NewVersionNumberPrereleaseLabel
 
           Write-Output "Copying the module files to the Prerelease artifact directory '$prereleaseArtifactModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
@@ -183,11 +183,11 @@ jobs:
           [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
           [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
 
-          Write-Output "Updating the prerelease manifest's version number to '$versionNumber-$prereleaseVersionNumberLabel'."
-          Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $versionNumber -Prerelease $prereleaseVersionNumberLabel
+          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber-$newVersionNumberPrereleaseLabel'."
+          Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $newVersionNumber -Prerelease $newVersionNumberPrereleaseLabel
 
-          Write-Output "Updating the stable manifest's version number to '$versionNumber'."
-          Update-ModuleManifest -Path $stableManifestFilePath -ModuleVersion $versionNumber
+          Write-Output "Updating the stable manifest's version number to '$newVersionNumber'."
+          Update-ModuleManifest -Path $stableManifestFilePath -ModuleVersion $newVersionNumber
 
           Write-Output "Testing the Prerelease manifest file '$prereleaseManifestFilePath' to ensure it is valid."
           Test-ModuleManifest -Path $prereleaseManifestFilePath
