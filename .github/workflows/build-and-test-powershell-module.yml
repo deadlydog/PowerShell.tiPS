@@ -86,7 +86,7 @@ jobs:
           # The preReleaseTag is empty when building the default branch, so manually create a prerelease version number if needed.
           if ([string]::IsNullOrWhiteSpace($prereleaseLabel)) {
             [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
-            $prereleaseLabel = $dateTime + 'SHA' + '${{ steps.git-version.outputs.shortSha }}'
+            $prereleaseLabel = 'CI' + $dateTime + 'SHA' + '${{ steps.git-version.outputs.shortSha }}'
           }
           # PowerShell prerelease labels can only contain the characters 'a-zA-Z0-9', so sanitize it if needed.
           $newVersionNumberPrereleaseLabel = $prereleaseLabel -replace '[^a-zA-Z0-9]', ''
