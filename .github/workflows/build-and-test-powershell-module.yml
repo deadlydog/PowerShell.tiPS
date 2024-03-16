@@ -55,12 +55,12 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history so that GitVersion can determine the version number.
 
-      - name: Run spellcheck
-        uses: streetsidesoftware/cspell-action@v5
-
       - name: Display PowerShell version being used
         shell: pwsh
         run: $PSVersionTable
+
+      - name: Run spellcheck
+        uses: streetsidesoftware/cspell-action@v5
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0
