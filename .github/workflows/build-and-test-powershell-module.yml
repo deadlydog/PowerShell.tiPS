@@ -154,7 +154,7 @@ jobs:
             $prereleaseLabel = 'ci' + $dateTime + 'SHA' + '${{ steps.git-version.outputs.shortSha }}'
           }
           # PowerShell prerelease labels can only contain the characters 'a-zA-Z0-9', so sanitize it if needed.
-          $newVersionNumberPrereleaseLabel = $prereleaseLabel -replace [^a-zA-Z0-9], ''
+          $newVersionNumberPrereleaseLabel = $prereleaseLabel -replace '[^a-zA-Z0-9]', ''
 
           Write-Output "Setting new environment variables 'NewVersionNumberMajorMinorPatch=$newVersionNumber' and 'NewVersionNumberPrereleaseLabel=$newVersionNumberPrereleaseLabel'."
           "NewVersionNumberMajorMinorPatch=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
