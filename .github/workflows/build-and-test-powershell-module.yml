@@ -132,9 +132,28 @@ jobs:
         with:
           versionSpec: '5.x'
 
-      - name: Determine the new version
+      - name: Get git metadata used for new version number
         id: git-version
         uses: gittools/actions/gitversion/execute@v0
+
+      - name: Determine the new version number
+        shell: pwsh
+        run: |
+          Write-Output "Getting new version numbers to use."
+          [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
+          [string] $prereleaseLabel = '${{ steps.git-version.outputs.preReleaseTag }}'
+
+          # The preReleaseTag is empty when building the default branch, so manually create a prerelease version number if needed.
+          if ([string]::IsNullOrWhiteSpace($prereleaseLabel)) {
+            [string] $dateTime = (Get-Date -Format 'yyyyMMddTHHmmss')
+            $prereleaseLabel = 'ci' + $dateTime + 'SHA' + '${{ steps.git-version.outputs.shortSha }}'
+          }
+          # PowerShell prerelease labels can only contain the characters 'a-zA-Z0-9', so sanitize it if needed.
+          $newVersionNumberPrereleaseLabel = $prereleaseLabel -replace [^a-zA-Z0-9], ''
+
+          Write-Output "Setting new environment variables 'NewVersionNumberMajorMinorPatch=$newVersionNumber' and 'NewVersionNumberPrereleaseLabel=$ciVersionTag'."
+          "NewVersionNumberMajorMinorPatch=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          "NewVersionNumberPrereleaseLabel=$newVersionNumberPrereleaseLabel" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Create Stable and Prerelease module artifacts
         shell: pwsh
@@ -145,11 +164,8 @@ jobs:
           [string] $moduleManifestFileName = $moduleName + '.psd1'
           [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
           [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
-
-          Write-Output "Getting version numbers to use."
-          [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
-          # Prerelease version numbers can only contain 'a-zA-Z0-9' characters.
-          [string] $prereleaseVersionNumberPostfix = '${{ steps.git-version.outputs.preReleaseTag }}' -replace '[^a-zA-Z0-9]', ''
+          [string] $versionNumber = $Env:NewVersionNumberMajorMinorPatch
+          [string] $prereleaseVersionNumberLabel = $Env:NewVersionNumberPrereleaseLabel
 
           Write-Output "Copying the module files to the Prerelease artifact directory '$prereleaseArtifactModuleDirectoryPath'."
           Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
@@ -162,11 +178,11 @@ jobs:
           [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
           [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
 
-          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber-$prereleaseVersionNumberPostfix'."
-          Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $newVersionNumber -Prerelease $prereleaseVersionNumberPostfix
+          Write-Output "Updating the prerelease manifest's version number to '$versionNumber-$prereleaseVersionNumberLabel'."
+          Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $versionNumber -Prerelease $prereleaseVersionNumberLabel
 
-          Write-Output "Updating the stable manifest's version number to '$newVersionNumber'."
-          Update-ModuleManifest -Path $stableManifestFilePath -ModuleVersion $newVersionNumber
+          Write-Output "Updating the stable manifest's version number to '$versionNumber'."
+          Update-ModuleManifest -Path $stableManifestFilePath -ModuleVersion $versionNumber
 
           Write-Output "Testing the Prerelease manifest file '$prereleaseManifestFilePath' to ensure it is valid."
           Test-ModuleManifest -Path $prereleaseManifestFilePath
@@ -188,7 +204,7 @@ jobs:
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         shell: pwsh
         run: |
-          [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
+          [string] $newVersionNumber = $Env:NewVersionNumberMajorMinorPatch
           [string] $newVersionTag = "v$newVersionNumber"
 
           # To avoid a 403 error on 'git push', ensure you have granted your GitHub Actions workflow read/write permission.
