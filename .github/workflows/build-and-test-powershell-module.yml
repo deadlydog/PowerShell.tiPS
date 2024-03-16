@@ -162,7 +162,7 @@ jobs:
           [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
           [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
 
-          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber$prereleaseVersionNumberPostfix'."
+          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber-$prereleaseVersionNumberPostfix'."
           Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $newVersionNumber -Prerelease $prereleaseVersionNumberPostfix
 
           Write-Output "Updating the stable manifest's version number to '$newVersionNumber'."
