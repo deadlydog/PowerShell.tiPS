@@ -32,7 +32,7 @@ if ($removeDllFilesError)
 	throw "Error deleting the DLL files in '$moduleClassesDirectoryPath'. They are likely in use by another process that imported tiPS. Try closing all PowerShell sessions and running the script again. Error: $removeDllFilesError"
 }
 
-Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode."
+Write-Output "Building C# sln '$csharpSlnFilePath' in Release mode with version number '$VersionNumber'."
 & dotnet build "$csharpSlnFilePath" --configuration Release -p:Version=$VersionNumber
 
 Write-Output "Copying the DLL files in '$csharpClassesDllDirectoryPath' to the module's Classes directory '$moduleClassesDirectoryPath'."
