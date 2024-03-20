@@ -55,7 +55,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history so that GitVersion can determine the version number.
 
-      - name: Display PowerShell version being used
+      - name: Display PowerShell version and OS details in case needed for troubleshooting
         shell: pwsh
         run: $PSVersionTable
 
@@ -67,7 +67,7 @@ jobs:
         with:
           versionSpec: '5.x'
 
-      - name: Get git metadata used for new version number
+      - name: Get git metadata used to determine new version number
         id: git-version
         uses: gittools/actions/gitversion/execute@v0
 
@@ -204,7 +204,7 @@ jobs:
           Write-Output "Copying the deployment files '$deployFilesDirectoryPath' to the deployment artifact directory '$deployFilesArtifactDirectoryPath'."
           Copy-Item -Path $deployFilesDirectoryPath -Destination $deployFilesArtifactDirectoryPath -Recurse -Force
 
-      - name: Update CI version tag and set new version tag
+      - name: Set the new version tag
         # Only run this step if we are doing a push (not a PR) to the default branch (e.g. main).
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         shell: pwsh
