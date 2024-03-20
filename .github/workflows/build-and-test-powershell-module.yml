@@ -221,19 +221,19 @@ jobs:
           & git push origin $newVersionTag
 
       - name: Upload prerelease module artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.prereleaseModuleArtifactName }}
           path: ${{ env.prereleaseModuleArtifactDirectoryPath }}
 
       - name: Upload stable module artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.stableModuleArtifactName }}
           path: ${{ env.stableModuleArtifactDirectoryPath }}
 
       - name: Upload deploy files artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.deployFilesArtifactName }}
           path: ${{ env.deployFilesArtifactDirectoryPath }}
