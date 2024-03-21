@@ -27,7 +27,7 @@ jobs:
     needs: run-build-and-test
     runs-on: ubuntu-latest
     steps:
-      - name: Download prerelease module artifact
+      - name: Download module artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.run-build-and-test.outputs.moduleArtifactName }}
@@ -144,7 +144,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
     steps:
-      - name: Download stable module artifact from triggered workflow
+      - name: Download module artifact from triggered workflow
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.run-build-and-test.outputs.moduleArtifactName}}
