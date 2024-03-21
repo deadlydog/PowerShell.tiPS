@@ -20,12 +20,18 @@ on:
       powerShellModuleName:
         description: 'The name of the PowerShell module being built.'
         value: ${{ jobs.build-and-test.outputs.powerShellModuleName }}
-      prereleaseModuleArtifactName:
-        description: 'The name of the prerelease module artifact created by the build.'
-        value: ${{ jobs.build-and-test.outputs.prereleaseModuleArtifactName }}
-      stableModuleArtifactName:
-        description: 'The name of the stable module artifact created by the build.'
-        value: ${{ jobs.build-and-test.outputs.stableModuleArtifactName }}
+      stableVersionNumber:
+        description: 'The stable version number of the PowerShell module created by the build.'
+        value: ${{ jobs.build-and-test.outputs.stableVersionNumber }}
+      prereleaseVersionNumber:
+        description: 'The full prerelease version number of the PowerShell module created by the build.'
+        value: ${{ jobs.build-and-test.outputs.prereleaseVersionNumber }}
+      prereleaseVersionLabel:
+        description: 'The prerelease label of the PowerShell module created by the build.'
+        value: ${{ jobs.build-and-test.outputs.prereleaseVersionLabel }}
+      moduleArtifactName:
+        description: 'The name of the module artifact created by the build.'
+        value: ${{ jobs.build-and-test.outputs.moduleArtifactName }}
       deployFilesArtifactName:
         description: 'The name of the deploy files artifact created by the build.'
         value: ${{ jobs.build-and-test.outputs.deployFilesArtifactName }}
@@ -34,10 +40,8 @@ env:
   powerShellModuleName: 'tiPS'
   powerShellModuleDirectoryPath: './src/tiPS'
   deployFilesDirectoryPath: './deploy'
-  prereleaseModuleArtifactName: 'PrereleaseModuleArtifact'
-  prereleaseModuleArtifactDirectoryPath: './artifacts/Prerelease'
-  stableModuleArtifactName: 'StableModuleArtifact'
-  stableModuleArtifactDirectoryPath: './artifacts/Stable'
+  moduleArtifactName: 'ModuleArtifact'
+  moduleArtifactDirectoryPath: './artifacts/Module'
   deployFilesArtifactName: 'DeployFilesArtifact'
   deployFilesArtifactDirectoryPath: './artifacts/deploy'
 
@@ -46,8 +50,10 @@ jobs:
     runs-on: windows-latest # Use Windows agent to ensure dotnet.exe is available to build C# assemblies.
     outputs:
       powerShellModuleName: ${{ env.powerShellModuleName }}
-      prereleaseModuleArtifactName: ${{ env.prereleaseModuleArtifactName }}
-      stableModuleArtifactName: ${{ env.stableModuleArtifactName }}
+      stableVersionNumber: ${{ steps.version-number.outputs.majorMinorPatch }}
+      prereleaseVersionNumber: ${{ steps.version-number.outputs.majorMinorPatch }}-${{ steps.version-number.outputs.prereleaseLabel }}
+      prereleaseVersionLabel: ${{ steps.version-number.outputs.prereleaseLabel}}
+      moduleArtifactName: ${{ env.moduleArtifactName }}
       deployFilesArtifactName: ${{ env.deployFilesArtifactName }}
     steps:
       - name: Checkout the repo source code
@@ -72,6 +78,7 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0
 
       - name: Determine the new version number
+        id: version-number
         shell: pwsh
         run: |
           [string] $newVersionNumber = '${{ steps.git-version.outputs.majorMinorPatch }}'
@@ -91,9 +98,9 @@ jobs:
           # PowerShell prerelease labels can only contain the characters 'a-zA-Z0-9', so sanitize it if needed.
           $newVersionNumberPrereleaseLabel = $prereleaseLabel -replace '[^a-zA-Z0-9]', ''
 
-          Write-Output "Setting new environment variables 'NewVersionNumberMajorMinorPatch=$newVersionNumber' and 'NewVersionNumberPrereleaseLabel=$newVersionNumberPrereleaseLabel'."
-          "NewVersionNumberMajorMinorPatch=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-          "NewVersionNumberPrereleaseLabel=$newVersionNumberPrereleaseLabel" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "Setting step output variables 'majorMinorPatch=$newVersionNumber' and 'prereleaseLabel=$newVersionNumberPrereleaseLabel'."
+          "majorMinorPatch=$newVersionNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "prereleaseLabel=$newVersionNumberPrereleaseLabel" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Build the C# assemblies
         shell: pwsh
@@ -160,40 +167,25 @@ jobs:
           }
           Invoke-Pester -Configuration $pesterConfig
 
-      - name: Create Stable and Prerelease module artifacts
+      - name: Create the module artifact
         shell: pwsh
         run: |
           Write-Output "Reading in environment variables."
           [string] $moduleName = $Env:powerShellModuleName
           [string] $moduleDirectoryPath = $Env:powerShellModuleDirectoryPath
           [string] $moduleManifestFileName = $moduleName + '.psd1'
-          [string] $prereleaseArtifactModuleDirectoryPath = Join-Path -Path $Env:prereleaseModuleArtifactDirectoryPath -ChildPath $moduleName
-          [string] $stableArtifactModuleDirectoryPath = Join-Path -Path $Env:stableModuleArtifactDirectoryPath -ChildPath $moduleName
-          [string] $newVersionNumber = $Env:NewVersionNumberMajorMinorPatch
-          [string] $newVersionNumberPrereleaseLabel = $Env:NewVersionNumberPrereleaseLabel
+          [string] $moduleManifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
+          [string] $moduleArtifactDirectoryPath = Join-Path -Path $Env:moduleArtifactDirectoryPath -ChildPath $moduleName
+          [string] $newVersionNumber = '${{ steps.version-number.outputs.majorMinorPatch}}'
 
-          Write-Output "Copying the module files to the Prerelease artifact directory '$prereleaseArtifactModuleDirectoryPath'."
-          Copy-Item -Path $moduleDirectoryPath -Destination $prereleaseArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+          Write-Output "Updating the version number of the module manifest file '$moduleManifestFilePath' to '$newVersionNumber'."
+          Update-ModuleManifest -Path $moduleManifestFilePath -ModuleVersion $newVersionNumber
 
-          Write-Output "Copying the module files to the Stable artifact directory '$stableArtifactModuleDirectoryPath'."
-          Copy-Item -Path $moduleDirectoryPath -Destination $stableArtifactModuleDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
+          Write-Output "Testing the module manifest file '$moduleManifestFilePath' to ensure it is valid."
+          Test-ModuleManifest -Path $moduleManifestFilePath
 
-          Write-Output "Determining what the module manifest file paths are."
-          [string] $manifestFilePath = Join-Path -Path $moduleDirectoryPath -ChildPath $moduleManifestFileName
-          [string] $prereleaseManifestFilePath = Join-Path -Path $prereleaseArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
-          [string] $stableManifestFilePath = Join-Path -Path $stableArtifactModuleDirectoryPath -ChildPath $moduleManifestFileName
-
-          Write-Output "Updating the prerelease manifest's version number to '$newVersionNumber-$newVersionNumberPrereleaseLabel'."
-          Update-ModuleManifest -Path $prereleaseManifestFilePath -ModuleVersion $newVersionNumber -Prerelease $newVersionNumberPrereleaseLabel
-
-          Write-Output "Updating the stable manifest's version number to '$newVersionNumber'."
-          Update-ModuleManifest -Path $stableManifestFilePath -ModuleVersion $newVersionNumber
-
-          Write-Output "Testing the Prerelease manifest file '$prereleaseManifestFilePath' to ensure it is valid."
-          Test-ModuleManifest -Path $prereleaseManifestFilePath
-
-          Write-Output "Testing the Stable manifest file '$stableManifestFilePath' to ensure it is valid."
-          Test-ModuleManifest -Path $stableManifestFilePath
+          Write-Output "Copying the module files to the module artifact directory '$moduleArtifactDirectoryPath'."
+          Copy-Item -Path $moduleDirectoryPath -Destination $moduleArtifactDirectoryPath -Exclude '*.Tests.ps1' -Recurse -Force
 
       - name: Create deploy files artifact
         shell: pwsh
@@ -209,7 +201,7 @@ jobs:
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         shell: pwsh
         run: |
-          [string] $newVersionNumber = $Env:NewVersionNumberMajorMinorPatch
+          [string] $newVersionNumber = '${{ steps.version-number.outputs.majorMinorPatch}}'
           [string] $newVersionTag = "v$newVersionNumber"
 
           # To avoid a 403 error on 'git push', ensure you have granted your GitHub Actions workflow read/write permission.
@@ -220,17 +212,11 @@ jobs:
           & git tag $newVersionTag
           & git push origin $newVersionTag
 
-      - name: Upload prerelease module artifact
+      - name: Upload module artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.prereleaseModuleArtifactName }}
-          path: ${{ env.prereleaseModuleArtifactDirectoryPath }}
-
-      - name: Upload stable module artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.stableModuleArtifactName }}
-          path: ${{ env.stableModuleArtifactDirectoryPath }}
+          name: ${{ env.moduleArtifactName }}
+          path: ${{ env.moduleArtifactDirectoryPath }}
 
       - name: Upload deploy files artifact
         uses: actions/upload-artifact@v4
