@@ -110,6 +110,7 @@ jobs:
         shell: pwsh
         run: ./build/Convert-PowerShellTipFilesToJsonFile.ps1
 
+      # Suppress rules if needed: https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/using-scriptanalyzer
       - name: Run PowerShell linter with PSScriptAnalyzer
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
