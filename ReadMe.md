@@ -12,6 +12,7 @@
 </p>
 
 <p align="center">
+  <!-- Must add 'Windows', 'MacOS', and 'Linux' to the module manifest tags for them to show up on the Platforms badge. -->
   <img src="https://img.shields.io/powershellgallery/p/tiPS.svg">
   <img src="https://img.shields.io/github/languages/top/deadlydog/PowerShell.tiPS.svg">
   <img src="https://img.shields.io/github/languages/code-size/deadlydog/PowerShell.tiPS.svg">
