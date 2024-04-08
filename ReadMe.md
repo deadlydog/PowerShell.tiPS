@@ -38,6 +38,8 @@ tiPS is community driven.
 Have a tip, module, blog post, or community event that you think others may find valuable?
 See the Contributing section below for how to add your tips to tiPS.
 
+If you enjoy this module, consider giving it a GitHub star ⭐ to show your support.
+
 ## ❓ Why this exists
 
 There are tons of great tips and tricks for PowerShell scattered around on the internet, but they require you to actively go look for them.
