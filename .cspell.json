@@ -5,7 +5,10 @@
 {
 	"version": "0.2",
 	"language": "en",
-	"ignorePaths": [],
+	"ignorePaths": [
+		".gitattributes",
+		".gitignore"
+	],
 	"words": [
 		"colours",
 		"gifs",
