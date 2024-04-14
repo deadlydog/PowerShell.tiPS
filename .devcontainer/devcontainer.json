@@ -27,14 +27,14 @@
 
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"ms-vscode.powershell",
-				"yzhang.markdown-all-in-one",
-				"streetsidesoftware.code-spell-checker",
 				"EditorConfig.EditorConfig",
-				"TylerLeonhardt.vscode-inline-values-powershell",
 				"ionutvmi.path-autocomplete",
 				"ms-dotnettools.csdevkit",
-				"nhoizey.gremlins"
+				"ms-vscode.powershell",
+				"nhoizey.gremlins",
+				"streetsidesoftware.code-spell-checker",
+				"TylerLeonhardt.vscode-inline-values-powershell",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	}

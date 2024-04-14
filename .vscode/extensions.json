@@ -1,0 +1,9 @@
+{
+	"recommendations": [
+		"EditorConfig.EditorConfig",
+		"ms-vscode.powershell",
+		"nhoizey.gremlins",
+		"streetsidesoftware.code-spell-checker",
+		"yzhang.markdown-all-in-one"
+	]
+}
