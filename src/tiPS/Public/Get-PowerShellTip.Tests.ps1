@@ -135,7 +135,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 		BeforeAll {
 			New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
 
-			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
+			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 			[int] $numberOfTipsInJsonFile =
 			Get-Content -Path $powerShellTipsJsonFilePath |
 				ConvertFrom-Json |
