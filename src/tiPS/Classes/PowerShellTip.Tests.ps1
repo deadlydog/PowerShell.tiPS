@@ -211,7 +211,7 @@ Describe 'Checking if an Example is provided' {
 			$tip.ExampleIsProvided | Should -BeFalse
 		}
 
-		It 'Should return false when the example is not initialized' {
+		It 'Should return false when the example is null' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Example = $null
 			$tip.ExampleIsProvided | Should -BeFalse
@@ -247,7 +247,7 @@ Describe 'Checking if URLs are provided' {
 			$tip.UrlsAreProvided | Should -BeFalse
 		}
 
-		It 'Should return false when the URLs array is not initialized' {
+		It 'Should return false when the URLs array is null' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Urls = $null
 			$tip.UrlsAreProvided | Should -BeFalse
@@ -283,7 +283,7 @@ Describe 'Checking if an Author is provided' {
 			$tip.AuthorIsProvided | Should -BeFalse
 		}
 
-		It 'Should return false when the author is not initialized' {
+		It 'Should return false when the author is null' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Author = $null
 			$tip.AuthorIsProvided | Should -BeFalse
