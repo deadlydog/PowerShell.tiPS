@@ -67,6 +67,8 @@ jobs:
 
       - name: Run spellcheck
         uses: streetsidesoftware/cspell-action@v5
+        with:
+          incremental_files_only: false
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0
