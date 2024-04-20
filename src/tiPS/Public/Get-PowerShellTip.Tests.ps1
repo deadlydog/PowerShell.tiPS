@@ -189,7 +189,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 						ConvertFrom-Json |
 						Measure-Object |
 						Select-Object -ExpandProperty Count
-				$powerShellTipsJsonFilePath | Should -Be "C:\Users\runneradmin\work\src\tiPS\PowerShellTips.json"
+				$powerShellTipsJsonFilePath | Should -Be "C:\Users\work\src\tiPS\PowerShellTips.json"
 				$content | Should -Be "not actually this"
 				$numberOfTipsInJsonFile | Should -Be 48
 			}
