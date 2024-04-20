@@ -3,6 +3,12 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## v1.3.0 - April 20, 2024
+
+Features:
+
+- Allow specifying the tip `Author` so they can get credit for the tip.
+
 ## v1.2.0 - March 7, 2024
 
 Features:
