@@ -137,10 +137,10 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 
 			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 			[int] $numberOfTipsInJsonFile =
-			Get-Content -Path $powerShellTipsJsonFilePath |
-				ConvertFrom-Json |
-				Measure-Object |
-				Select-Object -ExpandProperty Count
+				Get-Content -Path $powerShellTipsJsonFilePath |
+					ConvertFrom-Json |
+					Measure-Object |
+					Select-Object -ExpandProperty Count
 			New-Variable -Name TotalNumberOfTips -Value $numberOfTipsInJsonFile -Option Constant -Force
 		}
 
