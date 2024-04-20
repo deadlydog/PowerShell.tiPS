@@ -138,9 +138,9 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 			[int] $numberOfTipsInJsonFile =
 				Get-Content -Path $powerShellTipsJsonFilePath |
-					ConvertFrom-Json |
-					Measure-Object |
-					Select-Object -ExpandProperty Count
+				ConvertFrom-Json |
+				Measure-Object |
+				Select-Object -ExpandProperty Count
 			New-Variable -Name TotalNumberOfTips -Value $numberOfTipsInJsonFile -Option Constant -Force
 		}
 
@@ -178,43 +178,63 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 				$script:UnshownTips.Count | Should -Be ($TotalNumberOfTips - 1)
 			}
 
-			It 'temp troubleshooting 1' {
+			It 'temp troubleshooting file path' {
 				# Temp code for troubleshooting tests on Windows PowerShell.
 				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 				$content = Get-Content -Path $powerShellTipsJsonFilePath
 				[int] $numberOfTipsInJsonFile =
 					$content |
-						ConvertFrom-Json |
-						Measure-Object |
-						Select-Object -ExpandProperty Count
+					ConvertFrom-Json |
+					Measure-Object |
+					Select-Object -ExpandProperty Count
 				$powerShellTipsJsonFilePath | Should -Be "C:\Users\work\src\tiPS\PowerShellTips.json"
-				$content | Should -Be "not actually this"
-				$numberOfTipsInJsonFile | Should -Be 48
+				$numberOfTipsInJsonFile | Should -Be -1
 			}
 
-			It 'temp troubleshooting 2' {
+			It 'temp troubleshooting file content' {
 				# Temp code for troubleshooting tests on Windows PowerShell.
 				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 				$content = Get-Content -Path $powerShellTipsJsonFilePath
 				[int] $numberOfTipsInJsonFile =
 					$content |
-						ConvertFrom-Json |
-						Measure-Object |
-						Select-Object -ExpandProperty Count
+					ConvertFrom-Json |
+					Measure-Object |
+					Select-Object -ExpandProperty Count
 				$content | Should -Be "not actually this"
-				$numberOfTipsInJsonFile | Should -Be 48
+				$numberOfTipsInJsonFile | Should -Be -1
 			}
 
-			It 'temp troubleshooting 3' {
+			It 'temp troubleshooting numberOfTipsInJsonFile' {
 				# Temp code for troubleshooting tests on Windows PowerShell.
 				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 				$content = Get-Content -Path $powerShellTipsJsonFilePath
-					[int] $numberOfTipsInJsonFile =
+				[int] $numberOfTipsInJsonFile =
 					$content |
-						ConvertFrom-Json |
-						Measure-Object |
-						Select-Object -ExpandProperty Count
-				$numberOfTipsInJsonFile | Should -Be 48
+					ConvertFrom-Json |
+					Measure-Object |
+					Select-Object -ExpandProperty Count
+				$numberOfTipsInJsonFile | Should -Be -1
+			}
+
+			It 'temp troubleshooting jsonContent' {
+				# Temp code for troubleshooting tests on Windows PowerShell.
+				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+				$content = Get-Content -Path $powerShellTipsJsonFilePath
+				[int] $jsonContent =
+					$content |
+					ConvertFrom-Json
+				$jsonContent | Should -Be "not actually this"
+			}
+
+			It 'temp troubleshooting measurement' {
+				# Temp code for troubleshooting tests on Windows PowerShell.
+				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+				$content = Get-Content -Path $powerShellTipsJsonFilePath
+				$measurement =
+					$content |
+					ConvertFrom-Json |
+					Measure-Object
+				$measurement | Should -Be -1
 			}
 		}
 
