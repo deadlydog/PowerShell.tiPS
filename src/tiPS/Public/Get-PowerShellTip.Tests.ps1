@@ -220,7 +220,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 				# Temp code for troubleshooting tests on Windows PowerShell.
 				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 				$content = Get-Content -Path $powerShellTipsJsonFilePath
-				[int] $jsonContent =
+				$jsonContent =
 					$content |
 					ConvertFrom-Json
 				$jsonContent | Should -Be "not actually this"
@@ -234,7 +234,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 					$content |
 					ConvertFrom-Json |
 					Measure-Object
-				$measurement | Should -Be -1
+				$measurement.Count | Should -Be -1
 			}
 		}
 
