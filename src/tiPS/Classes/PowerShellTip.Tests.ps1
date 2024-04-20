@@ -1,4 +1,4 @@
-using module './../tiPS.psm1'
+using module '.\..\tiPS.psm1'
 
 Describe 'Trimming all tip properties' {
 	BeforeEach {
