@@ -1,19 +1,19 @@
 using module './../tiPS.psm1'
 
 Describe 'Trimming all tip properties' {
-	Context 'Given none of the properties need whitespace trimmed' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
+	BeforeEach {
+		[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+		$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+		$ValidTip.Title = 'Title of the tip'
+		$ValidTip.TipText = 'Tip Text'
+		$ValidTip.Example = 'Example'
+		$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+		$ValidTip.Category = 'Community'
+		$ValidTip.ExpiryDate = [DateTime]::MaxValue
+		$ValidTip.Author = 'Author Name'
+	}
 
+	Context 'Given none of the properties need whitespace trimmed' {
 		It 'Should not change any of the properties' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			[string] $title = 'Title of the tip'
@@ -60,18 +60,6 @@ Describe 'Trimming all tip properties' {
 	}
 
 	Context 'Given the properties need whitespace trimmed' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
-
 		It 'Should trim the leading and trailing whitespace from all of the properties' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			[string] $title = ' Title of the tip '
@@ -102,19 +90,19 @@ Describe 'Trimming all tip properties' {
 }
 
 Describe 'Validating a PowerShellTip' {
-	Context 'Given the PowerShellTip has invalid properties' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
+	BeforeEach {
+		[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+		$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+		$ValidTip.Title = 'Title of the tip'
+		$ValidTip.TipText = 'Tip Text'
+		$ValidTip.Example = 'Example'
+		$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+		$ValidTip.Category = 'Community'
+		$ValidTip.ExpiryDate = [DateTime]::MaxValue
+		$ValidTip.Author = 'Author Name'
+	}
 
+	Context 'Given the PowerShellTip has invalid properties' {
 		It 'Should throw an error when the CreatedDate has not been set' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.CreatedDate = [DateTime]::MinValue
@@ -158,18 +146,6 @@ Describe 'Validating a PowerShellTip' {
 	}
 
 	Context 'Given the PowerShellTip has all valid properties' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
-
 		It 'Should not throw an error when all properties are valid' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			{ $tip.Validate() } | Should -Not -Throw
@@ -178,19 +154,19 @@ Describe 'Validating a PowerShellTip' {
 }
 
 Describe 'Getting the Id property' {
-	Context 'Given the PowerShellTip properties are valid and have been specified' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
+	BeforeEach {
+		[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+		$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+		$ValidTip.Title = 'Title of the tip'
+		$ValidTip.TipText = 'Tip Text'
+		$ValidTip.Example = 'Example'
+		$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+		$ValidTip.Category = 'Community'
+		$ValidTip.ExpiryDate = [DateTime]::MaxValue
+		$ValidTip.Author = 'Author Name'
+	}
 
+	Context 'Given the PowerShellTip properties are valid and have been specified' {
 		It 'Should create the Id properly from the other property values' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.CreatedDate = [DateTime]::Parse('2023-07-16')
@@ -244,19 +220,19 @@ Describe 'Checking if an Example is provided' {
 }
 
 Describe 'Checking if URLs are provided' {
-	Context 'Given the PowerShellTip has URLs' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
+	BeforeEach {
+		[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+		$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+		$ValidTip.Title = 'Title of the tip'
+		$ValidTip.TipText = 'Tip Text'
+		$ValidTip.Example = 'Example'
+		$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+		$ValidTip.Category = 'Community'
+		$ValidTip.ExpiryDate = [DateTime]::MaxValue
+		$ValidTip.Author = 'Author Name'
+	}
 
+	Context 'Given the PowerShellTip has URLs' {
 		It 'Should return true when URLs are supplied' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Urls = @('https://Url1.com', 'http://Url2.com')
@@ -265,18 +241,6 @@ Describe 'Checking if URLs are provided' {
 	}
 
 	Context 'Given the PowerShellTip does not have URLs' {
-		BeforeEach {
-			[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
-			$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
-			$ValidTip.Title = 'Title of the tip'
-			$ValidTip.TipText = 'Tip Text'
-			$ValidTip.Example = 'Example'
-			$ValidTip.Urls = @()
-			$ValidTip.Category = 'Community'
-			$ValidTip.ExpiryDate = [DateTime]::MaxValue
-			$ValidTip.Author = 'Author Name'
-		}
-
 		It 'Should return false when no URLs are supplied' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Urls = @()
