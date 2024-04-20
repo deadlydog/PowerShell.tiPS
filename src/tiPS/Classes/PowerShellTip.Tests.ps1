@@ -11,6 +11,7 @@ Describe 'Trimming all tip properties' {
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
 			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should not change any of the properties' {
@@ -19,10 +20,12 @@ Describe 'Trimming all tip properties' {
 			[string] $tipText = 'Tip Text'
 			[string] $example = 'Example'
 			[string[]] $urls = @('https://Url1.com', 'http://Url2.com')
+			[string] $author = 'Author Name'
 			$tip.Title = $title
 			$tip.TipText = $tipText
 			$tip.Example = $example
 			$tip.Urls = $urls
+			$tip.Author = $author
 
 			{ $tip.TrimAllProperties() } | Should -Not -Throw
 
@@ -30,6 +33,29 @@ Describe 'Trimming all tip properties' {
 			$tip.TipText | Should -Be $tipText
 			$tip.Example | Should -Be $example
 			$tip.Urls | Should -Be $urls
+			$tip.Author | Should -Be $author
+		}
+
+		It 'Should not change any of the properties when an Author is not provided' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			[string] $title = 'Title of the tip'
+			[string] $tipText = 'Tip Text'
+			[string] $example = 'Example'
+			[string[]] $urls = @('https://Url1.com', 'http://Url2.com')
+			[string] $author = ''
+			$tip.Title = $title
+			$tip.TipText = $tipText
+			$tip.Example = $example
+			$tip.Urls = $urls
+			$tip.Author = $author
+
+			{ $tip.TrimAllProperties() } | Should -Not -Throw
+
+			$tip.Title | Should -Be $title
+			$tip.TipText | Should -Be $tipText
+			$tip.Example | Should -Be $example
+			$tip.Urls | Should -Be $urls
+			$tip.Author | Should -Be $author
 		}
 	}
 
@@ -43,6 +69,7 @@ Describe 'Trimming all tip properties' {
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
 			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should trim the leading and trailing whitespace from all of the properties' {
@@ -55,10 +82,13 @@ Describe 'Trimming all tip properties' {
 			[string] $expectedExample = 'Example'
 			[string[]] $urls = @('https://Url1.com   ', '   http://Url2.com')
 			[string[]] $expectedUrls = @('https://Url1.com', 'http://Url2.com')
+			[string] $author = ' Author Name '
+			[string] $expectedAuthor = 'Author Name'
 			$tip.Title = $title
 			$tip.TipText = $tipText
 			$tip.Example = $example
 			$tip.Urls = $urls
+			$tip.Author = $author
 
 			{ $tip.TrimAllProperties() } | Should -Not -Throw
 
@@ -66,6 +96,7 @@ Describe 'Trimming all tip properties' {
 			$tip.TipText | Should -Be $expectedTipText
 			$tip.Example | Should -Be $expectedExample
 			$tip.Urls | Should -Be $expectedUrls
+			$tip.Author | Should -Be $expectedAuthor
 		}
 	}
 }
@@ -81,6 +112,7 @@ Describe 'Validating a PowerShellTip' {
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
 			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should throw an error when the CreatedDate has not been set' {
@@ -135,6 +167,7 @@ Describe 'Validating a PowerShellTip' {
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
 			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should not throw an error when all properties are valid' {
@@ -155,6 +188,7 @@ Describe 'Getting the Id property' {
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
 			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should create the Id properly from the other property values' {
@@ -173,6 +207,42 @@ Describe 'Getting the Id property' {
 	}
 }
 
+Describe 'Checking if an Example is provided' {
+	BeforeEach {
+		[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+		$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+		$ValidTip.Title = 'Title of the tip'
+		$ValidTip.TipText = 'Tip Text'
+		$ValidTip.Example = 'Example'
+		$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+		$ValidTip.Category = 'Community'
+		$ValidTip.ExpiryDate = [DateTime]::MaxValue
+		$ValidTip.Author = 'Author Name'
+	}
+
+	Context 'Given the PowerShellTip does have an example' {
+		It 'Should return true' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Example = 'Example'
+			$tip.ExampleIsProvided | Should -BeTrue
+		}
+	}
+
+	Context 'Given the PowerShellTip does not have an example' {
+		It 'Should return false' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Example = ''
+			$tip.ExampleIsProvided | Should -BeFalse
+		}
+
+		It 'Should return false when the example is not initialized' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Example = $null
+			$tip.ExampleIsProvided | Should -BeFalse
+		}
+	}
+}
+
 Describe 'Checking if URLs are provided' {
 	Context 'Given the PowerShellTip has URLs' {
 		BeforeEach {
@@ -184,6 +254,7 @@ Describe 'Checking if URLs are provided' {
 			$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$ValidTip.Category = 'Community'
 			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should return true when URLs are supplied' {
@@ -202,6 +273,8 @@ Describe 'Checking if URLs are provided' {
 			$ValidTip.Example = 'Example'
 			$ValidTip.Urls = @()
 			$ValidTip.Category = 'Community'
+			$ValidTip.ExpiryDate = [DateTime]::MaxValue
+			$ValidTip.Author = 'Author Name'
 		}
 
 		It 'Should return false when no URLs are supplied' {
@@ -214,6 +287,42 @@ Describe 'Checking if URLs are provided' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			$tip.Urls = $null
 			$tip.UrlsAreProvided | Should -BeFalse
+		}
+	}
+}
+
+Describe 'Checking if an Author is provided' {
+	BeforeEach {
+		[tiPS.PowerShellTip] $ValidTip = [tiPS.PowerShellTip]::new()
+		$ValidTip.CreatedDate = [DateTime]::Parse('2023-07-16')
+		$ValidTip.Title = 'Title of the tip'
+		$ValidTip.TipText = 'Tip Text'
+		$ValidTip.Example = 'Example'
+		$ValidTip.Urls = @('https://Url1.com', 'http://Url2.com')
+		$ValidTip.Category = 'Community'
+		$ValidTip.ExpiryDate = [DateTime]::MaxValue
+		$ValidTip.Author = 'Author Name'
+	}
+
+	Context 'Given the PowerShellTip does have an Author' {
+		It 'Should return true' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Author = 'Author Name'
+			$tip.AuthorIsProvided | Should -BeTrue
+		}
+	}
+
+	Context 'Given the PowerShellTip does not have an Author' {
+		It 'Should return false' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Author = ''
+			$tip.AuthorIsProvided | Should -BeFalse
+		}
+
+		It 'Should return false when the author is not initialized' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Author = $null
+			$tip.AuthorIsProvided | Should -BeFalse
 		}
 	}
 }
