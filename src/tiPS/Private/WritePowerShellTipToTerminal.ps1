@@ -14,6 +14,7 @@ function WritePowerShellTipToTerminal
 	[ConsoleColor] $tipTextColor = [ConsoleColor]::White
 	[ConsoleColor] $exampleColor = [ConsoleColor]::Yellow
 	[ConsoleColor] $urlsColor = [ConsoleColor]::Green
+	[ConsoleColor] $authorColor = [ConsoleColor]::Gray
 
 	# Calculate how many header characters to put on each side of the title to make it look nice.
 	[int] $numberOfCharactersInHeader = 90
@@ -45,6 +46,11 @@ function WritePowerShellTipToTerminal
 	{
 		Write-Host 'More information: ' -ForegroundColor $urlsColor
 		Write-Host ($Tip.Urls -join [System.Environment]::NewLine) -ForegroundColor $urlsColor
+	}
+
+	if ($Tip.AuthorIsProvided)
+	{
+		Write-Host "Tip submitted by: $($Tip.Author)" -ForegroundColor $authorColor
 	}
 
 	Write-Host ('-' * $numberOfCharactersInHeader) -ForegroundColor $headerColor

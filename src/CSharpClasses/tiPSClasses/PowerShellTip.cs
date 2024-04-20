@@ -24,6 +24,7 @@ namespace tiPS
 		public string[] Urls { get; set; }
 		public TipCategory Category { get; set; }
 		public DateTime ExpiryDate { get; set; }
+		public string Author { get; set; }
 
 		public PowerShellTip()
 		{
@@ -34,6 +35,7 @@ namespace tiPS
 			Urls = Array.Empty<string>();
 			Category = TipCategory.Other;
 			ExpiryDate = DateTime.MaxValue;
+			Author = string.Empty;
 		}
 
 		public string Id
@@ -56,6 +58,11 @@ namespace tiPS
 			get { return Urls != null && Urls.Length > 0; }
 		}
 
+		public bool AuthorIsProvided
+		{
+			get { return !string.IsNullOrWhiteSpace(Author); }
+		}
+
 		public void TrimAllProperties()
 		{
 			Title = Title.Trim();
@@ -65,6 +72,7 @@ namespace tiPS
 			{
 				Urls[i] = Urls[i].Trim();
 			}
+			Author = Author.Trim();
 		}
 
 		public void Validate()

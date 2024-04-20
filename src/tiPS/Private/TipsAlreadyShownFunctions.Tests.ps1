@@ -13,6 +13,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 				$newTip.Urls = $tip.Urls
 				$newTip.Category = $tip.Category
 				$newTip.ExpiryDate = $tip.ExpiryDate
+				$newTip.Author = $tip.Author
 				return $newTip
 			}
 		}
@@ -36,6 +37,7 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			$validTip.Urls = @('https://Url1.com', 'http://Url2.com')
 			$validTip.Category = 'Community'
 			$validTip.ExpiryDate = [DateTime]::MaxValue
+			$validTip.Author = 'Author Name'
 
 			# Clone our valid tip to make multiple instances.
 			[tiPS.PowerShellTip] $testTip1 = CloneTip -tip $validTip

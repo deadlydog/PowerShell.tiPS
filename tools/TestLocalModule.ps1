@@ -10,6 +10,8 @@ Get-PowerShellTip
 
 Write-PowerShellTip
 
+Write-PowerShellTip -Id '2023-07-17-set-strict-mode-on-your-scripts'
+
 Tips
 
 Test-PowerShellProfileImportsTiPS
