@@ -176,11 +176,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 
 				$tip | Should -Not -BeNullOrEmpty
 				$script:UnshownTips.Count | Should -Be ($TotalNumberOfTips - 1)
+			}
 
 
-
-
-
+			
+			It 'temp troubleshooting 1' {
 				# Temp code for troubleshooting tests on Windows PowerShell.
 				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
 				$content = Get-Content -Path $powerShellTipsJsonFilePath
@@ -191,6 +191,31 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 						Select-Object -ExpandProperty Count
 				$powerShellTipsJsonFilePath | Should -Be "C:\Users\work\src\tiPS\PowerShellTips.json"
 				$content | Should -Be "not actually this"
+				$numberOfTipsInJsonFile | Should -Be 48
+			}
+
+			It 'temp troubleshooting 2' {
+				# Temp code for troubleshooting tests on Windows PowerShell.
+				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+				$content = Get-Content -Path $powerShellTipsJsonFilePath
+				[int] $numberOfTipsInJsonFile =
+					$content |
+						ConvertFrom-Json |
+						Measure-Object |
+						Select-Object -ExpandProperty Count
+				$content | Should -Be "not actually this"
+				$numberOfTipsInJsonFile | Should -Be 48
+			}
+
+			It 'temp troubleshooting 3' {
+				# Temp code for troubleshooting tests on Windows PowerShell.
+				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+				$content = Get-Content -Path $powerShellTipsJsonFilePath
+					[int] $numberOfTipsInJsonFile =
+					$content |
+						ConvertFrom-Json |
+						Measure-Object |
+						Select-Object -ExpandProperty Count
 				$numberOfTipsInJsonFile | Should -Be 48
 			}
 		}
