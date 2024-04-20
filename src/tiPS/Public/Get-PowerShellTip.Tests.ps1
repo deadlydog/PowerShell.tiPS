@@ -178,8 +178,6 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 				$script:UnshownTips.Count | Should -Be ($TotalNumberOfTips - 1)
 			}
 
-
-			
 			It 'temp troubleshooting 1' {
 				# Temp code for troubleshooting tests on Windows PowerShell.
 				[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
