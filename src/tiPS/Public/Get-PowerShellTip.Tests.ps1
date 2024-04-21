@@ -1,4 +1,4 @@
-using module './../tiPS.psm1'
+using module '.\..\tiPS.psm1'
 
 BeforeAll {
 	New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
@@ -135,12 +135,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level
 		BeforeAll {
 			New-Variable -Name ModuleName -Value 'tiPS' -Option Constant -Force # Required for mocking functions called by the module.
 
-			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot/../PowerShellTips.json"
-			[int] $numberOfTipsInJsonFile =
-			Get-Content -Path $powerShellTipsJsonFilePath |
-				ConvertFrom-Json |
-				Measure-Object |
-				Select-Object -ExpandProperty Count
+			[string] $powerShellTipsJsonFilePath = Resolve-Path "$PSScriptRoot\..\PowerShellTips.json"
+			[PSCustomObject[]] $tipObjects =
+				Get-Content -Path $powerShellTipsJsonFilePath |
+				ConvertFrom-Json
+			[int] $numberOfTipsInJsonFile = $tipObjects.Count
 			New-Variable -Name TotalNumberOfTips -Value $numberOfTipsInJsonFile -Option Constant -Force
 		}
 

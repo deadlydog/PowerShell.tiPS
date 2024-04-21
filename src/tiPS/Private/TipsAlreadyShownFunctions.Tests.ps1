@@ -1,4 +1,4 @@
-using module './../tiPS.psm1'
+using module '.\..\tiPS.psm1'
 
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functions of the module.
 	Describe 'Calling RemoveTipsAlreadyShown' {

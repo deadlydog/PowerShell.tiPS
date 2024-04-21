@@ -8,7 +8,8 @@
       "https://github.com/PowerShell/PowerShell"
     ],
     "Category": 0,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-07-17T00:00:00",
@@ -19,7 +20,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-08-28T00:00:00",
@@ -31,7 +33,8 @@
       "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history"
     ],
     "Category": 7,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-05T00:00:00",
@@ -43,7 +46,8 @@
       "https://stackoverflow.com/a/60996703/602585"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-06T00:00:00",
@@ -54,7 +58,8 @@
       "https://woshub.com/powershell-commands-history/"
     ],
     "Category": 7,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-06T00:00:00",
@@ -65,7 +70,8 @@
       "https://blog.danskingdom.com/PowerShell-intellisense-on-the-command-line/"
     ],
     "Category": 7,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-11T00:00:00",
@@ -76,7 +82,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-11T00:00:00",
@@ -89,7 +96,8 @@
       "https://www.youtube.com/@powershellanddscteamchanne5739"
     ],
     "Category": 0,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-11T00:00:00",
@@ -101,7 +109,8 @@
       "https://github.com/dfinke/ImportExcel"
     ],
     "Category": 2,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-12T00:00:00",
@@ -113,7 +122,8 @@
       "https://4sysops.com/archives/parse-log-files-with-powershell/"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-16T00:00:00",
@@ -125,7 +135,8 @@
       "https://woshub.com/using-out-gridview-table-powershell/"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-17T00:00:00",
@@ -137,7 +148,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/psreadline/"
     ],
     "Category": 7,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-18T00:00:00",
@@ -148,7 +160,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-7.3#line-continuation"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-19T00:00:00",
@@ -161,7 +174,8 @@
       "https://4sysops.com/archives/use-splatting-and-psboundparameters-to-pass-parameters-in-powershell/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-21T00:00:00",
@@ -173,7 +187,8 @@
       "https://devblogs.microsoft.com/scripting/maximizing-the-power-of-here-string-in-powershell-for-configuration-data"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-21T00:00:00",
@@ -186,7 +201,8 @@
       "https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-22T00:00:00",
@@ -197,7 +213,8 @@
       "https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.3#array-addition"
     ],
     "Category": 4,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-23T00:00:00",
@@ -208,7 +225,8 @@
       "https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.3#create-an-array"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-23T00:00:00",
@@ -219,7 +237,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables#psversiontable"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-23T00:00:00",
@@ -231,7 +250,8 @@
       "https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-09-29T00:00:00",
@@ -242,7 +262,8 @@
       "https://www.linkedin.com/feed/update/urn:li:activity:7113300637735407618/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-02T00:00:00",
@@ -254,7 +275,8 @@
       "https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename#system-io-path-gettempfilename"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-02T00:00:00",
@@ -267,19 +289,8 @@
       "https://blog.danskingdom.com/PowerShell-class-definition-pros-cons-and-performance-comparison/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
-  },
-  {
-    "CreatedDate": "2023-10-03T00:00:00",
-    "Title": "PowerShell DevOps Global Summit 2024",
-    "TipText": "The PowerShell DevOps Global Summit will be held in Bellevue, Washington, USA from April 8 - 11, 2024. The conference is a great place to learn about PowerShell and DevOps, and to meet and network with other people in the PowerShell community.\r\n\r\nWant to speak at the conference? The call for speakers is open from October 1 to November 15, 2023.",
-    "Example": "",
-    "Urls": [
-      "https://www.powershellsummit.org/",
-      "https://sessionize.com/pshsummit24/"
-    ],
-    "Category": 0,
-    "ExpiryDate": "2024-04-11T00:00:00"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-03T00:00:00",
@@ -291,7 +302,8 @@
       "https://twitter.com/dfinke/status/1698733677285388581"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-07T00:00:00",
@@ -304,7 +316,8 @@
       "https://www.pdq.com/blog/how-to-manage-powershell-secrets-with-secretsmanagement/"
     ],
     "Category": 5,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-08T00:00:00",
@@ -317,7 +330,8 @@
       "https://www.pdq.com/blog/secure-password-with-powershell-encrypting-credentials-part-1/"
     ],
     "Category": 5,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-09T00:00:00",
@@ -328,7 +342,8 @@
       "https://psconf.eu/"
     ],
     "Category": 0,
-    "ExpiryDate": "2024-06-27T00:00:00"
+    "ExpiryDate": "2024-06-27T00:00:00",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-11T00:00:00",
@@ -340,7 +355,8 @@
       "https://claytonerrington.com/blog/creating-a-test-file"
     ],
     "Category": 8,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-11T00:00:00",
@@ -352,7 +368,8 @@
       "https://twitter.com/devopsjeremy/status/1709773064563744888?s=46&t=-Ox1iPV67-4Vqb8wIZ275A"
     ],
     "Category": 8,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-14T00:00:00",
@@ -364,7 +381,8 @@
       "https://4sysops.com/archives/add-a-calculated-property-with-select-object-in-powershell/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-20T00:00:00",
@@ -375,7 +393,8 @@
       "https://github.com/PowerShell/GraphicalTools/"
     ],
     "Category": 2,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-21T00:00:00",
@@ -387,7 +406,8 @@
       "https://twitter.com/JeffHicks/status/1705007619499237525"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-21T00:00:00",
@@ -398,7 +418,8 @@
       "https://jdhitsolutions.com/blog/essential-powershell-resources/"
     ],
     "Category": 8,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-24T00:00:00",
@@ -410,7 +431,8 @@
       "https://www.sconstantinou.com/powershell-trap/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-28T00:00:00",
@@ -423,7 +445,8 @@
       "https://devblogs.microsoft.com/scripting/how-to-use-powershell-to-write-to-event-logs/"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-10-31T00:00:00",
@@ -434,7 +457,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-11-01T00:00:00",
@@ -446,7 +470,8 @@
       "https://linuxhint.com/use-get-member-powershell/"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-11-05T00:00:00",
@@ -459,7 +484,8 @@
       "https://adamtheautomator.com/powershell-copy-to-clipboard/"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-11-10T00:00:00",
@@ -471,7 +497,8 @@
       "https://ilovepowershell.com/powershell-modern/ultimate-guide-to-using-powershell-add-member-cmdlet/"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2023-11-18T00:00:00",
@@ -483,7 +510,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_if#using-the-ternary-operator-syntax"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-01-07T00:00:00",
@@ -495,7 +523,8 @@
       "https://toastit.dev/2020/03/10/ps7now-null-conditional/"
     ],
     "Category": 6,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-01-17T00:00:00",
@@ -506,7 +535,8 @@
       "https://discord.gg/powershell"
     ],
     "Category": 0,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-02-11T00:00:00",
@@ -517,7 +547,8 @@
       "https://x.com/_mbanana/status/1714337624674939081?s=20"
     ],
     "Category": 8,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-02-11T00:00:00",
@@ -528,7 +559,8 @@
       "https://powershelldle.com"
     ],
     "Category": 0,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-02-18T00:00:00",
@@ -539,7 +571,8 @@
       "https://marketplace.visualstudio.com/items?itemName=TylerLeonhardt.vscode-inline-values-powershell"
     ],
     "Category": 1,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-02-18T00:00:00",
@@ -550,7 +583,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/get-help?view=powershell-7.4"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-02-26T00:00:00",
@@ -562,7 +596,8 @@
       "https://twitter.com/CoryKnox/status/1762253942753493451"
     ],
     "Category": 1,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   },
   {
     "CreatedDate": "2024-03-04T00:00:00",
@@ -573,6 +608,7 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-date?view=powershell-7.4#-format"
     ],
     "Category": 3,
-    "ExpiryDate": "9999-12-31T23:59:59.9999999"
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": ""
   }
 ]

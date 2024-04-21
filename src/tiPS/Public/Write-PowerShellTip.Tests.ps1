@@ -1,4 +1,4 @@
-using module './../tiPS.psm1'
+using module '.\..\tiPS.psm1'
 
 # Prevent PSScriptAnalyzer from throwing errors for using aliases when we want to test them.
 [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingCmdletAliases', '')]
