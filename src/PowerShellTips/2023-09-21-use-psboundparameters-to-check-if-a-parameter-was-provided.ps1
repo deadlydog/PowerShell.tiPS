@@ -25,3 +25,4 @@ $tip.Urls = @(
 	'https://www.reza-aghaei.com/how-to-determine-if-a-parameter-is-passed-to-a-powershell-cmdlet/'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

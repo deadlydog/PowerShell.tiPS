@@ -29,6 +29,7 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_if#using-the-ternary-operator-syntax'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'
 
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
 # Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.

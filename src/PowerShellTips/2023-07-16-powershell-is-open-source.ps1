@@ -7,3 +7,4 @@ $tip.Urls = @(
 	'https://github.com/PowerShell/PowerShell'
 )
 $tip.Category = [tiPS.TipCategory]::Community
+$tip.Author = 'Daniel Schroeder (deadlydog)'

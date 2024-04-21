@@ -32,5 +32,8 @@
 		"pwsh", // PowerShell Core
 		"PowerShelldle", // PowerShell game
 		"Wordle" // Game
+	],
+	"ignoreRegExpList": [
+		"^\\$tip\\.Author = .*$" // Ignore tip Author names
 	]
 }

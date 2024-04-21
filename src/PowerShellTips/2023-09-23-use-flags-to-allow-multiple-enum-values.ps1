@@ -31,3 +31,4 @@ $tip.Urls = @(
 	'https://arcanecode.com/2021/12/06/fun-with-powershell-enum-flags/'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

@@ -12,3 +12,4 @@ $tip.Urls = @(
 	'https://woshub.com/using-out-gridview-table-powershell/'
 )
 $tip.Category = [tiPS.TipCategory]::NativeCmdlet # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

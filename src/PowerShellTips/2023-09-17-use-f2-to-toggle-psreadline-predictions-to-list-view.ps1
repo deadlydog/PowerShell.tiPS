@@ -14,3 +14,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/psreadline/'
 )
 $tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

@@ -7,3 +7,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax
+$tip.Author = 'Daniel Schroeder (deadlydog)'

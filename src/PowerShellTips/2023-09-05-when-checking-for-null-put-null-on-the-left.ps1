@@ -15,3 +15,4 @@ $tip.Urls = @(
 	'https://stackoverflow.com/a/60996703/602585'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

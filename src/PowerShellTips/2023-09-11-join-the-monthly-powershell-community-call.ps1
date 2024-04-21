@@ -13,3 +13,4 @@ $tip.Urls = @(
 	'https://www.youtube.com/@powershellanddscteamchanne5739'
 )
 $tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

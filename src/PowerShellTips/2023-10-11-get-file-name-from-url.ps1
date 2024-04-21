@@ -29,6 +29,7 @@ $tip.Urls = @(
 	'https://twitter.com/devopsjeremy/status/1709773064563744888?s=46&t=-Ox1iPV67-4Vqb8wIZ275A'
 )
 $tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'
 
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
 # Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.

@@ -36,6 +36,7 @@ $tip.Urls = @(
 	'https://4sysops.com/archives/add-a-calculated-property-with-select-object-in-powershell/'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'
 
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
 # Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.
