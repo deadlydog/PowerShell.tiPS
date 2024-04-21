@@ -29,3 +29,4 @@ $tip.Urls = @(
 	'https://www.linkedin.com/feed/update/urn:li:activity:7113300637735407618/'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

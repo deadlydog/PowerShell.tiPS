@@ -24,6 +24,7 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/en-us/dotnet/api/system.io.path.gettempfilename#system-io-path-gettempfilename'
 )
 $tip.Category = [tiPS.TipCategory]::Syntax # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Manjunath Beli (belibug)'
 
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
 # Editor: Editor tips and extensions. e.g. VSCode, ISE, etc.

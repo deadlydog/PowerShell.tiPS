@@ -11,3 +11,4 @@ $tip.Urls = @(
 	'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-history'
 )
 $tip.Category = [tiPS.TipCategory]::Terminal
+$tip.Author = 'Emil Larsson (ehmiiz)'

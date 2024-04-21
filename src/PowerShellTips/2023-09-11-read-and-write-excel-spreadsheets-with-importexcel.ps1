@@ -24,3 +24,4 @@ $tip.Urls = @(
 	'https://github.com/dfinke/ImportExcel'
 )
 $tip.Category = [tiPS.TipCategory]::Module # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'

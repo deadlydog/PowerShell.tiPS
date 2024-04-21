@@ -13,3 +13,4 @@ $tip.Urls = @(
 	'https://woshub.com/powershell-commands-history/'
 )
 $tip.Category = [tiPS.TipCategory]::Terminal # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
+$tip.Author = 'Daniel Schroeder (deadlydog)'
