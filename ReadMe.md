@@ -187,7 +187,7 @@ To restore tiPS to the default configuration, simply delete the directory.
 If tiPS is uninstalled, the directory is not automatically deleted; it must be done manually.
 The directory is very small though, so it is not a big deal if it is left behind.
 
-## ➕ How to contribute
+## ➕ Contribute a tip
 
 tiPS is open source, and contributions are not only welcome, they are encouraged! 😀
 
