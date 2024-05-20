@@ -3,6 +3,12 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## v1.3.7 - May 20, 2024
+
+Fixes:
+
+- Write module's last auto-update time and last auto-write tip time to file using a universal format instead of an OS-dependent format to avoid errors parsing the datetime when the module loads.
+
 ## v1.3.0 - April 20, 2024
 
 Features:
