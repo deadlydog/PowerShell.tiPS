@@ -14,16 +14,20 @@ Describe 'Write-PowerShellTip' {
 	}
 
 	Context 'Given no parameters' {
-		It 'Should write a tip' {
+		It 'Should write a tip without error' {
+			$Error.Clear()
 			{ Write-PowerShellTip } | Should -Not -Throw
 			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
+			$Error[0] | Should -BeNullOrEmpty
 		}
 	}
 
 	Context 'Given a valid tip ID' {
 		It 'Should write the tip to the terminal without error' {
+			$Error.Clear()
 			{ Write-PowerShellTip -Id '2023-07-16-powershell-is-open-source' } | Should -Not -Throw
 			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
+			$Error[0] | Should -BeNullOrEmpty
 		}
 	}
 

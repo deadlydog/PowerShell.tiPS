@@ -31,12 +31,24 @@ Describe 'Get-PowerShellTip' {
 			$tip = Get-PowerShellTip
 			$tip | Should -Not -BeNullOrEmpty
 		}
+
+		It 'Should not return an error' {
+			$Error.Clear()
+			{ Get-PowerShellTip } | Should -Not -Throw
+			$Error[0] | Should -BeNullOrEmpty
+		}
 	}
 
 	Context 'Given a valid tip ID' {
 		It 'Should return the tip with the specified ID' {
 			$tip = Get-PowerShellTip -Id '2023-07-16-powershell-is-open-source'
 			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
+		}
+
+		It 'Should not return an error' {
+			$Error.Clear()
+			{ Get-PowerShellTip -Id '2023-07-16-powershell-is-open-source' } | Should -Not -Throw
+			$Error[0] | Should -BeNullOrEmpty
 		}
 	}
 
