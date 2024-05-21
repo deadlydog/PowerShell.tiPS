@@ -122,6 +122,20 @@ namespace tiPS
 					throw new ArgumentException("The Urls property value '" + url + "' is not a valid URL.");
 				}
 			}
+
+			if (ExpiryDate <= CreatedDate)
+			{
+				throw new ArgumentException("The ExpiryDate property value must be greater than the CreatedDate property value.");
+			}
+
+			if (!string.IsNullOrWhiteSpace(Author))
+			{
+				// Ensure the Author is not the default value from the template often used to create new tips.
+				if (string.Equals(Author, "Your name and/or username", StringComparison.OrdinalIgnoreCase))
+				{
+					throw new ArgumentException("The Author property value must be set to your name and/or username, or left blank.");
+				}
+			}
 		}
 	}
 }

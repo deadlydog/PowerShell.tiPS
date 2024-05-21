@@ -143,6 +143,18 @@ Describe 'Validating a PowerShellTip' {
 			[tiPS.PowerShellTip] $tip = $ValidTip
 			{ $tip.Category = 'InvalidCategory' } | Should -Throw
 		}
+
+		It 'Should throw an error when the ExpiryDate is before the CreatedDate' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.ExpiryDate = [DateTime]::Parse('2020-01-15')
+			{ $tip.Validate() } | Should -Throw
+		}
+
+		It 'Should throw an error when the Author is the default template value' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			$tip.Author = 'Your name and/or username'
+			{ $tip.Validate() } | Should -Throw
+		}
 	}
 
 	Context 'Given the PowerShellTip has all valid properties' {
