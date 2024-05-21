@@ -623,5 +623,31 @@
     "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-05-20T00:00:00",
+    "Title": "Assign array items to variables in one line",
+    "TipText": "Often times we have an array with multiple items that we want to assign to individual variables. Instead of assigning each item to a variable on a separate line, you can assign all the items to variables on a single line.\r\n\r\nBe careful though, as if there are more items in the array than variables you are assigning to, the remaining items will all be assigned to the last variable. If there are more variables than items in the array, the extra variables will be assigned `$null`. To avoid this you can explicitly specify the indexes of the array items you want to assign to each variable, or use the range operator.\r\n\r\nYou can also use the `-split` operator to create an array of items from a string.",
+    "Example": "$items = 'One', 'Two', 'Three'\r\n\r\n# Instead of doing this:\r\n$one = $items[0]\r\n$two = $items[1]\r\n$three = $items[2]\r\n\r\n# You can do this:\r\n$one, $two, $three = $items\r\n\r\n# Be careful though:\r\n$one, $two = $items\r\n# $one will be 'One', but $two will be an array containing 'Two','Three'.\r\n\r\n$one, $two, $three, $four = $items\r\n# $one will be 'One', $two will be 'Two', $three will be 'Three', and $four will be $null\r\n\r\n# Use array indexing to get only the first two items.\r\n$one, $two = $items[0..1] # Or $items[0,1]\r\n\r\n# You can also use the `-split` operator to create an array of items from a string.\r\n$one, $two, $three = 'One Two Three' -split ' '",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_arrays",
+      "https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays",
+      "https://x.com/adbertram/status/1790396866099634606"
+    ],
+    "Category": 6,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-05-20T00:00:00",
+    "Title": "Learn from the PowerShell.org YouTube channel",
+    "TipText": "PowerShell.org has a YouTube channel with a variety of videos to help you learn PowerShell, including recordings of the PowerShell Summit conference sessions. Subscribe to the channel to stay up-to-date with the latest content.\r\n\r\nPowershell.org YouTube channel: https://www.youtube.com/powershellorg",
+    "Example": "",
+    "Urls": [
+      "https://www.youtube.com/powershellorg"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
