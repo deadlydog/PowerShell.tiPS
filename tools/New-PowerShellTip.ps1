@@ -45,15 +45,16 @@ This can be multiple lines.
 If the tip is for a new feature, mention the PowerShell version the feature was introduced in.
 '@
 `$tip.Example = @'
-Example code to demonstrate the tip. This can also be multiple lines if needed.
+Example code to demonstrate the tip. This can also be multiple lines if needed. Use an empty string if no example is provided.
 '@
 `$tip.Urls = @(
 	'https://OneTwoOrThreeUrls'
 	'https://ToLearnMoreAboutTheTip'
+	'https://UseAnEmptyArrayIfNoUrlsAreProvided'
 )
 `$tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
-#`$tip.ExpiryDate = [DateTime]::Parse('2024-10-30') # Optional. If the tip is not relevant after a certain date, set the expiration date. e.g. Announcing a conference or event.
 `$tip.Author = 'Your name and/or username' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
+#`$tip.ExpiryDate = [DateTime]::Parse('2024-10-30') # Optional. If the tip is not relevant after a certain date, set the expiration date. e.g. Announcing a conference or event.
 
 # Category meanings:
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
