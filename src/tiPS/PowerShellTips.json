@@ -662,5 +662,17 @@
     "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-06-12T00:00:00",
+    "Title": "Join the Pacific PowerShell User Group!",
+    "TipText": "The Pacific PowerShell User Group meets virtually once a month to share ideas and discuss all things PowerShell. This is a casual meetup where everyone is welcome, from seasoned professionals to complete PowerShell newbies. Feel free to join. We would love to have you!",
+    "Example": "Start-Process \"https://www.meetup.com/pacific-powershell-user-group/\"",
+    "Urls": [
+      "https://www.meetup.com/pacific-powershell-user-group/"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
