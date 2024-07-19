@@ -11,7 +11,7 @@ $tip.Urls = @(
 	'https://powershell.org/calendar/'
 )
 $tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
-$tip.Author = 'Your name and/or username' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
+$tip.Author = 'Daniel Schroeder (deadlydog)' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
 #$tip.ExpiryDate = [DateTime]::Parse('2024-10-30') # Optional. If the tip is not relevant after a certain date, set the expiration date. e.g. Announcing a conference or event.
 
 # Category meanings:
