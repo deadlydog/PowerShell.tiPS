@@ -334,18 +334,6 @@
     "Author": "Daniel Schroeder (deadlydog)"
   },
   {
-    "CreatedDate": "2023-10-09T00:00:00",
-    "Title": "PowerShell Conference Europe 2024",
-    "TipText": "PSConfEU 2024 will be held June 24 - 27, 2024. Save the date!\r\n\r\nMore details will be released at PSConfEU MiniCon on October 24, 2023.",
-    "Example": "",
-    "Urls": [
-      "https://psconf.eu/"
-    ],
-    "Category": 0,
-    "ExpiryDate": "2024-06-27T00:00:00",
-    "Author": "Daniel Schroeder (deadlydog)"
-  },
-  {
     "CreatedDate": "2023-10-11T00:00:00",
     "Title": "Create test files of arbitrary size",
     "TipText": "When doing performance testing it can be useful to have a file of a specific size to test with. Creating files of a specific size is fairly straightforward with the System.IO.FileStream class.",
@@ -672,6 +660,31 @@
       "https://www.meetup.com/pacific-powershell-user-group/"
     ],
     "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-07-18T00:00:00",
+    "Title": "Stay up-to-date with the latest PowerShell events",
+    "TipText": "PowerShell.org has a calendar of upcoming PowerShell events. This is a great way to stay informed about upcoming PowerShell events, such as conferences, user group meetings, and webinars. You can even subscribe to the calendar in your favorite calendar app, such as Outlook, Google Calendar, or Apple Calendar.\r\n\r\nYou can find the calendar at: https://powershell.org/calendar/",
+    "Example": "",
+    "Urls": [
+      "https://powershell.org/calendar/"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-07-18T00:00:00",
+    "Title": "Use the -is operator to check a variable's type",
+    "TipText": "PowerShell provides the -is and -isnot operators to check if a variable is of a specific type. This is useful when you need to ensure that a variable is of a certain type before performing an operation on it. It is also more reliable and performant than using the GetType() method.",
+    "Example": "(get-date) -is [DateTime] # Result is True\r\n(get-date) -isnot [DateTime] # Result is False\r\n\r\n$number = 42\r\n$number -is [int] # Result is True\r\n$number -is [string] # Result is False\r\n\r\n# Can also use the -is operator with the type name as a string\r\n$number -is 'int' # Result is True\r\n\r\nif ($number -is [int]) {\r\n    Write-Host \"$number is an integer\"\r\n}\r\n\r\n# Don't do this. It's less reliable and performant than using the -is operator.\r\nif ($number.GetType().Name -eq 'Int32') {\r\n    Write-Host \"$number is an integer\"\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_type_operators",
+      "https://x.com/adbertram/status/1779473980631433681"
+    ],
+    "Category": 6,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
   }
