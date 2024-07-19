@@ -665,6 +665,19 @@
   },
   {
     "CreatedDate": "2024-07-18T00:00:00",
+    "Title": "Easily expand environment variables in a string",
+    "TipText": "You can use the `[System.Environment]::ExpandEnvironmentVariables()` method to easily expand environment variables in a string. Simply wrap the environment variable name in % characters. You can even expand multiple environment variables in a single string.",
+    "Example": "# Expand a single environment variable and store it in a variable.\r\n$tempDirectoryPath = [System.Environment]::ExpandEnvironmentVariables('%TEMP%')\r\n\r\n# Alternative is to use the $Env: syntax to retrieve a single environment variable.\r\n$tempDirectoryPath = $Env:TEMP\r\n\r\n# Expand multiple environment variables in a string.\r\n[System.Environment]::ExpandEnvironmentVariables('My system drive is %SystemDrive% and my system root is %SystemRoot%')",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/dotnet/api/system.environment.expandenvironmentvariables",
+      "https://x.com/adbertram/status/1777421663581130856"
+    ],
+    "Category": 3,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-07-18T00:00:00",
     "Title": "Stay up-to-date with the latest PowerShell events",
     "TipText": "PowerShell.org has a calendar of upcoming PowerShell events. This is a great way to stay informed about upcoming PowerShell events, such as conferences, user group meetings, and webinars. You can even subscribe to the calendar in your favorite calendar app, such as Outlook, Google Calendar, or Apple Calendar.\r\n\r\nYou can find the calendar at: https://powershell.org/calendar/",
     "Example": "",
@@ -679,7 +692,7 @@
     "CreatedDate": "2024-07-18T00:00:00",
     "Title": "Use the -is operator to check a variable's type",
     "TipText": "PowerShell provides the -is and -isnot operators to check if a variable is of a specific type. This is useful when you need to ensure that a variable is of a certain type before performing an operation on it. It is also more reliable and performant than using the GetType() method.",
-    "Example": "(get-date) -is [DateTime] # Result is True\r\n(get-date) -isnot [DateTime] # Result is False\r\n\r\n$number = 42\r\n$number -is [int] # Result is True\r\n$number -is [string] # Result is False\r\n\r\n# Can also use the -is operator with the type name as a string\r\n$number -is 'int' # Result is True\r\n\r\nif ($number -is [int]) {\r\n    Write-Host \"$number is an integer\"\r\n}\r\n\r\n# Don't do this. It's less reliable and performant than using the -is operator.\r\nif ($number.GetType().Name -eq 'Int32') {\r\n    Write-Host \"$number is an integer\"\r\n}",
+    "Example": "(get-date) -is [DateTime] # Result is True\r\n(get-date) -isnot [DateTime] # Result is False\r\n\r\n$number = 42\r\n$number -is [int] # Result is True\r\n$number -is [string] # Result is False\r\n\r\n# Can also use the -is operator with the type name as a string.\r\n$number -is 'int' # Result is True\r\n\r\nif ($number -is [int]) {\r\n    Write-Host \"$number is an integer\"\r\n}\r\n\r\n# Don't do this. It's less reliable and performant than using the -is operator.\r\nif ($number.GetType().Name -eq 'Int32') {\r\n    Write-Host \"$number is an integer\"\r\n}",
     "Urls": [
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_type_operators",
       "https://x.com/adbertram/status/1779473980631433681"
