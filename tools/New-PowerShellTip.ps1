@@ -36,7 +36,7 @@ $dummyTip.Title = $tipTitle.Trim()
 [string] $tipTemplateFileContents = @"
 `$tip = [tiPS.PowerShellTip]::new()
 `$tip.CreatedDate = [DateTime]::Parse('$today')
-`$tip.Title = '$tipTitle'
+`$tip.Title = '$($tipTitle.Replace("'", "''"))'
 `$tip.TipText = @'
 A short description of the tip.
 
