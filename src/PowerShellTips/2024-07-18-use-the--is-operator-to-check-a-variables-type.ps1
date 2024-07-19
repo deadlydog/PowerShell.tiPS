@@ -12,7 +12,7 @@ $number = 42
 $number -is [int] # Result is True
 $number -is [string] # Result is False
 
-# Can also use the -is operator with the type name as a string
+# Can also use the -is operator with the type name as a string.
 $number -is 'int' # Result is True
 
 if ($number -is [int]) {
