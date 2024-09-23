@@ -180,7 +180,7 @@ NOTE: This only looks for the import statement directly in your PowerShell profi
 To get the directory where the tiPS configuration and other related data is stored, run:
 
 ```powershell
-Get-TiPSConfigurationDirectory
+Get-TiPSDataDirectoryPath
 ```
 
 To restore tiPS to the default configuration, simply delete the directory.
