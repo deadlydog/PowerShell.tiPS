@@ -2,7 +2,7 @@ $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2024-09-23')
 $tip.Title = 'Press Tab twice to view all parameters, properties and possibilities'
 $tip.TipText = @'
-Add `Set-PSReadlineKeyHandler -Key Tab -Function Complete` to your PowerShell profile. This way you can press the Tab key twice after a command to view all possible parameters, properties, and possiblities.
+Add `Set-PSReadLineKeyHandler -Key Tab -Function Complete` to your PowerShell profile. This way you can press the Tab key twice after a command to view all possible parameters, properties, and possibilities.
 
 The double tab method is similar to the normal tab completion, except it will show you all of the options at once instead of just one option at a time.
 
@@ -13,7 +13,7 @@ $tip.Example = @'
 notepad $profile
 
 # Add the following line:
-Set-PSReadlineKeyHandler -Key Tab -Function Complete
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
 '@
 $tip.Urls = @(
 	'https://lazyadmin.nl/powershell/powershell-cheat-sheet/#good-to-know'
