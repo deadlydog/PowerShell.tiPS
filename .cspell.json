@@ -20,6 +20,7 @@
 	"ignoreWords": [
 		"Codespace", // GitHub Codespaces
 		"Codespaces", // GitHub Codespaces
+		"datetime", // PowerShell type
 		"dawidd", // GitHub action author
 		"deadlydog", // Username
 		"devcontainer", // VS Code devcontainer
@@ -30,8 +31,10 @@
 		"madrapps", // GitHub action author
 		"netstandard", // .NET Standard project target
 		"nunit", // .NET unit testing framework
-		"pwsh", // PowerShell Core
 		"PowerShelldle", // PowerShell game
+		"pscredential", // PowerShell type
+		"pscustomobject", // PowerShell type
+		"pwsh", // PowerShell Core
 		"Wordle" // Game
 	],
 	"ignoreRegExpList": [

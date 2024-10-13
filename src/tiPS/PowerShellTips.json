@@ -700,5 +700,43 @@
     "Category": 6,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-09-23T00:00:00",
+    "Title": "Drag File or Folder into PowerShell to get the path",
+    "TipText": "You can drag a file or folder from the File Explorer into PowerShell to get the full path.",
+    "Example": "",
+    "Urls": [
+      "https://lazyadmin.nl"
+    ],
+    "Category": 7,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Rudy Mens (LazyAdmin)"
+  },
+  {
+    "CreatedDate": "2024-09-23T00:00:00",
+    "Title": "Press Tab twice to view all parameters, properties and possibilities",
+    "TipText": "Add `Set-PSReadLineKeyHandler -Key Tab -Function Complete` to your PowerShell profile. This way you can press the Tab key twice after a command to view all possible parameters, properties, and possibilities.\r\n\r\nThe double tab method is similar to the normal tab completion, except it will show you all of the options at once instead of just one option at a time.\r\n\r\nNote: Requires the `PSReadLine` module, which is included in PowerShell 5.1 and newer.",
+    "Example": "# Open your PowerShell Profile:\r\nnotepad $profile\r\n\r\n# Add the following line:\r\nSet-PSReadLineKeyHandler -Key Tab -Function Complete",
+    "Urls": [
+      "https://lazyadmin.nl/powershell/powershell-cheat-sheet/#good-to-know"
+    ],
+    "Category": 7,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Rudy Mens (LazyAdmin)"
+  },
+  {
+    "CreatedDate": "2024-10-13T00:00:00",
+    "Title": "Use Type Accelerators instead of fully qualified class names",
+    "TipText": "Type accelerators allow us to use a short alias for a .NET type, instead of typing the fully qualified class name. There are many built-in type accelerators, such as:\r\n\r\n[int] instead of [System.Int32]\r\n[string] instead of [System.String]\r\n[datetime] instead of [System.DateTime]\r\n[array] instead of [System.Array]\r\n[xml] instead of [System.Xml.XmlDocument]\r\n[regex] instead of [System.Text.RegularExpressions.Regex]\r\n[pscredential] instead of [System.Management.Automation.PSCredential]\r\n[pscustomobject] instead of [System.Management.Automation.PSCustomObject]\r\n\r\nSee the About_Type_Accelerators help topic for a full list of built-in type accelerators.\r\n\r\nWe can also create type accelerators for our own custom types, or existing .NET types that do not have a type accelerator.",
+    "Example": "# These lines are equivalent:\r\n[int] $myNumber = 42\r\n[System.Int32] $myNumber = 42\r\n\r\n# These lines are equivalent:\r\n[string]::IsNullOrWhiteSpace($someString)\r\n[System.String]::IsNullOrWhiteSpace($someString)\r\n\r\n# Create a type accelerator for an existing .NET class, and then use it to create a new instance.\r\n$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')\r\n$TypeAcceleratorsClass::Add('TCP','System.Net.Sockets.TCPClient')\r\n$tcpClient = [TCP]::new('localhost', 80)\r\n\r\n# Show all available type accelerators.\r\n[PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_type_accelerators",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_classes#exporting-classes-with-type-accelerators",
+      "https://4sysops.com/archives/using-powershell-type-accelerators/"
+    ],
+    "Category": 6,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
