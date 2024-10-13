@@ -20,6 +20,7 @@
 	"ignoreWords": [
 		"Codespace", // GitHub Codespaces
 		"Codespaces", // GitHub Codespaces
+		"datetime", // PowerShell type
 		"dawidd", // GitHub action author
 		"deadlydog", // Username
 		"devcontainer", // VS Code devcontainer
