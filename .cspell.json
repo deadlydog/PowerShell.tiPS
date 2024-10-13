@@ -30,8 +30,10 @@
 		"madrapps", // GitHub action author
 		"netstandard", // .NET Standard project target
 		"nunit", // .NET unit testing framework
-		"pwsh", // PowerShell Core
 		"PowerShelldle", // PowerShell game
+		"pscredential", // PowerShell type
+		"pscustomobject", // PowerShell type
+		"pwsh", // PowerShell Core
 		"Wordle" // Game
 	],
 	"ignoreRegExpList": [
