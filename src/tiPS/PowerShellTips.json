@@ -738,5 +738,17 @@
     "Category": 6,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-10-19T00:00:00",
+    "Title": "Follow the PowerShell Announcements repo to stay up-to-date",
+    "TipText": "The PowerShell team posts issues to the GitHub PowerShell/Announcements repository to keep the community informed of known PowerShell security vulnerabilities and breaking changes. You can browse the GitHub issues list to see vulnerabilities with PowerShell and PowerShell-related products, and \"Watch\" the repository to receive notifications of new issues and comments as they are posted.",
+    "Example": "",
+    "Urls": [
+      "https://github.com/PowerShell/Announcements"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
