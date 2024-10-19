@@ -2,6 +2,8 @@
 
 A brief summary of the change this PR brings.
 
+If this PR is simply to add a new Tip, you can remove all of the sections below, as they do not apply.
+
 ### Checklist
 
 Addresses issue #ISSUE_NUMBER (if applicable)
