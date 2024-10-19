@@ -2,7 +2,7 @@ $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2024-10-19')
 $tip.Title = 'Follow the PowerShell Announcements repo to stay up-to-date'
 $tip.TipText = @'
-The PowerShell team posts issues to the GitHub PowerShell/Announcements repository to keep the community informed of known PowerShell security vulnerabilities and breaking changes. You can browse the GitHub issues list to see vulnerabilities with PowerShell and PowerShell-related products, and "Watch" the repository to receive notifications of new issues and comments as they are posted.
+The PowerShell team posts issues to the GitHub PowerShell/Announcements repository to keep the community informed of known PowerShell security vulnerabilities and breaking changes. You can browse the GitHub issues list to see vulnerabilities with PowerShell and PowerShell-related products, see which version they are fixed in or if they are still outstanding, and "Watch" the repository to receive notifications of new issues and comments as they are posted.
 '@
 $tip.Example = ''
 $tip.Urls = @(
