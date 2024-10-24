@@ -750,5 +750,17 @@
     "Category": 0,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-10-24T00:00:00",
+    "Title": "PowerShell Best Practices and Style repository",
+    "TipText": "The PoshCode/PowerShellPracticeAndStyle GitHub repository contains a collection of best practices and style guidelines for PowerShell scripts and modules. It is a great resource to help you write better PowerShell code that is more readable, maintainable, and performant. The repository includes guidelines on naming conventions, formatting, error handling, documentation, and more.\r\n\r\nIt is an open-source repo, so you can follow it to be notified of updates, and open pull requests or issues to contribute your own suggestions or improvements.",
+    "Example": "",
+    "Urls": [
+      "https://github.com/PoshCode/PowerShellPracticeAndStyle"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
