@@ -43,3 +43,7 @@ This produces the fastest load time for the module, and allows us to use some of
 
 The main consequence of this decision is that the C# classes need to be recompiled into a new assembly file when they are modified.
 Building the C# assembly will need to be done by users during development, as well as part of the CI build process.
+
+## More information
+
+You can also read [this blog post](https://blog.danskingdom.com/PowerShell-class-definition-pros-cons-and-performance-comparison/) which goes does similar performance analysis and provides a GitHub repo with test code.
