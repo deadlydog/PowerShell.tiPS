@@ -36,6 +36,7 @@ Cons:
   - More maintenance required.
   - Possible downtime.
   - Potentially costs money to host.
+- Requires network connectivity to a potentially untrusted source (from the users point of view), so users behind a firewall with strict security regulations may not be able to access the service.
 
 ## Decision
 
