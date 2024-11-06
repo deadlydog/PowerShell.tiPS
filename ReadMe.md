@@ -99,7 +99,7 @@ Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyUpdat
 
 By default tiPS does not automatically show tips or update itself, so you must configure it to do so.
 
-## Commands
+## 🔧 Commands
 
 To see the full list of commands, use `Get-Command -Module tiPS`.
 You can then use `Get-Help <command>` to get more information about a specific command.
