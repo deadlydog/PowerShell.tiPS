@@ -6,9 +6,9 @@ The Research Triangle User Group (RTPSUG) meets virtually, typically once or twi
 "@
 $tip.Example = ''
 $tip.Urls = @(
+	'https://rtpsug.com'
 	'https://www.meetup.com/research-triangle-powershell-users-group/'
 	'https://www.youtube.com/c/RTPSUG/'
-	'https://rtpsug.com'
 )
 $tip.Category = [tiPS.TipCategory]::Community # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
 $tip.Author = 'Daniel Schroeder (deadlydog)' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
