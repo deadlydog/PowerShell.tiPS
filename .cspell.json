@@ -35,6 +35,7 @@
 		"pscredential", // PowerShell type
 		"pscustomobject", // PowerShell type
 		"pwsh", // PowerShell Core
+		"RTPSUG", // PowerShell user group
 		"Wordle" // Game
 	],
 	"ignoreRegExpList": [
