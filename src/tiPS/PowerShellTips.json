@@ -762,5 +762,32 @@
     "Category": 0,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-11-06T00:00:00",
+    "Title": "Join the Research Triangle PowerShell User Group!",
+    "TipText": "The Research Triangle User Group (RTPSUG) meets virtually, typically once or twice a month, to share ideas and discuss all things PowerShell. Community members often demo modules they've built or PowerShell things they have learned. It's free to attend and everyone is welcome. You can even reach out to the organizers to present something you've built or learned. Presentations are often uploaded to YouTube, allowing you to catch up on sessions you've missed. RTPSUG is an excellent way to stay up to date with both PowerShell technology and the PowerShell community.",
+    "Example": "",
+    "Urls": [
+      "https://rtpsug.com",
+      "https://www.meetup.com/research-triangle-powershell-users-group/",
+      "https://www.youtube.com/c/RTPSUG/"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-11-15T00:00:00",
+    "Title": "Use Set-PSReadLineKeyHandler to change keybindings",
+    "TipText": "You can use the Set-PSReadLineKeyHandler cmdlet to change key bindings.\r\n\r\nA handy shortcut to set is for AcceptNextSuggestionWord which is built within ForwardWord function. This function is bound to the key chord Ctrl + F on Unix but not on Windows. The following is a way to enable that mapping on Windows.",
+    "Example": "# With the following example you will be able to set the Ctrl+f to accept the next word of an inline suggestion.\r\nSet-PSReadLineKeyHandler -Chord \"Ctrl+f\" -Function ForwardWord\r\n\r\n# You could change the Right arrow to accept the next word instead of the whole suggestion line.\r\nSet-PSReadLineKeyHandler -Chord \"RightArrow\" -Function ForwardWord",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/using-predictors?view=powershell-7.4#changing-keybindings",
+      "https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlinekeyhandler?view=powershell-7.4"
+    ],
+    "Category": 7,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Adrian Muscat (adrimus)"
   }
 ]
