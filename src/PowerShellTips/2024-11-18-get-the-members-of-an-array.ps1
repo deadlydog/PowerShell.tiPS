@@ -7,7 +7,7 @@ PowerShell sends the items in an array one at a time when you pipe an array to G
 $tip.Example = @'
 # When you pipe to Get-Member PowerShell enumerates the array and you get the properties of the items inside the array, in this case a string
 PS C:\> [array]$myArray = @('one','two','three')
-PS C:\> $myarray | Get-Member
+PS C:\> $myArray | Get-Member
 
    TypeName: System.String
 
