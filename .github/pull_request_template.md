@@ -1,8 +1,10 @@
+If this PR is simply to add a new Tip, delete all of this template text and just mention you are adding a new tip.
+
+If you are making changes to the module's functionality, please fill out the template below.
+
 ### Summary
 
 A brief summary of the change this PR brings.
-
-If this PR is simply to add a new Tip, you can remove all of the sections below, as they do not apply.
 
 ### Checklist
 
