@@ -11,7 +11,7 @@ The `-ErrorAction` common parameter allows you to change what happens when a non
 - `Inquire`: Display the error message and prompt the user to continue or stop executing the script.
 - `Break`: Display the error message and enter the debugger. Also breaks into the debugger when a terminating error occurs.
 
-You can set the global behaviour for the current scope by setting the `$ErrorActionPreference` variable. This will be the default value for all cmdlets called that don't have the `-ErrorAction` parameter specified.
+You can set the global behavior for the current scope by setting the `$ErrorActionPreference` variable. This will be the default value for all cmdlets called that don't have the `-ErrorAction` parameter specified.
 '@
 $tip.Example = @'
 function Test-ErrorAction {
