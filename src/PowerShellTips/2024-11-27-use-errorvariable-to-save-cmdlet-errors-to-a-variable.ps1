@@ -8,11 +8,11 @@ You can also couple these with the `-ErrorAction` and `-WarningAction` common pa
 '@
 $tip.Example = @'
 function Test-ErrorVariable {
-	[CmdletBinding()] # This attribute is required to use the `-ErrorVariable` common parameter.
-	param()
+    [CmdletBinding()] # This attribute is required to use the `-ErrorVariable` common parameter.
+    param()
 
-	Write-Error "This is an error message that should be IGNORED"
-	Write-Error "This is another error message"
+    Write-Error "This is an error message that should be IGNORED"
+    Write-Error "This is another error message"
 }
 
 # You don't need to initialize the error and warning variable, but it's a good practice.
@@ -23,14 +23,14 @@ $warnings = @()
 Test-ErrorVariable -WarningVariable warnings -ErrorVariable errors -ErrorAction SilentlyContinue
 
 if ($errors) {
-	# Here you can inspect the errors and handle them as needed.
-	$errors | ForEach-Object {
-		if ($_ -like '*IGNORED*') {
-			Write-Verbose "Ignoring error: $_"
-		} else {
-			Write-Error "Error: $_"
-		}
-	}
+    # Here you can inspect the errors and handle them as needed.
+    $errors | ForEach-Object {
+        if ($_ -like '*IGNORED*') {
+            Write-Verbose "Ignoring error: $_"
+        } else {
+            Write-Error "Error: $_"
+        }
+    }
 }
 '@
 $tip.Urls = @(
