@@ -789,5 +789,31 @@
     "Category": 7,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Adrian Muscat (adrimus)"
+  },
+  {
+    "CreatedDate": "2024-11-18T00:00:00",
+    "Title": "Get the members of an array",
+    "TipText": "PowerShell sends the items in an array one at a time when you pipe an array to Get-Member and it ignores duplicates",
+    "Example": "# When you pipe to Get-Member PowerShell enumerates the array and you get the properties of the items inside the array, in this case a string\r\nPS C:\\> [array]$myArray = @('one','two','three')\r\nPS C:\\> $myArray | Get-Member\r\n\r\n   TypeName: System.String\r\n\r\n# This example will output the members of the array\r\nPS C:\\> Get-Member -InputObject $myArray\r\n\r\n   TypeName: System.Object[]\r\n\r\n# This will also do the same by making the array the second item in an array of arrays\r\n,$myArray | Get-Member\r\n\r\n# To see what type of object is in a variable use the GetType method.\r\nPS C:\\> $myArray.GetType()\r\n\r\nIsPublic IsSerial Name                                     BaseType\r\n-------- -------- ----                                     --------\r\nTrue     True     Object[]                                 System.Array",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.4",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_arrays?view=powershell-7.4#get-the-members-of-an-array"
+    ],
+    "Category": 3,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Adrian Muscat (adrimus)"
+  },
+  {
+    "CreatedDate": "2024-11-27T00:00:00",
+    "Title": "Use ErrorAction to change what happens when an error occurs",
+    "TipText": "The `-ErrorAction` common parameter allows you to change what happens when a non-terminating error occurs in a cmdlet or script, such as when `Write-Error` is used. The default behavior is to display an error message and continue executing the script. You can change this behavior to:\r\n\r\n- `Stop`: Display the error message and stop executing the script. That is, treat it as a terminating error.\r\n- `Continue`: Display the error message and continue executing the script. This is the default.\r\n- `SilentlyContinue`: Suppress the error message (so it is not written to the error stream) and continue executing the script.\r\n- `Ignore`: Suppress the error message and continue executing the script. Unlike SilentlyContinue, Ignore doesn't add the error message to the $Error automatic variable.\r\n- `Inquire`: Display the error message and prompt the user to continue or stop executing the script.\r\n- `Break`: Display the error message and enter the debugger. Also breaks into the debugger when a terminating error occurs.\r\n\r\nYou can set the global behaviour for the current scope by setting the `$ErrorActionPreference` variable. This will be the default value for all cmdlets called that don't have the `-ErrorAction` parameter specified.",
+    "Example": "function Test-ErrorAction {\r\n    [CmdletBinding()] # This attribute is required to use the `-ErrorAction` common parameter.\r\n    param()\r\n\r\n    Write-Error \"This is an error message\"\r\n}\r\n\r\nTest-ErrorAction # Displays the error message and continues executing the script.\r\nTest-ErrorAction -ErrorAction Stop # Displays the error message and stops executing the script.\r\n\r\n$ErrorActionPreference = \"SilentlyContinue\" # Sets the global error action preference to suppress error messages.\r\nTest-ErrorAction # Suppresses the error message and continues executing the script, because the global setting is SilentlyContinue.\r\nTest-ErrorAction -ErrorAction Stop # Displays the error message and stops executing the script, because the `-ErrorAction` parameter overrides the global setting.",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_commonparameters#-erroraction",
+      "https://devblogs.microsoft.com/scripting/handling-errors-the-powershell-way/"
+    ],
+    "Category": 6,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
