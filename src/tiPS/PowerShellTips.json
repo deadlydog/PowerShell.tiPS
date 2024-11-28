@@ -825,8 +825,8 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_commonparameters#-errorvariable",
       "https://stuart-moore.com/powershell-using-errorvariable-and-warningvariable/"
     ],
-    "Category": 8,
+    "Category": 6,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
-    "Author": "Your name and/or username"
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
