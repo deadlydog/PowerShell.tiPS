@@ -828,5 +828,31 @@
     "Category": 6,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-12-26T00:00:00",
+    "Title": "Attend the PowerShell + DevOps Global Summit",
+    "TipText": "The PowerShell + DevOps Global Summit happens every year somewhere in the United States, usually in April. The conference is a great place to learn about PowerShell and DevOps, and to meet and network with other people in the PowerShell community, including Microsoft MVPs and the Microsoft PowerShell team. Discuss the latest trends, best practices, and tips and tricks with other PowerShell enthusiasts!\r\n\r\nWant to speak at the conference? The call for speakers is typically open during October and November, where you can submit your session ideas for consideration. Speakers often receive a free ticket to the conference and sometimes additional reimbursement. It's a great opportunity to share your knowledge with the community.\r\n\r\nCheck the website for the latest information on the conference dates, location, sessions, and registration details.",
+    "Example": "Start-Process https://www.powershellsummit.org",
+    "Urls": [
+      "https://www.powershellsummit.org"
+    ],
+    "Category": 0,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2024-12-26T00:00:00",
+    "Title": "Automate Azure DevOps tasks with VSTeam",
+    "TipText": "Many organizations use Azure DevOps as their application lifecycle management (ALM) tool. VSTeam is a PowerShell module that provides cmdlets for many Azure DevOps tasks, which can be easier than calling the Azure DevOps APIs directly. It's a great way to simplify and automate many Azure DevOps tasks, such as retrieving and updating work items, teams, git repos, pull requests, release definitions, and more.",
+    "Example": "# List all commits in the demo project for a specific repository.\r\nGet-VSTeamGitCommit -ProjectName demo -RepositoryId 118C262F-0D4C-4B76-BD9B-7DD8CA12F196\r\n\r\n# List of all agent pools.\r\nGet-VSTeamPool\r\n\r\n# Gets work items with IDs 47 and 48.\r\nGet-VSTeamWorkItem -Id 47,48\r\n\r\n# Updates the title of work item 1.\r\nUpdate-VSTeamWorkItem -WorkItemId 1 -Title \"Updated Work Item Title\"",
+    "Urls": [
+      "https://methodsandpractices.github.io/vsteam-docs/",
+      "https://methodsandpractices.github.io/vsteam-docs/docs/modules/vsteam/commands/",
+      "https://github.com/MethodsAndPractices/vsteam-docs"
+    ],
+    "Category": 2,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
