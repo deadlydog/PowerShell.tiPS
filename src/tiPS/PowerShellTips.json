@@ -854,5 +854,19 @@
     "Category": 2,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-01-08T00:00:00",
+    "Title": "Use Start-Transcript for a quick and easy log file",
+    "TipText": "You can use the Start-Transcript cmdlet to easily create a log file of your PowerShell session. This is useful for keeping a record of what you did during an interactive session, or in your scripts to log any output for troubleshooting purposes.\r\n\r\nIf you do not specify the log file path, the log file will be created in the user's Home/Documents directory with a timestamped filename. The log file will remain locked by the PowerShell process until Stop-Transcript is called, so be sure to call Stop-Transcript when you are done.\r\n\r\nIt is often preferable to log output to a central logging system, however, that often requires much more code and may be overkill for some scenarios. Logging to a local file with Start-Transcript is a quick and easy alternative to capture output for later reference.",
+    "Example": "try {\r\n    # Log all script output to a file for easy reference later if needed.\r\n    # $PSCommandPath will be the file path of the PowerShell script that is running.\r\n    # Include the date and time in the log file name to make it unique instead of overwriting it every run.\r\n    [string] $lastRunLogFilePath = \"$PSCommandPath.LastRun.log\"\r\n    Start-Transcript -Path $lastRunLogFilePath\r\n\r\n    # Put your script code here...\r\n}\r\nfinally {\r\n    Stop-Transcript\r\n}",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.host/start-transcript",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.host/stop-transcript",
+      "https://lazyadmin.nl/powershell/start-transcript/"
+    ],
+    "Category": 3,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
