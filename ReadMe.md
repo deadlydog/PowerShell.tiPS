@@ -47,7 +47,7 @@ This module brings tips to you with minimal effort required on your part.
 
 You can configure tiPS to show a tip every time you open your PowerShell terminal, or show a tip on demand by running the `tips` command.
 
-## 🖼 Screenshots
+## 🖼️ Screenshots
 
 Calling the `tips` command to show a tip in the terminal:
 
@@ -89,7 +89,7 @@ Add-TiPSImportToPowerShellProfile
 
 > You can remove the import statement from your PowerShell profile by running the `Remove-TiPSImportFromPowerShellProfile` command.
 
-### ⚙ Recommended configuration
+### ⚙️ Recommended configuration
 
 The following configuration is a good balance for displaying new tips automatically and not being overwhelmed by them.
 
@@ -140,7 +140,7 @@ Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`
 Tips will only be automatically shown in interactive PowerShell sessions.
 This prevents them from appearing unexpectedly when running scripts or other automated processes.
 
-### ⬆ Automatic updates
+### ⬆️ Automatic updates
 
 New tips are obtained by updating the tiPS module.
 Instead of remembering to manually update the module, you can have the module automatically update itself by running:
@@ -209,7 +209,7 @@ tiPS is meant to be a community driven project, so please help make it better by
 Issues, Discussions, and Pull Requests are welcome.
 See [the Contributing page](/docs/Contributing.md) for more details.
 
-## 🛣 Roadmap
+## 🛣️ Roadmap
 
 Below is a short list of planned enhancements for tiPS:
 
@@ -224,7 +224,7 @@ Have other ideas?
 
 See what's changed in the module over time by viewing [the changelog](Changelog.md).
 
-## ❤ Donate to support this project
+## ❤️ Donate to support this project
 
 Buy me a bagel for providing this module open source and for free 🙂
 
