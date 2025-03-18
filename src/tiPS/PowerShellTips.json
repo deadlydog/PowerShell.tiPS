@@ -868,5 +868,19 @@
     "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-03-17T00:00:00",
+    "Title": "Extend types with your own properties and methods",
+    "TipText": "The `Update-TypeData` cmdlet can be used to add custom properties and methods to a type. This is useful when you want to extend the functionality of a type that you did not define, such as a built-in .NET class.\r\n\r\nThe `Update-TypeData` cmdlet has a `-MemberType` parameter that can be used to specify the type of member to add. The most common types are `NoteProperty` and `ScriptMethod`. The `NoteProperty` type is used to add a new property to an object, while the `ScriptMethod` type is used to add a method to an object to perform some action.\r\n\r\nThis is similar to using the `Add-Member` cmdlet, but `Update-TypeData` modifies the type data for all instances of the type, while `Add-Member` modifies only the instance you used it on.",
+    "Example": "# Define the new function logic that we want add to the type.\r\n[scriptblock] $GetValueOrDefaultFunction = {\r\n    param($key, $defaultValue)\r\n    if ($this.ContainsKey($key)) {\r\n        $this[$key]\r\n    } else {\r\n        $defaultValue\r\n    }\r\n}\r\n\r\n# Define that we want to add the new method to the Hashtable type, and call it GetValueOrDefault.\r\n$extendedTypeData = @{\r\n    TypeName = 'System.Collections.Hashtable'\r\n    MemberType = 'ScriptMethod'\r\n    MemberName = 'GetValueOrDefault'\r\n    Value = $GetValueOrDefaultFunction\r\n}\r\n\r\n# Add the new method to the Hashtable type, via splatting.\r\nUpdate-TypeData @extendedTypeData\r\n\r\n# Now we can use the new method on any Hashtable object.\r\n[hashtable] $myHashTable = @{ 'key1' = 'value1' }\r\n$myHashTable.GetValueOrDefault('key1', 'unknown') # Returns 'value1'.\r\n$myHashTable.GetValueOrDefault('key2', 'unknown') # Returns 'unknown'.\r\n$myHashTable['key2'] # Returns $null.",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/update-typedata",
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_classes_properties#defining-instance-properties-with-update-typedata",
+      "https://x.com/blackboxcoder/status/1716585384102985949?t=-Ox1iPV67-4Vqb8wIZ275A"
+    ],
+    "Category": 3,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
