@@ -13,9 +13,9 @@ $tip.Example = @'
 [scriptblock] $GetValueOrDefaultFunction = {
     param($key, $defaultValue)
     if ($this.ContainsKey($key)) {
-        $this[$key]
+        return $this[$key]
     } else {
-        $defaultValue
+        return $defaultValue
     }
 }
 
