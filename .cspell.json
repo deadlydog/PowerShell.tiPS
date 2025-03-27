@@ -10,8 +10,8 @@
 		".github/workflows/build-and-test-powershell-module.yml",
 		".github/workflows/build-test-and-deploy-powershell-module.yml",
 		"src/tiPS/PowerShellTips.json",
-		"**/bin/**",
-		"**/obj/**"
+		"**/bin/**", // Ignore C# build output files.
+		"**/obj/**" // Ignore C# build output files.
 	],
 	"words": [
 		"colours",
