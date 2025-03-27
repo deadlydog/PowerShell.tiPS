@@ -9,7 +9,9 @@
 		".devcontainer/devcontainer.json",
 		".github/workflows/build-and-test-powershell-module.yml",
 		".github/workflows/build-test-and-deploy-powershell-module.yml",
-		"src/tiPS/PowerShellTips.json"
+		"src/tiPS/PowerShellTips.json",
+		"**/bin/**",
+		"**/obj/**"
 	],
 	"words": [
 		"colours",
