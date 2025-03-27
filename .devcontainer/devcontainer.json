@@ -3,7 +3,7 @@
 {
 	"name": "PowerShell",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/powershell:lts-debian-11",
+	"image": "mcr.microsoft.com/dotnet/sdk:9.0",
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": "true",
@@ -11,10 +11,11 @@
 			"upgradePackages": "false",
 			"nonFreePackages": "true"
 		},
-		"ghcr.io/devcontainers/features/dotnet:2": "latest"
+		"ghcr.io/devcontainers/features/dotnet:2": "latest" // Installs the dotnet CLI.
 	},
 
-	"postCreateCommand": "sudo chsh vscode -s \"$(which pwsh)\"; pwsh -c 'install-module Pester -force'; pwsh -c 'install-module PSScriptAnalyzer -force'",
+	// Set pwsh as the default shell for the devcontainer, install required PowerShell modules, and install NPM and CSpell.
+	"postCreateCommand": "sudo chsh vscode -s \"$(which pwsh)\"; pwsh -c \"Install-Module Pester -Force\"; pwsh -c \"Install-Module PSScriptAnalyzer -Force\"; sudo apt update; sudo DEBIAN_FRONTEND=noninteractive apt install -y npm; npm install cspell",
 
 	// Configure tool-specific properties.
 	"customizations": {

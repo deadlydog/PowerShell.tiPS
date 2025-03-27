@@ -10,6 +10,7 @@
 			},
 			"dependsOn": [
 				"Run PSScriptAnalyzer linter",
+				"Run CSpell spell checker",
 				"Convert PowerShellTips files to JSON file"
 			]
 		},
@@ -36,6 +37,31 @@
 				}
 			},
 			"command": "Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"group": "build"
+			},
+			"problemMatcher": [
+				"$func-powershell-watch"
+			]
+		},
+		{
+			"label": "Run CSpell spell checker",
+			"type": "shell",
+			"options": {
+				"shell": {
+					"executable": "pwsh",
+					"args": [
+						"-NoProfile",
+						"-Command"
+					]
+				}
+			},
+			// If npx is not available, warn that Node.js is not installed. If we cannot run cspell, try to install and run it, and warn if we still cannot run it.
+			"command": "try { & npx -v > $null } catch {}; if (-not $?) { Write-Warning 'Node.js is not installed, so cannot download and run npx cspell.' } else { try { & npx cspell . } catch {}; if (-not $?) { & npm install cspell; & npx cspell . }; if (-not $?) { Write-Warning 'There was a problem installing or running cspell' } }",
 			"group": "build",
 			"presentation": {
 				"reveal": "always",
