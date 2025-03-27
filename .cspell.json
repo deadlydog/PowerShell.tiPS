@@ -9,6 +9,7 @@
 		".devcontainer/devcontainer.json",
 		".github/workflows/build-and-test-powershell-module.yml",
 		".github/workflows/build-test-and-deploy-powershell-module.yml",
+		".gitignore",
 		"src/tiPS/PowerShellTips.json",
 		"**/bin/**", // Ignore C# build output files.
 		"**/obj/**" // Ignore C# build output files.
