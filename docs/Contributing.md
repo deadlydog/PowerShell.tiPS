@@ -72,6 +72,8 @@ The build process performs the following operations:
 1. Generate the PowerShellTips.json file from the files in the PowerShellTips directory.
    1. [This ADR](/docs/ArchitectureDecisionRecords/004-Save-all-tips-to-a-single-file.md) explains why we save all of the tips to a single file.
 1. Run the PSScriptAnalyzer linter on all of the PowerShell files.
+1. Run the CSpell spell checker on all files to find any spelling mistakes.
+   1. If CSpell flags a word that is not actually misspelled, you can add it to the `.cspell.json` file in the root of the repository.
 1. (Pipeline build only) Concatenate all of the PowerShell file contents into the psm1 file, and delete the ps1 files.
    1. [This ADR](/docs/ArchitectureDecisionRecords/005-How-to-dot-source-files-into-the-module-psm1-file.md) explains why we concatenate the files into the psm1 file.
 
