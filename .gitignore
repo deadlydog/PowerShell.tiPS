@@ -1,5 +1,9 @@
-# Ignore Pester code coverage report file
+# Ignore Pester code coverage report file.
 coverage.xml
+
+# Ignore NPM files.
+package-lock.json
+package.json
 
 # Created by https://www.gitignore.io/api/powershell,visualstudio,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=powershell,visualstudio,visualstudiocode
