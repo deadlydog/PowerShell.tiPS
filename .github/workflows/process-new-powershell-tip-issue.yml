@@ -43,12 +43,7 @@ jobs:
             switch ($id) {
               'tipText' { $tipText = $value }
               'example' { $tipExample = $value }
-              'category' {
-                # Extract just the category name without description in parentheses.
-                if ($value -match '^([^(]+)') {
-                  $tipCategory = $Matches[1].Trim()
-                }
-              }
+              'category' { $tipCategory = $value }
               'url1' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
               'url2' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
               'url3' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
