@@ -26,6 +26,9 @@ jobs:
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
           $body = $issue.body
 
+          Write-Output "Displaying issue body for troubleshooting purposes:"
+          Write-Output $body
+
           # Define the variables to extract the GitHub issue fields into.
           [string] $tipTitle = [string]::Empty
           [string] $tipText = [string]::Empty
