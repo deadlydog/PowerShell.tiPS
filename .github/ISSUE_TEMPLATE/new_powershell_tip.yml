@@ -1,0 +1,97 @@
+name: PowerShell Tip Submission
+description: Submit a new PowerShell tip to be included in the tiPS module
+title: "Tip: "
+labels: ["new-tip"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        THIS FORM DOES NOT WORK YET! IT IS STILL A WORK IN PROGRESS!
+        Please do not use it yet. It is here for reference only.
+
+        Thanks for submitting a new PowerShell tip! Please fill in all required fields below.
+        The more information you provide, the easier it will be for us to review and include your tip.
+
+  - type: input
+    id: title
+    attributes:
+      label: Title (required)
+      description: A concise title for your tip (max 75 characters)
+    validations:
+      required: true
+
+  - type: textarea
+    id: tiptext
+    attributes:
+      label: Tip Text (required)
+      description: Detailed explanation of the tip. Be clear and concise.
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Code (optional)
+      description: Provide a working PowerShell example that demonstrates your tip.
+      render: powershell
+      value: |
+        # Your example code here
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category (required)
+      description: Select the category that best fits your tip
+      options:
+        - Community (Social events and community resources)
+        - Editor (Editor tips and extensions)
+        - Module (Modules and module tips)
+        - NativeCmdlet (Native cmdlet tips)
+        - Performance (Tips to improve runtime performance)
+        - Security (Security tips)
+        - Syntax (Syntax tips)
+        - Terminal (Terminal shortcuts and tips)
+        - Other (Tips that don't fit into any other category)
+    validations:
+      required: true
+
+  - type: input
+    id: url1
+    attributes:
+      label: URL 1 (optional)
+      description: URL with additional information (must start with http:// or https://)
+      placeholder: https://example.com
+
+  - type: input
+    id: url2
+    attributes:
+      label: URL 2 (optional)
+      description: URL with additional information (must start with http:// or https://)
+      placeholder: https://example.com
+
+  - type: input
+    id: url3
+    attributes:
+      label: URL 3 (optional)
+      description: URL with additional information (must start with http:// or https://)
+      placeholder: https://example.com
+
+  - type: input
+    id: author
+    attributes:
+      label: Author (optional)
+      description: Your name and/or username. Leave blank if you prefer to remain anonymous.
+      placeholder: e.g. Daniel Schroeder (deadlydog)
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Any additional context or information about your tip
+
+  - type: markdown
+    attributes:
+      value: |
+        By submitting this tip, you agree to make it available under the project's license.
+        The tip's CreatedDate will be set to the date when it's accepted, and ExpiryDate will
+        be set to the maximum date unless otherwise specified.
