@@ -26,7 +26,7 @@ jobs:
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
           $body = $issue.body
 
-          # Parse the issue body to extract fields.
+          # Define the variables to extract the GitHub issue fields into.
           [string] $tipTitle = [string]::Empty
           [string] $tipText = [string]::Empty
           [string] $tipExample = [string]::Empty
@@ -35,29 +35,72 @@ jobs:
           [string] $tipAuthor = [string]::Empty
           [string] $tipExpiryDate = [string]::Empty
 
-          # Extract data from the JSON representation of the issue.
-          # The structure will depend on the form fields defined in the YAML issue template.
-          foreach ($item in ($body | ConvertFrom-Json)) {
-            $id = $item.id
-            $value = $item.value
+          # Extract the data from the markdown representation of the issue.
+          # GitHub Forms generates structured markdown with specific section headers we can match against.
 
-            switch ($id) {
-              'title' { $tipTitle = $value }
-              'tipText' { $tipText = $value }
-              'example' { $tipExample = $value }
-              'category' { $tipCategory = $value }
-              'url1' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
-              'url2' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
-              'url3' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
-              'author' { $tipAuthor = $value }
-              'expiryDate' { $tipExpiryDate = $value }
+          # Extract Title
+          if ($body -match '### Title \(required\)\s+([^\r\n]+)') {
+            $tipTitle = $Matches[1].Trim()
+            Write-Output "Extracted Title: $tipTitle"
+          }
+
+          # Extract Tip Text
+          if ($body -match '### Tip Text \(required\)\s+([\s\S]*?)(?=###|$)') {
+            $tipText = $Matches[1].Trim()
+            Write-Output "Extracted Tip Text: $($tipText.Substring(0, [Math]::Min(30, $tipText.Length)))..."
+          }
+
+          # Extract Example Code
+          if ($body -match '### Example Code \(optional\)\s+```powershell\s+([\s\S]*?)```') {
+            $tipExample = $Matches[1].Trim()
+            Write-Output "Example code extracted with length: $($tipExample.Length)"
+          }
+
+          # Extract URLs (up to 3)
+          if ($body -match '### URL 1 \(optional\)\s+([^\r\n]+)') {
+            $url = $Matches[1].Trim()
+            if (-not [string]::IsNullOrWhiteSpace($url)) {
+              $tipUrls += $url
+              Write-Output "Extracted URL 1: $url"
             }
+          }
+
+          if ($body -match '### URL 2 \(optional\)\s+([^\r\n]+)') {
+            $url = $Matches[1].Trim()
+            if (-not [string]::IsNullOrWhiteSpace($url)) {
+              $tipUrls += $url
+              Write-Output "Extracted URL 2: $url"
+            }
+          }
+
+          if ($body -match '### URL 3 \(optional\)\s+([^\r\n]+)') {
+            $url = $Matches[1].Trim()
+            if (-not [string]::IsNullOrWhiteSpace($url)) {
+              $tipUrls += $url
+              Write-Output "Extracted URL 3: $url"
+            }
+          }
+
+          # Extract Category
+          if ($body -match '### Category \(required\)\s+([^\r\n]+)') {
+            $fullCategory = $Matches[1].Trim()
+            # Extract just the category name (before any parentheses)
+            if ($fullCategory -match '^([^(]+)') {
+              $tipCategory = $Matches[1].Trim()
+              Write-Output "Extracted Category: $tipCategory"
+            }
+          }
+
+          # Extract Author
+          if ($body -match '### Author \(optional\)\s+([^\r\n]+)') {
+            $tipAuthor = $Matches[1].Trim()
+            Write-Output "Extracted Author: $tipAuthor"
           }
 
           # Set current date as CreatedDate.
           $tipCreatedDate = Get-Date -Format "yyyy-MM-dd"
 
-          # Get the file contents by dot-sourcing the file with the function to call.
+          # Get the file contents to use by dot-sourcing the file with the function to call.
           . $GITHUB_WORKSPACE/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1
           $getFileContentsParameters = @{
             TipCreatedDate = $tipCreatedDate
@@ -69,7 +112,7 @@ jobs:
             TipAuthor = $tipAuthor
             TipExpiryDate = $tipExpiryDate
           }
-          [string] $fileContent = Get-PowerShellTipFileContents @getFileContentsParameters
+          [string] $fileContent = New-PowerShellTipFileContents @getFileContentsParameters
 
           # Create branch name and filename.
           $branchName = "new-tip/issue-$($issue.number)"

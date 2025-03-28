@@ -1,4 +1,4 @@
-function Get-PowerShellTipFileContents {
+function New-PowerShellTipFileContents {
 	param(
 		[Parameter(Mandatory = $true, HelpMessage = 'The date the tip was created. Format: YYYY-MM-DD')]
 		[ValidateNotNullOrWhiteSpace()]
