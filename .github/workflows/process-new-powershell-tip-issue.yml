@@ -70,18 +70,18 @@ jobs:
           }
           [string] $fileContent = Get-PowerShellTipFileContents @getFileContentsParameters
 
-          # Create branch name and filename
+          # Create branch name and filename.
           $branchName = "new-tip/issue-$($issue.number)"
           $fileName = "$tipCreatedDate-$($tipTitle.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-').ps1"
           $filePath = "src/PowerShellTips/$fileName"
 
-          # Output variables for next steps
-          Write-Output "::set-output name=branch_name::$branchName"
-          Write-Output "::set-output name=file_name::$fileName"
-          Write-Output "::set-output name=file_path::$filePath"
-          Write-Output "::set-output name=file_content::$fileContent"
-          Write-Output "::set-output name=issue_number::$($issue.number)"
-          Write-Output "::set-output name=tip_title::$tipTitle"
+          # Output variables for next steps.
+          "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "file_name=$fileName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "file_path=$filePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "file_content=$fileContent" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "issue_number=$($issue.number)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "tip_title=$tipTitle" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
         shell: pwsh
 
       - name: Create branch
