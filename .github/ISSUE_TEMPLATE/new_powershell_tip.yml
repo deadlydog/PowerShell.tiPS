@@ -3,8 +3,8 @@ description: Submit a new PowerShell tip to be included in the tiPS module
 title: "New Tip Submission - Ignore this field"
 labels: ["automation-new-tip-do-not-use"]
 body:
-  # NOTE: The input label is used by the process-new-powershell-tip-issue.yml workflow to extract the data from the issue body.
-  # DO NOT change the labels or required validation without also changing the parsing logic.
+  # NOTE: The input label, required validation, and order is used by the process-new-powershell-tip-issue.yml workflow to extract the data from the issue body.
+  # DO NOT change the labels or required validation or ordering without also changing the regex parsing logic of that file.
   - type: markdown
     attributes:
       value: |
@@ -65,16 +65,7 @@ body:
     id: category
     attributes:
       label: Category (required)
-      description: Select the category that best fits your tip.
-        - Community - Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
-        - Editor - Editor tips and extensions. e.g. VSCode, ISE, etc.
-        - Module - Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
-        - NativeCmdlet - Native cmdlet tips. e.g. Get-Process, Get-ChildItem, Get-Content, etc.
-        - Performance - Tips to improve runtime performance. e.g. foreach vs ForEach-Object, ForEach-Object -Parallel, etc.
-        - Security - Security tips. e.g. ExecutionPolicy, Constrained Language Mode, passwords, etc.
-        - Syntax - Syntax tips. e.g. splatting, pipeline, etc.
-        - Terminal - Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.
-        - Other - Tips that don't fit into any of the other categories.
+      description: Select the category that best fits your tip.\nCommunity - Social events and community resources. e.g. PowerShell Summit, podcasts, etc.\nEditor - Editor tips and extensions. e.g. VSCode, ISE, etc.\nModule - Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.\nNativeCmdlet - Native cmdlet tips. e.g. Get-Process, Get-ChildItem, Get-Content, etc.\nPerformance - Tips to improve runtime performance. e.g. foreach vs ForEach-Object, ForEach-Object -Parallel, etc.\nSecurity - Security tips. e.g. ExecutionPolicy, Constrained Language Mode, passwords, etc.\nSyntax - Syntax tips. e.g. splatting, pipeline, etc.\nTerminal - Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.\nOther - Tips that don't fit into any of the other categories.
       options:
         - Community
         - Editor
