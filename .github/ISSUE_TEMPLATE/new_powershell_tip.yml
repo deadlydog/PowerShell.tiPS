@@ -17,6 +17,7 @@ body:
     attributes:
       label: Tip Title (required)
       description: A concise title for your tip (max 75 characters)
+      placeholder: e.g. Use `-Filter` with `Get-ChildItem` to speed up file searches
     validations:
       required: true
 
