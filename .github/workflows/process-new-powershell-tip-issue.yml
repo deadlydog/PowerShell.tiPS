@@ -6,7 +6,7 @@ on:
 
 jobs:
   process-new-tip:
-    if: contains(github.event.issue.labels.*.name, 'new-tip')
+    if: contains(github.event.issue.labels.*.name, 'automation-new-tip-do-not-use ')
     runs-on: ubuntu-latest
     permissions:
       contents: write
