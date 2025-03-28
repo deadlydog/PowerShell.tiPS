@@ -16,98 +16,67 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Setup PowerShell
-        uses: actions/setup-powershell@v1
         with:
-          powershell-version: '7.2'
+          fetch-depth: 0
 
       - name: Extract tip information from issue
         id: extract-tip
         run: |
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
-          $title = $issue.title -replace '^\[TIP\]\s*', ''
+          [string] $tipTitle = $issue.title -replace '^\Tip:\s*', ''
           $body = $issue.body
 
-          # Parse the issue body to extract fields
-          $tipTitle = $null
-          $tipText = $null
-          $example = $null
-          $category = $null
-          $urls = @()
-          $author = $null
+          # Parse the issue body to extract fields.
+          [string] $tipText = [string]::Empty
+          [string] $tipExample = [string]::Empty
+          [string] $tipCategory = [string]::Empty
+          [string[]] $tipUrls = @()
+          [string] $tipAuthor = [string]::Empty
+          [string] $tipExpiryDate = [string]::Empty
 
-          # Extract data from the JSON representation of the issue
-          # The structure will depend on the form fields defined in the YAML template
+          # Extract data from the JSON representation of the issue.
+          # The structure will depend on the form fields defined in the YAML issue template.
           foreach ($item in ($body | ConvertFrom-Json)) {
             $id = $item.id
             $value = $item.value
 
             switch ($id) {
-              'title' { $tipTitle = $value }
-              'tiptext' { $tipText = $value }
-              'example' { $example = $value }
+              'tipText' { $tipText = $value }
+              'example' { $tipExample = $value }
               'category' {
-                # Extract just the category name without description
+                # Extract just the category name without description in parentheses.
                 if ($value -match '^([^(]+)') {
-                  $category = $Matches[1].Trim()
+                  $tipCategory = $Matches[1].Trim()
                 }
               }
-              'url1' { if (-not [string]::IsNullOrWhiteSpace($value)) { $urls += $value } }
-              'url2' { if (-not [string]::IsNullOrWhiteSpace($value)) { $urls += $value } }
-              'url3' { if (-not [string]::IsNullOrWhiteSpace($value)) { $urls += $value } }
-              'author' { $author = $value }
+              'url1' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
+              'url2' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
+              'url3' { if (-not [string]::IsNullOrWhiteSpace($value)) { $tipUrls += $value } }
+              'author' { $tipAuthor = $value }
+              'expiryDate' { $tipExpiryDate = $value }
             }
           }
 
-          # Set current date as CreatedDate
-          $createdDate = Get-Date -Format "yyyy-MM-dd"
+          # Set current date as CreatedDate.
+          $tipCreatedDate = Get-Date -Format "yyyy-MM-dd"
 
-          # Create file content
-          $fileContent = @"
-# This PowerShell tip was submitted by $author on $createdDate.
-
-`$PowerShellTip = [tiPS.PowerShellTip]@{
-    CreatedDate = [DateTime]::Parse('$createdDate')
-    Title = '$($tipTitle -replace "'", "''")'
-    TipText = @'
-$tipText
-'@
-"@
-
-          if (-not [string]::IsNullOrWhiteSpace($example)) {
-            $fileContent += @"
-
-    Example = @'
-$example
-'@
-"@
+          # Get the file contents by dot-sourcing the file with the function to call.
+          . $GITHUB_WORKSPACE/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1
+          $getFileContentsParameters = @{
+            TipCreatedDate = $tipCreatedDate
+            TipTitle = $tipTitle
+            TipText = $tipText
+            TipExample = $tipExample
+            TipUrls = $tipUrls
+            TipCategory = $tipCategory
+            TipAuthor = $tipAuthor
+            TipExpiryDate = $tipExpiryDate
           }
-
-          if ($urls.Count -gt 0) {
-            $fileContent += @"
-
-    Urls = @(
-"@
-            foreach ($url in $urls) {
-              $fileContent += @"
-        '$url'
-"@
-            }
-            $fileContent += @"
-    )
-"@
-          }
-
-          $fileContent += @"
-
-    Category = [tiPS.TipCategory]::$category
-}
-"@
+          [string] $fileContent = Get-PowerShellTipFileContents @getFileContentsParameters
 
           # Create branch name and filename
           $branchName = "new-tip/issue-$($issue.number)"
-          $fileName = "$createdDate-$($tipTitle.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-').ps1"
+          $fileName = "$tipCreatedDate-$($tipTitle.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-').ps1"
           $filePath = "src/PowerShellTips/$fileName"
 
           # Output variables for next steps
