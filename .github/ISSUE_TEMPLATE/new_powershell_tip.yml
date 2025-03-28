@@ -1,6 +1,6 @@
 name: PowerShell Tip Submission
 description: Submit a new PowerShell tip to be included in the tiPS module
-title: "Tip: "
+title: "New Tip Submission - Ignore this field"
 labels: ["new-tip"]
 body:
   - type: markdown

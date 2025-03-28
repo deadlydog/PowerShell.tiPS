@@ -23,10 +23,10 @@ jobs:
         id: extract-tip
         run: |
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
-          [string] $tipTitle = $issue.title -replace '^\Tip:\s*', ''
           $body = $issue.body
 
           # Parse the issue body to extract fields.
+          [string] $tipTitle = [string]::Empty
           [string] $tipText = [string]::Empty
           [string] $tipExample = [string]::Empty
           [string] $tipCategory = [string]::Empty
@@ -41,6 +41,7 @@ jobs:
             $value = $item.value
 
             switch ($id) {
+              'title' { $tipTitle = $value }
               'tipText' { $tipText = $value }
               'example' { $tipExample = $value }
               'category' { $tipCategory = $value }
