@@ -1,4 +1,4 @@
-name: PowerShell Tip Submission
+name: PowerShell tip submission
 description: Submit a new PowerShell tip to be included in the tiPS module
 title: "New Tip Submission - Ignore this field"
 labels: ["new-tip"]
@@ -15,7 +15,7 @@ body:
   - type: input
     id: title
     attributes:
-      label: Title (required)
+      label: Tip Title (required)
       description: A concise title for your tip (max 75 characters)
     validations:
       required: true
