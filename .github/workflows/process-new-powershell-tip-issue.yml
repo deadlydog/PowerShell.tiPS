@@ -101,7 +101,8 @@ jobs:
           $tipCreatedDate = Get-Date -Format "yyyy-MM-dd"
 
           # Get the file contents to use by dot-sourcing the file with the function to call.
-          . "$GITHUB_WORKSPACE/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1"
+          [string] $gitRootDirectoryPath = $Env:GITHUB_WORKSPACE
+          . "$gitRootDirectoryPath/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1"
           $getFileContentsParameters = @{
             TipCreatedDate = $tipCreatedDate
             TipTitle = $tipTitle
