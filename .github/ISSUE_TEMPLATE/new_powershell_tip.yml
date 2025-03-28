@@ -93,7 +93,7 @@ body:
       description: Your name and/or username. Leave blank if you prefer to remain anonymous.
       placeholder: e.g. Daniel Schroeder (deadlydog)
 
-  - type: textarea
+  - type: input
     id: expiryDate
     attributes:
       label: Expiry Date (optional)
