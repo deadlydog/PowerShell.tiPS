@@ -41,34 +41,54 @@ jobs:
           # Extract the data from the markdown representation of the issue.
           # GitHub Forms generates structured markdown with specific section headers we can match against.
           # Below is a sample of what the body data may look like:
-          # ### Tip Title (required)\n\nTest title\n\n### Tip Text (required)\n\nTest description\n\n### Example Code (optional)\n\n```powershell\nTest code\n```\n\n### URL 1 (optional)\n\nhttps://one.com\n\n### URL 2 (optional)\n\nhttp://two.com\n\n### URL 3 (optional)\n\n_No response_\n\n### Category (required)\n\nTerminal\n\n### Author (optional)\n\n_No response_\n\n### Expiry Date (optional)\n\n_No response_
+          #
+          # ### Tip Title (required)
+          # Test title
+          # ### Tip Text (required)
+          # Test description
+          # ### Example Code (optional)
+          # ```powershell
+          # Test code
+          # ```
+          # ### URL 1 (optional)
+          # https://one.com
+          # ### URL 2 (optional)
+          # http://two.com
+          # ### URL 3 (optional)
+          # _No response_
+          # ### Category (required)
+          # Terminal
+          # ### Author (optional)
+          # _No response_
+          # ### Expiry Date (optional)
+          # _No response_
 
           # The default text that GitHub Issues uses for optional fields that are not filled in.
           [string] $noResponseText = '_No response_'
 
           # Extract Title.
-          [regex] $titleRegex = '### Tip Title \(required\)\\n\\n(?<Title>.*?)\\n\\n### Tip Text'
+          [regex] $titleRegex = '### Tip Title \(required\)\s+(?<Title>.*?)\s+### Tip Text'
           if ($body -match $titleRegex) {
             $tipTitle = $Matches['Title'].Trim()
             Write-Output "Extracted Title: $tipTitle"
           }
 
           # Extract Tip Text.
-          [regex] $tipTextRegex = '### Tip Text \(required\)\\n\\n(?<TipText>.*?)\\n\\n### Example Code'
+          [regex] $tipTextRegex = '### Tip Text \(required\)\s+(?<TipText>.*?)\s+### Example Code'
           if ($body -match $tipTextRegex) {
             $tipText = $Matches['TipText'].Trim()
             Write-Output "Extracted Tip Text: $tipText"
           }
 
           # Extract Example Code.
-          [regex] $exampleRegex = '### Example Code \(optional\)\\n\\n```powershell\\n(?<ExampleCode>.*?)```\\n\\n### URL 1'
+          [regex] $exampleRegex = '### Example Code \(optional\)\s+```powershell\\n(?<ExampleCode>.*?)```\s+### URL 1'
           if ($body -match $exampleRegex) {
             $tipExample = $Matches['ExampleCode'].Trim()
             Write-Output "Extracted Example Code: $tipExample"
           }
 
           # Extract URLs (up to 3).
-          [regex] $url1Regex = '### URL 1 \(optional\)\\n\\n(?<Url1>.*?)\\n\\n### URL 2'
+          [regex] $url1Regex = '### URL 1 \(optional\)\s+(?<Url1>.*?)\s+### URL 2'
           if ($body -match $url1Regex) {
             $url = $Matches['Url1'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
@@ -77,7 +97,7 @@ jobs:
             }
           }
 
-          [regex] $url2Regex = '### URL 2 \(optional\)\\n\\n(?<Url2>.*?)\\n\\n### URL 3'
+          [regex] $url2Regex = '### URL 2 \(optional\)\s+(?<Url2>.*?)\s+### URL 3'
           if ($body -match $url2Regex) {
             $url = $Matches['Url2'].Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
@@ -86,7 +106,7 @@ jobs:
             }
           }
 
-          [regex] $url3Regex = '### URL 3 \(optional\)\\n\\n(?<Url3>.*?)\\n\\n### Category'
+          [regex] $url3Regex = '### URL 3 \(optional\)\s+(?<Url3>.*?)\s+### Category'
           if ($body -match $url3Regex) {
             $url = $Matches['Url3'].Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
@@ -96,14 +116,14 @@ jobs:
           }
 
           # Extract Category.
-          [regex] $categoryRegex = '### Category \(required\)\\n\\n(?<Category>.*?)\\n\\n### Author'
+          [regex] $categoryRegex = '### Category \(required\)\s+(?<Category>.*?)\s+### Author'
           if ($body -match $categoryRegex) {
             $tipCategory = $Matches['Category'].Trim()
             Write-Output "Extracted Category: $tipCategory"
           }
 
           # Extract Author.
-          [regex] $authorRegex = '### Author \(optional\)\\n\\n(?<Author>.*?)\\n\\n### Expiry Date'
+          [regex] $authorRegex = '### Author \(optional\)\s+(?<Author>.*?)\s+### Expiry Date'
           if ($body -match $authorRegex) {
             $tipAuthor = $Matches['Author'].Trim()
             Write-Output "Extracted Author: $tipAuthor"
