@@ -1,0 +1,169 @@
+name: Process New PowerShell Tip
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  process-new-tip:
+    if: contains(github.event.issue.labels.*.name, 'new-tip')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PowerShell
+        uses: actions/setup-powershell@v1
+        with:
+          powershell-version: '7.2'
+
+      - name: Extract tip information from issue
+        id: extract-tip
+        run: |
+          $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
+          $title = $issue.title -replace '^\[TIP\]\s*', ''
+          $body = $issue.body
+
+          # Parse the issue body to extract fields
+          $tipTitle = $null
+          $tipText = $null
+          $example = $null
+          $category = $null
+          $urls = @()
+          $author = $null
+
+          # Extract data from the JSON representation of the issue
+          # The structure will depend on the form fields defined in the YAML template
+          foreach ($item in ($body | ConvertFrom-Json)) {
+            $id = $item.id
+            $value = $item.value
+
+            switch ($id) {
+              'title' { $tipTitle = $value }
+              'tiptext' { $tipText = $value }
+              'example' { $example = $value }
+              'category' {
+                # Extract just the category name without description
+                if ($value -match '^([^(]+)') {
+                  $category = $Matches[1].Trim()
+                }
+              }
+              'url1' { if (-not [string]::IsNullOrWhiteSpace($value)) { $urls += $value } }
+              'url2' { if (-not [string]::IsNullOrWhiteSpace($value)) { $urls += $value } }
+              'url3' { if (-not [string]::IsNullOrWhiteSpace($value)) { $urls += $value } }
+              'author' { $author = $value }
+            }
+          }
+
+          # Set current date as CreatedDate
+          $createdDate = Get-Date -Format "yyyy-MM-dd"
+
+          # Create file content
+          $fileContent = @"
+# This PowerShell tip was submitted by $author on $createdDate.
+
+`$PowerShellTip = [tiPS.PowerShellTip]@{
+    CreatedDate = [DateTime]::Parse('$createdDate')
+    Title = '$($tipTitle -replace "'", "''")'
+    TipText = @'
+$tipText
+'@
+"@
+
+          if (-not [string]::IsNullOrWhiteSpace($example)) {
+            $fileContent += @"
+
+    Example = @'
+$example
+'@
+"@
+          }
+
+          if ($urls.Count -gt 0) {
+            $fileContent += @"
+
+    Urls = @(
+"@
+            foreach ($url in $urls) {
+              $fileContent += @"
+        '$url'
+"@
+            }
+            $fileContent += @"
+    )
+"@
+          }
+
+          $fileContent += @"
+
+    Category = [tiPS.TipCategory]::$category
+}
+"@
+
+          # Create branch name and filename
+          $branchName = "new-tip/issue-$($issue.number)"
+          $fileName = "$createdDate-$($tipTitle.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-').ps1"
+          $filePath = "src/PowerShellTips/$fileName"
+
+          # Output variables for next steps
+          Write-Output "::set-output name=branch_name::$branchName"
+          Write-Output "::set-output name=file_name::$fileName"
+          Write-Output "::set-output name=file_path::$filePath"
+          Write-Output "::set-output name=file_content::$fileContent"
+          Write-Output "::set-output name=issue_number::$($issue.number)"
+          Write-Output "::set-output name=tip_title::$tipTitle"
+        shell: pwsh
+
+      - name: Create branch
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git checkout -b "${{ steps.extract-tip.outputs.branch_name }}"
+        shell: bash
+
+      - name: Create tip file
+        run: |
+          # Ensure directory exists
+          $directory = Split-Path -Parent "${{ steps.extract-tip.outputs.file_path }}"
+          if (-not (Test-Path $directory)) {
+            New-Item -ItemType Directory -Path $directory -Force
+          }
+
+          # Create the file
+          Set-Content -Path "${{ steps.extract-tip.outputs.file_path }}" -Value "${{ steps.extract-tip.outputs.file_content }}"
+        shell: pwsh
+
+      - name: Push changes and create PR
+        run: |
+          git add "${{ steps.extract-tip.outputs.file_path }}"
+          git commit -m "Add new PowerShell tip: ${{ steps.extract-tip.outputs.tip_title }}"
+          git push --set-upstream origin "${{ steps.extract-tip.outputs.branch_name }}"
+
+          # Create PR
+          gh pr create \
+            --title "New PowerShell Tip: ${{ steps.extract-tip.outputs.tip_title }}" \
+            --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.extract-tip.outputs.issue_number }}." \
+            --label "enhancement" \
+            --label "new-tip"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+
+      - name: Add comment to issue
+        run: |
+          gh issue comment "${{ steps.extract-tip.outputs.issue_number }}" --body "Thanks for your submission! I've created a pull request with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.extract-tip.outputs.branch_name }} --json number --jq '.[0].number')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+
+      - name: Close issue
+        run: |
+          gh issue close "${{ steps.extract-tip.outputs.issue_number }}" --comment "This issue has been processed and a pull request has been created with your tip."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
