@@ -21,6 +21,7 @@ jobs:
 
       - name: Extract tip information from issue
         id: extract-tip
+        shell: pwsh
         run: |
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
           $body = $issue.body
@@ -82,7 +83,6 @@ jobs:
           "file_content=$fileContent" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "issue_number=$($issue.number)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "tip_title=$tipTitle" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-        shell: pwsh
 
       - name: Create branch
         run: |
