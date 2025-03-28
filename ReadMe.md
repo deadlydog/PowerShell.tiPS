@@ -193,7 +193,17 @@ tiPS is open source, and contributions are not only welcome, they are encouraged
 
 Have a PowerShell tip you want to share?
 Know of a great module, blog post, or community event that you think others should know about?
+<!-->
+There are 2 ways to submit your tip to tiPS:
 
+1. Use [the GitHub issue template](https://github.com/deadlydog/PowerShell.tiPS/issues/new?template=new_powershell_tip.yml) to create a PR for your new tip.
+   This is the easiest method, but since an app creates the PR, you will not be recorded as the contributor in git.
+   However, you can still put your name or handle in the tip's `Author` field.
+1. Fork the repo and create a PR for your tip the traditional way, by following the steps below.
+   This method is a bit more work, but you will be recorded as the contributor in git.
+
+Follow the steps below to fork the repo and manually submit your PR:
+-->
 Follow these steps to add your tip to tiPS:
 
 1. Fork this repo to your account ([See GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
