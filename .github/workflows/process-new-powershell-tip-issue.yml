@@ -189,7 +189,7 @@ jobs:
           Write-Output "Creating pull request..."
           [string] $prUrl = gh pr create `
             --title "Tip: ${{ steps.create-tip-file.outputs.tip_title }}" `
-            --body "This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}." `
+            --body "This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}.\n\nNext steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.\n\nThis PR was created automatically using a GitHub Action." `
             --label "automation-new-tip-pr-do-not-use"
 
           Write-Output "Writing variables to environment variables for later steps..."
@@ -207,6 +207,6 @@ jobs:
       - name: Close issue
         shell: pwsh
         run: |
-          gh issue close "${{ github.event.issue.number }}" --comment "This issue has been processed and a pull request has been created with your tip. Closing this issue."
+          gh issue close "${{ github.event.issue.number }}" --comment "This issue has been processed and pull request ${{ steps.create-pr.outputs.pr_url }} has been created with your tip. Closing this issue."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
