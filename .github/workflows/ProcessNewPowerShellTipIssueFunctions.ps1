@@ -26,7 +26,9 @@ function New-PowerShellTipFile {
 	)
 
 	Write-Information "Building tiPS C# assemblies and importing module..." -InformationAction Continue
-	. "$PSScriptRoot/../../tools/Helpers/ImportBuiltModule.ps1"
+	$output = . "$PSScriptRoot/../../tools/Helpers/ImportBuiltModule.ps1"
+
+	Write-Information $output -InformationAction Continue
 
 	# The Tip filename is based on the ID, which is based on the date and title, so load a dummy PowerShellTip to get the filename to use.
 	$dummyTip = [tiPS.PowerShellTip]::new()
