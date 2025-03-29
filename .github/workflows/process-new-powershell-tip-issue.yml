@@ -47,7 +47,9 @@ jobs:
           Write-Output "Reading information from GitHub issue..."
           # $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
           # Need to escape quotes in the issue body so they don't break the PowerShell syntax.
-          $body = "${{ github.event.issue.body }}"
+          $body = @'
+          ${{ github.event.issue.body }}
+          '@
 
           Write-Output "Displaying issue body for troubleshooting purposes:"
           Write-Output $body
