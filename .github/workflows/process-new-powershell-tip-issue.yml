@@ -23,8 +23,7 @@ jobs:
         id: create-branch
         shell: pwsh
         run: |
-          [string] $issueNumber = '${{ github.event.issue.number }}'
-          [string] $branchName = "new-tip/issue-$issueNumber"
+          [string] $branchName = "new-tip/issue-${{ github.event.issue.number }}"
 
           Write-Output "Creating and checking out new branch: $branchName"
           git config --global user.name 'GitHub Action - tiPS Automation'
@@ -46,8 +45,9 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "Reading information from GitHub issue..."
-          $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
-          $body = $issue.body
+          # $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
+          # Need to escape single quotes in the issue body so they don't break the PowerShell syntax.
+          $body = '${{ github.event.issue.body }}'
 
           Write-Output "Displaying issue body for troubleshooting purposes:"
           Write-Output $body
