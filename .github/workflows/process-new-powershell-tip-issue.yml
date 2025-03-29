@@ -193,6 +193,9 @@ jobs:
           Write-Output "Committing changes to local branch and pushing to remote..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
           git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}"
+
+          # Git pull is only needed when run fails and needs to be re-run.
+          git pull --rebase origin "${{ steps.create-branch.outputs.branch_name }}"
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           [string] $message = @"
