@@ -23,20 +23,20 @@ jobs:
         id: create-branch
         shell: pwsh
         run: |
-          Write-Output "Reading information from GitHub issue..."
-          $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
-          [string] $issueNumber = $issue.number
+          # Write-Output "Reading information from GitHub issue..."
+          # $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
+          # [string] $issueNumber = $issue.number
 
-          [string] $branchName = "new-tip/issue-$issueNumber"
+          # [string] $branchName = "new-tip/issue-$issueNumber"
 
-          Write-Output "Creating and checking out new branch: $branchName"
-          git config --global user.name 'GitHub Action - tiPS Automation'
-          git config --global user.email 'tiPSAutomation@DoesNotExist.com'
-          git checkout -b "$branchName"
+          # Write-Output "Creating and checking out new branch: $branchName"
+          # git config --global user.name 'GitHub Action - tiPS Automation'
+          # git config --global user.email 'tiPSAutomation@DoesNotExist.com'
+          # git checkout -b "$branchName"
 
-          Write-Output "Writing variables to environment variables for later steps..."
-          "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          "issue_number=$issueNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          # Write-Output "Writing variables to environment variables for later steps..."
+          # "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          # "issue_number=$issueNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Add comment to issue letting user know we are processing it
         shell: pwsh
