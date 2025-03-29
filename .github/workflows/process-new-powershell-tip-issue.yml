@@ -99,14 +99,14 @@ jobs:
           }
 
           # Extract Tip Text.
-          [regex] $tipTextRegex = '### Tip Text \(required\)\s+(?<TipText>.*?)\s+### Example Code'
+          [regex] $tipTextRegex = '(?s)### Tip Text \(required\)\s+(?<TipText>.*?)\s+### Example Code'
           if ($body -match $tipTextRegex) {
             $tipText = $Matches['TipText'].Trim()
             Write-Output "Extracted Tip Text: $tipText"
           }
 
           # Extract Example Code.
-          [regex] $exampleRegex = '### Example Code \(optional\)\s+```powershell\\n(?<ExampleCode>.*?)```\s+### URL 1'
+          [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\\n(?<ExampleCode>.*?)```\s+### URL 1'
           if ($body -match $exampleRegex) {
             $tipExample = $Matches['ExampleCode'].Trim()
             Write-Output "Extracted Example Code: $tipExample"
