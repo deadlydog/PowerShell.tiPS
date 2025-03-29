@@ -33,12 +33,11 @@ jobs:
 
           Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          "issue_number=$issueNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Add comment to issue letting user know we are processing it
         shell: pwsh
         run: |
-          gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
+          gh issue comment "${{ github.event.issue.number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -185,7 +184,7 @@ jobs:
           Write-Output "Creating pull request..."
           [string] $prUrl = gh pr create `
             --title "Tip: ${{ steps.extract-tip.outputs.tip_title }}" `
-            --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.create-branch.outputs.issue_number }}." `
+            --body "This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}." `
             --label "automation-new-tip-pr-do-not-use"
 
           Write-Output "Writing variables to environment variables for later steps..."
@@ -196,13 +195,13 @@ jobs:
       - name: Add comment to issue with link to PR
         shell: pwsh
         run: |
-          gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thanks for contributing! 🙌 A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}."
+          gh issue comment "${{ github.event.issue.number }}" --body "Thanks for contributing! 🙌 A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Close issue
         shell: pwsh
         run: |
-          gh issue close "${{ steps.create-branch.outputs.issue_number }}" --comment "This issue has been processed and a pull request has been created with your tip. Closing this issue."
+          gh issue close "${{ github.event.issue.number }}" --comment "This issue has been processed and a pull request has been created with your tip. Closing this issue."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
