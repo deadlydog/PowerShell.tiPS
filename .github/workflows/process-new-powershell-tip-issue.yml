@@ -23,13 +23,14 @@ jobs:
         id: extract-tip
         shell: pwsh
         run: |
+          Write-Output "Reading information from GitHub issue..."
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
           $body = $issue.body
 
           Write-Output "Displaying issue body for troubleshooting purposes:"
           Write-Output $body
 
-          # Define the variables to extract the GitHub issue fields into.
+          Write-Output "Extracting information from issue body to local variables..."
           [string] $tipTitle = [string]::Empty
           [string] $tipText = [string]::Empty
           [string] $tipExample = [string]::Empty
@@ -132,9 +133,11 @@ jobs:
           # Set current date as CreatedDate.
           $tipCreatedDate = Get-Date -Format "yyyy-MM-dd"
 
-          # Get the file contents to use by dot-sourcing the file with the function to call.
+          Write-Output "Dot-sourcing utility script used to get file contents..."
           [string] $gitRootDirectoryPath = $Env:GITHUB_WORKSPACE
           . "$gitRootDirectoryPath/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1"
+
+          Write-Output "Calling function to get file contents..."
           $getFileContentsParameters = @{
             TipCreatedDate = $tipCreatedDate
             TipTitle = $tipTitle
@@ -152,7 +155,7 @@ jobs:
           $fileName = "$tipCreatedDate-$($tipTitle.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-').ps1"
           $filePath = "src/PowerShellTips/$fileName"
 
-          # Output variables for next steps.
+          Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "file_name=$fileName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "file_path=$filePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
