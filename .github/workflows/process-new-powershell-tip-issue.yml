@@ -1,8 +1,8 @@
-name: Process New PowerShell Tip Issue
+name: Process-new-PowerShell-tip-issue
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [opened, labeled] # Include 'labeled' to make troubleshooting easier.
 
 jobs:
   process-new-tip-issue:
