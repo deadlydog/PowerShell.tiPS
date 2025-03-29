@@ -25,9 +25,9 @@ jobs:
         run: |
           Write-Output "Reading information from GitHub issue..."
           $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
-          $issueNumber = $issue.number
+          [string] $issueNumber = $issue.number
 
-          $branchName = "new-tip/issue-$issueNumber"
+          [string] $branchName = "new-tip/issue-$issueNumber"
 
           Write-Output "Creating and checking out new branch: $branchName"
           git config --global user.name 'GitHub Action - tiPS Automation'
