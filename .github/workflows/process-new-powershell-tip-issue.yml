@@ -188,7 +188,7 @@ jobs:
       - name: Add comment to issue with link to PR
         shell: pwsh
         run: |
-          gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thanks for your submission! I've created a pull request with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.create-branch.outputs.branch_name }} --json number --jq '.[0].number')"
+          gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thanks for contributing! A pull request has been created with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.create-branch.outputs.branch_name }} --json number --jq '.[0].number')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
