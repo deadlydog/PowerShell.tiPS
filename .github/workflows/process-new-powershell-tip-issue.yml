@@ -2,7 +2,7 @@ name: process-new-powershell-tip-issue
 
 on:
   issues:
-    types: [opened, labeled] # Include 'labeled' to make troubleshooting easier.
+    types: [opened] #, labeled] # Can add 'labeled' to make troubleshooting easier and simply remove/add label to trigger workflow run.
 
 jobs:
   process-new-tip-issue:
