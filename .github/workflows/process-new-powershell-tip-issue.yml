@@ -35,6 +35,8 @@ jobs:
           git checkout -b "$branchName"
 
           Write-Output "Writing variables to environment variables for later steps..."
+          "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "issue_number=$issueNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Add comment to issue letting user know we are processing it
         shell: pwsh
