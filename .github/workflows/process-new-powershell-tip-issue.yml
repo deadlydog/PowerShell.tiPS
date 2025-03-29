@@ -1,4 +1,4 @@
-name: Process-new-PowerShell-tip-issue
+name: process-new-powershell-tip-issue
 
 on:
   issues:
