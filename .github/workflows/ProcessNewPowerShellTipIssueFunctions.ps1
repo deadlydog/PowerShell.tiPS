@@ -49,7 +49,7 @@ function New-PowerShellTipFile {
 `$tip.Title = '$($TipTitle.Replace("'", "''"))'
 `$tip.TipText = $TipText
 `$tip.Example = $TipExample
-`$tip.Urls = $TipUrls
+`$tip.Urls = @('$($TipUrls -join "','")')
 `$tip.Category = [tiPS.TipCategory]::$TipCategory # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
 `$tip.Author = '$TipAuthor' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
 #`$tip.ExpiryDate = [DateTime]::Parse('2024-10-30') # Optional. If the tip is not relevant after a certain date, set the expiration date. e.g. Announcing a conference or event.
