@@ -38,12 +38,12 @@ jobs:
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "issue_number=$issueNumber" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
-      - name: Add comment to issue letting user know we are processing it
-        shell: pwsh
-        run: |
-          gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Add comment to issue letting user know we are processing it
+      #   shell: pwsh
+      #   run: |
+      #     gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract tip information from issue
         id: extract-tip
