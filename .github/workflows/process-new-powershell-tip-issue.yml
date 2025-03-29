@@ -36,6 +36,7 @@ jobs:
 
           Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "issue_number=$issueNumber)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Extract tip information from issue
         id: extract-tip
@@ -165,20 +166,19 @@ jobs:
           [string] $newTipFilePath = New-PowerShellTipFile @newTipFileParameters
 
           Write-Output "Writing variables to environment variables for later steps..."
-          "file_path=$newTipFilePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          "issue_number=$($issue.number)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "tip_file_path=$newTipFilePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "tip_title=$tipTitle" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Push changes and create PR
         run: |
-          git add "${{ steps.extract-tip.outputs.file_path }}"
+          git add "${{ steps.extract-tip.outputs.tip_file_path }}"
           git commit -m "Add new tip: ${{ steps.extract-tip.outputs.tip_title }}"
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           # Create PR
           gh pr create \
             --title "New PowerShell Tip: ${{ steps.extract-tip.outputs.tip_title }}" \
-            --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.extract-tip.outputs.issue_number }}." \
+            --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.create-branch.outputs.issue_number }}." \
             --label "enhancement" \
             --label "new-tip"
         env:
@@ -187,14 +187,14 @@ jobs:
 
       - name: Add comment to issue with link to PR
         run: |
-          gh issue comment "${{ steps.extract-tip.outputs.issue_number }}" --body "Thanks for your submission! I've created a pull request with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.create-branch.outputs.branch_name }} --json number --jq '.[0].number')"
+          gh issue comment "${{ steps.create-branch.outputs.issue_number }}" --body "Thanks for your submission! I've created a pull request with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.create-branch.outputs.branch_name }} --json number --jq '.[0].number')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
 
       - name: Close issue
         run: |
-          gh issue close "${{ steps.extract-tip.outputs.issue_number }}" --comment "This issue has been processed and a pull request has been created with your tip. Closing this issue."
+          gh issue close "${{ steps.create-branch.outputs.issue_number }}" --comment "This issue has been processed and a pull request has been created with your tip. Closing this issue."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
