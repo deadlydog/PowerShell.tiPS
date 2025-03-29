@@ -40,27 +40,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Write tip information to local file
-      #   id: write-issue-body
-      #   shell: pwsh
-      #   run: |
-      #     Write-Output "Creating issue body file..."
-
-      #     Write-Output "Writing variables to environment variables for later steps..."
-      #     "issue_body_file_path=$newTipFilePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-
       - name: Extract tip information from issue
         id: extract-tip
         shell: pwsh
         run: |
           Write-Output "Reading information from GitHub issue..."
-          # Need to escape quotes in the issue body so they don't break the PowerShell syntax.
           $body = @'
           ${{ github.event.issue.body }}
           '@
 
           Write-Output "Displaying issue body for troubleshooting purposes:"
+          Write-Output "----------------------------------------"
           Write-Output $body
+          Write-Output "----------------------------------------"
 
           Write-Output "Extracting information from issue body to local variables..."
           [string] $tipTitle = [string]::Empty
