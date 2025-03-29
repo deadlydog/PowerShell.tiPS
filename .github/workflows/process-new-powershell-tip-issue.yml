@@ -26,9 +26,15 @@ jobs:
         shell: pwsh
         run: |
           [string] $runUrl = "$Env:GITHUB_SERVER_URL/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          [string] $message = @"
+          Thank you for your submission! 🙏
 
-          gh issue comment "${{ github.event.issue.number }}" `
-          --body "Thank you for your submission! 🙏 A pull request is being created for your tip via the following GitHub Actions run and should be linked to this issue shortly... ⏱️\n\n$runUrl"
+          A pull request is being created for your tip via the following GitHub Actions run and should be linked to this issue shortly... ⏱️
+
+          $runUrl
+          "@
+
+          gh issue comment "${{ github.event.issue.number }}" --body $message
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -189,10 +195,18 @@ jobs:
           git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}"
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
+          [string] $message = @"
+          This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
+
+          Next steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.
+
+          This PR was created automatically using a GitHub Action.
+          "@
+
           Write-Output "Creating pull request..."
           [string] $prUrl = gh pr create `
             --title "Tip: ${{ steps.create-tip-file.outputs.tip_title }}" `
-            --body "This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}.\n\nNext steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.\n\nThis PR was created automatically using a GitHub Action." `
+            --body $message `
             --label "automation-new-tip-pr-do-not-use"
 
           Write-Output "Writing variables to environment variables for later steps..."
@@ -203,7 +217,15 @@ jobs:
       - name: Close issue
         shell: pwsh
         run: |
-          gh issue close "${{ github.event.issue.number }}" `
-          --comment "Thanks for contributing! 🙌 A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}.\n\nThis issue has been processed and will now be closed."
+          [string] $message = @"
+          Thanks for contributing! 🙌
+
+          A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}.
+
+          This issue has been processed and will now be closed.
+          "@
+
+          Write-Output "Closing issue and adding comment..."
+          gh issue close "${{ github.event.issue.number }}" --comment $message
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
