@@ -1,7 +1,7 @@
 name: PowerShell tip submission
 description: Submit a new PowerShell tip to be included in the tiPS module
 title: "New Tip Submission - Ignore this field"
-labels: ["automation-new-tip-do-not-use"]
+labels: ["automation-new-tip-issue-do-not-use"]
 body:
   # NOTE: The input label, required validation, and order is used by the process-new-powershell-tip-issue.yml workflow to extract the data from the issue body.
   # DO NOT change the labels or required validation or ordering without also changing the regex parsing logic of that file.

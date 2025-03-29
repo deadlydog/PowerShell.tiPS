@@ -1,12 +1,12 @@
-name: Process New PowerShell Tip
+name: Process New PowerShell Tip Issue
 
 on:
   issues:
     types: [opened, labeled]
 
 jobs:
-  process-new-tip:
-    if: contains(github.event.issue.labels.*.name, 'automation-new-tip-do-not-use')
+  process-new-tip-issue:
+    if: contains(github.event.issue.labels.*.name, 'automation-new-tip-issue-do-not-use')
     runs-on: windows-latest # Use Windows to ensure dotnet SDK is installed to build the assemblies.
     permissions:
       contents: write
@@ -179,10 +179,9 @@ jobs:
 
           Write-Output "Creating pull request..."
           gh pr create `
-            --title "New PowerShell Tip: ${{ steps.extract-tip.outputs.tip_title }}" `
+            --title "Tip: ${{ steps.extract-tip.outputs.tip_title }}" `
             --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.create-branch.outputs.issue_number }}." `
-            --label "enhancement" `
-            --label "new-tip"
+            --label "automation-new-tip-pr-do-not-use"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
