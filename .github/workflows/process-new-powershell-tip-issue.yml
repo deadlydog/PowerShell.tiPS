@@ -25,7 +25,10 @@ jobs:
       - name: Add comment to issue letting user know we are processing it
         shell: pwsh
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
+          [string] $runUrl = "$Env:GITHUB_SERVER_URL/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          gh issue comment "${{ github.event.issue.number }}" `
+          --body "Thank you for your submission! 🙏 A pull request is being created for your tip via the following GitHub Actions run and should be linked to this issue shortly... ⏱️\n\n$runUrl"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -197,16 +200,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Add comment to issue with link to PR
-        shell: pwsh
-        run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "Thanks for contributing! 🙌 A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Close issue
         shell: pwsh
         run: |
-          gh issue close "${{ github.event.issue.number }}" --comment "This issue has been processed and pull request ${{ steps.create-pr.outputs.pr_url }} has been created with your tip. Closing this issue."
+          gh issue close "${{ github.event.issue.number }}" `
+          --comment "Thanks for contributing! 🙌 A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}.\n\nThis issue has been processed and will now be closed."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
