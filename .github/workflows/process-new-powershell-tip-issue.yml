@@ -1,8 +1,11 @@
 name: process-new-powershell-tip-issue
 
+# Trigger whenever a new issue is opened, and ensure (in the job) it has the automation label meaning we should process it.
 on:
   issues:
-    types: [opened, labeled] # Can add 'labeled' to make troubleshooting easier and simply remove/add label to trigger workflow run.
+    # Can add 'labeled' to make troubleshooting easier and simply remove/add label to trigger workflow run.
+    # Do not leave it on though, as it will result in duplicate PRs being created when new tips are submitted.
+    types: [opened] #, labeled]
 
 jobs:
   process-new-tip-issue:
@@ -14,6 +17,13 @@ jobs:
       pull-requests: write
 
     steps:
+      - name: Add comment to issue letting user know we are processing it
+        shell: pwsh
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -33,15 +43,8 @@ jobs:
           Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
-      - name: Add comment to issue letting user know we are processing it
-        shell: pwsh
-        run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "Thank you for your submission! 🙏 A pull request is being created for your tip and should be linked to this issue shortly... ⏱️"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract tip information from issue
-        id: extract-tip
+      - name: Extract tip information from issue and create new tip file
+        id: create-tip-file
         shell: pwsh
         run: |
           Write-Output "Reading information from GitHub issue..."
@@ -179,13 +182,13 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "Committing changes to local branch and pushing to remote..."
-          git add "${{ steps.extract-tip.outputs.tip_file_path }}"
-          git commit -m "Add new tip: ${{ steps.extract-tip.outputs.tip_title }}"
+          git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
+          git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}"
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           Write-Output "Creating pull request..."
           [string] $prUrl = gh pr create `
-            --title "Tip: ${{ steps.extract-tip.outputs.tip_title }}" `
+            --title "Tip: ${{ steps.create-tip-file.outputs.tip_title }}" `
             --body "This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}." `
             --label "automation-new-tip-pr-do-not-use"
 
