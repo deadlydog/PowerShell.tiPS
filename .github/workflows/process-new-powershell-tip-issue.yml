@@ -119,7 +119,7 @@ jobs:
 
           [regex] $url2Regex = '### URL 2 \(optional\)\s+(?<Url2>.*?)\s+### URL 3'
           if ($body -match $url2Regex) {
-            $url = $Matches['Url2'].Trim()
+            $url = $Matches['Url2'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
               $tipUrls += $url
               Write-Output "Extracted URL 2: $url"
@@ -128,7 +128,7 @@ jobs:
 
           [regex] $url3Regex = '### URL 3 \(optional\)\s+(?<Url3>.*?)\s+### Category'
           if ($body -match $url3Regex) {
-            $url = $Matches['Url3'].Trim()
+            $url = $Matches['Url3'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
               $tipUrls += $url
               Write-Output "Extracted URL 3: $url"
