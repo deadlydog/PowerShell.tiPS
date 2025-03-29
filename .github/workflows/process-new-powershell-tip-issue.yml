@@ -178,10 +178,10 @@ jobs:
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           Write-Output "Creating pull request..."
-          gh pr create \
-            --title "New PowerShell Tip: ${{ steps.extract-tip.outputs.tip_title }}" \
-            --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.create-branch.outputs.issue_number }}." \
-            --label "enhancement" \
+          gh pr create `
+            --title "New PowerShell Tip: ${{ steps.extract-tip.outputs.tip_title }}" `
+            --body "This PR adds a new PowerShell tip submitted via issue #${{ steps.create-branch.outputs.issue_number }}." `
+            --label "enhancement" `
             --label "new-tip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
