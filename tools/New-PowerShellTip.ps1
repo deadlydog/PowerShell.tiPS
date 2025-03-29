@@ -29,13 +29,13 @@ $dummyTip = [tiPS.PowerShellTip]::new()
 $dummyTip.CreatedDate = [DateTime]::Today
 $dummyTip.Title = $tipTitle.Trim()
 
-[string] $today = $dummyTip.CreatedDate.ToString('yyyy-MM-dd')
+[string] $createdDate = $dummyTip.CreatedDate.ToString('yyyy-MM-dd')
 [string] $powerShellTipsFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot/../src/PowerShellTips"
 [string] $newTipFileName = $dummyTip.Id + '.ps1'
 [string] $newTipFilePath = Join-Path -Path $powerShellTipsFilesDirectoryPath -ChildPath $newTipFileName
 [string] $tipTemplateFileContents = @"
 `$tip = [tiPS.PowerShellTip]::new()
-`$tip.CreatedDate = [DateTime]::Parse('$today')
+`$tip.CreatedDate = [DateTime]::Parse('$createdDate')
 `$tip.Title = '$($tipTitle.Replace("'", "''"))'
 `$tip.TipText = @'
 A short description of the tip.
@@ -69,7 +69,7 @@ Example code to demonstrate the tip. This can also be multiple lines if needed. 
 "@
 
 Write-Output "Creating new PowerShell Tip file and opening it: $newTipFilePath"
-Set-Content -Path $newTipFilePath -Value $tipTemplateFileContents -Force
+Set-Content -Path $newTipFilePath -Value $tipTemplateFileContents -Encoding utf8 -Force
 try
 {
 	Invoke-Item -Path $newTipFilePath -ErrorVariable openTipFileError
