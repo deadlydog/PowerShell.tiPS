@@ -101,14 +101,14 @@ jobs:
             Write-Output "Extracted Title: $tipTitle"
           }
 
-          # Extract Tip Text.
+          # Extract Tip Text. Use '(?s)' for multiline match mode, since these are multiline strings.
           [regex] $tipTextRegex = '(?s)### Tip Text \(required\)\s+(?<TipText>.*?)\s+### Example Code'
           if ($body -match $tipTextRegex) {
             $tipText = $Matches['TipText'].Trim()
             Write-Output "Extracted Tip Text: $tipText"
           }
 
-          # Extract Example Code.
+          # Extract Example Code. Use '(?s)' for multiline match mode, since these are multiline strings.
           [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\\n(?<ExampleCode>.*?)```\s+### URL 1'
           if ($body -match $exampleRegex) {
             $tipExample = $Matches['ExampleCode'].Trim()
