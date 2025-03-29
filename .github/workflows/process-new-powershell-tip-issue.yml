@@ -7,7 +7,7 @@ on:
 jobs:
   process-new-tip:
     if: contains(github.event.issue.labels.*.name, 'automation-new-tip-do-not-use')
-    runs-on: ubuntu-latest
+    runs-on: windows-latest # Use Windows to ensure dotnet SDK is installed to build the assemblies.
     permissions:
       contents: write
       issues: write
@@ -18,6 +18,24 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Create branch for PR
+        id: create-branch
+        shell: pwsh
+        run: |
+          Write-Output "Reading information from GitHub issue..."
+          $issue = ConvertFrom-Json '${{ toJson(github.event.issue) }}'
+          $issueNumber = $issue.number
+
+          $branchName = "new-tip/issue-$issueNumber"
+
+          Write-Output "Creating and checking out new branch: $branchName"
+          git config --global user.name 'GitHub Action - tiPS Automation'
+          git config --global user.email 'tiPSAutomation@DoesNotExist.com'
+          git checkout -b "$branchName"
+
+          Write-Output "Writing variables to environment variables for later steps..."
+          "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Extract tip information from issue
         id: extract-tip
@@ -130,16 +148,12 @@ jobs:
             Write-Output "Extracted Author: $tipAuthor"
           }
 
-          # Set current date as CreatedDate.
-          $tipCreatedDate = Get-Date -Format "yyyy-MM-dd"
-
-          Write-Output "Dot-sourcing utility script used to get file contents..."
+          Write-Output "Dot-sourcing utility script used to create the new tip file..."
           [string] $gitRootDirectoryPath = $Env:GITHUB_WORKSPACE
           . "$gitRootDirectoryPath/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1"
 
-          Write-Output "Calling function to get file contents..."
-          $getFileContentsParameters = @{
-            TipCreatedDate = $tipCreatedDate
+          Write-Output "Calling function to create new tip file..."
+          $newTipFileParameters = @{
             TipTitle = $tipTitle
             TipText = $tipText
             TipExample = $tipExample.Replace($noResponseText, '').Trim()
@@ -148,45 +162,18 @@ jobs:
             TipAuthor = $tipAuthor.Replace($noResponseText, '').Trim()
             TipExpiryDate = $tipExpiryDate
           }
-          [string] $fileContent = New-PowerShellTipFileContents @getFileContentsParameters
-
-          # Create branch name and filename.
-          $branchName = "new-tip/issue-$($issue.number)"
-          $fileName = "$tipCreatedDate-$($tipTitle.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-').ps1"
-          $filePath = "src/PowerShellTips/$fileName"
+          [string] $newTipFilePath = New-PowerShellTipFile @newTipFileParameters
 
           Write-Output "Writing variables to environment variables for later steps..."
-          "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          "file_name=$fileName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          "file_path=$filePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          "file_content=$fileContent" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "file_path=$newTipFilePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "issue_number=$($issue.number)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "tip_title=$tipTitle" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-
-      - name: Create branch
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-          git checkout -b "${{ steps.extract-tip.outputs.branch_name }}"
-        shell: bash
-
-      - name: Create tip file
-        run: |
-          # Ensure directory exists
-          $directory = Split-Path -Parent "${{ steps.extract-tip.outputs.file_path }}"
-          if (-not (Test-Path $directory)) {
-            New-Item -ItemType Directory -Path $directory -Force
-          }
-
-          # Create the file
-          Set-Content -Path "${{ steps.extract-tip.outputs.file_path }}" -Value "${{ steps.extract-tip.outputs.file_content }}"
-        shell: pwsh
 
       - name: Push changes and create PR
         run: |
           git add "${{ steps.extract-tip.outputs.file_path }}"
-          git commit -m "Add new PowerShell tip: ${{ steps.extract-tip.outputs.tip_title }}"
-          git push --set-upstream origin "${{ steps.extract-tip.outputs.branch_name }}"
+          git commit -m "Add new tip: ${{ steps.extract-tip.outputs.tip_title }}"
+          git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           # Create PR
           gh pr create \
@@ -198,16 +185,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
 
-      - name: Add comment to issue
+      - name: Add comment to issue with link to PR
         run: |
-          gh issue comment "${{ steps.extract-tip.outputs.issue_number }}" --body "Thanks for your submission! I've created a pull request with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.extract-tip.outputs.branch_name }} --json number --jq '.[0].number')"
+          gh issue comment "${{ steps.extract-tip.outputs.issue_number }}" --body "Thanks for your submission! I've created a pull request with your tip. You can view it here: ${{ github.server_url }}/${{ github.repository }}/pull/$(gh pr list --head ${{ steps.create-branch.outputs.branch_name }} --json number --jq '.[0].number')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
 
       - name: Close issue
         run: |
-          gh issue close "${{ steps.extract-tip.outputs.issue_number }}" --comment "This issue has been processed and a pull request has been created with your tip."
+          gh issue close "${{ steps.extract-tip.outputs.issue_number }}" --comment "This issue has been processed and a pull request has been created with your tip. Closing this issue."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash

@@ -1,9 +1,5 @@
-function New-PowerShellTipFileContents {
+function New-PowerShellTipFile {
 	param(
-		[Parameter(Mandatory = $true, HelpMessage = 'The date the tip was created. Format: YYYY-MM-DD')]
-		[ValidateNotNullOrWhiteSpace()]
-		[string] $TipCreatedDate,
-
 		[Parameter(Mandatory = $true, HelpMessage = 'The title of the tip. Must be 75 characters or less.')]
 		[ValidateNotNullOrWhiteSpace()]
 		[string] $TipTitle,
@@ -29,9 +25,22 @@ function New-PowerShellTipFileContents {
 		[string] $TipExpiryDate = ''
 	)
 
-	[string] $tipFileContents = @"
+	Write-Information "Building tiPS C# assemblies and importing module..." -InformationAction Continue
+	. "$PSScriptRoot/../../tools/Helpers/ImportBuiltModule.ps1"
+
+	# The Tip filename is based on the ID, which is based on the date and title, so load a dummy PowerShellTip to get the filename to use.
+	$dummyTip = [tiPS.PowerShellTip]::new()
+	$dummyTip.CreatedDate = [DateTime]::Today
+	$dummyTip.Title = $TipTitle.Trim()
+
+	[string] $createdDate = $dummyTip.CreatedDate.ToString('yyyy-MM-dd')
+	[string] $powerShellTipsFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot/../../src/PowerShellTips"
+	[string] $newTipFileName = $dummyTip.Id + '.ps1'
+	[string] $newTipFilePath = Join-Path -Path $powerShellTipsFilesDirectoryPath -ChildPath $newTipFileName
+
+	[string] $newTipFileContent = @"
 `$tip = [tiPS.PowerShellTip]::new()
-`$tip.CreatedDate = [DateTime]::Parse('$TipCreatedDate')
+`$tip.CreatedDate = [DateTime]::Parse('$createdDate')
 `$tip.Title = '$($TipTitle.Replace("'", "''"))'
 `$tip.TipText = $TipText
 `$tip.Example = $TipExample
@@ -46,8 +55,11 @@ function New-PowerShellTipFileContents {
 	# If a TipExpiryDate is provided, uncomment the TipExpiryDate line.
 	if (-not [string]::IsNullOrWhiteSpace($TipExpiryDate)) {
 		[string] $expiryTextToMatch = '$tip.ExpiryDate = [DateTime]::Parse('
-		$tipFileContents = $tipFileContents.Replace("#$expiryTextToMatch", $expiryTextToMatch)
+		$newTipFileContent = $newTipFileContent.Replace("#$expiryTextToMatch", $expiryTextToMatch)
 	}
 
-	return $tipFileContents
+	Write-Information "Creating new tip file '$newTipFilePath'..." -InformationAction Continue
+	Set-Content -Path $newTipFilePath -Value $newTipFileContent -Encoding utf8 -Force
+
+	return $newTipFilePath
 }
