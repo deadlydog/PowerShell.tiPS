@@ -12,7 +12,6 @@ body:
         Please do not use it yet. It is here for reference only.
 
         Thanks for submitting a new PowerShell tip! Please fill in all required fields below.
-        The more information you provide, the easier it will be for us to review and include your tip.
 
   - type: input
     id: title
@@ -38,7 +37,7 @@ body:
       label: Example Code (optional)
       description: Provide a working PowerShell example that demonstrates your tip.
       render: powershell
-      placeholder: Your example code here...
+      placeholder: Provide example code here...
 
   - type: input
     id: url1
