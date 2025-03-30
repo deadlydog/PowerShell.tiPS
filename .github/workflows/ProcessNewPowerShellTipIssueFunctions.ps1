@@ -1,4 +1,5 @@
 function New-PowerShellTipFile {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
 	param(
 		[Parameter(Mandatory = $true, HelpMessage = 'The title of the tip. Must be 75 characters or less.')]
 		[ValidateNotNullOrWhiteSpace()]
