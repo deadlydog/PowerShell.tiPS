@@ -86,7 +86,7 @@ body:
     attributes:
       label: URL 3 (optional)
       description: URL with additional information or examples (must start with http:// or https://)
-      placeholder: https://OfficialDocsOrBlogPostOrSocialMediaPost.com
+      placeholder: https://OfficialDocs.com/OrBlogPost/OrSocialMediaPost
 
   - type: input
     id: author
