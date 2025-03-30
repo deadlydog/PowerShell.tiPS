@@ -127,7 +127,7 @@ jobs:
           }
 
           # Extract Example Code. Use '(?s)' for multiline match mode, since these are multiline strings.
-          [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\\n(?<ExampleCode>.*?)```\s+### URL 1'
+          [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\s+(?<ExampleCode>.*?)```\s+### URL 1'
           if ($body -match $exampleRegex) {
             $tipExample = $Matches['ExampleCode'].Trim()
             Write-Output "Extracted Example Code: $tipExample"
