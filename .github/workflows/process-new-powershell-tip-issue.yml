@@ -107,6 +107,15 @@ jobs:
           [regex] $titleRegex = '### Tip Title \(required\)\s+(?<Title>.*?)\s+### Tip Text'
           if ($body -match $titleRegex) {
             $tipTitle = $Matches['Title'].Trim()
+
+            # Trim title to 75 characters max.
+            # Normally we would let the class validation logic handle this, but we want to do as much as possible
+            # to ensure the PR creation doesn't fail, as this flow is only triggered on issue creation and we don't
+            # want to force the user to create a whole new issue just to adjust the title length.
+            if ($tipTitle.Length -gt 75) {
+              $tipTitle = $tipTitle.Substring(0, 75)
+            }
+
             Write-Output "Extracted Title: $tipTitle"
           }
 
