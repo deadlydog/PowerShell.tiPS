@@ -5,7 +5,7 @@ on:
   issues:
     # Can add 'labeled' to make troubleshooting easier and simply remove/add label to trigger workflow run.
     # Do not leave it on though, as it will result in duplicate PRs being created when new tips are submitted.
-    types: [opened, labeled]
+    types: [opened] #, labeled]
 
 jobs:
   process-new-tip-issue:
