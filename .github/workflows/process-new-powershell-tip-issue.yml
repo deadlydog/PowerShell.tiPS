@@ -205,9 +205,13 @@ jobs:
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           [string] $message = @"
-          This PR adds a new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
+          This PR adds the new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
 
           Next steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.
+
+          Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
+
+          🎉 Thank you for contributing to tiPS! 🎉
 
           This PR was created automatically using a GitHub Action.
           "@
@@ -230,6 +234,8 @@ jobs:
           Thanks for contributing! 🙌
 
           A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}.
+
+          Subscribe to the PR for notifications on any next steps and to see when your tip has been merged into tiPS.
 
           This issue has been processed and will now be closed.
           "@
