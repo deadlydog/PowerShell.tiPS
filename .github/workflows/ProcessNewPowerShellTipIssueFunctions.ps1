@@ -47,8 +47,12 @@ function New-PowerShellTipFile {
 `$tip = [tiPS.PowerShellTip]::new()
 `$tip.CreatedDate = [DateTime]::Parse('$createdDate')
 `$tip.Title = '$($TipTitle.Replace("'", "''"))'
-`$tip.TipText = $TipText
-`$tip.Example = $TipExample
+`$tip.TipText = @'
+$TipText
+'@
+`$tip.Example = @'
+$TipExample
+'@
 `$tip.Urls = @('$($TipUrls -join "','")')
 `$tip.Category = [tiPS.TipCategory]::$TipCategory # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
 `$tip.Author = '$TipAuthor' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
