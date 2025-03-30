@@ -202,15 +202,14 @@ There are 2 ways to submit your tip to tiPS:
 1. Fork the repo and create a PR for your tip the traditional way, by following the steps below.
    This method is a bit more work, but you will be recorded as the contributor in git.
 
-Follow the steps below to fork the repo and manually submit your PR:
+   Follow the steps below to fork the repo and manually submit your PR:
+   1. Fork this repo to your account ([See GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
+   1. Clone the repo to your local machine, or open it in GitHub Codespaces, and create a new branch.
+   1. Run the [New-PowerShellTip script](/tools/New-PowerShellTip.ps1) to create your new tip file in the [PowerShellTips directory](/src/PowerShellTips/).
+   1. Modify it with your tip info and commit your changes.
+   1. Submit a pull request from your fork back to this repo ([See GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)).
 
-1. Fork this repo to your account ([See GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
-1. Clone the repo to your local machine, or open it in GitHub Codespaces, and create a new branch.
-1. Run the [New-PowerShellTip script](/tools/New-PowerShellTip.ps1) to create your new tip file in the [PowerShellTips directory](/src/PowerShellTips/).
-1. Modify it with your tip info and commit your changes.
-1. Submit a pull request from your fork back to this repo ([See GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)).
-
-🎦 [This video](https://youtu.be/OBg1KJf8sC4?si=CXEtMmaaZ3ybQAVF) walks through the above steps, showing how to fork the repo to contribute a new tip 🎦
+   🎦 [This video](https://youtu.be/OBg1KJf8sC4?si=CXEtMmaaZ3ybQAVF) walks through the above steps, showing how to fork the repo to contribute a new tip 🎦
 
 tiPS is meant to be a community driven project, so please help make it better by contributing your tips.
 
