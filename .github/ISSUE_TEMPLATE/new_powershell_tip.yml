@@ -99,7 +99,7 @@ body:
     id: expiryDate
     attributes:
       label: Expiry Date (optional)
-      description: Date when the tip should expire (format of YYYY-MM-DD). Mostly applicable when promoting a community event on a specific date. Leave blank for no expiry.
+      description: Date when the tip should expire and no longer be shown (format of YYYY-MM-DD). Mostly applicable when promoting a community event on a specific date. Leave blank for no expiry.
       placeholder: '2025-10-25'
 
   - type: markdown
