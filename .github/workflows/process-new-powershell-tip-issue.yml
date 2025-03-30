@@ -79,9 +79,9 @@ jobs:
           # GitHub Forms generates structured markdown with specific section headers we can match against.
           # Below is a sample of what the body data may look like:
           #
-          # ### Tip Title (required)
+          # ### Tip Title
           # Test title
-          # ### Tip Text (required)
+          # ### Tip Text
           # Test description
           # ### Example Code (optional)
           # ```powershell
@@ -93,7 +93,7 @@ jobs:
           # http://two.com
           # ### URL 3 (optional)
           # _No response_
-          # ### Category (required)
+          # ### Category
           # Terminal
           # ### Author (optional)
           # _No response_
@@ -104,7 +104,7 @@ jobs:
           [string] $noResponseText = '_No response_'
 
           # Extract Title.
-          [regex] $titleRegex = '### Tip Title \(required\)\s+(?<Title>.*?)\s+### Tip Text'
+          [regex] $titleRegex = '### Tip Title\s+(?<Title>.*?)\s+### Tip Text'
           if ($body -match $titleRegex) {
             $tipTitle = $Matches['Title'].Trim()
 
@@ -120,17 +120,24 @@ jobs:
           }
 
           # Extract Tip Text. Use '(?s)' for multiline match mode, since these are multiline strings.
-          [regex] $tipTextRegex = '(?s)### Tip Text \(required\)\s+(?<TipText>.*?)\s+### Example Code'
+          [regex] $tipTextRegex = '(?s)### Tip Text\s+(?<TipText>.*?)\s+### Example Code'
           if ($body -match $tipTextRegex) {
             $tipText = $Matches['TipText'].Trim()
             Write-Output "Extracted Tip Text: $tipText"
           }
 
           # Extract Example Code. Use '(?s)' for multiline match mode, since these are multiline strings.
-          [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\s+(?<ExampleCode>.*?)```\s+### URL 1'
+          [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\s+(?<ExampleCode>.*?)```\s+### Category'
           if ($body -match $exampleRegex) {
             $tipExample = $Matches['ExampleCode'].Trim()
             Write-Output "Extracted Example Code: $tipExample"
+          }
+
+          # Extract Category.
+          [regex] $categoryRegex = '### Category\s+(?<Category>.*?)\s+### URL 1'
+          if ($body -match $categoryRegex) {
+            $tipCategory = $Matches['Category'].Trim()
+            Write-Output "Extracted Category: $tipCategory"
           }
 
           # Extract URLs (up to 3).
@@ -152,20 +159,13 @@ jobs:
             }
           }
 
-          [regex] $url3Regex = '### URL 3 \(optional\)\s+(?<Url3>.*?)\s+### Category'
+          [regex] $url3Regex = '### URL 3 \(optional\)\s+(?<Url3>.*?)\s+### Author'
           if ($body -match $url3Regex) {
             $url = $Matches['Url3'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
               $tipUrls += $url
               Write-Output "Extracted URL 3: $url"
             }
-          }
-
-          # Extract Category.
-          [regex] $categoryRegex = '### Category \(required\)\s+(?<Category>.*?)\s+### Author'
-          if ($body -match $categoryRegex) {
-            $tipCategory = $Matches['Category'].Trim()
-            Write-Output "Extracted Category: $tipCategory"
           }
 
           # Extract Author.

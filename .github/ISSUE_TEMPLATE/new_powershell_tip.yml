@@ -16,7 +16,7 @@ body:
   - type: input
     id: title
     attributes:
-      label: Tip Title (required)
+      label: Tip Title
       description: A concise title for your tip (max 75 characters)
       placeholder: e.g. Use `-Filter` with `Get-ChildItem` to speed up file searches
     validations:
@@ -25,7 +25,7 @@ body:
   - type: textarea
     id: tipText
     attributes:
-      label: Tip Text (required)
+      label: Tip Text
       description: Detailed explanation of the tip. Be clear and concise.
       placeholder: Write your tip description here...
     validations:
@@ -39,31 +39,10 @@ body:
       render: powershell
       placeholder: Provide example code here...
 
-  - type: input
-    id: url1
-    attributes:
-      label: URL 1 (optional)
-      description: URL with additional information (must start with http:// or https://)
-      placeholder: https://example.com
-
-  - type: input
-    id: url2
-    attributes:
-      label: URL 2 (optional)
-      description: URL with additional information (must start with http:// or https://)
-      placeholder: https://example.com
-
-  - type: input
-    id: url3
-    attributes:
-      label: URL 3 (optional)
-      description: URL with additional information (must start with http:// or https://)
-      placeholder: https://example.com
-
   - type: dropdown
     id: category
     attributes:
-      label: Category (required)
+      label: Category
       description: |
         Select the category that best fits your tip.
         Community - Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
@@ -87,6 +66,27 @@ body:
         - Other
     validations:
       required: true
+
+  - type: input
+    id: url1
+    attributes:
+      label: URL 1 (optional)
+      description: URL with additional information (must start with http:// or https://)
+      placeholder: https://example.com
+
+  - type: input
+    id: url2
+    attributes:
+      label: URL 2 (optional)
+      description: URL with additional information (must start with http:// or https://)
+      placeholder: https://example.com
+
+  - type: input
+    id: url3
+    attributes:
+      label: URL 3 (optional)
+      description: URL with additional information (must start with http:// or https://)
+      placeholder: https://example.com
 
   - type: input
     id: author
