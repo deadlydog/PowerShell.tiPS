@@ -36,7 +36,7 @@ tiPS provides a low-effort way to learn new things about PowerShell, and help yo
 
 tiPS is community driven.
 Have a tip, module, blog post, or community event that you think others may find valuable?
-See the Contributing section below for how to add your tips to tiPS.
+See [the Contributing section below](#-contribute-a-tip) for how to easily add your own tips to tiPS.
 
 If you enjoy this module, consider giving it a GitHub star ⭐ to show your support.
 
@@ -193,18 +193,16 @@ tiPS is open source, and contributions are not only welcome, they are encouraged
 
 Have a PowerShell tip you want to share?
 Know of a great module, blog post, or community event that you think others should know about?
-<!-->
+
 There are 2 ways to submit your tip to tiPS:
 
 1. Use [the GitHub issue template](https://github.com/deadlydog/PowerShell.tiPS/issues/new?template=new_powershell_tip.yml) to create a PR for your new tip.
-   This is the easiest method, but since an app creates the PR, you will not be recorded as the contributor in git.
+   This is the easiest method, but since a GitHub Action creates the PR, you will not be recorded as the contributor in git.
    However, you can still put your name or handle in the tip's `Author` field.
 1. Fork the repo and create a PR for your tip the traditional way, by following the steps below.
    This method is a bit more work, but you will be recorded as the contributor in git.
 
 Follow the steps below to fork the repo and manually submit your PR:
--->
-Follow these steps to add your tip to tiPS:
 
 1. Fork this repo to your account ([See GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
 1. Clone the repo to your local machine, or open it in GitHub Codespaces, and create a new branch.
@@ -212,7 +210,7 @@ Follow these steps to add your tip to tiPS:
 1. Modify it with your tip info and commit your changes.
 1. Submit a pull request from your fork back to this repo ([See GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)).
 
-🎦 [This video](https://youtu.be/OBg1KJf8sC4?si=CXEtMmaaZ3ybQAVF) walks through the above steps, showing how to contribute a new tip 🎦
+🎦 [This video](https://youtu.be/OBg1KJf8sC4?si=CXEtMmaaZ3ybQAVF) walks through the above steps, showing how to fork the repo to contribute a new tip 🎦
 
 tiPS is meant to be a community driven project, so please help make it better by contributing your tips.
 
