@@ -26,7 +26,7 @@ body:
     id: tipText
     attributes:
       label: Tip Text
-      description: Detailed explanation of the tip. Be clear and concise.
+      description: Detailed explanation of the tip. Try to be clear and concise.
       placeholder: Write your tip description here...
     validations:
       required: true
@@ -35,7 +35,7 @@ body:
     id: example
     attributes:
       label: Example Code (optional)
-      description: Provide a working PowerShell example that demonstrates your tip.
+      description: Provide one or more PowerShell examples that demonstrates your tip.
       render: powershell
       placeholder: Provide example code here...
 
@@ -71,22 +71,22 @@ body:
     id: url1
     attributes:
       label: URL 1 (optional)
-      description: URL with additional information (must start with http:// or https://)
-      placeholder: https://example.com
+      description: URL with additional information or examples (must start with http:// or https://)
+      placeholder: https://LearnMoreHere.com
 
   - type: input
     id: url2
     attributes:
       label: URL 2 (optional)
-      description: URL with additional information (must start with http:// or https://)
-      placeholder: https://example.com
+      description: URL with additional information or examples (must start with http:// or https://)
+      placeholder: https://AndSeeOtherExamplesHere.com
 
   - type: input
     id: url3
     attributes:
       label: URL 3 (optional)
-      description: URL with additional information (must start with http:// or https://)
-      placeholder: https://example.com
+      description: URL with additional information or examples (must start with http:// or https://)
+      placeholder: https://OfficialDocsOrBlogPostOrSocialMediaPost.com
 
   - type: input
     id: author
@@ -105,6 +105,4 @@ body:
   - type: markdown
     attributes:
       value: |
-        By submitting this tip, you agree to make it available under the project's license.
-        The tip's CreatedDate will be set to the date when it's accepted, and ExpiryDate will
-        be set to the maximum date unless otherwise specified.
+        By submitting this tip, you agree to make it available under the project's license (MIT).
