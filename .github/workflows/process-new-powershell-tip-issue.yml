@@ -145,6 +145,10 @@ jobs:
           if ($body -match $url1Regex) {
             $url = $Matches['Url1'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
+              # Ensure URL starts with http(s)://.
+              if (-not ($url.StartsWith('http://') -or $url.StartsWith('https://'))) {
+                $url = "https://$url"
+              }
               $tipUrls += $url
               Write-Output "Extracted URL 1: $url"
             }
@@ -154,6 +158,10 @@ jobs:
           if ($body -match $url2Regex) {
             $url = $Matches['Url2'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
+              # Ensure URL starts with http(s)://.
+              if (-not ($url.StartsWith('http://') -or $url.StartsWith('https://'))) {
+                $url = "https://$url"
+              }
               $tipUrls += $url
               Write-Output "Extracted URL 2: $url"
             }
@@ -163,6 +171,10 @@ jobs:
           if ($body -match $url3Regex) {
             $url = $Matches['Url3'].Replace($noResponseText, '').Trim()
             if (-not [string]::IsNullOrWhiteSpace($url)) {
+              # Ensure URL starts with http(s)://.
+              if (-not ($url.StartsWith('http://') -or $url.StartsWith('https://'))) {
+                $url = "https://$url"
+              }
               $tipUrls += $url
               Write-Output "Extracted URL 3: $url"
             }
