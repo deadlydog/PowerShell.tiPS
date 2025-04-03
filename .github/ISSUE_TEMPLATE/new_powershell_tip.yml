@@ -8,10 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        THIS FORM DOES NOT WORK YET! IT IS STILL A WORK IN PROGRESS!
-        Please do not use it yet. It is here for reference only.
-
-        Thanks for submitting a new PowerShell tip! Please fill in all required fields below.
+        Thanks for contributing to tiPS! Fill out the fields below to submit a new PowerShell tip.
 
   - type: input
     id: title
@@ -39,12 +36,10 @@ body:
       render: powershell
       placeholder: Provide example code here...
 
-  - type: dropdown
-    id: category
+  - type: markdown
     attributes:
-      label: Category
-      description: |
-        Select the category that best fits your tip.
+      value: |
+        Category descriptions:
         Community - Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
         Editor - Editor tips and extensions. e.g. VSCode, ISE, etc.
         Module - Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
@@ -54,6 +49,11 @@ body:
         Syntax - Syntax tips. e.g. splatting, pipeline, etc.
         Terminal - Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.
         Other - Tips that don't fit into any of the other categories.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Select the category that best fits your tip.
       options:
         - Community
         - Editor
