@@ -39,7 +39,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Category descriptions:
+        ### Category descriptions:
         Community - Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
         Editor - Editor tips and extensions. e.g. VSCode, ISE, etc.
         Module - Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
