@@ -58,15 +58,15 @@ body:
     attributes:
       value: |
         #### Category descriptions:
-        Community - Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
-        Editor - Editor tips and extensions. e.g. VS Code, ISE, etc.
-        Module - Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
-        NativeCmdlet - Native cmdlet tips. e.g. Get-Process, Get-ChildItem, Get-Content, etc.
-        Performance - Tips to improve runtime performance. e.g. foreach vs ForEach-Object, ForEach-Object -Parallel, etc.
-        Security - Security tips. e.g. ExecutionPolicy, Constrained Language Mode, passwords, etc.
-        Syntax - Syntax tips. e.g. splatting, pipeline, keywords, etc.
-        Terminal - Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.
-        Other - Tips that don't fit into any of the other categories.
+        Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
+        Editor: Editor tips and extensions. e.g. VS Code, ISE, etc.
+        Module: Modules and module tips. e.g. PSScriptAnalyzer, Pester, etc.
+        NativeCmdlet: Native cmdlet tips. e.g. Get-Process, Get-ChildItem, Get-Content, etc.
+        Performance: Tips to improve runtime performance. e.g. foreach vs ForEach-Object, ForEach-Object -Parallel, etc.
+        Security: Security tips. e.g. ExecutionPolicy, Constrained Language Mode, passwords, etc.
+        Syntax: Syntax tips. e.g. splatting, pipeline, keywords, etc.
+        Terminal: Terminal shortcuts and tips. e.g. PSReadLine, Windows Terminal, ConEmu, etc.
+        Other: Tips that don't fit into any of the other categories.
 
   - type: input
     id: url1
