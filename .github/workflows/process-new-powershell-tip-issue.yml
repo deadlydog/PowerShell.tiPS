@@ -3,9 +3,7 @@ name: process-new-powershell-tip-issue
 # Trigger whenever a new issue is opened, and ensure (in the job) it has the automation label meaning we should process it.
 on:
   issues:
-    # Can add 'labeled' to make troubleshooting easier and simply remove/add label to trigger workflow run.
-    # Do not leave it on though, as it will result in duplicate PRs being created when new tips are submitted.
-    types: [opened] #, labeled]
+    types: [opened, edited]
 
 jobs:
   process-new-tip-issue:
@@ -29,9 +27,11 @@ jobs:
           [string] $message = @"
           Thank you for your submission! 🙏
 
-          A pull request is being created for your tip via the following GitHub Actions run and should be linked to this issue shortly... ⏱️
+          A pull request is being created for your tip via the following GitHub Actions workflow run and should be linked to this issue shortly... ⏱️
 
           $runUrl
+
+          If the run fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description to fix it up and it will automatically re-run the workflow and update the PR.
           "@
 
           Write-Output "Adding comment with link to workflow run to issue..."
