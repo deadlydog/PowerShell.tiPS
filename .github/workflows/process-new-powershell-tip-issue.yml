@@ -192,14 +192,14 @@ jobs:
           }
 
           # Extract Expiry Date.
-          [regex] $expiryDateRegex = '### Expiry Date \(optional\)\s+(?<ExpiryDate>.*?)\s+### Name and GitHub Email'
+          [regex] $expiryDateRegex = '### Expiry Date \(optional\)\s+(?<ExpiryDate>.*?)\s+### Git Display Name and GitHub Email'
           if ($body -match $expiryDateRegex) {
             $tipExpiryDate = $Matches['ExpiryDate'].Trim()
             Write-Output "Extracted Expiry Date: $tipExpiryDate"
           }
 
           # Extract GitHub Co-Author.
-          [regex] $gitHubCoAuthorRegex = '### Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)\s+'
+          [regex] $gitHubCoAuthorRegex = '### Git Display Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)\s+'
           if ($body -match $gitHubCoAuthorRegex) {
             $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Trim()
             Write-Output "Extracted GitHub Email: $gitHubCoAuthor"
