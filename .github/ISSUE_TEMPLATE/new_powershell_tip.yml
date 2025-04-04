@@ -107,7 +107,10 @@ body:
     id: gitHubCoAuthor
     attributes:
       label: Git Display Name and GitHub Email (optional)
-      description: Your name and GitHub email address in the format, DisplayName \<EmailAddress\>. This allows you to get attribution in the git history and GitHub. If you do not want to use your public email address, you can use your private GitHub email address, which can be enabled and found at https://github.com/settings/emails. Leave blank if you prefer to remain anonymous.
+      description: >
+        Your display name and GitHub email address in the format: DisplayName \<EmailAddress\>
+
+        This allows you to get attribution in the git history and GitHub. If you do not want to use your public GitHub email address, you can use your private GitHub email address, which can be enabled and found at https://github.com/settings/emails. Leave blank if you prefer to remain anonymous in the git history.
       placeholder: e.g. Daniel Schroeder <deadlydog@hotmail.com>
 
   - type: markdown
