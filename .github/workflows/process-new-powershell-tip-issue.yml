@@ -164,7 +164,7 @@ jobs:
           # Extract Example Code. Use '(?s)' for multiline match mode, since these are multiline strings.
           [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\s+(?<ExampleCode>.*?)```\s+### Category'
           if ($body -match $exampleRegex) {
-            $tipExample = $Matches['ExampleCode'].Replace($noResponseText, '').Trim()
+            $tipExample = $Matches['ExampleCode'].Trim()
             Write-Output "Extracted Example Code: $tipExample"
           }
 
@@ -218,21 +218,21 @@ jobs:
           # Extract Author.
           [regex] $authorRegex = '### Author \(optional\)\s+(?<Author>.*?)\s+### Expiry Date'
           if ($body -match $authorRegex) {
-            $tipAuthor = $Matches['Author'].Replace($noResponseText, '').Trim()
+            $tipAuthor = $Matches['Author'].Trim()
             Write-Output "Extracted Author: $tipAuthor"
           }
 
           # Extract Expiry Date.
           [regex] $expiryDateRegex = '### Expiry Date \(optional\)\s+(?<ExpiryDate>.*?)\s+### Git Display Name and GitHub Email'
           if ($body -match $expiryDateRegex) {
-            $tipExpiryDate = $Matches['ExpiryDate'].Replace($noResponseText, '').Trim()
+            $tipExpiryDate = $Matches['ExpiryDate'].Trim()
             Write-Output "Extracted Expiry Date: $tipExpiryDate"
           }
 
           # Extract GitHub Co-Author.
           [regex] $gitHubCoAuthorRegex = '### Git Display Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)$'
           if ($body -match $gitHubCoAuthorRegex) {
-            $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Replace($noResponseText, '').Trim()
+            $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Trim()
             Write-Output "Extracted GitHub Co-Author: $gitHubCoAuthor"
           }
 
@@ -248,9 +248,12 @@ jobs:
             TipUrls = $tipUrls
             TipCategory = $tipCategory.Replace($noResponseText, '').Trim()
             TipAuthor = $tipAuthor.Replace($noResponseText, '').Trim()
-            TipExpiryDate = $tipExpiryDate
+            TipExpiryDate = $tipExpiryDate.Replace($noResponseText, '').Trim()
           }
           [string] $newTipFilePath = New-PowerShellTipFile @newTipFileParameters
+
+          # Sanitize the GitHub Co-Author string if none was provided.
+          $gitHubCoAuthor = $gitHubCoAuthor.Replace($noResponseText, '').Trim()
 
           Write-Output "Writing variables to environment variables for later steps..."
           "tip_file_path=$newTipFilePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
