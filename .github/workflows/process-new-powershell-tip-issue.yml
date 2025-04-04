@@ -283,7 +283,8 @@ jobs:
           git commit -m "$commitMessage"
 
           Write-Output "Pushing changes to remote branch..."
-          git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
+          # Use force push because we rebased the branch on main, and the commit history may have changed.
+          git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}" --force-with-lease
 
           Write-Output "Checking if a PR already exists for this branch..."
           $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
