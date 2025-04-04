@@ -34,6 +34,7 @@ jobs:
           $runUrl
           "@
 
+          Write-Output "Adding comment with link to workflow run to issue..."
           gh issue comment "${{ github.event.issue.number }}" --body $message
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,9 +45,11 @@ jobs:
         run: |
           [string] $branchName = "new-tip/issue-${{ github.event.issue.number }}"
 
-          Write-Output "Creating and checking out new branch: $branchName"
+          Write-Output "Setting up git user information for automated workflow..."
           git config --global user.name 'GitHub Action - tiPS Automation'
           git config --global user.email 'tiPSAutomation@DoesNotExist.com'
+
+          Write-Output "Creating and checking out new branch: $branchName"
           git checkout -b "$branchName"
 
           Write-Output "Writing variables to environment variables for later steps..."
@@ -248,8 +251,10 @@ jobs:
 
           🎉 Thank you for contributing to tiPS! 🎉
 
-          This PR was created automatically using a GitHub Action.
+          This PR was created automatically using a GitHub Action to resolve #${{ github.event.issue.number }}.
           "@
+          # Using "resolve #issue_number" in the PR message above will automatically close the issue when the PR is merged.
+          # For more information see: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
 
           Write-Output "Creating pull request..."
           [string] $prUrl = gh pr create `
@@ -274,10 +279,10 @@ jobs:
 
           Subscribe to the PR for notifications on any next steps and to see when your tip has been merged into tiPS.
 
-          This issue has been processed and will now be closed.
+          This issue will be automatically closed when the PR is merged or closed.
           "@
 
-          Write-Output "Closing issue and adding comment..."
-          gh issue close "${{ github.event.issue.number }}" --comment $message
+          Write-Output "Adding comment with link to PR to issue..."
+          gh issue comment "${{ github.event.issue.number }}" --body $message
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
