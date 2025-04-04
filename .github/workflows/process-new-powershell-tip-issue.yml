@@ -45,23 +45,20 @@ jobs:
           git config --global user.name 'GitHub Action - tiPS Automation'
           git config --global user.email 'tiPSAutomation@DoesNotExist.com'
 
+          Write-Output "Creating and checking out local branch: $branchName"
+          git checkout -b "$branchName"
+
           Write-Output "Checking if branch '$branchName' already exists on remote..."
           [string] $remoteBranchName = "origin/$branchName"
           [string] $remoteBranchSha = (& git show-ref "$remoteBranchName")
           [bool] $remoteBranchExists = -not ([string]::IsNullOrWhitespace($remoteBranchSha))
           if ($remoteBranchExists) {
-            Write-Output "Branch '$branchName' already exists on remote. Pulling latest changes..."
-            git pull origin "$branchName"
-          } else {
-            Write-Output "Branch '$branchName' does not exist on remote. Creating local branch..."
-            git branch "$branchName"
+            Write-Output "Branch '$branchName' already exists on remote. Getting remote changes..."
+            git reset --hard "origin/$branchName"
+
+            Write-Output "Rebasing branch '$branchName' on main to ensure it has latest main branch changes..."
+            git rebase main
           }
-
-          Write-Output "Checking out branch: $branchName"
-          git checkout "$branchName"
-
-          Write-Output "Rebasing branch '$branchName' on main to ensure it has latest changes..."
-          git rebase main
 
           Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
