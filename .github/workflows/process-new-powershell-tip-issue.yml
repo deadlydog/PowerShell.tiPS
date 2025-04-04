@@ -223,7 +223,7 @@ jobs:
           [regex] $gitHubCoAuthorRegex = '### Git Display Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)$'
           if ($body -match $gitHubCoAuthorRegex) {
             $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Trim()
-            Write-Output "Extracted GitHub Email: $gitHubCoAuthor"
+            Write-Output "Extracted GitHub Co-Author: $gitHubCoAuthor"
           }
 
           Write-Output "Dot-sourcing utility script used to create the new tip file..."
