@@ -59,8 +59,8 @@ jobs:
             git branch "$branchName"
           }
 
-          Write-Output "Switching to branch: $branchName"
-          git switch "$branchName"
+          Write-Output "Checking out branch: $branchName"
+          git checkout "$branchName"
 
           Write-Output "Rebasing branch '$branchName' on main to ensure it has latest changes..."
           git rebase main
