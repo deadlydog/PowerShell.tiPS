@@ -55,11 +55,14 @@ jobs:
             Write-Output "Branch '$branchName' already exists on remote. Pulling latest changes..."
             git pull origin "$branchName"
           } else {
-            Write-Output "Branch '$branchName' does not exist on remote. No need to pull it."
+            Write-Output "Branch '$branchName' does not exist on remote. Creating local branch..."
+            git branch "$branchName" "origin/main" --set-upstream
           }
 
-          Write-Output "Checking out branch: $branchName"
-          git checkout -b "$branchName"
+          Write-Output "Switching to branch: $branchName"
+          git switch "$branchName"
+
+          Write-Output "Rebasing branch '$branchName' on main to ensure it has latest changes..."
           git rebase main
 
           Write-Output "Writing variables to environment variables for later steps..."
@@ -277,7 +280,8 @@ jobs:
           Write-Output "Committing changes to local branch and pushing to remote..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
           git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
-          git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
+          git push
+          #git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           Write-Output "Checking if a PR already exists for this branch..."
           $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
