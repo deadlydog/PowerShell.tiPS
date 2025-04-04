@@ -266,7 +266,7 @@ jobs:
           # GitHub docs: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
           [string] $coAuthorCommitMessage = [string]::Empty
           [string] $gitHubCoAuthor = '${{ steps.create-tip-file.outputs.github_coauthor }}'
-          if ($gitHubCoAuthor -ne [string]::Empty) {
+          if (-not ([string]::IsNullOrWhiteSpace($gitHubCoAuthor))) {
             $coAuthorCommitMessage = "-m ""Co-authored-by: $gitHubCoAuthor"""
             Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
           }
