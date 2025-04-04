@@ -277,8 +277,10 @@ jobs:
             Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
           }
 
-          Write-Output "Committing changes to local branch..."
+          Write-Output "Adding new tip file to git staging area..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
+
+          Write-Output "Committing changes to local branch..."
           git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
 
           Write-Output "Pushing changes to remote branch..."
