@@ -164,7 +164,7 @@ jobs:
           # Extract Example Code. Use '(?s)' for multiline match mode, since these are multiline strings.
           [regex] $exampleRegex = '(?s)### Example Code \(optional\)\s+```powershell\s+(?<ExampleCode>.*?)```\s+### Category'
           if ($body -match $exampleRegex) {
-            $tipExample = $Matches['ExampleCode'].Trim()
+            $tipExample = $Matches['ExampleCode'].Replace($noResponseText, '').Trim()
             Write-Output "Extracted Example Code: $tipExample"
           }
 
@@ -218,21 +218,21 @@ jobs:
           # Extract Author.
           [regex] $authorRegex = '### Author \(optional\)\s+(?<Author>.*?)\s+### Expiry Date'
           if ($body -match $authorRegex) {
-            $tipAuthor = $Matches['Author'].Trim()
+            $tipAuthor = $Matches['Author'].Replace($noResponseText, '').Trim()
             Write-Output "Extracted Author: $tipAuthor"
           }
 
           # Extract Expiry Date.
           [regex] $expiryDateRegex = '### Expiry Date \(optional\)\s+(?<ExpiryDate>.*?)\s+### Git Display Name and GitHub Email'
           if ($body -match $expiryDateRegex) {
-            $tipExpiryDate = $Matches['ExpiryDate'].Trim()
+            $tipExpiryDate = $Matches['ExpiryDate'].Replace($noResponseText, '').Trim()
             Write-Output "Extracted Expiry Date: $tipExpiryDate"
           }
 
           # Extract GitHub Co-Author.
           [regex] $gitHubCoAuthorRegex = '### Git Display Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)$'
           if ($body -match $gitHubCoAuthorRegex) {
-            $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Trim()
+            $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Replace($noResponseText, '').Trim()
             Write-Output "Extracted GitHub Co-Author: $gitHubCoAuthor"
           }
 
