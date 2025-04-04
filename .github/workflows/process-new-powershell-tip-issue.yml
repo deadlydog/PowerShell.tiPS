@@ -39,11 +39,11 @@ jobs:
         id: create-branch
         shell: pwsh
         run: |
-          [string] $branchName = "new-tip/issue-${{ github.event.issue.number }}"
-
           Write-Output "Setting up git user information for automated workflow..."
           git config --global user.name 'GitHub Action - tiPS Automation'
           git config --global user.email 'tiPSAutomation@DoesNotExist.com'
+
+          [string] $branchName = 'new-tip/issue-${{ github.event.issue.number }}'
 
           Write-Output "Creating and checking out local branch: $branchName"
           git checkout -b "$branchName"
@@ -58,6 +58,10 @@ jobs:
 
             Write-Output "Rebasing branch '$branchName' on main to ensure it has latest main branch changes..."
             git rebase main
+          } else {
+            # If the branch doesn't exist, the 'git show-ref' command will have returned a non-zero exit code.
+            # Reset the PowerShell LastExitCode variable to 0 to avoid failing the workflow run.
+            $LastExitCode = 0
           }
 
           Write-Output "Writing variables to environment variables for later steps..."
