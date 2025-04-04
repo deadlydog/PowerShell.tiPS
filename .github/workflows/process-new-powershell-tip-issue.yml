@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags to ensure we can rebase the branch on main.
 
       - name: Comment on issue letting user know we are processing it
         shell: pwsh
