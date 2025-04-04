@@ -288,6 +288,10 @@ jobs:
           # Use force push because we rebased the branch on main, and the commit history may have changed.
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}" --force-with-lease
 
+          if ($LastExitCode -ne 0) {
+            throw "Git push to remote branch failed. Exiting workflow run."
+          }
+
           Write-Output "Checking if a PR already exists for this branch..."
           $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
 
