@@ -350,7 +350,7 @@ jobs:
 
           If the PR check fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description and it will automatically re-run the workflow to update the PR.
 
-          This issue will be automatically closed when the PR is merged or closed.
+          This issue will be automatically closed when the PR is merged.
           "@
 
           Write-Output "Adding comment with link to PR to issue..."
