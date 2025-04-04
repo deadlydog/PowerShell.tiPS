@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Add comment to issue letting user know we are processing it
+      - name: Comment on issue letting user know we are processing it
         shell: pwsh
         run: |
           [string] $runUrl = "$Env:GITHUB_SERVER_URL/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -269,7 +269,7 @@ jobs:
           # For more information see: https://github.com/peter-evans/create-pull-request/issues/48
           GITHUB_TOKEN: ${{ secrets.TIPS_GITHUB_ACTIONS_PR_CREATION_TOKEN }}
 
-      - name: Close issue
+      - name: Comment on issue with link to PR
         shell: pwsh
         run: |
           [string] $message = @"
