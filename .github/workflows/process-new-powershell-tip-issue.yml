@@ -296,16 +296,16 @@ jobs:
           [string] $prUrl = [string]::Empty
           if ([string]::IsNullOrWhiteSpace($prNumber)) {
             [string] $message = @"
-            This PR adds the new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
+          This PR adds the new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
 
-            Next steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.
+          Next steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.
 
-            Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
+          Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
 
-            🎉 Thank you for contributing to tiPS! 🎉
+          🎉 Thank you for contributing to tiPS! 🎉
 
-            This PR was created automatically using a GitHub Action to resolve #${{ github.event.issue.number }}.
-            "@
+          This PR was created automatically using a GitHub Action to resolve #${{ github.event.issue.number }}.
+          "@
             # Using "resolve #issue_number" in the PR message above will automatically close the issue when the PR is merged.
             # For more information see: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
 
