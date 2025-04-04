@@ -2,7 +2,7 @@ $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2025-04-04')
 $tip.Title = 'Test title'
 $tip.TipText = @'
-Test description. More. Again. Again. More. Again. More. Again.
+Test description. More. Again. Again. More. Again. More. Again. More.
 
 Multiline test.
 '@
