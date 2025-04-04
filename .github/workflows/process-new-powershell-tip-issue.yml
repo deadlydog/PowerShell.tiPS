@@ -220,7 +220,7 @@ jobs:
           }
 
           # Extract GitHub Co-Author.
-          [regex] $gitHubCoAuthorRegex = '### Git Display Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)\s+'
+          [regex] $gitHubCoAuthorRegex = '### Git Display Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)$'
           if ($body -match $gitHubCoAuthorRegex) {
             $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Trim()
             Write-Output "Extracted GitHub Email: $gitHubCoAuthor"
