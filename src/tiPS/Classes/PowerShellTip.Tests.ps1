@@ -57,6 +57,16 @@ Describe 'Trimming all tip properties' {
 			$tip.Urls | Should -Be $urls
 			$tip.Author | Should -Be $author
 		}
+
+		It 'Should remove empty URLs from the URL array' {
+			[tiPS.PowerShellTip] $tip = $ValidTip
+			[string[]] $urls = @('https://Url1.com', '', 'http://Url2.com')
+			$tip.Urls = $urls
+
+			{ $tip.TrimAllProperties() } | Should -Not -Throw
+
+			$tip.Urls | Should -Be @('https://Url1.com', 'http://Url2.com')
+		}
 	}
 
 	Context 'Given the properties need whitespace trimmed' {
