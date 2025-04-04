@@ -288,7 +288,8 @@ jobs:
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
 
           Write-Output "Committing changes to local branch..."
-          git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
+          #git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
+          git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}"
 
           Write-Output "Pushing changes to remote branch..."
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
