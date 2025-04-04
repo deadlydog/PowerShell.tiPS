@@ -103,6 +103,13 @@ body:
       description: Date when the tip should expire and no longer be shown (format of YYYY-MM-DD). Mostly applicable when promoting a community event on a specific date. Leave blank for no expiry.
       placeholder: '2025-10-25'
 
+  - type: input
+    id: gitHubCoAuthor
+    attributes:
+      label: Name and GitHub Email (optional)
+      description: Your name and GitHub email address in the format, name <email address>. This allows you to get attribution in the git history and GitHub. If you do not want to use your public email address, you can use your private GitHub email address, which can be enabled and found at https://github.com/settings/emails. Leave blank if you prefer to remain anonymous.
+      placeholder: e.g. Daniel Schroeder <deadlydog@hotmail.com>
+
   - type: markdown
     attributes:
       value: |

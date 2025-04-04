@@ -74,6 +74,7 @@ jobs:
           [string[]] $tipUrls = @()
           [string] $tipAuthor = [string]::Empty
           [string] $tipExpiryDate = [string]::Empty
+          [string] $gitHubCoAuthor = [string]::Empty
 
           # Extract the data from the markdown representation of the issue.
           # GitHub Forms generates structured markdown with specific section headers we can match against.
@@ -187,6 +188,20 @@ jobs:
             Write-Output "Extracted Author: $tipAuthor"
           }
 
+          # Extract Expiry Date.
+          [regex] $expiryDateRegex = '### Expiry Date \(optional\)\s+(?<ExpiryDate>.*?)\s+### Name and GitHub Email'
+          if ($body -match $expiryDateRegex) {
+            $tipExpiryDate = $Matches['ExpiryDate'].Trim()
+            Write-Output "Extracted Expiry Date: $tipExpiryDate"
+          }
+
+          # Extract GitHub Co-Author.
+          [regex] $gitHubCoAuthorRegex = '### Name and GitHub Email \(optional\)\s+(?<GitHubCoAuthor>.*?)\s+'
+          if ($body -match $gitHubCoAuthorRegex) {
+            $gitHubCoAuthor = $Matches['GitHubCoAuthor'].Trim()
+            Write-Output "Extracted GitHub Email: $gitHubCoAuthor"
+          }
+
           Write-Output "Dot-sourcing utility script used to create the new tip file..."
           [string] $gitRootDirectoryPath = $Env:GITHUB_WORKSPACE
           . "$gitRootDirectoryPath/.github/workflows/ProcessNewPowerShellTipIssueFunctions.ps1"
@@ -206,14 +221,22 @@ jobs:
           Write-Output "Writing variables to environment variables for later steps..."
           "tip_file_path=$newTipFilePath" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           "tip_title=$tipTitle" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "github_coauthor=$gitHubCoAuthor" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Push changes and create PR
         id: create-pr
         shell: pwsh
         run: |
+          [string] $coAuthorCommitMessage = [string]::Empty
+          [string] $gitHubCoAuthor = '${{ steps.create-tip-file.outputs.github_coauthor }}'
+          if ($gitHubCoAuthor -ne [string]::Empty) {
+            $coAuthorCommitMessage = "-m ""Co-authored-by: $gitHubCoAuthor"""
+            Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
+          }
+
           Write-Output "Committing changes to local branch and pushing to remote..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
-          git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}"
+          git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           [string] $message = @"
