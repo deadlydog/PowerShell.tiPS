@@ -264,6 +264,7 @@ jobs:
         run: |
           # Use GitHub's Co-Author feature to add the user as a committer on the git commit.
           # GitHub docs: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
+          Write-Output "Setting up git co-author information for git commit..."
           [string] $coAuthorCommitMessage = [string]::Empty
           [string] $gitHubCoAuthor = '${{ steps.create-tip-file.outputs.github_coauthor }}'
           if (-not ([string]::IsNullOrWhiteSpace($gitHubCoAuthor))) {
@@ -279,7 +280,7 @@ jobs:
           Write-Output "Checking if a PR already exists for this branch..."
           $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
 
-          # Get the PR number from the output.
+          # Get the PR number from the output, if it exists.
           # The output will look like this when a PR is found for the branch:
           #   Showing 1 of 1 pull request in deadlydog/PowerShell.tiPS that matches your search
           #   ID    TITLE            BRANCH             CREATED AT
@@ -315,7 +316,7 @@ jobs:
               --label "automation-new-tip-pr-do-not-use"
           } else {
             $prUrl = "https://github.com/${{ github.repository }}/pull/$prNumber"
-            Write-Output "PR already exists. PR URL: $prUrl"
+            Write-Output "PR already existed. PR URL: $prUrl"
           }
 
           Write-Output "Writing variables to environment variables for later steps..."
