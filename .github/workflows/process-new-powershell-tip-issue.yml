@@ -260,6 +260,8 @@ jobs:
         id: create-pr
         shell: pwsh
         run: |
+          # Use GitHub's Co-Author feature to add the user as a committer on the git commit.
+          # GitHub docs: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
           [string] $coAuthorCommitMessage = [string]::Empty
           [string] $gitHubCoAuthor = '${{ steps.create-tip-file.outputs.github_coauthor }}'
           if ($gitHubCoAuthor -ne [string]::Empty) {
