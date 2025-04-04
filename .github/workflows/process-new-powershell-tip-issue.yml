@@ -303,7 +303,7 @@ jobs:
 
           Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
 
-          If the PR check fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description and it will automatically re-run the workflow to update the PR.
+          If the PR check fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description and it will automatically re-run the workflow to update this PR.
 
           🎉 Thank you for contributing to tiPS! 🎉
 
