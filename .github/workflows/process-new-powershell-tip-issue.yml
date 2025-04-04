@@ -54,7 +54,7 @@ jobs:
           [bool] $remoteBranchExists = -not ([string]::IsNullOrWhitespace($remoteBranchSha))
           if ($remoteBranchExists) {
             Write-Output "Branch '$branchName' already exists on remote. Getting remote changes..."
-            git reset --hard "origin/$branchName"
+            git reset --hard "$remoteBranchName"
 
             Write-Output "Rebasing branch '$branchName' on main to ensure it has latest main branch changes..."
             git rebase main
