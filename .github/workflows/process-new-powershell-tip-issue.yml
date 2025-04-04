@@ -279,12 +279,14 @@ jobs:
           $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
 
           # Get the PR number from the output, if it exists.
-          # The output will look like this when a PR is found for the branch:
+          # The output to the console will look like this when a PR is found for the branch:
           #   Showing 1 of 1 pull request in deadlydog/PowerShell.tiPS that matches your search
           #   ID    TITLE            BRANCH             CREATED AT
-          #   #110  Tip: Test title  new-tip/issue-109  about 1 hour ago
+          #   #110  Tip: Test title  new-tip/issue-109  about 10 hours ago
+          # But the actual output captured by the variable will look like this:
+          #   110     Tip: Test title new-tip/issue-109       OPEN    2025-04-04T03:45:47Z
           [string] $prNumber = [string]::Empty
-          [regex] $prNumberRegex = '(?s)#(?<PRNumber>\d+)' # Use '(?s)' for multiline match mode.
+          [regex] $prNumberRegex = '^(?<PRNumber>\d+)'
           if ($prOutput -match $prNumberRegex) {
             $prNumber = $Matches['PRNumber'].Trim()
             Write-Output "PR already exists. PR number: $prNumber"
