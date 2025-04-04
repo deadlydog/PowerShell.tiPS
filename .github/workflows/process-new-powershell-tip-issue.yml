@@ -39,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create branch for PR
+      - name: Checkout branch for PR
         id: create-branch
         shell: pwsh
         run: |
@@ -276,25 +276,47 @@ jobs:
           git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
-          [string] $message = @"
-          This PR adds the new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
+          Write-Output "Checking if a PR already exists for this branch..."
+          $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
 
-          Next steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.
+          # Get the PR number from the output.
+          # The output will look like this when a PR is found for the branch:
+          #   Showing 1 of 1 pull request in deadlydog/PowerShell.tiPS that matches your search
+          #   ID    TITLE            BRANCH             CREATED AT
+          #   #110  Tip: Test title  new-tip/issue-109  about 1 hour ago
+          [string] $prNumber = [string]::Empty
+          [regex] $prNumberRegex = '#(?<PRNumber>\d+)'
+          if ($prOutput -match $prNumberRegex) {
+            $prNumber = $Matches['PRNumber']
+            Write-Output "PR already exists. PR number: $prNumber"
+          }
 
-          Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
+          # If the PR number was not found, create a new PR.
+          [string] $prUrl = [string]::Empty
+          if ([string]::IsNullOrWhiteSpace($prNumber)) {
+            [string] $message = @"
+            This PR adds the new PowerShell tip submitted via issue #${{ github.event.issue.number }}.
 
-          🎉 Thank you for contributing to tiPS! 🎉
+            Next steps are to wait for the PR checks to pass, and for the maintainer to review and merge this PR.
 
-          This PR was created automatically using a GitHub Action to resolve #${{ github.event.issue.number }}.
-          "@
-          # Using "resolve #issue_number" in the PR message above will automatically close the issue when the PR is merged.
-          # For more information see: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
+            Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
 
-          Write-Output "Creating pull request..."
-          [string] $prUrl = gh pr create `
-            --title "Tip: ${{ steps.create-tip-file.outputs.tip_title }}" `
-            --body $message `
-            --label "automation-new-tip-pr-do-not-use"
+            🎉 Thank you for contributing to tiPS! 🎉
+
+            This PR was created automatically using a GitHub Action to resolve #${{ github.event.issue.number }}.
+            "@
+            # Using "resolve #issue_number" in the PR message above will automatically close the issue when the PR is merged.
+            # For more information see: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
+
+            Write-Output "Creating pull request..."
+            $prUrl = gh pr create `
+              --title "Tip: ${{ steps.create-tip-file.outputs.tip_title }}" `
+              --body $message `
+              --label "automation-new-tip-pr-do-not-use"
+          } else {
+            $prUrl = "https://github.com/${{ github.repository }}/pull/$prNumber"
+            Write-Output "PR already exists. PR URL: $prUrl"
+          }
 
           Write-Output "Writing variables to environment variables for later steps..."
           "pr_url=$prUrl" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
