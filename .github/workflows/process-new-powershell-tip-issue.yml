@@ -53,7 +53,7 @@ jobs:
           git checkout -b "$branchName"
 
           Write-Output "Fetching latest branch changes from remote branch if it exists, in case this was triggered from editing an issue. We will get an error when trying to push if we're not on the latest version of the branch..."
-          git pull origin/$branchName $branchName
+          git pull origin/$branchName $branchName 2>&1 # Convert errors to stdout since they are expected when the branch doesn't exist yet.
 
           Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
