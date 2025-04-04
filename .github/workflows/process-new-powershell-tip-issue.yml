@@ -288,7 +288,7 @@ jobs:
           [string] $prNumber = [string]::Empty
           [regex] $prNumberRegex = '#(?<PRNumber>\d+)'
           if ($prOutput -match $prNumberRegex) {
-            $prNumber = $Matches['PRNumber']
+            $prNumber = $Matches['PRNumber'].Trim()
             Write-Output "PR already exists. PR number: $prNumber"
           }
 
