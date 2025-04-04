@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace tiPS
 {
@@ -72,6 +73,7 @@ namespace tiPS
 			{
 				Urls[i] = Urls[i].Trim();
 			}
+			Urls = Urls.Where(url => !string.IsNullOrWhiteSpace(url)).ToArray(); // Remove empty URLs.
 			Author = Author.Trim();
 		}
 
