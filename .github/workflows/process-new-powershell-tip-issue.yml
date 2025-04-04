@@ -51,6 +51,7 @@ jobs:
           Write-Output "Checking if branch '$branchName' already exists on remote..."
           [string] $remoteBranchName = "origin/$branchName"
           [string] $remoteBranchSha = (& git show-ref "$remoteBranchName")
+          Write-Output "Remote branch SHA: $remoteBranchSha"
           [bool] $remoteBranchExists = -not ([string]::IsNullOrWhitespace($remoteBranchSha))
           if ($remoteBranchExists) {
             Write-Output "Branch '$branchName' already exists on remote. Getting remote changes..."
