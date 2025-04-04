@@ -2,10 +2,12 @@ $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2025-04-04')
 $tip.Title = 'Test title'
 $tip.TipText = @'
-Test description
+Test description. More.
+
+Multiline test.
 '@
 $tip.Example = @'
-Test example code
+Test example code. More.
 '@
 $tip.Urls = @('https://example.com')
 $tip.Category = [tiPS.TipCategory]::Other # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
