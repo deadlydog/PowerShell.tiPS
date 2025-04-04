@@ -55,15 +55,15 @@ jobs:
             Write-Output "Branch '$branchName' already exists on remote. Pulling latest changes..."
             git pull origin "$branchName"
           } else {
-            #Write-Output "Branch '$branchName' does not exist on remote. Creating local branch..."
-            #git branch "$branchName"
+            Write-Output "Branch '$branchName' does not exist on remote. Creating local branch..."
+            git branch "$branchName"
           }
 
           Write-Output "Checking out branch: $branchName"
-          git checkout -b "$branchName"
+          git checkout "$branchName"
 
-          #Write-Output "Rebasing branch '$branchName' on main to ensure it has latest changes..."
-          #git rebase main
+          Write-Output "Rebasing branch '$branchName' on main to ensure it has latest changes..."
+          git rebase main
 
           Write-Output "Writing variables to environment variables for later steps..."
           "branch_name=$branchName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
