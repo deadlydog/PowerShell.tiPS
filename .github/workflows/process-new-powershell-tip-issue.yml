@@ -30,8 +30,6 @@ jobs:
           A pull request is being created for your tip via the following GitHub Actions workflow run and should be linked to this issue shortly... ⏱️
 
           $runUrl
-
-          If the run fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description to fix it up and it will automatically re-run the workflow and update the PR.
           "@
 
           Write-Output "Adding comment with link to workflow run to issue..."
@@ -302,6 +300,8 @@ jobs:
 
           Subscribe to this PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
 
+          If the PR check fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description and it will automatically re-run the workflow to update the PR.
+
           🎉 Thank you for contributing to tiPS! 🎉
 
           This PR was created automatically using a GitHub Action to resolve #${{ github.event.issue.number }}.
@@ -334,7 +334,9 @@ jobs:
 
           A pull request has been created for your tip. You can view it at PR ${{ steps.create-pr.outputs.pr_url }}.
 
-          Subscribe to the PR for notifications on any next steps and to see when your tip has been merged into tiPS.
+          Subscribe to the PR to receive notifications for any comments and to see when your tip has been merged into tiPS.
+
+          If the PR check fails due to a spelling mistake, or you want to update the tip information, you can edit the issue description and it will automatically re-run the workflow to update the PR.
 
           This issue will be automatically closed when the PR is merged or closed.
           "@
