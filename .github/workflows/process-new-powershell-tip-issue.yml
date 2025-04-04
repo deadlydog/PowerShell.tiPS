@@ -56,7 +56,7 @@ jobs:
             git pull origin "$branchName"
           } else {
             Write-Output "Branch '$branchName' does not exist on remote. Creating local branch..."
-            git branch "$branchName" "origin/main" --set-upstream
+            git branch "$branchName" --set-upstream-to "origin/$branchName"
           }
 
           Write-Output "Switching to branch: $branchName"
