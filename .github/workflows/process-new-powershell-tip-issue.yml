@@ -275,7 +275,7 @@ jobs:
           if (-not ([string]::IsNullOrWhiteSpace($gitHubCoAuthor))) {
             [string] $coAuthorCommitMessage = "Co-authored-by: $gitHubCoAuthor"
             Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
-            $commitMessage += [Environment]::NewLine + [Environment]::NewLine + $coAuthorCommitMessage"
+            $commitMessage += [Environment]::NewLine + [Environment]::NewLine + $coAuthorCommitMessage
           }
 
           Write-Output "Adding new tip file to git staging area..."
