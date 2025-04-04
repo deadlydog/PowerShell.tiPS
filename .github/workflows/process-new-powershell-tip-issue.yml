@@ -84,25 +84,46 @@ jobs:
           # Below is a sample of what the body data may look like:
           #
           # ### Tip Title
-          # Test title
+          #
+          # Testing title
+          #
           # ### Tip Text
+          #
           # Test description
+          #
           # ### Example Code (optional)
+          #
           # ```powershell
-          # Test code
+          # Example code
           # ```
-          # ### URL 1 (optional)
-          # https://one.com
-          # ### URL 2 (optional)
-          # http://two.com
-          # ### URL 3 (optional)
-          # _No response_
+          #
           # ### Category
-          # Terminal
+          #
+          # Syntax
+          #
+          # ### URL 1 (optional)
+          #
+          # https://example.com
+          #
+          # ### URL 2 (optional)
+          #
+          # https://anotherExample.com
+          #
+          # ### URL 3 (optional)
+          #
+          # _No response_
+          #
           # ### Author (optional)
-          # _No response_
+          #
+          # Daniel Schroeder (deadlydog)
+          #
           # ### Expiry Date (optional)
+          #
           # _No response_
+          #
+          # ### Git Display Name and GitHub Email (optional)
+          #
+          # Daniel Schroeder <deadlydog@hotmail.com>
 
           # The default text that GitHub Issues uses for optional fields that are not filled in.
           [string] $noResponseText = '_No response_'
