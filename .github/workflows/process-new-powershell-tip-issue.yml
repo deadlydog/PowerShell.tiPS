@@ -47,7 +47,7 @@ jobs:
           git config --global user.name 'GitHub Action - tiPS Automation'
           git config --global user.email 'tiPSAutomation@DoesNotExist.com'
 
-          # Check if branch exists on remote and pull latest changes if it does.
+          # Check if branch exists on remote and pull it if it does.
           [string] $remoteBranchName = "origin/$branchName"
           [string] $remoteBranchSha = (& git show-ref "$remoteBranchName")
           [bool] $remoteBranchExists = -not ([string]::IsNullOrWhitespace($remoteBranchSha))
@@ -56,7 +56,7 @@ jobs:
             git pull origin "$branchName"
           } else {
             Write-Output "Branch '$branchName' does not exist on remote. Creating local branch..."
-            git branch "$branchName" --set-upstream-to "origin/$branchName"
+            git branch "$branchName"
           }
 
           Write-Output "Switching to branch: $branchName"
@@ -277,11 +277,12 @@ jobs:
             Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
           }
 
-          Write-Output "Committing changes to local branch and pushing to remote..."
+          Write-Output "Committing changes to local branch..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
           git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
-          git push
-          #git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
+
+          Write-Output "Pushing changes to remote branch..."
+          git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
 
           Write-Output "Checking if a PR already exists for this branch..."
           $prOutput = (& gh pr list --head "${{ steps.create-branch.outputs.branch_name }}")
