@@ -277,6 +277,13 @@ jobs:
             Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
           }
 
+          # Temp troubleshooting code
+          $filePath = '${{ steps.create-tip-file.outputs.tip_file_path }}'
+          Write-Output "Checking if file exists: $filePath"
+          if (-not (Test-Path $filePath)) {
+            Write-Output "File does not exist."
+          }
+
           Write-Output "Adding new tip file to git staging area..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
 
