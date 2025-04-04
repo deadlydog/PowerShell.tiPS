@@ -267,29 +267,22 @@ jobs:
         id: create-pr
         shell: pwsh
         run: |
+          [string] $commitMessage = "New tip: ${{ steps.create-tip-file.outputs.tip_title }}"
+
           # Use GitHub's Co-Author feature to add the user as a committer on the git commit.
           # GitHub docs: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
-          Write-Output "Setting up git co-author information for git commit..."
-          [string] $coAuthorCommitMessage = [string]::Empty
           [string] $gitHubCoAuthor = '${{ steps.create-tip-file.outputs.github_coauthor }}'
           if (-not ([string]::IsNullOrWhiteSpace($gitHubCoAuthor))) {
-            $coAuthorCommitMessage = "-m ""Co-authored-by: $gitHubCoAuthor"""
+            [string] $coAuthorCommitMessage = "Co-authored-by: $gitHubCoAuthor"
             Write-Output "Adding co-author to commit message: $coAuthorCommitMessage"
-          }
-
-          # Temp troubleshooting code
-          $filePath = '${{ steps.create-tip-file.outputs.tip_file_path }}'
-          Write-Output "Checking if file exists: $filePath"
-          if (-not (Test-Path $filePath)) {
-            Write-Output "File does not exist."
+            $commitMessage += [Environment]::NewLine + [Environment]::NewLine + $coAuthorCommitMessage"
           }
 
           Write-Output "Adding new tip file to git staging area..."
           git add "${{ steps.create-tip-file.outputs.tip_file_path }}"
 
           Write-Output "Committing changes to local branch..."
-          #git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}" $coAuthorCommitMessage
-          git commit -m "Add new tip: ${{ steps.create-tip-file.outputs.tip_title }}"
+          git commit -m "$commitMessage"
 
           Write-Output "Pushing changes to remote branch..."
           git push --set-upstream origin "${{ steps.create-branch.outputs.branch_name }}"
