@@ -159,7 +159,7 @@ jobs:
           }
 
           # Extract Category.
-          [regex] $categoryRegex = '### Category\s+(?<Category>.*?)\s+#### Category descriptions'
+          [regex] $categoryRegex = '### Category\s+(?<Category>.*?)\s+### URL 1'
           if ($body -match $categoryRegex) {
             $tipCategory = $Matches['Category'].Trim()
             Write-Output "Extracted Category: $tipCategory"
