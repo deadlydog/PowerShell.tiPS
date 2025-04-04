@@ -286,7 +286,7 @@ jobs:
           #   ID    TITLE            BRANCH             CREATED AT
           #   #110  Tip: Test title  new-tip/issue-109  about 1 hour ago
           [string] $prNumber = [string]::Empty
-          [regex] $prNumberRegex = '#(?<PRNumber>\d+)'
+          [regex] $prNumberRegex = '(?s)#(?<PRNumber>\d+)' # Use '(?s)' for multiline match mode.
           if ($prOutput -match $prNumberRegex) {
             $prNumber = $Matches['PRNumber'].Trim()
             Write-Output "PR already exists. PR number: $prNumber"
