@@ -330,8 +330,9 @@ jobs:
               --label "automation-new-tip-pr-do-not-use"
           } else {
             $prUrl = "https://github.com/${{ github.repository }}/pull/$prNumber"
-            Write-Output "PR already existed. PR URL: $prUrl"
           }
+
+          Write-Output "PR URL is: $prUrl"
 
           Write-Output "Writing variables to environment variables for later steps..."
           "pr_url=$prUrl" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
