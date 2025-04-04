@@ -51,7 +51,9 @@ jobs:
 
           # Check if branch exists on remote and pull latest changes if it does.
           [string] $remoteBranchName = "origin/$branchName"
-          if (git show-ref --verify --quiet "$remoteBranchName") {
+          [string] $remoteBranchSha = (& git show-ref "$remoteBranchName")
+          [bool] $remoteBranchExists = -not ([string]::IsNullOrWhitespace($remoteBranchSha))
+          if ($remoteBranchExists) {
             Write-Output "Branch '$branchName' already exists on remote. Pulling latest changes..."
             git pull origin "$branchName"
           } else {
