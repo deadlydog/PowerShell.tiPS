@@ -45,7 +45,7 @@ jobs:
           git config --global user.name 'GitHub Action - tiPS Automation'
           git config --global user.email 'tiPSAutomation@DoesNotExist.com'
 
-          # Check if branch exists on remote and pull it if it does.
+          Write-Output "Checking if branch '$branchName' already exists on remote..."
           [string] $remoteBranchName = "origin/$branchName"
           [string] $remoteBranchSha = (& git show-ref "$remoteBranchName")
           [bool] $remoteBranchExists = -not ([string]::IsNullOrWhitespace($remoteBranchSha))
