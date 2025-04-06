@@ -198,8 +198,8 @@ There are 2 ways to submit your tip to tiPS:
 
 1. Use [the GitHub issue template](https://github.com/deadlydog/PowerShell.tiPS/issues/new?template=new_powershell_tip.yml) to create a PR for your new tip.
    This is the easiest way to submit a tip.
-1. Fork the repo and create a PR for your tip the traditional way, by following the steps below.
-   You will need to use fork the repo if you want to contribute other changes to the module as well, besides just new tips.
+1. Fork the repo and create a PR for your tip the traditional way.
+   You will need to fork the repo if you want to contribute other changes to the module, besides just new tips.
 
    Follow the steps below to fork the repo and manually submit your PR:
    1. Fork this repo to your account ([See GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
