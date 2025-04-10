@@ -4,7 +4,7 @@ $tip.Title = 'Find the .NET version PowerShell is using'
 $tip.TipText = @'
 $PSVersionTable will tell you which version of PowerShell is running, but it won't tell you which version of .NET is being used. This is important as sometimes you want to call .NET methods from PowerShell, or use .NET types, but they may have changed from one .NET version to the next.
 
-Minor Pwsh versions currently map to major .NET versions. For example, Pwsh 7.0 maps to .NET Core 3.1, 7.1 maps to .NET 5, 7.2 to .NET 6, 7.3 to .NET 7, 7.4 to .NET 8, and 7.5 to .NET 9. This isn't necessarily easy to remember though, and it may change in the future.
+Minor Pwsh versions currently map to major .NET versions. For example, Pwsh 7.0 uses .NET Core 3.1, 7.1 uses .NET 5, 7.2 uses .NET 6, 7.3 uses .NET 7, 7.4 uses .NET 8, and 7.5 uses .NET 9. This isn't necessarily easy to remember though, and the convention may change in the future.
 
 Rather than relying on remembering a convention, we can use the following command to display the version of .NET being used:
 [System.Runtime.InteropServices.RuntimeInformation]::FrameworkDescription
