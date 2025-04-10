@@ -895,5 +895,42 @@
     "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-04-04T00:00:00",
+    "Title": "Submit your own tiPS tips from the web form",
+    "TipText": "You can now easily submit your own PowerShell tips for the tiPS module right from the GitHub repository website! There is a new GitHub issue template called \"PowerShell tip submission\". When you open an issue you will be prompted for your tip's information, such as the tip title, text, category, example code, and URLs. You can even enter your GitHub email address so that you are tagged as a co-author on the commit, allowing you to still get credit in the git history.\r\n\r\nThis tip was submitted using a GitHub issue. Visit the website and submit a tip today!",
+    "Example": "Start-Process 'https://github.com/deadlydog/PowerShell.tiPS/issues/new?template=new_powershell_tip.yml'",
+    "Urls": [
+      "https://github.com/deadlydog/PowerShell.tiPS/issues/new?template=new_powershell_tip.yml",
+      "https://github.com/deadlydog/PowerShell.tiPS#-contribute-a-tip"
+    ],
+    "Category": 2,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-04-09T00:00:00",
+    "Title": "Reduce null checks by using null-conditional operators",
+    "TipText": "PowerShell 7.1 introduced the null-conditional operators `?.` and `?[]`. These operators allow you to simplify your code by avoiding explicit null checks when accessing properties or elements of objects or arrays that may be null.\r\n\r\nBy default, if you try to index into a null array (e.g. $nullArray[0]), an exception will be thrown. Similarly, if you have Strict Mode enabled and try to access a property of a null object (e.g. $nullObject.SomeProperty), an exception will be thrown. The null-conditional operators allow you to avoid these exceptions and return null instead. You can even chain these together when accessing nested properties.\r\n\r\nOne slight caveat is that because '?' can be part of a variable name, you must use braces '{}' around the variable name. e.g. ${someVariable}?.Property or ${someVariable}?[0].",
+    "Example": "# Example of using the null-conditional operator with an array.\r\n$nullArray = $null\r\n$element = $nullArray[0] # Throws exception 'InvalidOperation: Cannot index into a null array.'\r\n$element = ${nullArray}?[0] # $element will be null without throwing an exception.\r\n\r\n$array = @('Element1', 'Element2')\r\n$element = ${array}?[0] # $element will be 'Element1'.\r\n\r\n# Example of using the null-conditional operator with a property.\r\n$nullObject = $null\r\n$property = $nullObject.Property # $property will be null without throwing an exception, since Strict Mode is off.\r\n$property = ${nullObject}?.Property # $property will be null without throwing an exception.\r\n\r\nSet-StrictMode -Version Latest\r\n$property = $nullObject.Property # Throws a PropertyNotFoundException, since Strict Mode is on.\r\n$property = ${nullObject}?.Property # $property will be null without throwing an exception.\r\n\r\n$object = [PSCustomObject]@{ Property = 'Value' }\r\n$property = ${object}?.Property # $property will be 'Value'.\r\n\r\n# Example with a REST API call and potentially null nested properties.\r\n$result = Invoke-RestMethod -Uri https://dummyjson.com/products\r\n$productWidthOrNull = ${result}?.{products}?[0]?.{dimensions}?.width",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators?view=powershell-7.4#null-conditional-operators--and-"
+    ],
+    "Category": 6,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-04-10T00:00:00",
+    "Title": "Find the .NET version PowerShell is using",
+    "TipText": "$PSVersionTable will tell you which version of PowerShell is running, but it won't tell you which version of .NET is being used. This is important as sometimes you want to call .NET methods from PowerShell, or use .NET types, but they may have changed from one .NET version to the next.\r\n\r\nMinor Pwsh versions currently map to major .NET versions. For example, Pwsh 7.0 maps to .NET Core 3.1, 7.1 maps to .NET 5, 7.2 to .NET 6, 7.3 to .NET 7, 7.4 to .NET 8, and 7.5 to .NET 9. This isn't necessarily easy to remember though, and it may change in the future.\r\n\r\nRather than relying on remembering a convention, we can use the following command to display the version of .NET being used:\r\n[System.Runtime.InteropServices.RuntimeInformation]::FrameworkDescription\r\n\r\nNote: This property exists for all .NET Core versions, but was not introduced in .NET Framework until .NET Framework 4.7.1, so it may not work in Windows PowerShell versions using a lower version of .NET Framework.",
+    "Example": "# Display the .NET version the current PowerShell session is using.\r\n[System.Runtime.InteropServices.RuntimeInformation]::FrameworkDescription",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.runtimeinformation.frameworkdescription"
+    ],
+    "Category": 8,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
