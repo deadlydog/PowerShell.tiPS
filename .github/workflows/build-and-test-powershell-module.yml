@@ -115,13 +115,6 @@ jobs:
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
 
-      - name: Run Super Linter across the entire repo
-        uses: github/super-linter@v5
-        env:
-          VALIDATE_ALL_CODEBASE: true
-          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run Pester tests on Windows PowerShell to ensure backward compatibility
         shell: powershell
         run: |
@@ -250,3 +243,17 @@ jobs:
         with:
           name: ${{ env.deployFilesArtifactName }}
           path: ${{ env.deployFilesArtifactDirectoryPath }}
+  super-linter:
+    runs-on: ubuntu-latest # Required by Super Linter.
+    steps:
+      - name: Checkout the repo source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for Super Linter to work properly.
+
+      - name: Run Super Linter across the entire repo
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
