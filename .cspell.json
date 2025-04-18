@@ -27,6 +27,7 @@
 		"dawidd", // GitHub action author
 		"deadlydog", // Username
 		"devcontainer", // VS Code devcontainer
+		"DontShow", // PowerShell keyword
 		"gittools", // GitHub action author
 		"Hmmss", // Time format
 		"jacoco", // Java code coverage
