@@ -2,7 +2,7 @@ $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2025-05-05')
 $tip.Title = 'Use Join-Path and Split-Path to create cross-platform paths'
 $tip.TipText = @'
-When creating file paths in PowerShell, use the `Join-Path` cmdlet instead of string concatenation. This ensures that the correct path separator is used for the current platform (e.g. `\` on Windows and `/` on Linux/macOS). PowerShell 6 introduced the -AdditionalChildPaths parameter, which allows you to specify multiple child paths to join.
+When creating file paths in PowerShell, use the `Join-Path` cmdlet instead of string concatenation. This ensures that the correct path separator is used for the current platform (e.g. `\` on Windows and `/` on Linux/macOS). PowerShell 6 introduced the -AdditionalChildPath parameter, which allows you to specify multiple child paths to join.
 
 Similarly, you can use the `Split-Path` cmdlet to split a path into its components. This is useful for extracting the directory or file name from a full path.
 '@
@@ -15,8 +15,11 @@ $tip.Example = @'
 [string] $configFilePath = Join-Path $configDirectoryPath 'config.json' # Excludes -Path and -ChildPath for brevity.
 
 # In PowerShell 6+ you can join multiple child paths at once.
-[string] $configFilePath = Join-Path -Path $HOME -AdditionalChildPaths 'Config', 'config.json'
+[string] $configFilePath = Join-Path -Path $HOME -AdditionalChildPath 'Config' 'config.json'
 [string] $xmlFilePath = Join-Path $HOME 'Config' 'config.xml' # Excludes parameter names for brevity.
+
+# Use -Resolve to ensure we get an absolute path, and error if the path does not exist.
+[string] $configFilePath = Join-Path $HOME 'Config' 'config.json' -Resolve
 
 # Get the name of the file with and without the extension, it's parent directory path, and it's parent directory name.
 [string] $fileName = Split-Path -Path $configFilePath -Leaf
