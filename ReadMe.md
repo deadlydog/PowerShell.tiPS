@@ -219,7 +219,6 @@ See [the Contributing page](/docs/Contributing.md) for more details.
 
 Below is a short list of planned enhancements for tiPS:
 
-- An easier way to add new tips. e.g. a simple web form that can be filled out.
 - A way to customize the look of the tip when it is displayed. e.g. add a border around it, change the colors, etc.
 - Add a `Write-PowerShellTip -Previous` switch to output the last shown tip.
 
