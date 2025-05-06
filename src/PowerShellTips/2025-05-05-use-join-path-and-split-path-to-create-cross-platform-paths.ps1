@@ -8,13 +8,16 @@ Similarly, you can use the `Split-Path` cmdlet to split a path into its componen
 '@
 $tip.Example = @'
 # Don't do this, as it may not work on all platforms.
-[string] $configFilePath = "$HOME\Config\config.json"
+[string] $configFilePath = "$HOME/Config/config.json"
 
 # Do this instead, as it works on all platforms.
 [string] $configDirectoryPath = Join-Path -Path $HOME -ChildPath 'Config'
 [string] $configFilePath = Join-Path $configDirectoryPath 'config.json' # Excludes -Path and -ChildPath for brevity.
 
-# In PowerShell 6+ you can join multiple child paths at once.
+# You can use System.IO.Path to easily join multiple paths. Helpful in Windows PowerShell.
+[string] $configFilePath = [System.IO.Path]::Combine($HOME, 'Config', 'config.json')
+
+# In PowerShell 6+ you can join multiple child paths at once using -AdditionalChildPath.
 [string] $configFilePath = Join-Path -Path $HOME -AdditionalChildPath 'Config' 'config.json'
 [string] $xmlFilePath = Join-Path $HOME 'Config' 'config.xml' # Excludes parameter names for brevity.
 
