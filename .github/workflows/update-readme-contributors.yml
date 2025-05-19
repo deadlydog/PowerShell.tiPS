@@ -107,12 +107,14 @@ Thanks to these wonderful people who have contributed to tiPS:
       
       - name: Commit and push changes if README was updated
         if: steps.update-readme.outputs.result == 'true'
+        shell: pwsh
         run: |
           # Check if there are changes to commit
-          if [[ -z $(git status --porcelain) ]]; then
-            echo "No changes to commit. README is already up to date."
-            exit 0
-          fi
+          $gitStatus = git status --porcelain
+          if ([string]::IsNullOrWhiteSpace($gitStatus)) {
+              Write-Output "No changes to commit. README is already up to date."
+              exit 0
+          }
           
           # Configure git
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -123,19 +125,21 @@ Thanks to these wonderful people who have contributed to tiPS:
           git commit -m "docs: update contributors in README [skip ci]"
           
           # Push changes - retry up to 3 times in case of network issues
-          MAX_RETRIES=3
-          RETRY_COUNT=0
+          $maxRetries = 3
+          $retryCount = 0
           
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            if git push; then
-              echo "Successfully pushed changes to the repository."
-              exit 0
-            else
-              RETRY_COUNT=$((RETRY_COUNT+1))
-              echo "Push failed. Retrying in 5 seconds... (Attempt $RETRY_COUNT of $MAX_RETRIES)"
-              sleep 5
-            fi
-          done
+          while ($retryCount -lt $maxRetries) {
+              try {
+                  git push
+                  Write-Output "Successfully pushed changes to the repository."
+                  exit 0
+              }
+              catch {
+                  $retryCount++
+                  Write-Output "Push failed. Retrying in 5 seconds... (Attempt $retryCount of $maxRetries)"
+                  Start-Sleep -Seconds 5
+              }
+          }
           
-          echo "Failed to push changes after $MAX_RETRIES attempts."
+          Write-Output "Failed to push changes after $maxRetries attempts."
           exit 1
