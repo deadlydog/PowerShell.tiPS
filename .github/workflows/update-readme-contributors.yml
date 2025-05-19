@@ -1,0 +1,115 @@
+name: Update README Contributors
+
+on:
+  # Run weekly on Sunday at 00:00 UTC
+  schedule:
+    - cron: '0 0 * * 0'
+  
+  # Run when changes are merged to main
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'ReadMe.md'  # Skip when only the ReadMe.md changes to avoid infinite loops
+  
+  # Allows manual triggering from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        
+      - name: Update README with Contributors
+        id: update-readme
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            try {
+              // Fetch contributors from the repository
+              console.log('Fetching contributors from GitHub API...');
+              const contributorsResponse = await github.rest.repos.listContributors({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100
+              });
+              
+              const contributors = contributorsResponse.data;
+              console.log(`Found ${contributors.length} contributors.`);
+              
+              if (contributors.length === 0) {
+                console.log('No contributors found. Skipping update.');
+                return;
+              }
+              
+              // Read the README file
+              const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
+              let readmeContent = fs.readFileSync(readmePath, 'utf8');
+              
+              // Create the Contributors section
+              let contributorsSection = `
+## 👥 Contributors
+
+Thanks to these wonderful people who have contributed to tiPS:
+
+<p align="center">
+`;
+              
+              // Add each contributor to the section
+              for (const contributor of contributors) {
+                // Skip GitHub Actions bot or other bots
+                if (contributor.login === 'github-actions[bot]' || 
+                    contributor.login === 'dependabot[bot]') {
+                  continue;
+                }
+                
+                contributorsSection += `  <a href="${contributor.html_url}" title="${contributor.login}"><img src="${contributor.avatar_url}" width="50" height="50" style="border-radius:50%;margin:5px;" alt="${contributor.login}"></a>\n`;
+              }
+              
+              contributorsSection += `</p>
+
+`;
+              
+              // Check if the README already has a Contributors section
+              if (readmeContent.includes('## 👥 Contributors')) {
+                // Replace the existing section
+                const pattern = /(## 👥 Contributors[\s\S]*?)(\r?\n\r?\n## )/;
+                readmeContent = readmeContent.replace(pattern, contributorsSection + '$2');
+              } else {
+                // Insert before the Roadmap section
+                readmeContent = readmeContent.replace(/(## 🛣️ Roadmap)/, contributorsSection + '$1');
+              }
+              
+              // Write the updated content back to the README file
+              fs.writeFileSync(readmePath, readmeContent);
+              
+              console.log('README updated with contributors.');
+              
+              // Set output for next step
+              return true;
+            } catch (error) {
+              console.error(`Error updating README: ${error}`);
+              return false;
+            }
+          result-encoding: string
+      
+      - name: Commit and push changes if README was updated
+        if: steps.update-readme.outputs.result == 'true'
+        run: |
+          # Check if there are changes to commit
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "No changes to commit. README is already up to date."
+            exit 0
+          fi
+          
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ReadMe.md
+          git commit -m "docs: update contributors in README"
+          git push
