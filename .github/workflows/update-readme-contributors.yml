@@ -105,41 +105,21 @@ jobs:
             }
           result-encoding: string
 
-      - name: Commit and push changes if README was updated
+      - name: Commit changes and create PR if README was updated
         if: steps.update-readme.outputs.result == 'true'
-        shell: pwsh
-        run: |
-          # Check if there are changes to commit
-          $gitStatus = git status --porcelain
-          if ([string]::IsNullOrWhiteSpace($gitStatus)) {
-              Write-Output "No changes to commit. README is already up to date."
-              exit 0
-          }
-
-          # Configure git
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-
-          # Add, commit and push changes
-          git add ReadMe.md
-          git commit -m "docs: update contributors in README [skip ci]"
-
-          # Push changes - retry up to 3 times in case of network issues
-          $maxRetries = 3
-          $retryCount = 0
-
-          while ($retryCount -lt $maxRetries) {
-              try {
-                  git push
-                  Write-Output "Successfully pushed changes to the repository."
-                  exit 0
-              }
-              catch {
-                  $retryCount++
-                  Write-Output "Push failed. Retrying in 5 seconds... (Attempt $retryCount of $maxRetries)"
-                  Start-Sleep -Seconds 5
-              }
-          }
-
-          Write-Output "Failed to push changes after $maxRetries attempts."
-          exit 1
+        id: create-pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: update contributors in README [skip ci]"
+          branch: update-readme-contributors
+          branch-suffix: timestamp
+          delete-branch: true
+          title: "docs: update contributors in README"
+          body: |
+            This PR automatically updates the contributors section in the README.
+            
+            This PR was created by the update-readme-contributors workflow.
+          labels: |
+            documentation
+            automated pr
