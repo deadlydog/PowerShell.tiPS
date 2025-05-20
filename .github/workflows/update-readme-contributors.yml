@@ -62,12 +62,12 @@ jobs:
 
               // Create the Contributors section
               let contributorsSection = `
-              ## 👥 Contributors
+            ## 👥 Contributors
 
-              Thanks to these wonderful people who have contributed to tiPS:
+            Thanks to these wonderful people who have contributed to tiPS:
 
-              <p align="center">
-              `;
+            <p align="center">
+            `;
 
               // Add each contributor to the section
               for (const contributor of contributors) {
@@ -82,7 +82,7 @@ jobs:
 
               contributorsSection += `</p>
 
-              `;
+            `;
 
               // Check if the README already has a Contributors section
               if (readmeContent.includes('## 👥 Contributors')) {
@@ -117,7 +117,7 @@ jobs:
           title: "docs: Update contributors in README"
           body: |
             This PR updates the README.md file with the latest contributors to the project.
-            
+
             *This is an automated PR created by the update-readme-contributors workflow.*
           branch: auto-update-readme-contributors
           branch-suffix: timestamp
