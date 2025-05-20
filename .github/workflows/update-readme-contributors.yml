@@ -1,0 +1,145 @@
+name: Update README Contributors
+
+on:
+  # Run weekly on Sunday at 00:00 UTC
+  schedule:
+    - cron: '0 0 * * 0'
+  
+  # Run when changes are merged to main
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'ReadMe.md'  # Skip when only the ReadMe.md changes to avoid infinite loops
+      - '.github/workflows/update-readme-contributors.yml'  # Skip when this workflow file changes
+  
+  # Allows manual triggering from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          # Fetch with token that has write access to the repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Update README with Contributors
+        id: update-readme
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            try {
+              // Fetch contributors from the repository
+              console.log('Fetching contributors from GitHub API...');
+              const contributorsResponse = await github.rest.repos.listContributors({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100
+              });
+              
+              const contributors = contributorsResponse.data;
+              console.log(`Found ${contributors.length} contributors.`);
+              
+              if (contributors.length === 0) {
+                console.log('No contributors found. Skipping update.');
+                return false;
+              }
+              
+              // Read the README file
+              const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
+              let readmeContent = fs.readFileSync(readmePath, 'utf8');
+              
+              // Create the Contributors section
+              let contributorsSection = `
+## 👥 Contributors
+
+Thanks to these wonderful people who have contributed to tiPS:
+
+<p align="center">
+`;
+              
+              // Add each contributor to the section
+              for (const contributor of contributors) {
+                // Skip GitHub Actions bot or other bots
+                if (contributor.login === 'github-actions[bot]' || 
+                    contributor.login === 'dependabot[bot]') {
+                  continue;
+                }
+                
+                contributorsSection += `  <a href="${contributor.html_url}" title="${contributor.login}"><img src="${contributor.avatar_url}" width="50" height="50" style="border-radius:50%;margin:5px;" alt="${contributor.login}"></a>\n`;
+              }
+              
+              contributorsSection += `</p>
+
+`;
+              
+              // Check if the README already has a Contributors section
+              if (readmeContent.includes('## 👥 Contributors')) {
+                // Replace the existing section using regex to capture everything between the Contributors heading and the next heading
+                const pattern = /(## 👥 Contributors[\s\S]*?)(\r?\n\r?\n## )/;
+                readmeContent = readmeContent.replace(pattern, contributorsSection + '$2');
+              } else {
+                // Insert before the Roadmap section
+                readmeContent = readmeContent.replace(/(## 🛣️ Roadmap)/, contributorsSection + '$1');
+              }
+              
+              // Write the updated content back to the README file
+              fs.writeFileSync(readmePath, readmeContent);
+              
+              console.log('README updated with contributors.');
+              
+              // Set output for next step - return true if we made changes
+              return true;
+            } catch (error) {
+              console.error(`Error updating README: ${error}`);
+              core.setFailed(`Failed to update README: ${error.message}`);
+              return false;
+            }
+          result-encoding: string
+      
+      - name: Commit and push changes if README was updated
+        if: steps.update-readme.outputs.result == 'true'
+        shell: pwsh
+        run: |
+          # Check if there are changes to commit
+          $gitStatus = git status --porcelain
+          if ([string]::IsNullOrWhiteSpace($gitStatus)) {
+              Write-Output "No changes to commit. README is already up to date."
+              exit 0
+          }
+          
+          # Configure git
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Add, commit and push changes
+          git add ReadMe.md
+          git commit -m "docs: update contributors in README [skip ci]"
+          
+          # Push changes - retry up to 3 times in case of network issues
+          $maxRetries = 3
+          $retryCount = 0
+          
+          while ($retryCount -lt $maxRetries) {
+              try {
+                  git push
+                  Write-Output "Successfully pushed changes to the repository."
+                  exit 0
+              }
+              catch {
+                  $retryCount++
+                  Write-Output "Push failed. Retrying in 5 seconds... (Attempt $retryCount of $maxRetries)"
+                  Start-Sleep -Seconds 5
+              }
+          }
+          
+          Write-Output "Failed to push changes after $maxRetries attempts."
+          exit 1
