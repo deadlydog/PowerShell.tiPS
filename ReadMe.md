@@ -215,6 +215,21 @@ tiPS is meant to be a community driven project, so please help make it better by
 Issues, Discussions, and Pull Requests are welcome.
 See [the Contributing page](/docs/Contributing.md) for more details.
 
+
+## 👥 Contributors
+
+Thanks to these wonderful people who have contributed to tiPS:
+
+<p align="center">
+  <a href="https://github.com/deadlydog" title="deadlydog"><img src="https://avatars.githubusercontent.com/u/1187140?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="deadlydog"></a>
+  <a href="https://github.com/apps/copilot-swe-agent" title="Copilot"><img src="https://avatars.githubusercontent.com/in/1143301?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="Copilot"></a>
+  <a href="https://github.com/belibug" title="belibug"><img src="https://avatars.githubusercontent.com/u/61643561?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="belibug"></a>
+  <a href="https://github.com/ruudmens" title="ruudmens"><img src="https://avatars.githubusercontent.com/u/20253186?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="ruudmens"></a>
+  <a href="https://github.com/santisq" title="santisq"><img src="https://avatars.githubusercontent.com/u/23342410?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="santisq"></a>
+  <a href="https://github.com/adrimus" title="adrimus"><img src="https://avatars.githubusercontent.com/u/37830358?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="adrimus"></a>
+  <a href="https://github.com/ehmiiz" title="ehmiiz"><img src="https://avatars.githubusercontent.com/u/43292173?v=4" width="50" height="50" style="border-radius:50%;margin:5px;" alt="ehmiiz"></a>
+</p>
+
 ## 🛣️ Roadmap
 
 Below is a short list of planned enhancements for tiPS:
