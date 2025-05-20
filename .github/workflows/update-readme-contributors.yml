@@ -111,9 +111,7 @@ jobs:
         if: steps.update-readme.outputs.result == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
-          # Must use a user token instead of built-in GITHUB_TOKEN so that workflows will be triggered on the created PR.
-          # For more information see: https://github.com/peter-evans/create-pull-request/issues/48
-          token: ${{ secrets.TIPS_GITHUB_ACTIONS_PR_CREATION_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "docs: update contributors in README [skip ci]"
           title: "docs: Update contributors in README"
           body: |
