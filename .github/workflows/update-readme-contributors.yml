@@ -61,8 +61,7 @@ jobs:
               let readmeContent = fs.readFileSync(readmePath, 'utf8');
 
               // Create the Contributors section
-              let contributorsSection = `
-            ## 👥 Contributors
+              let contributorsSection = `## 👥 Contributors
 
             Thanks to these wonderful people who have contributed to tiPS:
 
