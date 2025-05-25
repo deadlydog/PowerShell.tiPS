@@ -86,7 +86,7 @@ jobs:
               // Check if the README already has a Contributors section
               if (readmeContent.includes('## 👥 Contributors')) {
                 // Replace the existing section using regex to capture everything between the Contributors heading and the next heading
-                const pattern = /(## 👥 Contributors[\s\S]*?)(\r?\n\r?\n## )/;
+                const pattern = /(## 👥 Contributors[\s\S]*?)(## 🛣️ Roadmap)/;
                 readmeContent = readmeContent.replace(pattern, contributorsSection + '$2');
               } else {
                 // Insert before the Roadmap section
