@@ -72,7 +72,8 @@ jobs:
               for (const contributor of contributors) {
                 // Skip GitHub Actions bot or other bots
                 if (contributor.login === 'github-actions[bot]' ||
-                    contributor.login === 'dependabot[bot]') {
+                    contributor.login === 'dependabot[bot]' ||
+                    contributor.login === 'Copilot') {
                   continue;
                 }
 
