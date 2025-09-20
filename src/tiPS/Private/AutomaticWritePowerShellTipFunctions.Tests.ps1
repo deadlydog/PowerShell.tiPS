@@ -83,6 +83,50 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			}
 		}
 
+		Context 'When the WritePowerShellTipCadence is Biweekly' {
+			It 'Should update the module if the last update was more than 14 days ago' {
+				$config = [tiPS.Configuration]::new()
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Biweekly
+				WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-15))
+
+				WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+				Assert-MockCalled WriteAutomaticPowerShellTip -Times 1 -Exactly
+			}
+
+			It 'Should not update the module if the last update was less than 14 days ago' {
+				$config = [tiPS.Configuration]::new()
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Biweekly
+				WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-13))
+
+				WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+				Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
+			}
+		}
+
+		Context 'When the WritePowerShellTipCadence is Monthly' {
+			It 'Should update the module if the last update was more than 30 days ago' {
+				$config = [tiPS.Configuration]::new()
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Monthly
+				WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-31))
+
+				WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+				Assert-MockCalled WriteAutomaticPowerShellTip -Times 1 -Exactly
+			}
+
+			It 'Should not update the module if the last update was less than 30 days ago' {
+				$config = [tiPS.Configuration]::new()
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::Monthly
+				WriteLastAutomaticTipWrittenDate -LastAutomaticTipWrittenDate ([DateTime]::Now.Date.AddDays(-29))
+
+				WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+				Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
+			}
+		}
+
 		Context 'When the PowerShell session is not interactive' {
 			BeforeEach {
 				Mock -CommandName TestPowerShellSessionIsInteractive -MockWith { return $false }

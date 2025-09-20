@@ -26,6 +26,8 @@ function WriteAutomaticPowerShellTipIfNeeded
 		([tiPS.WritePowerShellTipCadence]::EverySession) { $shouldShowTip = $true; break }
 		([tiPS.WritePowerShellTipCadence]::Daily) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 1; break }
 		([tiPS.WritePowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
+		([tiPS.WritePowerShellTipCadence]::Biweekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 14; break }
+		([tiPS.WritePowerShellTipCadence]::Monthly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 30; break }
 	}
 
 	if ($shouldShowTip)

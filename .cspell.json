@@ -43,6 +43,8 @@
 		"Wordle" // Game
 	],
 	"ignoreRegExpList": [
-		"^\\$tip\\.Author = .*$" // Ignore tip Author names
+		"^\\$tip\\.Author = .*$", // Ignore tip Author names.
+		"<a .+title=\".+\"", // Ignore contributor usernames on the ReadMe page.
+		"<a .+alt=\".+\"" // Ignore contributor usernames on the ReadMe page.
 	]
 }

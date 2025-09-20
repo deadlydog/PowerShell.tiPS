@@ -3,6 +3,12 @@
 This page is a list of _notable_ changes made in each version.
 Every time a tip is added the patch version is incremented, so there will be a lot of patch version changes not documented here.
 
+## v1.4.0 - September 20, 2025
+
+Features:
+
+- Added `Biweekly` and `Monthly` options to the `AutomaticallyWritePowerShellTip` configuration setting to allow more flexibility in how often tips are automatically shown.
+
 ## v1.3.7 - May 20, 2024
 
 Fixes:
