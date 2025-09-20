@@ -155,7 +155,7 @@ Automatic updates are performed in a background job, so they will not block your
 The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
 Old versions of the module are automatically deleted after a successful update.
 
-### Tip retrieval order
+### 🔀 Tip retrieval order
 
 By default, the most recent tips are shown first.
 This means that if a new tip is submitted, it will be shown next.
