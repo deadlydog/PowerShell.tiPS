@@ -135,7 +135,7 @@ To have a tip automatically displayed every time you open your PowerShell termin
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip EverySession
 ```
 
-Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`, `EverySession`, `Daily`, and `Weekly`.
+Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`, `EverySession`, `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
 
 Tips will only be automatically shown in interactive PowerShell sessions.
 This prevents them from appearing unexpectedly when running scripts or other automated processes.

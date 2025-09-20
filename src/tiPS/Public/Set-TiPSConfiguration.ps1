@@ -18,11 +18,11 @@ function Set-TiPSConfiguration
 	This also means that the new module version will not be used until the next time the module is imported, or
 	the next time a PowerShell session is started.
 	Old versions of the module are automatically deleted after a successful update.
-	Valid values are Never, Daily, Weekly, Monthly, and Yearly. Default is Never.
+	Valid values are Never, Daily, Weekly, Biweekly, and Monthly. Default is Never.
 
 	.PARAMETER AutomaticallyWritePowerShellTip
 	Whether to automatically write a PowerShell tip at session startup.
-	Valid values are Never, Daily, Weekly, Monthly, and Yearly. Default is Never.
+	Valid values are Never, EverySession, Daily, Weekly, Biweekly, and Monthly. Default is Never.
 
 	.PARAMETER TipRetrievalOrder
 	The order in which to retrieve PowerShell tips.

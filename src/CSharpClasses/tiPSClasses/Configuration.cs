@@ -14,7 +14,9 @@ namespace tiPS
 		Never = 0,
 		EverySession = 1,
 		Daily = 2,
-		Weekly = 3
+		Weekly = 3,
+		Biweekly = 4,
+		Monthly = 5
 	}
 
 	public enum TipRetrievalOrder
