@@ -135,7 +135,7 @@ To have a tip automatically displayed every time you open your PowerShell termin
 Set-TiPSConfiguration -AutomaticallyWritePowerShellTip EverySession
 ```
 
-Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`, `EverySession`, `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
+Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never` (default), `EverySession`, `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
 
 Tips will only be automatically shown in interactive PowerShell sessions.
 This prevents them from appearing unexpectedly when running scripts or other automated processes.
@@ -149,11 +149,23 @@ Instead of remembering to manually update the module, you can have the module au
 Set-TiPSConfiguration -AutomaticallyUpdateModule Weekly
 ```
 
-Possible values for the `-AutomaticallyUpdateModule` parameter are `Never`, `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
+Possible values for the `-AutomaticallyUpdateModule` parameter are `Never` (default), `Daily`, `Weekly`, `Biweekly`, and `Monthly`.
 
 Automatic updates are performed in a background job, so they will not block your PowerShell session from starting.
 The updated module will be loaded the next time you open a PowerShell terminal or import tiPS.
 Old versions of the module are automatically deleted after a successful update.
+
+### Tip retrieval order
+
+By default, the most recent tips are shown first.
+This means that if a new tip is submitted, it will be shown next.
+You can change the order in which tips are retrieved by running:
+
+```powershell
+Set-TiPSConfiguration -TipOrder Random
+```
+
+Possible values for the `-TipOrder` parameter are `NewestFirst` (default), `OldestFirst`, and `Random`.
 
 ### ❌ Uninstalling tiPS
 
