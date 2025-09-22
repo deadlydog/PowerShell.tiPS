@@ -73,11 +73,12 @@ jobs:
         id: create-tip-file
         shell: pwsh
         env:
+          # Avoid script injection by retrieving the issue body via an environment variable instead of injecting the text directly into the script.
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
           Write-Output "Reading information from GitHub issue..."
           $body = $Env:ISSUE_BODY
-          
+
           Write-Output "Displaying issue body for troubleshooting purposes:"
           Write-Output "----------------------------------------"
           Write-Output $body
