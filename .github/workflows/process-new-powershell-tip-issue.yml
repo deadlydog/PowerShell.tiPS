@@ -72,12 +72,25 @@ jobs:
       - name: Extract tip information from issue and create new tip file
         id: create-tip-file
         shell: pwsh
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
           Write-Output "Reading information from GitHub issue..."
-          $body = @'
-          ${{ github.event.issue.body }}
-          '@
+          $body = $Env:ISSUE_BODY
+          Write-Output "----------------------------------------"
 
+          Write-Output "Extracting information from issue body to local variables..."
+          [string] $tipTitle = [string]::Empty
+          [string] $tipText = [string]::Empty
+          [string] $tipExample = [string]::Empty
+          [string] $tipCategory = [string]::Empty
+          [string[]] $tipUrls = @()
+          [string] $tipAuthor = [string]::Empty
+          [string] $tipExpiryDate = [string]::Empty
+          [string] $gitHubCoAuthor = [string]::Empty
+
+          # Extract the data from the markdown representation of the issue.
+          # GitHub Forms generates structured markdown with specific section headers we can match against.
           Write-Output "Displaying issue body for troubleshooting purposes:"
           Write-Output "----------------------------------------"
           Write-Output $body
