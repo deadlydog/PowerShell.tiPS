@@ -1010,5 +1010,17 @@
     "Category": 3,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-10-01T00:00:00",
+    "Title": "Use PSDates to easily work with time zones",
+    "TipText": "The PSDates module makes it easy to work with dates and times across different time zones. It contains functions to help you find and convert date formats, get certain dates based on other dates (first/last day of the month or year, patch Tuesday, etc). It includes functions for working with timezones, unix time, WMI time, crontab schedules, and more.",
+    "Example": "# Convert the local system time to GMT Standard Time.\r\nConvert-TimeZone -ToTimeZone \"GMT Standard Time\"\r\n\r\n# Convert the date and time 11/17/2017 12:34 AM from 'China Standard Time' to 'US Mountain Standard Time'.\r\nConvert-TimeZone -date '11/17/2017 12:34 AM' -FromTimeZone \"China Standard Time\" -ToTimeZone \"US Mountain Standard Time\"\r\n\r\n# Get the datetime for the Unix time 1509512400.\r\nConvertFrom-UnixTime -UnixTime 1509512400\r\n\r\n# Get the datetime for the Wmi time 20190912173652.000000-300.\r\nConvertFrom-WmiDateTime -WmiTime '20190912173652.000000-300'\r\n\r\n# Explain the crontab expression '0 17 * * 1'. Output: At 05:00 PM, only on Monday\r\nGet-CronDescription -Crontab '0 17 * * 1'\r\n\r\n# Get the next occurrence of the crontab from the current time.\r\nGet-CronNextOccurrence -Crontab '0 17 * * *'",
+    "Urls": [
+      "https://github.com/mdowst/PSDates"
+    ],
+    "Category": 2,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
