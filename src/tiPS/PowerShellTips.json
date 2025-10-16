@@ -1022,5 +1022,17 @@
     "Category": 2,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-10-16T00:00:00",
+    "Title": "Use -join to make regex more readable",
+    "TipText": "Regular expressions can be hard to read when you see the entire pattern in one long string. You can use a string array with the -join operator to break the pattern into multiple lines, making it easier to read and understand. This also allows you to comment each part of the regex pattern.",
+    "Example": "[string] $emailAddressRegexPattern = @(\r\n    '(?<localPart>[^\\s]+)' # Local part of the email address (before the @ symbol).\r\n    '@'                    # The @ symbol.\r\n    '(?<domain>[^@]+)'     # Domain part of the email address.\r\n    '(?<tld>\\.[a-z]{2,})'  # Top-level domain (e.g. .com, .org, .net).\r\n) -join ''\r\n# Creates the string: (?<localPart>[^\\s]+)@(?<domain>[^@]+)(?<tld>\\.[a-z]{2,})\r\n\r\n# Can also use -join to concatenate strings in more complex ways.\r\n[string] $concatenatedString = @(\r\n    'This is'\r\n    'a concatenated string'\r\n    'with numbers 1 - 10:'\r\n    1..10 | ForEach-Object { $_ }\r\n    @(\r\n        '. And more'\r\n        'nested strings'\r\n    ) -join ' '\r\n) -join ' '\r\n# Creates the string: This is a concatenated string with numbers 1 - 10: 1 2 3 4 5 6 7 8 9 10 . And more nested strings",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_join"
+    ],
+    "Category": 6,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
   }
 ]
