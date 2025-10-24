@@ -14,6 +14,10 @@ function Write-PowerShellTip
 	The ID of the tip to write. If not supplied, a random tip will be written.
 	If no tip with the specified ID exists, an error is written.
 
+	.PARAMETER Previous
+	Write the last tip that was shown instead of a new tip.
+	The tip is not marked as shown again when using this parameter.
+
 	.INPUTS
 	You can pipe a [string] of the ID of the tip to write, or a PSCustomObject with a [string] 'Id' property.
 
@@ -29,20 +33,36 @@ function Write-PowerShellTip
 	Write-PowerShellTip -Id '2023-07-16-powershell-is-open-source'
 
 	Write the tip with the specified ID.
+
+	.EXAMPLE
+	Write-PowerShellTip -Previous
+
+	Write the last tip that was shown.
 #>
-	[CmdletBinding()]
+	[CmdletBinding(DefaultParameterSetName = 'Default')]
 	[Alias('Tips')]
 	[OutputType([void])]
 	Param
 	(
-		[Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true,
+		[Parameter(ParameterSetName = 'Default', Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true,
 			HelpMessage = 'The ID of the tip to write. If not supplied, a random tip will be written.')]
-		[string] $Id
+		[string] $Id,
+
+		[Parameter(ParameterSetName = 'Previous', Mandatory = $false, HelpMessage = 'Write the last tip that was shown.')]
+		[switch] $Previous
 	)
 
 	Process
 	{
-		[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Id $Id
+		if ($Previous)
+		{
+			[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Previous
+		}
+		else
+		{
+			[tiPS.PowerShellTip] $tip = Get-PowerShellTip -Id $Id
+		}
+
 		if ($null -ne $tip)
 		{
 			WritePowerShellTipToTerminal -Tip $tip

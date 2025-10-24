@@ -20,6 +20,11 @@ function Get-PowerShellTip
 
 	When this parameter is used, the list of tips shown is not updated.
 
+	.PARAMETER Previous
+	Return the last tip that was shown.
+
+	When this parameter is used, the list of tips shown is not updated.
+
 	.INPUTS
 	You can pipe a [string] of the ID of the tip to retrieve, or a PSCustomObject with a [string] 'Id' property.
 
@@ -44,6 +49,11 @@ function Get-PowerShellTip
 	Get all tips.
 
 	.EXAMPLE
+	Get-PowerShellTip -Previous
+
+	Get the last tip that was shown.
+
+	.EXAMPLE
 	'2023-07-16-powershell-is-open-source' | Get-PowerShellTip
 
 	Pipe a [string] of the ID of the tip to retrieve.
@@ -56,6 +66,7 @@ function Get-PowerShellTip
 
 	[CmdletBinding(DefaultParameterSetName = 'Default')]
 	[OutputType([tiPS.PowerShellTip], ParameterSetName = 'Default')]
+	[OutputType([tiPS.PowerShellTip], ParameterSetName = 'Previous')]
 	[OutputType([System.Collections.Specialized.OrderedDictionary], ParameterSetName = 'AllTips')]
 	Param
 	(
@@ -65,7 +76,10 @@ function Get-PowerShellTip
 		[string] $Id,
 
 		[Parameter(ParameterSetName = 'AllTips', Mandatory = $false, HelpMessage = 'Return all tips.')]
-		[switch] $AllTips
+		[switch] $AllTips,
+
+		[Parameter(ParameterSetName = 'Previous', Mandatory = $false, HelpMessage = 'Return the last tip that was shown.')]
+		[switch] $Previous
 	)
 
 	Process
@@ -73,6 +87,27 @@ function Get-PowerShellTip
 		if ($AllTips)
 		{
 			return ReadAllPowerShellTipsFromJsonFile
+		}
+
+		if ($Previous)
+		{
+			$lastShownTipId = GetLastShownTipId
+			if ($null -eq $lastShownTipId)
+			{
+				Write-Error "No tips have been shown yet."
+				return
+			}
+
+			[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
+			[bool] $tipIdDoesNotExist = (-not $allTips.Contains($lastShownTipId))
+			if ($tipIdDoesNotExist)
+			{
+				Write-Error "The last shown tip with ID '$lastShownTipId' no longer exists."
+				return
+			}
+
+			[tiPS.PowerShellTip] $tip = $allTips[$lastShownTipId]
+			return $tip
 		}
 
 		[bool] $allTipsHaveBeenShown = $script:UnshownTips.Count -eq 0

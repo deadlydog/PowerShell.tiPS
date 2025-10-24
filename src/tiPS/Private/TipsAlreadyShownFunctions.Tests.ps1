@@ -144,4 +144,49 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			}
 		}
 	}
+
+	Describe 'Calling GetLastShownTipId' {
+		BeforeEach {
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
+			}
+
+			ClearTipIdsAlreadyShown
+		}
+
+		Context 'When no tips have been shown' {
+			It 'Should return null' {
+				$lastShownTipId = GetLastShownTipId
+				$lastShownTipId | Should -BeNullOrEmpty
+			}
+		}
+
+		Context 'When tips have been shown' {
+			It 'Should return the last shown tip ID' {
+				AppendTipIdToTipIdsAlreadyShown -TipId 'Tip1'
+				AppendTipIdToTipIdsAlreadyShown -TipId 'Tip2'
+				AppendTipIdToTipIdsAlreadyShown -TipId 'Tip3'
+
+				$lastShownTipId = GetLastShownTipId
+
+				$lastShownTipId | Should -Be 'Tip3'
+			}
+		}
+
+		Context 'When only one tip has been shown' {
+			It 'Should return that tip ID' {
+				AppendTipIdToTipIdsAlreadyShown -TipId 'OnlyTip'
+
+				$lastShownTipId = GetLastShownTipId
+
+				$lastShownTipId | Should -Be 'OnlyTip'
+			}
+		}
+	}
 }
