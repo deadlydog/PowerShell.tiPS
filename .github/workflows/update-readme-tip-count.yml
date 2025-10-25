@@ -1,0 +1,103 @@
+name: Update README Tip Count
+
+on:
+  # Run when changes are merged to main
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/PowerShellTips/*.ps1'  # Only run when tip files change
+
+  # Allows manual triggering from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-tip-count:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          # Fetch with token that has write access to the repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README with Tip Count
+        id: update-readme
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            try {
+              // Count tip files in the PowerShellTips directory
+              console.log('Counting tip files in /src/PowerShellTips...');
+              const tipsDir = path.join(process.env.GITHUB_WORKSPACE, 'src', 'PowerShellTips');
+              const files = fs.readdirSync(tipsDir);
+              const tipFiles = files.filter(file => file.endsWith('.ps1'));
+              const tipCount = tipFiles.length;
+              console.log(`Found ${tipCount} tip files.`);
+
+              // Read the README file
+              const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
+              let readmeContent = fs.readFileSync(readmePath, 'utf8');
+
+              // Create the tip count badge/text
+              const tipCountText = `> **${tipCount}** PowerShell tips available!`;
+
+              // Check if the tip count already exists in the README
+              const tipCountPattern = /> \*\*\d+\*\* PowerShell tips available!/;
+              
+              if (tipCountPattern.test(readmeContent)) {
+                // Replace existing tip count
+                const oldContent = readmeContent;
+                readmeContent = readmeContent.replace(tipCountPattern, tipCountText);
+                
+                // Check if content actually changed
+                if (oldContent === readmeContent) {
+                  console.log('Tip count is already up to date. No changes needed.');
+                  return false;
+                }
+                console.log('Updated existing tip count.');
+              } else {
+                // Insert the tip count after the description heading (around line 25)
+                // We'll insert it after "PowerShell tips delivered straight to your terminal 💻."
+                const insertPattern = /(PowerShell tips delivered straight to your terminal 💻\.)/;
+                readmeContent = readmeContent.replace(insertPattern, `$1\n\n${tipCountText}`);
+                console.log('Inserted tip count into README.');
+              }
+
+              // Write the updated content back to the README file
+              fs.writeFileSync(readmePath, readmeContent);
+
+              console.log('README updated with tip count.');
+
+              // Set output for next step - return true if we made changes
+              return true;
+            } catch (error) {
+              console.error(`Error updating README: ${error}`);
+              core.setFailed(`Failed to update README: ${error.message}`);
+              return false;
+            }
+          result-encoding: string
+
+      - name: Create Pull Request if README was updated
+        if: steps.update-readme.outputs.result == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: update tip count in README [skip ci]"
+          title: "docs: Update tip count in README"
+          body: |
+            This PR updates the README.md file with the current number of PowerShell tip files.
+
+            *This is an automated PR created by the update-readme-tip-count workflow.*
+          branch: auto-update-readme-tip-count
+          branch-suffix: timestamp
+          delete-branch: true
+          base: main

@@ -22,6 +22,8 @@
 
 PowerShell tips delivered straight to your terminal 💻.
 
+> **88** PowerShell tips available!
+
 ## 💬 Description
 
 `tiPS` is a cross-platform PowerShell module that provides PowerShell tips for things like:
