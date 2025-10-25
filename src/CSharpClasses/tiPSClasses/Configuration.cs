@@ -16,7 +16,8 @@ namespace tiPS
 		Daily = 2,
 		Weekly = 3,
 		Biweekly = 4,
-		Monthly = 5
+		Monthly = 5,
+		NewTipsOnly = 6
 	}
 
 	public enum TipRetrievalOrder

@@ -22,7 +22,8 @@ function Set-TiPSConfiguration
 
 	.PARAMETER AutomaticallyWritePowerShellTip
 	Whether to automatically write a PowerShell tip at session startup.
-	Valid values are Never, EverySession, Daily, Weekly, Biweekly, and Monthly. Default is Never.
+	Valid values are Never, EverySession, Daily, Weekly, Biweekly, Monthly, and NewTipsOnly. Default is Never.
+	NewTipsOnly will only show a tip if there are tips that have not been shown yet.
 
 	.PARAMETER TipRetrievalOrder
 	The order in which to retrieve PowerShell tips.

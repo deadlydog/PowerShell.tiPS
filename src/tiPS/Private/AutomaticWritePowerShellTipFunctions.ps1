@@ -28,6 +28,7 @@ function WriteAutomaticPowerShellTipIfNeeded
 		([tiPS.WritePowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
 		([tiPS.WritePowerShellTipCadence]::Biweekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 14; break }
 		([tiPS.WritePowerShellTipCadence]::Monthly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 30; break }
+		([tiPS.WritePowerShellTipCadence]::NewTipsOnly) { $shouldShowTip = TestIfUnseenTipsExist; break }
 	}
 
 	if ($shouldShowTip)
@@ -136,4 +137,32 @@ function GetLastAutomaticTipWrittenDateFilePath
 	[string] $appDataDirectoryPath = Get-TiPSDataDirectoryPath
 	[string] $lastAutomaticTipWrittenDateFilePath = Join-Path -Path $appDataDirectoryPath -ChildPath 'LastAutomaticTipWrittenDate.txt'
 	return $lastAutomaticTipWrittenDateFilePath
+}
+
+function TestIfUnseenTipsExist
+{
+	[CmdletBinding()]
+	[OutputType([bool])]
+	Param()
+
+	[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
+	[string[]] $tipIdsAlreadyShown = ReadTipIdsAlreadyShownOrDefault
+
+	# If no tips have been shown yet, there are definitely unseen tips
+	if ($tipIdsAlreadyShown.Count -eq 0)
+	{
+		return $true
+	}
+
+	# Check if there are any tips that haven't been shown yet
+	foreach ($tipId in $allTips.Keys)
+	{
+		if ($tipId -notin $tipIdsAlreadyShown)
+		{
+			return $true
+		}
+	}
+
+	# All tips have been shown
+	return $false
 }
