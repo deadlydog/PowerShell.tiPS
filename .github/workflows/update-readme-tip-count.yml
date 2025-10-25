@@ -50,26 +50,33 @@ jobs:
               // Create the tip count badge/text
               const tipCountText = `> **${tipCount}** PowerShell tips available!`;
 
+              // Store the original content to compare later
+              const originalContent = readmeContent;
+
               // Check if the tip count already exists in the README
               const tipCountPattern = /> \*\*\d+\*\* PowerShell tips available!/;
               
               if (tipCountPattern.test(readmeContent)) {
                 // Replace existing tip count
-                const oldContent = readmeContent;
                 readmeContent = readmeContent.replace(tipCountPattern, tipCountText);
-                
-                // Check if content actually changed
-                if (oldContent === readmeContent) {
-                  console.log('Tip count is already up to date. No changes needed.');
-                  return false;
-                }
                 console.log('Updated existing tip count.');
               } else {
-                // Insert the tip count after the description heading (around line 25)
-                // We'll insert it after "PowerShell tips delivered straight to your terminal 💻."
-                const insertPattern = /(PowerShell tips delivered straight to your terminal 💻\.)/;
-                readmeContent = readmeContent.replace(insertPattern, `$1\n\n${tipCountText}`);
-                console.log('Inserted tip count into README.');
+                // Insert the tip count after the title section
+                // Look for the pattern: "# tiPS PowerShell Module" followed by description line
+                const insertPattern = /(# tiPS PowerShell Module\s*\n\s*\nPowerShell tips delivered[^\n]+\n)/;
+                if (insertPattern.test(readmeContent)) {
+                  readmeContent = readmeContent.replace(insertPattern, `$1\n${tipCountText}\n`);
+                  console.log('Inserted tip count into README.');
+                } else {
+                  console.log('Could not find insertion point in README. Skipping update.');
+                  return 'false';
+                }
+              }
+
+              // Check if content actually changed
+              if (originalContent === readmeContent) {
+                console.log('Tip count is already up to date. No changes needed.');
+                return 'false';
               }
 
               // Write the updated content back to the README file
@@ -77,12 +84,12 @@ jobs:
 
               console.log('README updated with tip count.');
 
-              // Set output for next step - return true if we made changes
-              return true;
+              // Return string 'true' for the conditional check in next step
+              return 'true';
             } catch (error) {
               console.error(`Error updating README: ${error}`);
               core.setFailed(`Failed to update README: ${error.message}`);
-              return false;
+              return 'false';
             }
           result-encoding: string
 
