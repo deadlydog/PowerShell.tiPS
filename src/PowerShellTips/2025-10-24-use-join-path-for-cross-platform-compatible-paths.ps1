@@ -4,7 +4,7 @@ $tip.Title = 'Use Join-Path for cross-platform compatible paths'
 $tip.TipText = @'
 When constructing file system paths in PowerShell, especially in scripts that may run on different operating systems (like Windows, Linux, or macOS), it's best to use the `Join-Path` cmdlet instead of string concatenation. This cmdlet automatically uses the correct path separator ('/' or '\') for the operating system, ensuring that your paths are constructed correctly regardless of where the script is executed. You can also use the `-Resolve` parameter to ensure that the constructed path exists, which can help prevent errors when accessing files or directories.
 
-As of PowerShell 6 and later, Join-Path accepts multiple path segments, allowing you to provide and combine many child path segments in a single call.
+As of PowerShell 6 and later, Join-Path accepts multiple path segments via the `-AdditionalChildPath` parameter, allowing you to provide and combine many child path segments in a single call.
 '@
 $tip.Example = @'
 # Basic example to access 'C:\Temp\File.txt'.
