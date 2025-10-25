@@ -48,7 +48,7 @@ function Write-PowerShellTip
 			HelpMessage = 'The ID of the tip to write. If not supplied, a random tip will be written.')]
 		[string] $Id,
 
-		[Parameter(ParameterSetName = 'Previous', Mandatory = $false, HelpMessage = 'Write the last tip that was shown.')]
+		[Parameter(ParameterSetName = 'Previous', HelpMessage = 'Write the last tip that was shown.')]
 		[switch] $Previous
 	)
 

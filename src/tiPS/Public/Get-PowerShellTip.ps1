@@ -75,10 +75,10 @@ function Get-PowerShellTip
 			HelpMessage = 'The ID of the tip to retrieve. If not supplied, a random tip will be returned.')]
 		[string] $Id,
 
-		[Parameter(ParameterSetName = 'AllTips', Mandatory = $false, HelpMessage = 'Return all tips.')]
+		[Parameter(ParameterSetName = 'AllTips', HelpMessage = 'Return all tips.')]
 		[switch] $AllTips,
 
-		[Parameter(ParameterSetName = 'Previous', Mandatory = $false, HelpMessage = 'Return the last tip that was shown.')]
+		[Parameter(ParameterSetName = 'Previous', HelpMessage = 'Return the last tip that was shown.')]
 		[switch] $Previous
 	)
 
