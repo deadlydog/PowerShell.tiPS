@@ -16,8 +16,8 @@ Join-Path 'C:\Temp' 'File.txt'
 # PowerShell 6+ example with multiple segments, to access 'C:\Temp\TempFolder\ASubFolder\AnotherSubFolder\TempFile.txt'.
 Join-Path -Path 'C:\Temp' -ChildPath 'TempFolder' -AdditionalChildPath 'ASubFolder', 'AnotherSubFolder', 'TempFile.txt'
 
-# Shorthand syntax with multiple segments.
-Join-Path 'C:\Temp' 'TempFolder', 'ASubFolder', 'AnotherSubFolder', 'TempFile.txt'
+# Shorthand syntax with multiple segments (Path, ChildPath, AdditionalChildPath array).
+Join-Path 'C:\Temp' 'TempFolder' 'ASubFolder', 'AnotherSubFolder', 'TempFile.txt'
 
 # Return multiple paths on different drives.
 Join-Path -Path 'C:', 'D:', 'E:' -ChildPath 'TempFile.txt'
