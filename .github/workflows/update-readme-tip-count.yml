@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
 
     steps:
       - name: Checkout the repo
@@ -88,18 +87,25 @@ jobs:
             exit 1
           }
 
-      - name: Create Pull Request if README was updated
+      - name: Commit and push changes if README was updated
         if: steps.update-readme.outputs.result == 'true'
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "docs: update tip count in README [skip ci]"
-          title: "docs: Update tip count in README"
-          body: |
-            This PR updates the README.md file with the current number of PowerShell tip files.
+        shell: pwsh
+        run: |
+          Write-Output "Configuring git user..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-            *This is an automated PR created by the update-readme-tip-count workflow.*
-          branch: auto-update-readme-tip-count
-          branch-suffix: timestamp
-          delete-branch: true
-          base: main
+          Write-Output "Adding README changes to git staging area..."
+          git add ReadMe.md
+
+          Write-Output "Committing changes..."
+          git commit -m "docs: update tip count in README [skip ci]"
+
+          Write-Output "Pushing changes to main branch..."
+          git push origin main
+
+          if ($LastExitCode -ne 0) {
+            throw "Git push to main branch failed. Exiting workflow run."
+          }
+
+          Write-Output "Successfully pushed tip count update to main branch."
