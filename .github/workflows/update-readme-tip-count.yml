@@ -46,20 +46,24 @@ jobs:
             # Store the original content to compare later
             [string] $originalContent = $readmeContent
 
-            # Check if the tip count already exists in the README
-            [string] $tipCountPattern = '> \*\*\d+\*\* PowerShell tips available!'
+            # Check if the tip count marker exists in the README
+            [string] $markerBegin = '<!-- BEGIN: Number of tips marker used by GitHub action -->'
+            [string] $markerEnd = '<!-- END: Number of tips marker used by GitHub action -->'
             
-            if ($readmeContent -match $tipCountPattern) {
-              # Replace existing tip count
-              $readmeContent = $readmeContent -replace $tipCountPattern, $tipCountText
-              Write-Output 'Updated existing tip count.'
+            if ($readmeContent -match [regex]::Escape($markerBegin)) {
+              # Replace the content between the markers
+              [string] $pattern = [regex]::Escape($markerBegin) + '[\s\S]*?' + [regex]::Escape($markerEnd)
+              [string] $replacement = "$markerBegin`n$tipCountText`n$markerEnd"
+              $readmeContent = $readmeContent -replace $pattern, $replacement
+              Write-Output 'Updated existing tip count between markers.'
             } else {
-              # Insert the tip count after the title section
+              # Insert the tip count with markers after the title section
               # Look for the pattern: "# tiPS PowerShell Module" followed by description line
               [string] $insertPattern = '(# tiPS PowerShell Module\s*\n\s*\nPowerShell tips delivered[^\n]+\n)'
               if ($readmeContent -match $insertPattern) {
-                $readmeContent = $readmeContent -replace $insertPattern, "`$1`n$tipCountText`n"
-                Write-Output 'Inserted tip count into README.'
+                [string] $insertText = "`n$markerBegin`n$tipCountText`n$markerEnd`n"
+                $readmeContent = $readmeContent -replace $insertPattern, "`$1$insertText"
+                Write-Output 'Inserted tip count with markers into README.'
               } else {
                 Write-Output 'Could not find insertion point in README. Skipping update.'
                 "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
