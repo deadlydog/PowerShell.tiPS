@@ -27,71 +27,66 @@ jobs:
 
       - name: Update README with Tip Count
         id: update-readme
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            const path = require('path');
+        shell: pwsh
+        run: |
+          try {
+            # Count tip files in the PowerShellTips directory
+            Write-Output 'Counting tip files in /src/PowerShellTips...'
+            [string] $tipsDir = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'src' -AdditionalChildPath 'PowerShellTips'
+            [array] $tipFiles = Get-ChildItem -Path $tipsDir -Filter '*.ps1' -File
+            [int] $tipCount = $tipFiles.Count
+            Write-Output "Found $tipCount tip files."
 
-            try {
-              // Count tip files in the PowerShellTips directory
-              console.log('Counting tip files in /src/PowerShellTips...');
-              const tipsDir = path.join(process.env.GITHUB_WORKSPACE, 'src', 'PowerShellTips');
-              const files = fs.readdirSync(tipsDir);
-              const tipFiles = files.filter(file => file.endsWith('.ps1'));
-              const tipCount = tipFiles.length;
-              console.log(`Found ${tipCount} tip files.`);
+            # Read the README file
+            [string] $readmePath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'ReadMe.md'
+            [string] $readmeContent = Get-Content -Path $readmePath -Raw
 
-              // Read the README file
-              const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
-              let readmeContent = fs.readFileSync(readmePath, 'utf8');
+            # Create the tip count badge/text
+            [string] $tipCountText = "> **$tipCount** PowerShell tips available!"
 
-              // Create the tip count badge/text
-              const tipCountText = `> **${tipCount}** PowerShell tips available!`;
+            # Store the original content to compare later
+            [string] $originalContent = $readmeContent
 
-              // Store the original content to compare later
-              const originalContent = readmeContent;
-
-              // Check if the tip count already exists in the README
-              const tipCountPattern = /> \*\*\d+\*\* PowerShell tips available!/;
-              
-              if (tipCountPattern.test(readmeContent)) {
-                // Replace existing tip count
-                readmeContent = readmeContent.replace(tipCountPattern, tipCountText);
-                console.log('Updated existing tip count.');
+            # Check if the tip count already exists in the README
+            [string] $tipCountPattern = '> \*\*\d+\*\* PowerShell tips available!'
+            
+            if ($readmeContent -match $tipCountPattern) {
+              # Replace existing tip count
+              $readmeContent = $readmeContent -replace $tipCountPattern, $tipCountText
+              Write-Output 'Updated existing tip count.'
+            } else {
+              # Insert the tip count after the title section
+              # Look for the pattern: "# tiPS PowerShell Module" followed by description line
+              [string] $insertPattern = '(# tiPS PowerShell Module\s*\n\s*\nPowerShell tips delivered[^\n]+\n)'
+              if ($readmeContent -match $insertPattern) {
+                $readmeContent = $readmeContent -replace $insertPattern, "`$1`n$tipCountText`n"
+                Write-Output 'Inserted tip count into README.'
               } else {
-                // Insert the tip count after the title section
-                // Look for the pattern: "# tiPS PowerShell Module" followed by description line
-                const insertPattern = /(# tiPS PowerShell Module\s*\n\s*\nPowerShell tips delivered[^\n]+\n)/;
-                if (insertPattern.test(readmeContent)) {
-                  readmeContent = readmeContent.replace(insertPattern, `$1\n${tipCountText}\n`);
-                  console.log('Inserted tip count into README.');
-                } else {
-                  console.log('Could not find insertion point in README. Skipping update.');
-                  return 'false';
-                }
+                Write-Output 'Could not find insertion point in README. Skipping update.'
+                "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+                exit 0
               }
-
-              // Check if content actually changed
-              if (originalContent === readmeContent) {
-                console.log('Tip count is already up to date. No changes needed.');
-                return 'false';
-              }
-
-              // Write the updated content back to the README file
-              fs.writeFileSync(readmePath, readmeContent);
-
-              console.log('README updated with tip count.');
-
-              // Return string 'true' for the conditional check in next step
-              return 'true';
-            } catch (error) {
-              console.error(`Error updating README: ${error}`);
-              core.setFailed(`Failed to update README: ${error.message}`);
-              return 'false';
             }
-          result-encoding: string
+
+            # Check if content actually changed
+            if ($originalContent -eq $readmeContent) {
+              Write-Output 'Tip count is already up to date. No changes needed.'
+              "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+              exit 0
+            }
+
+            # Write the updated content back to the README file
+            Set-Content -Path $readmePath -Value $readmeContent -NoNewline
+
+            Write-Output 'README updated with tip count.'
+
+            # Set output for the conditional check in next step
+            "result=true" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          } catch {
+            Write-Error "Error updating README: $_"
+            "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+            exit 1
+          }
 
       - name: Create Pull Request if README was updated
         if: steps.update-readme.outputs.result == 'true'
