@@ -95,3 +95,7 @@ jobs:
           }
 
           Write-Output "Successfully pushed tip count update to main branch."
+        env:
+          # Must use a user token instead of built-in GITHUB_TOKEN to bypass branch protection policies.
+          # For more information see: https://blog.robsewell.com/blog/github-action-workflow-protected-branch-update-failed/
+          GITHUB_TOKEN: ${{ secrets.TIPS_GITHUB_ACTIONS_COMMIT_TO_MAIN_TOKEN }}
