@@ -28,7 +28,12 @@ function WriteAutomaticPowerShellTipIfNeeded
 		([tiPS.WritePowerShellTipCadence]::Weekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 7; break }
 		([tiPS.WritePowerShellTipCadence]::Biweekly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 14; break }
 		([tiPS.WritePowerShellTipCadence]::Monthly) { $shouldShowTip = $daysSinceLastAutomaticTipWritten -ge 30; break }
-		([tiPS.WritePowerShellTipCadence]::NewTipsOnly) { $shouldShowTip = TestIfUnseenTipsExist; break }
+	}
+
+	# If the cadence says we should show a tip, check if we should only show unseen tips
+	if ($shouldShowTip -and $Config.AutoWritePowerShellTipOptions -eq [tiPS.WritePowerShellTipOptions]::UnseenTipsOnly)
+	{
+		$shouldShowTip = TestIfUnseenTipsExist
 	}
 
 	if ($shouldShowTip)

@@ -16,8 +16,7 @@ namespace tiPS
 		Daily = 2,
 		Weekly = 3,
 		Biweekly = 4,
-		Monthly = 5,
-		NewTipsOnly = 6
+		Monthly = 5
 	}
 
 	public enum TipRetrievalOrder
@@ -27,17 +26,25 @@ namespace tiPS
 		Random = 2
 	}
 
+	public enum WritePowerShellTipOptions
+	{
+		CycleThroughAllTips = 0,
+		UnseenTipsOnly = 1
+	}
+
 	public class Configuration
 	{
 		public ModuleAutoUpdateCadence AutoUpdateCadence { get; set; }
 		public WritePowerShellTipCadence AutoWritePowerShellTipCadence { get; set; }
 		public TipRetrievalOrder TipRetrievalOrder { get; set; }
+		public WritePowerShellTipOptions AutoWritePowerShellTipOptions { get; set; }
 
 		public Configuration()
 		{
 			AutoUpdateCadence = ModuleAutoUpdateCadence.Never;
 			AutoWritePowerShellTipCadence = WritePowerShellTipCadence.Never;
 			TipRetrievalOrder = TipRetrievalOrder.NewestFirst;
+			AutoWritePowerShellTipOptions = WritePowerShellTipOptions.CycleThroughAllTips;
 		}
 	}
 }

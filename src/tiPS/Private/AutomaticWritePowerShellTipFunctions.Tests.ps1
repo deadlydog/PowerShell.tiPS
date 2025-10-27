@@ -142,10 +142,11 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 			}
 		}
 
-		Context 'When the WritePowerShellTipCadence is NewTipsOnly' {
+		Context 'When the AutoWritePowerShellTipOptions is UnseenTipsOnly' {
 			It 'Should show a tip when there are unseen tips' {
 				$config = [tiPS.Configuration]::new()
-				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::NewTipsOnly
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EverySession
+				$config.AutoWritePowerShellTipOptions = [tiPS.WritePowerShellTipOptions]::UnseenTipsOnly
 				Mock -CommandName TestIfUnseenTipsExist -MockWith { return $true }
 
 				WriteAutomaticPowerShellTipIfNeeded -Config $config
@@ -155,7 +156,8 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 
 			It 'Should not show a tip when all tips have been shown' {
 				$config = [tiPS.Configuration]::new()
-				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::NewTipsOnly
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EverySession
+				$config.AutoWritePowerShellTipOptions = [tiPS.WritePowerShellTipOptions]::UnseenTipsOnly
 				Mock -CommandName TestIfUnseenTipsExist -MockWith { return $false }
 
 				WriteAutomaticPowerShellTipIfNeeded -Config $config
