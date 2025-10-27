@@ -23,7 +23,7 @@
 PowerShell tips delivered straight to your terminal 💻.
 
 <!-- BEGIN: Number of tips marker used by GitHub action -->
-> **88** PowerShell tips currently available!
+> **83** PowerShell tips currently available!
 <!-- END: Number of tips marker used by GitHub action -->
 
 ## 💬 Description
