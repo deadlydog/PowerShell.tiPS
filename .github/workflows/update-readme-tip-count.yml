@@ -29,81 +29,79 @@ jobs:
         shell: pwsh
         run: |
           try {
-            # Count tip files in the PowerShellTips directory
-            Write-Output 'Counting tip files in /src/PowerShellTips...'
-            [string] $tipsDir = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'src' -AdditionalChildPath 'PowerShellTips'
-            [array] $tipFiles = Get-ChildItem -Path $tipsDir -Filter '*.ps1' -File
+            Write-Output 'Retrieving PowerShellTips files to be processed...'
+            [string] $tipsDirectoryPath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'src' -AdditionalChildPath 'PowerShellTips'
+            [array] $tipFiles = Get-ChildItem -Path $tipsDirectoryPath -Filter '*.ps1' -File
             [int] $tipCount = $tipFiles.Count
-            Write-Output "Found $tipCount tip files."
 
-            # Read the README file
+            Write-Output "Processing $tipCount tip files..."
+            [int] $numberOfTips = 0
+            foreach ($file in $tipFiles) {
+              # Each tip file defines a $tip object when sourced, which we can inspect to see if it's expired.
+              Write-Output "Processing tip file: $($file.Name)"
+              . $file.FullName
+
+              if ($tip.ExpiryDate -gt (Get-Date)) {
+                $numberOfTips++
+              } else {
+                Write-Output "Tip '$($tip.Title)' expired on '$($tip.ExpiryDate)'. Skipping."
+              }
+            }
+
+            Write-Output "Reading current ReadMe.md content..."
             [string] $readmePath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'ReadMe.md'
             [string] $readmeContent = Get-Content -Path $readmePath -Raw
-
-            # Create the tip count badge/text
-            [string] $tipCountText = "> **$tipCount** PowerShell tips available!"
-
-            # Store the original content to compare later
             [string] $originalContent = $readmeContent
 
-            # Check if the tip count marker exists in the README
+            # Check if the tip count marker exists in the ReadMe.md.
             [string] $markerBegin = '<!-- BEGIN: Number of tips marker used by GitHub action -->'
             [string] $markerEnd = '<!-- END: Number of tips marker used by GitHub action -->'
-            
+
             if ($readmeContent -match [regex]::Escape($markerBegin)) {
-              # Replace the content between the markers
+              [string] $tipCountText = "> **$numberOfTips** PowerShell tips currently available!"
+
+              Write-Output "Updating ReadMe.md with new tip count: $numberOfTips"
               [string] $pattern = [regex]::Escape($markerBegin) + '[\s\S]*?' + [regex]::Escape($markerEnd)
               [string] $replacement = "$markerBegin`n$tipCountText`n$markerEnd"
               $readmeContent = $readmeContent -replace $pattern, $replacement
-              Write-Output 'Updated existing tip count between markers.'
             } else {
-              # Insert the tip count with markers after the title section
-              # Look for the pattern: "# tiPS PowerShell Module" followed by description line
-              [string] $insertPattern = '(# tiPS PowerShell Module\s*\n\s*\nPowerShell tips delivered[^\n]+\n)'
-              if ($readmeContent -match $insertPattern) {
-                [string] $insertText = "`n$markerBegin`n$tipCountText`n$markerEnd`n"
-                $readmeContent = $readmeContent -replace $insertPattern, "`$1$insertText"
-                Write-Output 'Inserted tip count with markers into README.'
-              } else {
-                Write-Output 'Could not find insertion point in README. Skipping update.'
-                "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-                exit 0
-              }
+              "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+              throw "Could not find tip count markers in ReadMe.md to update the tip count. Please ensure the markers are present."
             }
 
             # Check if content actually changed
             if ($originalContent -eq $readmeContent) {
               Write-Output 'Tip count is already up to date. No changes needed.'
-              "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+              "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
               exit 0
             }
 
-            # Write the updated content back to the README file
+            # Write the updated content back to the ReadMe.md file
             Set-Content -Path $readmePath -Value $readmeContent -NoNewline
 
-            Write-Output 'README updated with tip count.'
+            Write-Output 'ReadMe.md updated with tip count.'
 
             # Set output for the conditional check in next step
-            "result=true" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+            "ReadMeUpdated=true" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           } catch {
-            Write-Error "Error updating README: $_"
-            "result=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+            Write-Error "Error updating ReadMe.md: $_"
+            "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
             exit 1
           }
 
-      - name: Commit and push changes if README was updated
-        if: steps.update-readme.outputs.result == 'true'
+      - name: Commit and push changes if ReadMe.md was updated
+        if: steps.update-readme.outputs.ReadMeUpdated == 'true'
         shell: pwsh
         run: |
           Write-Output "Configuring git user..."
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          Write-Output "Adding README changes to git staging area..."
+          Write-Output "Adding ReadMe.md changes to git staging area..."
           git add ReadMe.md
 
           Write-Output "Committing changes..."
-          git commit -m "docs: update tip count in README [skip ci]"
+          git commit -m "docs: update tip count in ReadMe.md [skip ci]"
 
           Write-Output "Pushing changes to main branch..."
           git push origin main
