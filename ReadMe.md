@@ -22,6 +22,10 @@
 
 PowerShell tips delivered straight to your terminal 💻.
 
+<!-- BEGIN: Number of tips marker used by GitHub action -->
+> **88** PowerShell tips currently available!
+<!-- END: Number of tips marker used by GitHub action -->
+
 ## 💬 Description
 
 `tiPS` is a cross-platform PowerShell module that provides PowerShell tips for things like:

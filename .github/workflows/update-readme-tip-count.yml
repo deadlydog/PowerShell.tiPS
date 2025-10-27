@@ -1,0 +1,113 @@
+name: Update README Tip Count
+
+on:
+  # Run when changes are merged to main
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/PowerShellTips/*.ps1'  # Only run when tip files change
+
+  # Allows manual triggering from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-tip-count:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          # Fetch with token that has write access to the repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README with Tip Count
+        id: update-readme
+        shell: pwsh
+        run: |
+          try {
+            Write-Output 'Retrieving PowerShellTips files to be processed...'
+            [string] $tipsDirectoryPath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'src' -AdditionalChildPath 'PowerShellTips'
+            [array] $tipFiles = Get-ChildItem -Path $tipsDirectoryPath -Filter '*.ps1' -File
+            [int] $tipCount = $tipFiles.Count
+
+            Write-Output "Processing $tipCount tip files..."
+            [int] $numberOfTips = 0
+            foreach ($file in $tipFiles) {
+              # Each tip file defines a $tip object when sourced, which we can inspect to see if it's expired.
+              Write-Output "Processing tip file: $($file.Name)"
+              . $file.FullName
+
+              if ($tip.ExpiryDate -gt (Get-Date)) {
+                $numberOfTips++
+              } else {
+                Write-Output "Tip '$($tip.Title)' expired on '$($tip.ExpiryDate)'. Skipping."
+              }
+            }
+
+            Write-Output "Reading current ReadMe.md content..."
+            [string] $readmePath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'ReadMe.md'
+            [string] $readmeContent = Get-Content -Path $readmePath -Raw
+            [string] $originalContent = $readmeContent
+
+            # Check if the tip count marker exists in the ReadMe.md.
+            [string] $markerBegin = '<!-- BEGIN: Number of tips marker used by GitHub action -->'
+            [string] $markerEnd = '<!-- END: Number of tips marker used by GitHub action -->'
+
+            if ($readmeContent -match [regex]::Escape($markerBegin)) {
+              [string] $tipCountText = "> **$numberOfTips** PowerShell tips currently available!"
+
+              Write-Output "Updating ReadMe.md with new tip count: $numberOfTips"
+              [string] $pattern = [regex]::Escape($markerBegin) + '[\s\S]*?' + [regex]::Escape($markerEnd)
+              [string] $replacement = "$markerBegin`n$tipCountText`n$markerEnd"
+              $readmeContent = $readmeContent -replace $pattern, $replacement
+            } else {
+              "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+              throw "Could not find tip count markers in ReadMe.md to update the tip count. Please ensure the markers are present."
+            }
+
+            # Check if content actually changed
+            if ($originalContent -eq $readmeContent) {
+              Write-Output 'Tip count is already up to date. No changes needed.'
+              "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+              exit 0
+            }
+
+            # Write the updated content back to the ReadMe.md file
+            Set-Content -Path $readmePath -Value $readmeContent -NoNewline
+
+            Write-Output 'ReadMe.md updated with tip count.'
+
+            # Set output for the conditional check in next step
+            "ReadMeUpdated=true" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          } catch {
+            Write-Error "Error updating ReadMe.md: $_"
+            "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+            exit 1
+          }
+
+      - name: Commit and push changes if ReadMe.md was updated
+        if: steps.update-readme.outputs.ReadMeUpdated == 'true'
+        shell: pwsh
+        run: |
+          Write-Output "Configuring git user..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          Write-Output "Adding ReadMe.md changes to git staging area..."
+          git add ReadMe.md
+
+          Write-Output "Committing changes..."
+          git commit -m "docs: update tip count in ReadMe.md [skip ci]"
+
+          Write-Output "Pushing changes to main branch..."
+          git push origin main
+
+          if ($LastExitCode -ne 0) {
+            throw "Git push to main branch failed. Exiting workflow run."
+          }
+
+          Write-Output "Successfully pushed tip count update to main branch."
