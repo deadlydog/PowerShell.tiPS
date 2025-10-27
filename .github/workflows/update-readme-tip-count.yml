@@ -1,4 +1,4 @@
-name: Update ReadMe Tip Count
+name: update-readme-tip-count
 
 on:
   # Run when changes are merged to main

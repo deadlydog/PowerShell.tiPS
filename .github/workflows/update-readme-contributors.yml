@@ -1,4 +1,4 @@
-name: Update ReadMe Contributors
+name: update-readme-contributors
 
 on:
   # Run weekly on Sunday at 00:00 UTC
