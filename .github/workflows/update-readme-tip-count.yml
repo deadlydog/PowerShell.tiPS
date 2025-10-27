@@ -1,4 +1,4 @@
-name: Update README Tip Count
+name: Update ReadMe Tip Count
 
 on:
   # Run when changes are merged to main
@@ -24,7 +24,7 @@ jobs:
           # Fetch with token that has write access to the repo
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update README with Tip Count
+      - name: Update ReadMe with Tip Count
         id: update-readme
         shell: pwsh
         run: |

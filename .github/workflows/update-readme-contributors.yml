@@ -1,4 +1,4 @@
-name: Update README Contributors
+name: Update ReadMe Contributors
 
 on:
   # Run weekly on Sunday at 00:00 UTC
@@ -30,7 +30,7 @@ jobs:
           # Fetch with token that has write access to the repo
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update README with Contributors
+      - name: Update ReadMe with Contributors
         id: update-readme
         uses: actions/github-script@v7
         with:
@@ -56,7 +56,7 @@ jobs:
                 return false;
               }
 
-              // Read the README file
+              // Read the ReadMe file
               const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
               let readmeContent = fs.readFileSync(readmePath, 'utf8');
 
@@ -84,7 +84,7 @@ jobs:
 
             `;
 
-              // Check if the README already has a Contributors section
+              // Check if the ReadMe already has a Contributors section
               if (readmeContent.includes('## 👥 Contributors')) {
                 // Replace the existing section using regex to capture everything between the Contributors heading and the next heading
                 const pattern = /(## 👥 Contributors[\s\S]*?)(## 🛣️ Roadmap)/;
@@ -94,29 +94,29 @@ jobs:
                 readmeContent = readmeContent.replace(/(## 🛣️ Roadmap)/, contributorsSection + '$1');
               }
 
-              // Write the updated content back to the README file
+              // Write the updated content back to the ReadMe file
               fs.writeFileSync(readmePath, readmeContent);
 
-              console.log('README updated with contributors.');
+              console.log('ReadMe updated with contributors.');
 
               // Set output for next step - return true if we made changes
               return true;
             } catch (error) {
-              console.error(`Error updating README: ${error}`);
-              core.setFailed(`Failed to update README: ${error.message}`);
+              console.error(`Error updating ReadMe: ${error}`);
+              core.setFailed(`Failed to update ReadMe: ${error.message}`);
               return false;
             }
           result-encoding: string
 
-      - name: Create Pull Request if README was updated
+      - name: Create Pull Request if ReadMe was updated
         if: steps.update-readme.outputs.result == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "docs: update contributors in README [skip ci]"
-          title: "docs: Update contributors in README"
+          commit-message: "docs: update contributors in ReadMe.md [skip ci]"
+          title: "docs: Update contributors in ReadMe.md"
           body: |
-            This PR updates the README.md file with the latest contributors to the project.
+            This PR updates the ReadMe.md file with the latest contributors to the project.
 
             *This is an automated PR created by the update-readme-contributors workflow.*
           branch: auto-update-readme-contributors
