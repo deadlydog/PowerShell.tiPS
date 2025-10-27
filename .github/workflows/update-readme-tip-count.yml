@@ -30,7 +30,7 @@ jobs:
         run: |
           try {
             Write-Output "Building and importing the tiPS module to get the number of active tips..."
-            . "$Env:GITHUB_WORKSPACE/Helpers/BuildAndImportTiPSModule.ps1"
+            . "$Env:GITHUB_WORKSPACE/tools/Helpers/BuildAndImportTiPSModule.ps1"
             [int] $numberOfTips = (Get-PowerShellTip -AllTips).Count
 
             Write-Output "Reading current ReadMe.md content..."
