@@ -2,7 +2,7 @@
 # This script can be run on-demand when a Pester test complains that a file is not named correctly.
 # It is also run as part of the default VS Code build task.
 
-. "$PSScriptRoot/Helpers/ImportBuiltModule.ps1"
+. "$PSScriptRoot/Helpers/BuildAndImportTiPSModule.ps1"
 
 [string] $powerShellTipFilesDirectoryPath = Resolve-Path -Path "$PSScriptRoot/../src/PowerShellTips"
 

@@ -27,7 +27,7 @@ function New-PowerShellTipFile {
 	)
 
 	Write-Information "Building tiPS C# assemblies and importing module..." -InformationAction Continue
-	$buildOutput = . "$PSScriptRoot/../../tools/Helpers/ImportBuiltModule.ps1"
+	$buildOutput = . "$PSScriptRoot/../../tools/Helpers/BuildAndImportTiPSModule.ps1"
 
 	# Write the build output as Information messages so it doesn't affect the function's return value.
 	foreach ($entry in $buildOutput) {

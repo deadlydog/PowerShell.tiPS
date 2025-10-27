@@ -29,8 +29,8 @@ jobs:
         shell: pwsh
         run: |
           try {
-            Write-Output "Importing the tiPS module to get the number of active tips..."
-            Import-Module "$Env:GITHUB_WORKSPACE/src/tiPS"
+            Write-Output "Building and importing the tiPS module to get the number of active tips..."
+            . "$Env:GITHUB_WORKSPACE/Helpers/BuildAndImportTiPSModule.ps1"
             [int] $numberOfTips = (Get-PowerShellTip -AllTips).Count
 
             Write-Output "Reading current ReadMe.md content..."

@@ -22,7 +22,7 @@ do
 	}
 } while ($titleLength -gt $maxTitleLength)
 
-. "$PSScriptRoot/Helpers/ImportBuiltModule.ps1"
+. "$PSScriptRoot/Helpers/BuildAndImportTiPSModule.ps1"
 
 # The Tip filename is based on the ID, which is based on the date and title, so load a dummy PowerShellTip to get the filename to use.
 $dummyTip = [tiPS.PowerShellTip]::new()
