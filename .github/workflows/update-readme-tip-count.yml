@@ -29,38 +29,22 @@ jobs:
         shell: pwsh
         run: |
           try {
-            Write-Output 'Retrieving PowerShellTips files to be processed...'
-            [string] $tipsDirectoryPath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'src' -AdditionalChildPath 'PowerShellTips'
-            [array] $tipFiles = Get-ChildItem -Path $tipsDirectoryPath -Filter '*.ps1' -File
-            [int] $tipCount = $tipFiles.Count
-
-            Write-Output "Processing $tipCount tip files..."
-            [int] $numberOfTips = 0
-            foreach ($file in $tipFiles) {
-              # Each tip file defines a $tip object when sourced, which we can inspect to see if it's expired.
-              Write-Output "Processing tip file: $($file.Name)"
-              . $file.FullName
-
-              if ($tip.ExpiryDate -gt (Get-Date)) {
-                $numberOfTips++
-              } else {
-                Write-Output "Tip '$($tip.Title)' expired on '$($tip.ExpiryDate)'. Skipping."
-              }
-            }
+            Write-Output "Importing the tiPS module to get the number of active tips..."
+            Import-Module "$Env:GITHUB_WORKSPACE/src/tiPS"
+            [int] $numberOfTips = (Get-PowerShellTip -AllTips).Count
 
             Write-Output "Reading current ReadMe.md content..."
             [string] $readmePath = Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath 'ReadMe.md'
             [string] $readmeContent = Get-Content -Path $readmePath -Raw
-            [string] $originalContent = $readmeContent
+            [string] $originalReadMeContent = $readmeContent
 
             # Check if the tip count marker exists in the ReadMe.md.
             [string] $markerBegin = '<!-- BEGIN: Number of tips marker used by GitHub action -->'
             [string] $markerEnd = '<!-- END: Number of tips marker used by GitHub action -->'
-
-            if ($readmeContent -match [regex]::Escape($markerBegin)) {
-              [string] $tipCountText = "> **$numberOfTips** PowerShell tips currently available!"
-
+            if ($readmeContent -match [regex]::Escape($markerBegin) -and
+                $readmeContent -match [regex]::Escape($markerEnd)) {
               Write-Output "Updating ReadMe.md with new tip count: $numberOfTips"
+              [string] $tipCountText = "> **$numberOfTips** PowerShell tips currently available!"
               [string] $pattern = [regex]::Escape($markerBegin) + '[\s\S]*?' + [regex]::Escape($markerEnd)
               [string] $replacement = "$markerBegin`n$tipCountText`n$markerEnd"
               $readmeContent = $readmeContent -replace $pattern, $replacement
@@ -70,7 +54,7 @@ jobs:
             }
 
             # Check if content actually changed
-            if ($originalContent -eq $readmeContent) {
+            if ($originalReadMeContent -eq $readmeContent) {
               Write-Output 'Tip count is already up to date. No changes needed.'
               "ReadMeUpdated=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
               exit 0
