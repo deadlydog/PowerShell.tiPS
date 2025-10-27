@@ -53,12 +53,13 @@ jobs:
 
               if (contributors.length === 0) {
                 console.log('No contributors found. Skipping update.');
-                return false;
+                core.setOutput('ReadMeUpdated', 'false');
               }
 
               // Read the ReadMe file
               const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
               let readmeContent = fs.readFileSync(readmePath, 'utf8');
+              let originalReadMeContent = readmeContent;
 
               // Create the Contributors section
               let contributorsSection = `## 👥 Contributors
@@ -94,22 +95,28 @@ jobs:
                 readmeContent = readmeContent.replace(/(## 🛣️ Roadmap)/, contributorsSection + '$1');
               }
 
+              if (originalReadMeContent === readmeContent) {
+                console.log('Contributors section is already up to date. No changes needed.');
+                core.setOutput('ReadMeUpdated', 'false');
+                exit 0;
+              }
+
               // Write the updated content back to the ReadMe file
               fs.writeFileSync(readmePath, readmeContent);
 
               console.log('ReadMe updated with contributors.');
 
-              // Set output for next step - return true if we made changes
-              return true;
+              // Set output for next step. True means there are changes to commit
+              core.setOutput('ReadMeUpdated', 'true');
             } catch (error) {
               console.error(`Error updating ReadMe: ${error}`);
               core.setFailed(`Failed to update ReadMe: ${error.message}`);
-              return false;
+              core.setOutput('ReadMeUpdated', 'false');
             }
           result-encoding: string
 
       - name: Create Pull Request if ReadMe was updated
-        if: steps.update-readme.outputs.result == 'true'
+        if: steps.update-readme.outputs.ReadMeUpdated == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
