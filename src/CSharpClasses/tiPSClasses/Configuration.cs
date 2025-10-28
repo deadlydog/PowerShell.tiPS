@@ -29,7 +29,7 @@ namespace tiPS
 	public enum GetPowerShellTipConditions
 	{
 		CycleThroughTips = 0,
-		OnlyWriteUnshownTips = 1
+		OnlyGetUnshownTips = 1
 	}
 
 	public class Configuration

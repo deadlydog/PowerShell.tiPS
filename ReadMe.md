@@ -150,12 +150,12 @@ By default, tiPS will cycle through all available tips, so once all tips have be
 If you prefer to only see tips that haven't been shown before, you can configure tiPS to only show unshown tips by running:
 
 ```powershell
-Set-TiPSConfiguration -GetPowerShellTipCondition OnlyWriteUnshownTips
+Set-TiPSConfiguration -GetPowerShellTipCondition OnlyGetUnshownTips
 ```
 
-Possible values for the `-GetPowerShellTipCondition` parameter are `CycleThroughTips` (default) and `OnlyWriteUnshownTips`.
+Possible values for the `-GetPowerShellTipCondition` parameter are `CycleThroughTips` (default) and `OnlyGetUnshownTips`.
 
-When `OnlyWriteUnshownTips` is used, tiPS will only automatically display a tip if there are tips that have not been shown yet.
+When `OnlyGetUnshownTips` is used, tiPS will only automatically display a tip if there are tips that have not been shown yet.
 Once all tips have been shown, no more tips will be displayed until new tips are added (by updating the module).
 
 ### ⬆️ Automatic updates

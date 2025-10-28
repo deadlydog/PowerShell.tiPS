@@ -26,8 +26,8 @@ function Set-TiPSConfiguration
 
 	.PARAMETER GetPowerShellTipCondition
 	Controls how tips are selected when automatically showing tips.
-	Valid values are CycleThroughTips (default) and OnlyWriteUnshownTips.
-	OnlyWriteUnshownTips will only show tips that have not been shown before.
+	Valid values are CycleThroughTips (default) and OnlyGetUnshownTips.
+	OnlyGetUnshownTips will only show tips that have not been shown before.
 
 	.PARAMETER TipRetrievalOrder
 	The order in which to retrieve PowerShell tips.
@@ -67,7 +67,7 @@ function Set-TiPSConfiguration
 	Set the tiPS configuration to retrieve PowerShell tips in random order.
 
 	.EXAMPLE
-	Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -GetPowerShellTipCondition OnlyWriteUnshownTips
+	Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -GetPowerShellTipCondition OnlyGetUnshownTips
 
 	Set the tiPS configuration to automatically write a PowerShell tip every day, but only if there are tips that have not been shown yet.
 #>
