@@ -76,6 +76,7 @@ function Set-TiPSConfiguration
 		[tiPS.WritePowerShellTipCadence] $AutomaticallyWritePowerShellTip = [tiPS.WritePowerShellTipCadence]::Never,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
+		[Alias('TipOrder')]
 		[tiPS.TipRetrievalOrder] $TipRetrievalOrder = [tiPS.TipRetrievalOrder]::NewestFirst
 	)
 

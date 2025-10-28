@@ -166,10 +166,10 @@ This means that if a new tip is submitted, it will be shown next.
 You can change the order in which tips are retrieved by running:
 
 ```powershell
-Set-TiPSConfiguration -TipOrder Random
+Set-TiPSConfiguration -TipRetrievalOrder Random
 ```
 
-Possible values for the `-TipOrder` parameter are `NewestFirst` (default), `OldestFirst`, and `Random`.
+Possible values for the `-TipRetrievalOrder` parameter are `NewestFirst` (default), `OldestFirst`, and `Random`.
 
 ### ❌ Uninstalling tiPS
 
