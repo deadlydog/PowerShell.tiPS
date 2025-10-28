@@ -144,19 +144,19 @@ Possible values for the `-AutomaticallyWritePowerShellTip` parameter are `Never`
 Tips will only be automatically shown in interactive PowerShell sessions.
 This prevents them from appearing unexpectedly when running scripts or other automated processes.
 
-#### Write only unshown tips
+#### Do not show the same tips twice
 
-By default, tiPS will cycle through all available tips.
-If you prefer to only see tips that you haven't shown before, you can configure tiPS to only show unshown tips by running:
+By default, tiPS will cycle through all available tips, so once all tips have been shown it will restart and display them again.
+If you prefer to only see tips that haven't been shown before, you can configure tiPS to only show unshown tips by running:
 
 ```powershell
-Set-TiPSConfiguration -AutomaticallyWritePowerShellTipOption OnlyWriteUnshownTips
+Set-TiPSConfiguration -WritePowerShellTipCondition OnlyWriteUnshownTips
 ```
 
-Possible values for the `-AutomaticallyWritePowerShellTipOption` parameter are `CycleThroughTips` (default) and `OnlyWriteUnshownTips`.
+Possible values for the `-WritePowerShellTipCondition` parameter are `CycleThroughTips` (default) and `OnlyWriteUnshownTips`.
 
 When `OnlyWriteUnshownTips` is used, tiPS will only automatically display a tip if there are tips that have not been shown yet.
-Once all tips have been shown, no more tips will be automatically displayed until new tips are added to the module (typically by updating the module).
+Once all tips have been shown, no more tips will be displayed until new tips are added (by updating the module).
 
 ### ⬆️ Automatic updates
 

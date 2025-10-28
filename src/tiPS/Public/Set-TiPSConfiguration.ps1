@@ -24,10 +24,10 @@ function Set-TiPSConfiguration
 	Whether to automatically write a PowerShell tip at session startup.
 	Valid values are Never, EverySession, Daily, Weekly, Biweekly, and Monthly. Default is Never.
 
-	.PARAMETER AutomaticallyWritePowerShellTipOption
+	.PARAMETER WritePowerShellTipCondition
 	Controls how tips are selected when automatically showing tips.
 	Valid values are CycleThroughTips (default) and OnlyWriteUnshownTips.
-	OnlyWriteUnshownTips will only show tips that have not been shown yet.
+	OnlyWriteUnshownTips will only show tips that have not been shown before.
 
 	.PARAMETER TipRetrievalOrder
 	The order in which to retrieve PowerShell tips.
@@ -67,7 +67,7 @@ function Set-TiPSConfiguration
 	Set the tiPS configuration to retrieve PowerShell tips in random order.
 
 	.EXAMPLE
-	Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AutomaticallyWritePowerShellTipOption OnlyWriteUnshownTips
+	Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -WritePowerShellTipCondition OnlyWriteUnshownTips
 
 	Set the tiPS configuration to automatically write a PowerShell tip every day, but only if there are tips that have not been shown yet.
 #>
@@ -86,7 +86,7 @@ function Set-TiPSConfiguration
 		[tiPS.WritePowerShellTipCadence] $AutomaticallyWritePowerShellTip = [tiPS.WritePowerShellTipCadence]::Never,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
-		[tiPS.WritePowerShellTipConditions] $AutomaticallyWritePowerShellTipOption = [tiPS.WritePowerShellTipConditions]::CycleThroughTips,
+		[tiPS.WritePowerShellTipConditions] $WritePowerShellTipCondition = [tiPS.WritePowerShellTipConditions]::CycleThroughTips,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
 		[Alias('TipOrder')]
@@ -131,12 +131,12 @@ function Set-TiPSConfiguration
 			}
 		}
 
-		# If the AutomaticallyWritePowerShellTipOption parameter is passed in, set it.
-		if ($PSBoundParameters.ContainsKey('AutomaticallyWritePowerShellTipOption'))
+		# If the WritePowerShellTipCondition parameter is passed in, set it.
+		if ($PSBoundParameters.ContainsKey('WritePowerShellTipCondition'))
 		{
 			if ($PSCmdlet.ShouldProcess('tiPS configuration WritePowerShellTipCondition property', 'Set'))
 			{
-				$script:TiPSConfiguration.WritePowerShellTipCondition = $AutomaticallyWritePowerShellTipOption
+				$script:TiPSConfiguration.WritePowerShellTipCondition = $WritePowerShellTipCondition
 			}
 		}
 
