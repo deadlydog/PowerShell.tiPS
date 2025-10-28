@@ -26,7 +26,7 @@ namespace tiPS
 		Random = 2
 	}
 
-	public enum WritePowerShellTipConditions
+	public enum GetPowerShellTipConditions
 	{
 		CycleThroughTips = 0,
 		OnlyWriteUnshownTips = 1
@@ -37,14 +37,14 @@ namespace tiPS
 		public ModuleAutoUpdateCadence AutoUpdateCadence { get; set; }
 		public WritePowerShellTipCadence AutoWritePowerShellTipCadence { get; set; }
 		public TipRetrievalOrder TipRetrievalOrder { get; set; }
-		public WritePowerShellTipConditions WritePowerShellTipCondition { get; set; }
+		public GetPowerShellTipConditions GetPowerShellTipCondition { get; set; }
 
 		public Configuration()
 		{
 			AutoUpdateCadence = ModuleAutoUpdateCadence.Never;
 			AutoWritePowerShellTipCadence = WritePowerShellTipCadence.Never;
 			TipRetrievalOrder = TipRetrievalOrder.NewestFirst;
-			WritePowerShellTipCondition = WritePowerShellTipConditions.CycleThroughTips;
+			GetPowerShellTipCondition = GetPowerShellTipConditions.CycleThroughTips;
 		}
 	}
 }
