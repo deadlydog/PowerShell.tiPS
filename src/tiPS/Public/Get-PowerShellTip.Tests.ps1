@@ -140,6 +140,60 @@ Describe 'Get-PowerShellTip' {
 			$tip.CreatedDate | Should -Be $oldestTipDate
 		}
 	}
+
+	Context 'Given the Previous switch' {
+		BeforeEach {
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -ModuleName $ModuleName -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
+			}
+		}
+
+		It 'Should return the last shown tip' {
+			InModuleScope -ModuleName $ModuleName {
+				# Show a tip to populate the last shown tip ID
+				AppendTipIdToTipIdsAlreadyShown -TipId '2023-07-16-powershell-is-open-source'
+			}
+
+			$tip = Get-PowerShellTip -Previous
+
+			$tip.Id | Should -Be '2023-07-16-powershell-is-open-source'
+		}
+
+		It 'Should write an error when no tips have been shown yet' {
+			InModuleScope -ModuleName $ModuleName {
+				# Clear all shown tips
+				ClearTipIdsAlreadyShown
+			}
+
+			Get-PowerShellTip -Previous -ErrorVariable error -ErrorAction SilentlyContinue > $null
+			$error | Should -Not -BeNullOrEmpty
+		}
+
+		It 'Should not mark the tip as shown again' {
+			InModuleScope -ModuleName $ModuleName {
+				# Show a tip to populate the last shown tip ID
+				AppendTipIdToTipIdsAlreadyShown -TipId '2023-07-16-powershell-is-open-source'
+
+				# Get count of shown tips before calling -Previous
+				[string[]] $tipIdsBeforePrevious = ReadTipIdsAlreadyShownOrDefault
+
+				# Get the previous tip
+				Get-PowerShellTip -Previous > $null
+
+				# Get count of shown tips after calling -Previous
+				[string[]] $tipIdsAfterPrevious = ReadTipIdsAlreadyShownOrDefault
+
+				# The count should be the same
+				$tipIdsAfterPrevious.Count | Should -Be $tipIdsBeforePrevious.Count
+			}
+		}
+	}
 }
 
 InModuleScope -ModuleName tiPS { # Must use InModuleScope to access script-level variables of the module.
