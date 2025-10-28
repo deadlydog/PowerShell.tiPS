@@ -26,17 +26,25 @@ namespace tiPS
 		Random = 2
 	}
 
+	public enum AllTipsShownBehaviours
+	{
+		ClearShownTipsList = 0,
+		DoNotShowTips = 1
+	}
+
 	public class Configuration
 	{
 		public ModuleAutoUpdateCadence AutoUpdateCadence { get; set; }
 		public WritePowerShellTipCadence AutoWritePowerShellTipCadence { get; set; }
 		public TipRetrievalOrder TipRetrievalOrder { get; set; }
+		public AllTipsShownBehaviours AllTipsShownBehaviour { get; set; }
 
 		public Configuration()
 		{
 			AutoUpdateCadence = ModuleAutoUpdateCadence.Never;
 			AutoWritePowerShellTipCadence = WritePowerShellTipCadence.Never;
 			TipRetrievalOrder = TipRetrievalOrder.NewestFirst;
+			AllTipsShownBehaviour = AllTipsShownBehaviours.ClearShownTipsList;
 		}
 	}
 }

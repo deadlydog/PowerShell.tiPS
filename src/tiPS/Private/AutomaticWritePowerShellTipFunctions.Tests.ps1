@@ -141,6 +141,30 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 				Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
 			}
 		}
+
+		Context 'When the AllTipsShownBehaviour is DoNotShowTips' {
+			It 'Should show a tip when there are unseen tips' {
+				$config = [tiPS.Configuration]::new()
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EverySession
+				$config.AllTipsShownBehaviour = [tiPS.AllTipsShownBehaviours]::DoNotShowTips
+				Mock -CommandName TestIfUnseenTipsExist -MockWith { return $true }
+
+				WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+				Assert-MockCalled WriteAutomaticPowerShellTip -Times 1 -Exactly
+			}
+
+			It 'Should not show a tip when all tips have been shown' {
+				$config = [tiPS.Configuration]::new()
+				$config.AutoWritePowerShellTipCadence = [tiPS.WritePowerShellTipCadence]::EverySession
+				$config.AllTipsShownBehaviour = [tiPS.AllTipsShownBehaviours]::DoNotShowTips
+				Mock -CommandName TestIfUnseenTipsExist -MockWith { return $false }
+
+				WriteAutomaticPowerShellTipIfNeeded -Config $config
+
+				Assert-MockCalled WriteAutomaticPowerShellTip -Times 0 -Exactly
+			}
+		}
 	}
 
 	Describe 'Calling WriteLastAutomaticTipWrittenDate' {
@@ -162,6 +186,53 @@ InModuleScope -ModuleName tiPS { # Must use InModuleScope to call private functi
 
 			$lastAutomaticTipWrittenDate = Get-Content -Path (GetLastAutomaticTipWrittenDateFilePath)
 			$lastAutomaticTipWrittenDate | Should -Be $today
+		}
+	}
+
+	Describe 'Calling TestIfUnseenTipsExist' {
+		BeforeEach {
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
+			}
+		}
+
+		It 'Should return true when no tips have been shown yet' {
+			# Ensure the file is empty
+			ClearTipIdsAlreadyShown
+
+			$result = TestIfUnseenTipsExist
+
+			$result | Should -Be $true
+		}
+
+		It 'Should return true when some tips have been shown but not all' {
+			# Get all tips and mark only one as shown
+			[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
+			[string] $firstTipId = $allTips.Keys | Select-Object -First 1
+			AppendTipIdToTipIdsAlreadyShown -TipId $firstTipId
+
+			$result = TestIfUnseenTipsExist
+
+			$result | Should -Be $true
+		}
+
+		It 'Should return false when all tips have been shown' {
+			# Mark all tips as shown
+			[hashtable] $allTips = ReadAllPowerShellTipsFromJsonFile
+			foreach ($tipId in $allTips.Keys)
+			{
+				AppendTipIdToTipIdsAlreadyShown -TipId $tipId
+			}
+
+			$result = TestIfUnseenTipsExist
+
+			$result | Should -Be $false
 		}
 	}
 }
