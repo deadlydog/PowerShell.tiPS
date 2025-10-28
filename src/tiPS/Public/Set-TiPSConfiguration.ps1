@@ -86,7 +86,7 @@ function Set-TiPSConfiguration
 		[tiPS.WritePowerShellTipCadence] $AutomaticallyWritePowerShellTip = [tiPS.WritePowerShellTipCadence]::Never,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
-		[tiPS.WritePowerShellTipOptions] $AutomaticallyWritePowerShellTipOption = [tiPS.WritePowerShellTipOptions]::CycleThroughTips,
+		[tiPS.WritePowerShellTipConditions] $AutomaticallyWritePowerShellTipOption = [tiPS.WritePowerShellTipConditions]::CycleThroughTips,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
 		[Alias('TipOrder')]
@@ -134,9 +134,9 @@ function Set-TiPSConfiguration
 		# If the AutomaticallyWritePowerShellTipOption parameter is passed in, set it.
 		if ($PSBoundParameters.ContainsKey('AutomaticallyWritePowerShellTipOption'))
 		{
-			if ($PSCmdlet.ShouldProcess('tiPS configuration AutoWritePowerShellTipOptions property', 'Set'))
+			if ($PSCmdlet.ShouldProcess('tiPS configuration WritePowerShellTipCondition property', 'Set'))
 			{
-				$script:TiPSConfiguration.AutoWritePowerShellTipOptions = $AutomaticallyWritePowerShellTipOption
+				$script:TiPSConfiguration.WritePowerShellTipCondition = $AutomaticallyWritePowerShellTipOption
 			}
 		}
 
