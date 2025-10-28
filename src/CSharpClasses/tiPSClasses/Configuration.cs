@@ -28,8 +28,8 @@ namespace tiPS
 
 	public enum WritePowerShellTipOptions
 	{
-		CycleThroughAllTips = 0,
-		UnseenTipsOnly = 1
+		CycleThroughTips = 0,
+		OnlyWriteUnseenTips = 1
 	}
 
 	public class Configuration
@@ -44,7 +44,7 @@ namespace tiPS
 			AutoUpdateCadence = ModuleAutoUpdateCadence.Never;
 			AutoWritePowerShellTipCadence = WritePowerShellTipCadence.Never;
 			TipRetrievalOrder = TipRetrievalOrder.NewestFirst;
-			AutoWritePowerShellTipOptions = WritePowerShellTipOptions.CycleThroughAllTips;
+			AutoWritePowerShellTipOptions = WritePowerShellTipOptions.CycleThroughTips;
 		}
 	}
 }

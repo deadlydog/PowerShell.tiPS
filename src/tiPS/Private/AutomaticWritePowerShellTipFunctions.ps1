@@ -31,7 +31,7 @@ function WriteAutomaticPowerShellTipIfNeeded
 	}
 
 	# If the cadence says we should show a tip, check if we should only show unseen tips
-	if ($shouldShowTip -and $Config.AutoWritePowerShellTipOptions -eq [tiPS.WritePowerShellTipOptions]::UnseenTipsOnly)
+	if ($shouldShowTip -and $Config.AutoWritePowerShellTipOptions -eq [tiPS.WritePowerShellTipOptions]::OnlyWriteUnseenTips)
 	{
 		$shouldShowTip = TestIfUnseenTipsExist
 	}
