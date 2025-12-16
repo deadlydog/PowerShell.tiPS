@@ -32,88 +32,104 @@ jobs:
 
       - name: Update ReadMe with Contributors
         id: update-readme
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            const path = require('path');
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $ErrorActionPreference = 'Stop'
 
-            try {
-              // Fetch contributors from the repository
-              console.log('Fetching contributors from GitHub API...');
-              const contributorsResponse = await github.rest.repos.listContributors({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                per_page: 100
-              });
+          try {
+            Write-Host 'Resolve owner/repo and API base'
+            $owner, $repo = $env:GITHUB_REPOSITORY -split '/'
+            $apiBase = if ($env:GITHUB_API_URL) { $env:GITHUB_API_URL } else { 'https://api.github.com' }
 
-              const contributors = contributorsResponse.data;
-              console.log(`Found ${contributors.length} contributors.`);
-
-              if (contributors.length === 0) {
-                console.log('No contributors found. Skipping update.');
-                core.setOutput('ReadMeUpdated', 'false');
-              }
-
-              // Read the ReadMe file
-              const readmePath = path.join(process.env.GITHUB_WORKSPACE, 'ReadMe.md');
-              let readmeContent = fs.readFileSync(readmePath, 'utf8');
-              let originalReadMeContent = readmeContent;
-
-              // Create the Contributors section
-              let contributorsSection = `## 👥 Contributors
-
-            Thanks to these wonderful people who have contributed to tiPS:
-
-            <p align="center">
-            `;
-
-              // Add each contributor to the section
-              for (const contributor of contributors) {
-                // Skip GitHub Actions bot or other bots
-                if (contributor.login === 'github-actions[bot]' ||
-                    contributor.login === 'dependabot[bot]' ||
-                    contributor.login === 'Copilot') {
-                  continue;
-                }
-
-                contributorsSection += `  <a href="${contributor.html_url}" title="${contributor.login}"><img src="${contributor.avatar_url}" width="50" height="50" style="border-radius:50%;margin:5px;" alt="${contributor.login}"></a>\n`;
-              }
-
-              contributorsSection += `</p>
-
-            `;
-
-              // Check if the ReadMe already has a Contributors section
-              if (readmeContent.includes('## 👥 Contributors')) {
-                // Replace the existing section using regex to capture everything between the Contributors heading and the next heading
-                const pattern = /(## 👥 Contributors[\s\S]*?)(## 🛣️ Roadmap)/;
-                readmeContent = readmeContent.replace(pattern, contributorsSection + '$2');
-              } else {
-                // Insert before the Roadmap section
-                readmeContent = readmeContent.replace(/(## 🛣️ Roadmap)/, contributorsSection + '$1');
-              }
-
-              if (originalReadMeContent === readmeContent) {
-                console.log('Contributors section is already up to date. No changes needed.');
-                core.setOutput('ReadMeUpdated', 'false');
-                exit 0;
-              }
-
-              // Write the updated content back to the ReadMe file
-              fs.writeFileSync(readmePath, readmeContent);
-
-              console.log('ReadMe updated with contributors.');
-
-              // Set output for next step. True means there are changes to commit
-              core.setOutput('ReadMeUpdated', 'true');
-            } catch (error) {
-              console.error(`Error updating ReadMe: ${error}`);
-              core.setFailed(`Failed to update ReadMe: ${error.message}`);
-              core.setOutput('ReadMeUpdated', 'false');
+            Write-Host 'Prepare headers'
+            $headers = @{
+              Authorization          = "Bearer $env:GITHUB_TOKEN"
+              'User-Agent'           = $env:GITHUB_REPOSITORY
+              'X-GitHub-Api-Version' = '2022-11-28'
+              Accept                 = 'application/vnd.github+json'
             }
-          result-encoding: string
+
+            Write-Host 'Fetch contributors with simple pagination'
+            $contributors = @()
+            $page = 1
+            $perPage = 100
+            do {
+              $url = "$apiBase/repos/$owner/$repo/contributors?per_page=$perPage&page=$page"
+              Write-Host "Fetching contributors page $page..."
+              $resp = Invoke-RestMethod -Headers $headers -Method GET -Uri $url
+              if ($null -eq $resp) { $resp = @() }
+              $contributors += $resp
+              $count = @($resp).Count
+              $page++
+            } while ($count -eq $perPage)
+
+            Write-Host ("Found {0} contributors (including bots)." -f $contributors.Count)
+
+            if ($contributors.Count -eq 0) {
+              Write-Host 'No contributors found. Skipping update.'
+              'ReadMeUpdated=false' | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+              exit 0
+            }
+
+            Write-Host 'Filter out bots'
+            $filtered = $contributors | Where-Object {
+              $_.login -ne 'github-actions[bot]' -and
+              $_.login -ne 'dependabot[bot]' -and
+              $_.login -ne 'Copilot'
+            }
+
+            Write-Host 'Reading ReadMe'
+            $readmePath = Join-Path $env:GITHUB_WORKSPACE 'ReadMe.md'
+            $readmeContent = Get-Content -Path $readmePath -Raw
+            $originalReadMeContent = $readmeContent
+
+            Write-Host 'Building contributors section'
+            $contributorsSection = @()
+            $contributorsSection += '## 👥 Contributors'
+            $contributorsSection += ''
+            $contributorsSection += 'Thanks to these wonderful people who have contributed to tiPS:'
+            $contributorsSection += ''
+            $contributorsSection += '<p align="center">'
+
+            foreach ($c in $filtered) {
+              $contributorsSection += "  <a href=\"$($c.html_url)\" title=\"$($c.login)\"><img src=\"$($c.avatar_url)\" width=\"50\" height=\"50\" style=\"border-radius:50%;margin:5px;\" alt=\"$($c.login)\"></a>"
+            }
+
+            $contributorsSection += '</p>'
+            $contributorsSection += ''
+            $contributorsSectionText = ($contributorsSection -join "`n") + "`n"
+
+            Write-Host 'Update or insert section'
+            if ($readmeContent -match '## 👥 Contributors') {
+              $pattern = '## 👥 Contributors[\s\S]*?(?=## 🛣️ Roadmap)'
+              $readmeContent = [regex]::Replace($readmeContent, $pattern, $contributorsSectionText)
+            } else {
+              if ($readmeContent -match '## 🛣️ Roadmap') {
+                $readmeContent = [regex]::Replace($readmeContent, '(?ms)(?=^## 🛣️ Roadmap)', $contributorsSectionText)
+              } else {
+                $readmeContent = $readmeContent + "`n`n" + $contributorsSectionText
+              }
+            }
+
+            if ($readmeContent -eq $originalReadMeContent) {
+              Write-Host 'Contributors section is already up to date. No changes needed.'
+              'ReadMeUpdated=false' | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+              exit 0
+            }
+
+            Write-Host 'Write updated ReadMe'
+            Set-Content -Path $readmePath -Value $readmeContent -Encoding utf8
+            Write-Host 'ReadMe updated with contributors.'
+
+            Write-Host 'Set output for next step'
+            'ReadMeUpdated=true' | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          } catch {
+            Write-Error ("Failed to update ReadMe: {0}" -f $_.Exception.Message)
+            'ReadMeUpdated=false' | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+            exit 1
+          }
 
       - name: Create Pull Request if ReadMe was updated
         if: steps.update-readme.outputs.ReadMeUpdated == 'true'
