@@ -1,6 +1,6 @@
 $tip = [tiPS.PowerShellTip]::new()
 $tip.CreatedDate = [DateTime]::Parse('2025-12-16')
-$tip.Title = 'PSCompletions module autocompletes common CLIs'
+$tip.Title = 'Autocomplete common CLIs using PSCompletions module'
 $tip.TipText = @'
 Similar to how the PoshGit module provides tab completion for Git commands, the PSCompletions (psc) module offers autocompletion for a variety of widely-used command-line interfaces (CLIs). This includes tools like 7-zip, Bun, Chocolatey, Docker, Git, Kubernetes (kubectl), NGrok, Node, NPM, NVM, Oh-My-Posh, PowerShell, Pwsh, Python, Scoop, WinGet, WSL, Windows Terminal, Yarn, and many others. Use the command `psc add <tool>` to enable autocompletion for a specific CLI.
 
