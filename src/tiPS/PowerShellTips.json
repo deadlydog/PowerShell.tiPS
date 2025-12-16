@@ -1049,6 +1049,19 @@
   },
   {
     "CreatedDate": "2025-10-16T00:00:00",
+    "Title": "PSConfEU 2026",
+    "TipText": "The PowerShell Conference Europe (PSConfEU) is back for 2026! It will be held at Wiesbaden, Germany from June 1 - 4, 2026! This community-driven event brings together PowerShell enthusiasts, experts, and professionals from around the world to share knowledge, network, and learn about the latest developments in PowerShell. Book your tickets soon at https://psconf.eu to take advantage of early bird pricing!\r\n\r\nYou too can be a speaker at PSConfEU 2026! The call for speakers is open from October 14 - December 14, 2025. Submit your session ideas at https://sessionize.com/psconfeu26 to hopefully be selected.",
+    "Example": "",
+    "Urls": [
+      "https://psconf.eu",
+      "https://sessionize.com/psconfeu26"
+    ],
+    "Category": 0,
+    "ExpiryDate": "2026-06-04T00:00:00",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-10-16T00:00:00",
     "Title": "Use -join to make regex more readable",
     "TipText": "Regular expressions can be hard to read when you see the entire pattern in one long string. You can use a string array with the -join operator to break the pattern into multiple lines, making it easier to read and understand. This also allows you to comment each part of the regex pattern.",
     "Example": "[string] $emailAddressRegexPattern = @(\r\n    '(?<localPart>[^\\s]+)' # Local part of the email address (before the @ symbol).\r\n    '@'                    # The @ symbol.\r\n    '(?<domain>[^@]+)'     # Domain part of the email address.\r\n    '(?<tld>\\.[a-z]{2,})'  # Top-level domain (e.g. .com, .org, .net).\r\n) -join ''\r\n# Creates the string: (?<localPart>[^\\s]+)@(?<domain>[^@]+)(?<tld>\\.[a-z]{2,})\r\n\r\n# Can also use -join to concatenate strings in more complex ways.\r\n[string] $concatenatedString = @(\r\n    'This is'\r\n    'a concatenated string'\r\n    'with numbers 1 - 10:'\r\n    1..10 | ForEach-Object { $_ }\r\n    @(\r\n        '. And more'\r\n        'nested strings'\r\n    ) -join ' '\r\n) -join ' '\r\n# Creates the string: This is a concatenated string with numbers 1 - 10: 1 2 3 4 5 6 7 8 9 10 . And more nested strings",
@@ -1056,6 +1069,33 @@
       "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_join"
     ],
     "Category": 6,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-10-24T00:00:00",
+    "Title": "Use Join-Path for cross-platform compatible paths",
+    "TipText": "When constructing file system paths in PowerShell, especially in scripts that may run on different operating systems (like Windows, Linux, or macOS), it's best to use the `Join-Path` cmdlet instead of string concatenation. This cmdlet automatically uses the correct path separator ('/' or '\\') for the operating system, ensuring that your paths are constructed correctly regardless of where the script is executed. You can also use the `-Resolve` parameter to ensure that the constructed path exists, which can help prevent errors when accessing files or directories.\r\n\r\nAs of PowerShell 6 and later, Join-Path accepts multiple path segments via the `-AdditionalChildPath` parameter, allowing you to provide and combine many child path segments in a single call.",
+    "Example": "# Basic example to access 'C:\\Temp\\File.txt'.\r\nJoin-Path -Path 'C:\\Temp' -ChildPath 'File.txt'\r\n\r\n# Shorthand syntax.\r\nJoin-Path 'C:\\Temp' 'File.txt'\r\n\r\n# PowerShell 6+ example with multiple segments, to access 'C:\\Temp\\TempFolder\\ASubFolder\\AnotherSubFolder\\TempFile.txt'.\r\nJoin-Path -Path 'C:\\Temp' -ChildPath 'TempFolder' -AdditionalChildPath 'ASubFolder', 'AnotherSubFolder', 'TempFile.txt'\r\n\r\n# Shorthand syntax with multiple segments (Path, ChildPath, AdditionalChildPath array).\r\nJoin-Path 'C:\\Temp' 'TempFolder' 'ASubFolder', 'AnotherSubFolder', 'TempFile.txt'\r\n\r\n# Return multiple paths on different drives.\r\nJoin-Path -Path 'C:', 'D:', 'E:' -ChildPath 'TempFile.txt'\r\n\r\n# Potentially return multiple paths using wildcards and -Resolve. (e.g. returns C:\\Users\\Alice\\Desktop, C:\\Users\\Bob\\Desktop, etc.)\r\nJoin-Path -Path 'C:\\Users\\*' -ChildPath 'Desktop' -Resolve\r\n\r\n# Use the -Resolve parameter to ensure the path exists (throws exception if it doesn't).\r\nJoin-Path -Path '/usr/local' -ChildPath 'bin' -AdditionalChildPath 'script.sh' -Resolve",
+    "Urls": [
+      "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/join-path",
+      "https://x.com/adbertram/status/1782005562286252241?s=46&t=-Ox1iPV67-4Vqb8wIZ275A"
+    ],
+    "Category": 3,
+    "ExpiryDate": "9999-12-31T23:59:59.9999999",
+    "Author": "Daniel Schroeder (deadlydog)"
+  },
+  {
+    "CreatedDate": "2025-12-16T00:00:00",
+    "Title": "PSCompletions module autocompletes common CLIs",
+    "TipText": "Similar to how the PoshGit module provides tab completion for Git commands, the PSCompletions (psc) module offers autocompletion for a variety of widely-used command-line interfaces (CLIs). This includes tools like 7-zip, Bun, Chocolatey, Docker, Git, Kubernetes (kubectl), NGrok, Node, NPM, NVM, Oh-My-Posh, PowerShell, Pwsh, Python, Scoop, WinGet, WSL, Windows Terminal, Yarn, and many others. Use the command `psc add <tool>` to enable autocompletion for a specific CLI.\r\n\r\nThe module also offers a different tab-completion experience for PowerShell, with more of a TUI (Text User Interface) feel. It supports filtering as you type, as well as wildcard matching. If you want the autocompletion, but not the new tab-completion experience, you can disable it with `psc menu config enable_menu 0`.\r\n\r\nIn order for the autocompletion to work, you must first import the PSCompletions module, so you will want to add it to your $Profile script.",
+    "Example": "# One-time setup: First install the module, then add autocompletion for common CLIs you use.\r\nInstall-Module -Name PSCompletions -Scope CurrentUser\r\npsc add <tab> # Show the list of available CLIs to add autocompletion for.\r\npsc add git\r\npsc add docker\r\npsc add kubectl\r\n\r\n# Ensure the module is imported for autocompletion to work (add this to your $Profile).\r\nImport-Module PSCompletions\r\n\r\n# See the CLI autocompletion for docker and git in action.\r\ndocker <tab>\r\ngit stash <tab>\r\n\r\n# Disable the TUI tab completion menu if you prefer the default PowerShell experience (set to 1 to enable).\r\npsc menu config enable_menu 0",
+    "Urls": [
+      "https://pscompletions.abgox.com",
+      "https://github.com/abgox/PSCompletions",
+      "https://github.com/abgox/PSCompletions/blob/main/completions.md"
+    ],
+    "Category": 2,
     "ExpiryDate": "9999-12-31T23:59:59.9999999",
     "Author": "Daniel Schroeder (deadlydog)"
   }
