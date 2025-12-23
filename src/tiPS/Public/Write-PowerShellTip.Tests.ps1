@@ -56,4 +56,40 @@ Describe 'Write-PowerShellTip' {
 			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
 		}
 	}
+
+	Context 'Given the Previous switch' {
+		BeforeEach {
+			# Use a temp configuration data directory instead of reading/overwriting the current user's configuration.
+			Mock -ModuleName $ModuleName -CommandName Get-TiPSDataDirectoryPath -MockWith {
+				[string] $directoryPath = "$TestDrive/tiPS" # Use $TestDrive variable so .NET methods can resolve the path.
+				if (-not (Test-Path -Path $directoryPath -PathType Container))
+				{
+					New-Item -Path $directoryPath -ItemType Directory -Force > $null
+				}
+				return $directoryPath
+			}
+		}
+
+		It 'Should write the last shown tip without error' {
+			InModuleScope -ModuleName $ModuleName {
+				# Show a tip to populate the last shown tip ID
+				AppendTipIdToTipIdsAlreadyShown -TipId '2023-07-16-powershell-is-open-source'
+			}
+
+			$Error.Clear()
+			{ Write-PowerShellTip -Previous } | Should -Not -Throw
+			Should -InvokeVerifiable # Verify that the Write-Host mock was called.
+			$Error[0] | Should -BeNullOrEmpty
+		}
+
+		It 'Should write an error when no tips have been shown yet' {
+			InModuleScope -ModuleName $ModuleName {
+				# Clear all shown tips
+				ClearTipIdsAlreadyShown
+			}
+
+			Write-PowerShellTip -Previous -ErrorVariable tipError -ErrorAction SilentlyContinue > $null
+			$tipError | Should -Not -BeNullOrEmpty
+		}
+	}
 }

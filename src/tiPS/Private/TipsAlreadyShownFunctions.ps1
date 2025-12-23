@@ -64,6 +64,27 @@ function ClearTipIdsAlreadyShown
 	[System.IO.File]::WriteAllText($tipIdsAlreadyShownFilePath, [string]::Empty)
 }
 
+function GetLastShownTipId
+{
+	[CmdletBinding()]
+	[OutputType([string])]
+	Param()
+
+	[string[]] $tipIdsAlreadyShown = ReadTipIdsAlreadyShownOrDefault
+	if ($tipIdsAlreadyShown.Count -eq 0)
+	{
+		return $null
+	}
+
+	[string] $lastShownTipId = $tipIdsAlreadyShown | Select-Object -Last 1
+	if ([string]::IsNullOrWhiteSpace($lastShownTipId))
+	{
+		return $null
+	}
+
+	return $lastShownTipId
+}
+
 function GetTipIdsAlreadyShownFilePath
 {
 	[CmdletBinding()]
