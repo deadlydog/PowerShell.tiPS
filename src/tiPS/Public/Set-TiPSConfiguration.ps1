@@ -24,6 +24,11 @@ function Set-TiPSConfiguration
 	Whether to automatically write a PowerShell tip at session startup.
 	Valid values are Never, EverySession, Daily, Weekly, Biweekly, and Monthly. Default is Never.
 
+	.PARAMETER AllTipsShownBehaviour
+	Controls how tips are selected when automatically showing tips.
+	Valid values are ClearShownTipsList (default) and DoNotShowTips.
+	DoNotShowTips will only show tips that have not been shown before.
+
 	.PARAMETER TipRetrievalOrder
 	The order in which to retrieve PowerShell tips.
 	Valid values are NewestFirst, OldestFirst, and Random. Default is NewestFirst.
@@ -60,6 +65,11 @@ function Set-TiPSConfiguration
 	Set-TiPSConfiguration -TipRetrievalOrder Random
 
 	Set the tiPS configuration to retrieve PowerShell tips in random order.
+
+	.EXAMPLE
+	Set-TiPSConfiguration -AutomaticallyWritePowerShellTip Daily -AllTipsShownBehaviour DoNotShowTips
+
+	Set the tiPS configuration to automatically write a PowerShell tip every day, but only if there are tips that have not been shown yet.
 #>
 	[CmdletBinding(SupportsShouldProcess = $true, DefaultParameterSetName = 'PartialConfiguration')]
 	[OutputType([void])]
@@ -74,6 +84,9 @@ function Set-TiPSConfiguration
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
 		[tiPS.WritePowerShellTipCadence] $AutomaticallyWritePowerShellTip = [tiPS.WritePowerShellTipCadence]::Never,
+
+		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
+		[tiPS.AllTipsShownBehaviours] $AllTipsShownBehaviour = [tiPS.AllTipsShownBehaviours]::ClearShownTipsList,
 
 		[Parameter(Mandatory = $false, ParameterSetName = 'PartialConfiguration', ValueFromPipelineByPropertyName = $true)]
 		[Alias('TipOrder')]
@@ -115,6 +128,15 @@ function Set-TiPSConfiguration
 			if ($PSCmdlet.ShouldProcess('tiPS configuration TipRetrievalOrder property', 'Set'))
 			{
 				$script:TiPSConfiguration.TipRetrievalOrder = $TipRetrievalOrder
+			}
+		}
+
+		# If the AllTipsShownBehaviour parameter is passed in, set it.
+		if ($PSBoundParameters.ContainsKey('AllTipsShownBehaviour'))
+		{
+			if ($PSCmdlet.ShouldProcess('tiPS configuration AllTipsShownBehaviour property', 'Set'))
+			{
+				$script:TiPSConfiguration.AllTipsShownBehaviour = $AllTipsShownBehaviour
 			}
 		}
 
