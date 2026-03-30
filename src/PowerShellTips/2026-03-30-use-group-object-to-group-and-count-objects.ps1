@@ -29,7 +29,7 @@ $tip.Urls = @(
 	'https://adamtheautomator.com/powershell-group-object/'
 )
 $tip.Category = [tiPS.TipCategory]::NativeCmdlet # Community, Editor, Module, NativeCmdlet, Performance, Security, Syntax, Terminal, or Other.
-$tip.Author = 'Copilot'
+$tip.Author = 'Daniel Schroeder (deadlydog)' # Optional. Get credit for your tip. e.g. 'Daniel Schroeder (deadlydog)'.
 
 # Category meanings:
 # Community: Social events and community resources. e.g. PowerShell Summit, podcasts, etc.
